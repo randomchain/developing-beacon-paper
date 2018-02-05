@@ -1,0 +1,35 @@
+% Enable warnings on deprecated things.
+\RequirePackage[l2tabu, orthodox]{nag}
+
+\documentclass[twocolumn]{scrartcl}
+
+\overfullrule=4cm
+
+\input{preamble/constants.tex}
+\input{preamble/setup.tex}
+\input{preamble/glossaries.tex}
+
+\begin{document}
+\setcounter{page}{1}
+\input{frontmatter/titlepage.tex}
+\pagenumbering{arabic}
+
+\date{}
+\maketitle
+
+\renewcommand\abstractname{\color{sectioning}Abstract}
+
+\begin{abstract}
+    \subimport{frontmatter/}{abstract.tex}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%
+%IMPORTS
+\subimport{content/}{index.tex}%
+\label{LastPageLabel} % There must be a comment on the line before this.
+
+\printbibliography{}
+
+\subimport{appendix/}{index.tex}
+
+%%%%%%%%%%%%%%%%%%%
+\end{document}
