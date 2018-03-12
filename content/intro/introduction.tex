@@ -1,0 +1,18 @@
+\section{Introduction}
+
+In our modern society identification and authorization, by means of digital solutions, has become a central part of everyday life.
+From unlocking our front door to verifying our payments at the local grocery store, an significant number of people are using so called smart cards, to facilitate the underlying authorization.
+The most prominent type of smart cards are Java Cards, which leverage a subset of Java, used to develop applets capable of executing secure and secret protocols on the smart card.
+
+Authorization is a process with varying degrees of critical operation.
+Some use cases require more timely processing, while other might sacrifice speed for an extra round of confirmation.
+Common for all application of authorization is the requirement of no false positives, i.e.\ nobody should be able to gain access to something they are not authorized to.
+This obviously becomes a problem, in scenarios where the smart card is the only factor used in the authorization process, since a stolen smart card has no way of knowing who is using it.
+To mitigate this, smart card authorization is often supported by pin codes or passwords.
+
+\fxnote{Chosen cyphertext attacks, might be able to extract private keys with certain protocols}
+
+\fxnote{Not possible in computationally expensive algorithms}
+\fxnote{But expensive algorithms equals expensive smart cards}
+
+
