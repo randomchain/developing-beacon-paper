@@ -1,49 +1,37 @@
 \section{Beacon Requirements}
 \label{sec:beacon_requirements}
 
-Given the use case of random authentication challenges, the underlying beacon must exhibit certain properties.
-These properties are valid for virtually all randomness beacons, but the prioritization may vary to better suit this specific use case.
+% Given the use case of random authentication challenges, the underlying beacon must exhibit certain properties.
+% These properties are valid for virtually all randomness beacons, but the prioritization may vary to better suit this specific use case.
 
-\subsection{Availability}
-The first requirement is that the beacon must be highly available, i.e.\ the output cycle of the beacon should be unstoppable,
-and the output values should be available for any user, provided they are connected to the internet. % Maybe not assume beacon is on the internet as of yet?
-This requirement imposes some security risks, since the system is required to be online, and thereby reachable to adversaries.
-Furthermore, it is important to consider attacks such as man-in-the-middle, where an adversary can inject themself between the beacon and a user, and then intercept and potentially manipulate the communication between the two parties.
+% \subsection{Availability}
+% The first requirement is that the beacon must be highly available, i.e.\ the output cycle of the beacon should be unstoppable,
+% and the output values should be available for any user, provided they are connected to the internet. % Maybe not assume beacon is on the internet as of yet?
+% This requirement imposes some security risks, since the system is required to be online, and thereby reachable to adversaries.
+% Furthermore, it is important to consider attacks such as man-in-the-middle, where an adversary can inject themself between the beacon and a user, and then intercept and potentially manipulate the communication between the two parties.
 
-The platform or technique used for publishing the random outputs must also be highly available and persist the values for a predetermined period of time to facilitate retrieval and verification of previous outputs.
-This also leads to another requirement, trustable output, which will be presented later.
+% The platform or technique used for publishing the random outputs must also be highly available and persist the values for a predetermined period of time to facilitate retrieval and verification of previous outputs.
+% This also leads to another requirement, trustable output, which will be presented later.
 
-Given a highly available beacon, the protocol must still have means of authenticating authorized entities if the beacon is unavailable, e.g.\ if no internet connection is present.
-This offline operation must be scrutinized to ensure no degradation in security, which in turn may affect the time to authorize or other performance parameters.
-Performance loss is expected in offline scenarios, since the randomness beacon would otherwise be rendered useless if the protocol did not suffer from it's absence.
-However, this is a authentication protocol requirement, and will therefore not affect the beacon design.
+% Given a highly available beacon, the protocol must still have means of authenticating authorized entities if the beacon is unavailable, e.g.\ if no internet connection is present.
+% This offline operation must be scrutinized to ensure no degradation in security, which in turn may affect the time to authorize or other performance parameters.
+% Performance loss is expected in offline scenarios, since the randomness beacon would otherwise be rendered useless if the protocol did not suffer from it's absence.
+% However, this is a authentication protocol requirement, and will therefore not affect the beacon design.
 
-\subsection{Trustable Output}
-\label{sub:trustable_output}
-Users must be able to trust the output of the beacon at any given time.
-This means that they should be able to reason about the validity of both the origin and the computation of the output, i.e.\ where it came from, and how it was produced.
-In the use case of smart card authorization protocols, the beacon can be operated by organizations such as the smart card providers, since users already need to trust these.
-A smart card provider operating the beacon cannot gain any additional knowledge about the smart cards by choosing a specific output, since they already know everything about said smart cards; furthermore, the smart card provider is interested in providing a secure and trustable system, hence not colluding with adversaries.
-\msmnote{How about smart cards where the user instantiates the keys themself?}
+% \subsection{Trustable Output}
+% \label{sub:trustable_output}
+% Users must be able to trust the output of the beacon at any given time.
+% This means that they should be able to reason about the validity of both the origin and the computation of the output, i.e.\ where it came from, and how it was produced.
+% In the use case of smart card authorization protocols, the beacon can be operated by organizations such as the smart card providers, since users already need to trust these.
+% A smart card provider operating the beacon cannot gain any additional knowledge about the smart cards by choosing a specific output, since they already know everything about said smart cards; furthermore, the smart card provider is interested in providing a secure and trustable system, hence not colluding with adversaries.
+% \msmnote{How about smart cards where the user instantiates the keys themself?}
 
-Regarding validity of the outputs, the users must be able to verify that the beacon actually produced it, i.e.\ the outputs should be signed by the beacon.
-Moreover, users should be able to reason about the freshness of outputs, such that an adversary cannot choose an arbitrary valid output.
-This requires the outputs to be time stamped in an unforgeable manner, and would also enable offline smart cards to reject outputs older than the last seen one.
+% Regarding validity of the outputs, the users must be able to verify that the beacon actually produced it, i.e.\ the outputs should be signed by the beacon.
+% Moreover, users should be able to reason about the freshness of outputs, such that an adversary cannot choose an arbitrary valid output.
+% This requires the outputs to be time stamped in an unforgeable manner, and would also enable offline smart cards to reject outputs older than the last seen one.
 
-\subsection{Output Rate}
-\label{sub:output_rate}
-Because the system is expected to perform a significant amount of authentications, the beacon should output at a significant high rate, such that outputs are not reused for authenticating the same user twice.
-This will help avoid replay attacks, which would otherwise require additional randomness from the smart card or authenticator.
-
-    % Highly available
-    %   Distributed architecture
-    %       Trusted-transparent authority
-    %   Robust publishing
-    % Offline protocol (smart card usage)
-    % Trustable output
-    %   Card providers run beacon (they must be trusted anyway)
-    %   Timestamped and signed
-    % High output rate
-    %   Several per minute
-
+% \subsection{Output Rate}
+% \label{sub:output_rate}
+% Because the system is expected to perform a significant amount of authentications, the beacon should output at a significant high rate, such that outputs are not reused for authenticating the same user twice.
+% This will help avoid replay attacks, which would otherwise require additional randomness from the smart card or authenticator.
 
