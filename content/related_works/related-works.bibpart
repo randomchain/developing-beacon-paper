@@ -5,3 +5,20 @@
     year = {2015},
     note = {\url{https://eprint.iacr.org/2015/366}},
 }
+
+@misc{mpcsnarks,
+    author = {Sean Bowe and Ariel Gabizon and Ian Miers},
+    title = {Scalable Multi-party Computation for zk-SNARK Parameters in the Random Beacon Model},
+    howpublished = {Cryptology ePrint Archive, Report 2017/1050},
+    year = {2017},
+    note = {\url{https://eprint.iacr.org/2017/1050}},
+}
+
+@article{snarkparameters,
+  title={A multi-party protocol for constructing the public parameters of the Pinocchio zk-SNARK},
+  author={Sean Bowe and Ariel Gabizon and Matthew Green},
+  journal={IACR Cryptology ePrint Archive},
+  year={2017},
+  volume={2017},
+  pages={602}
+}
