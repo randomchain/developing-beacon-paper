@@ -1,0 +1,34 @@
+\section{Beacon Requirements}
+\label{sec:beacon_requirements}
+
+Given the scenarios where simple but insecure protocols can be made secure by utilizing a randomness beacon, we present the following requirements for said beacon.
+Due to the universal nature of these insecure protocols, we prioritize a use case agnostic beacon, which will fit multiple use cases.
+This means that some requirements may be more relaxed in our case, compared to a specialized beacon, suited for one use case only.
+
+The requirements of our randomness beacon are separated into two groups: functional and non-functional requirements, as defined by Ian Sommerville in \textit{Software Engineering}\msmnote{cite here}.
+
+\subsection{Functional Requirements}
+\label{sub:functional_requirements}
+\begin{enumberate}
+\item The beacon should accept input from and output to multiple sources, in an extendable and configurable manner.
+\item The beacon should be able to deterministically compute a random output from a given set of inputs.
+\item The beacon should commit to a set of inputs before initiating output computation, and the commitment should be published as proof.
+\item The output should be unpredictable before the computation is done, even for the beacon operator.
+\item The beacon should publish the output immediately after the computation is done, alongside any important meta data about the computation, e.g.\ parameters and witnesses to be used in verification.
+\item The output should be verifiable for any user, i.e.\ anyone should be able to verify the authenticity of both the computation and origin of the output.
+\end{enumberate}
+
+
+\subsection{Non-Functional Requirements}
+\label{sub:non_functional_requirements}
+
+\begin{enumberate}
+\item The randomness beacon should be extendable or configurable by beacon operators, i.e.\ it should be highly modular in nature.
+      This will allow for customization of the beacon to embrace different use cases.
+\item The beacon should not contain a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy.
+\item Operating the beacon should be incentivized and distributable among multiple participants. \msmnote{e.g.\ input sourcing by some, computation by another, etc.}
+\item It should be easy for users to contribute with input, and to fetch outputs.
+\end{enumberate}
+
+
+
