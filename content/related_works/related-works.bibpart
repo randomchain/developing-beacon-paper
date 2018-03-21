@@ -1,0 +1,7 @@
+@misc{randomzoo,
+    author = {Arjen K. Lenstra and Benjamin Wesolowski},
+    title = {A random zoo: sloth, unicorn, and trx},
+    howpublished = {Cryptology ePrint Archive, Report 2015/366},
+    year = {2015},
+    note = {\url{https://eprint.iacr.org/2015/366}},
+}

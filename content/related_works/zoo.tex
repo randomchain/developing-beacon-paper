@@ -1,0 +1,4 @@
+\subsection{A random zoo: sloth, unicorn, and trx}
+\label{sub:random_zoo}
+\citet{randomzoo} implement a protocol reminiscent of a beacon as a way to generate random numbers and elliptic curves. They produce random numbers by collecting data from a variety of sources before running it through a time-hard function, known as a sloth. The sloth is a strictly sequential function with a trapdoor for fast verification. The time-hardness prevents last-draw attacks, as attackers have to dedicate large amounts of time to compute how to bias the output, during which new inputs can render their efforts pointless. The process of generating random numbers is the unicorn protocol, which can then be used to generate elliptic curves by  \textit{feeding the unicorn to the trx}. 
+Of special note is the sloth function, which can be generalized as a delay function - a function that delays the output significantly and makes the protocol time-hard. 
