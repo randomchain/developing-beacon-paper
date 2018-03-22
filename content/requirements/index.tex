@@ -1,21 +1,27 @@
+\section{Definition}
+
+A Randomness Beacon... \mtjnote{TODO: Definition from the previous semester}
+
+It consists of a round of input collection with a known deadline. At the deadline, input collection is stopped, and computation can begin. Meanwhile a new round of input collection can begin???
+
 \section{Randomness Beacon Requirements}
 \label{sec:beacon_requirements}
 
 We believe randomness beacons are universal --- a sufficiently general randomness beacon with enough entropy can be utilized for multiple use cases. Given the many use cases, we will therefore prioritize a use case agnostic beacon.
 This means that some requirements may be more relaxed in our case, compared to a specialized randomness beacon, suited for one use case only. However, the usefulness of such general randomness beacon is much higher as it can serve multiple use cases.
 
-The requirements of our randomness beacon are separated into two groups: functional and non-functional requirements, as defined by \citet[sec. 1.3]{swebok} \mtjnote{Or Sommerville if you guys prefer... Same same}.
+The requirements of our randomness beacon are separated into two groups: functional and non-functional requirements, as defined by \citet[1.4.1]{swebok} \mtjnote{Or Sommerville if you guys prefer... Same same}.
 
 \subsection{Functional Requirements}
 \label{sub:functional_requirements}
 \begin{description}
     \item[Extendable] The randomness beacon should be extendable or configurable by beacon operators, i.e.\ it should be highly modular in nature. This will allow for customization of the beacon to embrace different use cases \mtjnote{Do we want a universal beacon or a beacon framework?}. As an example, the beacon should accept input from and output to multiple sources, in an extendable and configurable manner.
 
-    \item[Deterministic Randomness] The beacon should be able to deterministically compute a random output from a given set of inputs.
+    \item[Deterministic Randomness] The beacon should be able to deterministically compute a random output from a set of inputs.
 
-    \item[Commitment to Input] The beacon should commit to a set of inputs and the commitment to the inputs should be published as soon as possible after input collection deadline, but before initiating output computation.
+    \item[Commitment to Input] The beacon should produce a commitment to a set of inputs and publish the commitment as soon as possible after the input collection deadline, but before initiating output computation. This ensures that the beacon operator cannot add, remove, or order the inputs to his own benefit.
 
-    \item[Timeliness] The beacon should publish the random output immediately after the computation is done, alongside any important meta data about the computation, e.g.\ parameters and witnesses to be used in verification.
+    \item[Output] The beacon should publish the random output immediately after the computation is done, accompanied with any important meta data about the computation, e.g.\ parameters and witnesses to be used in verification.
 
     \item[Unpredictable] The output should be unpredictable before the computation is done, even for the beacon operator.
 
@@ -30,12 +36,23 @@ The requirements of our randomness beacon are separated into two groups: functio
 \begin{description}
     \item[No Single Point of Failure] The beacon should not contain a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy.
     \item[Something something] Operating the beacon should be incentivized and distributable among multiple participants. \msmnote{e.g.\ input sourcing by some, computation by another, etc.} \mtjnote{Why are these two necessary?} \mtjnote{This is two requirements, no?}
-    \item[Usability] It should be easy for users to contribute with input, and to fetch outputs. In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the computation can be verified. \mtjnote{we need to discuss the implications of only using insecure channels. What if an adversary has complete knowledge of all inputs? Then he can only do it as fast as the original operator?}
+    \item[Usability] It should be easy for users to contribute with input, and to fetch outputs. In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified. \mtjnote{we need to discuss the implications of only using insecure channels. What if an adversary has complete knowledge of all inputs? Then he can only do it as fast as the original operator? But he cannot change anything besides the order of inputs --- but he needs to commit to the order before computing, and clients should not use a random number for which they have not seen the corresponding commitment to.}
 \end{description}
 
 
-
+%%%%%%%%%%%
 \paragraph{The beacon is secure because:}
 The operator does not know the individual inputs before receiving them
 He commits to using the inputs, i.e. he cannot change the order of them to his own benefit. What keeps him from trying out multiple commitments before publishing one?
 The slow hash function ensures that he cannot try excessively many commitments.
+
+\section{Component Design}
+\mtjnote{Allocation of requirements to components in the software. From Swebok: \enquote{As an
+example, requirements for a particular braking
+performance for a car (braking distance, safety in
+poor driving conditions, smoothness of applica-
+tion, pedal pressure required, and so on) may be
+allocated to the braking hardware (mechanical
+and hydraulic assemblies) and an antilock braking
+system (ABS)
+}}
