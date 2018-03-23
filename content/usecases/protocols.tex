@@ -1,7 +1,7 @@
 \subsection{Improving Protocols}
 Throughout the litterature on randomness beacons there has been a prevailing theme of use-cases: securing algorithms and protocols that would otherwise be insecure without public randomness. This allows for the use of faster and less complicated protocols as long as randomness is available from a beacon. 
 
-The theme has its roots in the first paper on randomness beacons \cite{rabin1983transaction}, as they were origally conceived as a means to protect transactions. Here the availability of trustable random numbers allows for 
+The theme has its roots in the first paper on randomness beacons \cite{rabin1983transaction}, as they were origally conceived as a means to protect transactions. Here the availability of trustable random numbers allows for protected transactions that do not rely on a third party.  
 
 Beacons have also been suggested as a way to secure smart card authentication protocols. \citet{fischer2011publicrandomnessservice} suggest using a smart card challenge-response authentication protocol based around modular square roots and blum integers. The protocol itself is potentially vulnerable to chosen ciphertext attacks from the card reader, that could obtain the cards secret key. Using a randomness beacon, they can ensure that the challenges are randomly generated, and the reader is unable to steal the private key. However, they fail to adress the fact that the random number would need to be signed by the beacon for the card to trust it, and the card would need to verify this signature. The question then becomes whether the card could not simply replace the insecure challenge-response protocol with the secure signing protocol it would need to verify.
 
