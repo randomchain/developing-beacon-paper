@@ -18,7 +18,7 @@ In the recent literature, a major theme is how to avoid the necessity of relying
 
 Randomness beacons indeed sound like useful concepts in applications where fairness and unbiasability is important.
 %But once one dives deeper into these use cases and problems, only a subset makes sense --- and questions of incentives and funding to run such a beacon further aggravates their diminishing usefulness.
-This recent literature presents some promising ways of creating an unbiasable beacon. Despite this, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon. \mtjnote{Elaborate what is meant by killer} However, we see many potential small use cases.
+This recent literature presents some promising ways of creating an unbiasable beacon. Despite this, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon. \mtjnote{Elaborate what is meant by killer} However, we see many potential small use cases, that we describe in the following section. 
 
 
 %The simplest example of the usefulness of randomness beacons is a lottery (e.g.\ picking a winner to receive a monetary prize or picking out young men to go to war). Here, the draw must be fair. However, how can users trust that the draw is fair? The entity performing the lottery draw may be biased, unwillingly or not, and draw a number that favors a particular outcome. The participants of the lottery have no way of verifying the fairness of the outcome. Instead, the lottery entity could announce that the randomness beacon output at some fixed point in the future will be used as input to a publicly known function, mapping the beacon outcome to the lottery output space. This takes the responsibility
@@ -27,16 +27,6 @@ This recent literature presents some promising ways of creating an unbiasable be
 
 
 %Examples of use cases and their merit:
-\begin{description}
-    \item[Lotteries] A lottery entity performing the draw of some numbers can use a randomness beacon to transparently show the participants they are not biasing the draw.
-    The lottery entity should announce a specific time in the future at which the beacon output will be used to determine the winning numbers.
-    \item[Constants in Cryptography] Many cryptographic schemes contain hard-coded constants, which ultimately are generated in \enquote{some way} by the algorithm designer, or by using \enquote{nothing-up-my-sleeve}-numbers (e.g.\ the SHA1 of $\pi$).
-    The former way leaves vulnerabilities of backdoors~\mtjnote{dual-curve source}, and in the latter case \mtjnote{SOURCE} argues there is a great amount of freedom in choosing seemingly innocent constants.
-    Instead, it could be announced by the algorithm designers, just like the lottery entity, that a future randomness beacon output will be used to generate the constant in the way \mtjnote{million dollar curve cite} describes.
-    \item[Sampling] Many use cases concern sampling. Today, \mtjnote{manual recounts of votes in elections}. Often in quality control, a few items sampled from a large number of items must be tested because either the test destroys the item under test or the test is expensive per item. Conflicting interests can bias the selection of items. Water samples from a river are to be tested for contamination. If the major industrial plants upriver can bias the random time the water samples are collected, they can potentially choose a time where the contamination is underestimated (resulting in environmental damage). On the other hand, environmental activists may tamper with the random time to show an overestimation of contamination (resulting in loss for the industrial plants upriver).
-\end{description}
-
-\mtjnote{Maybe restructure the list to split at sampling/non-sampling use cases}
 
 % \subsection{Some Section}
 
