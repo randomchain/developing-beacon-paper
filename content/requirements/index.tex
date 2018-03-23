@@ -1,6 +1,15 @@
 \section{Definition}
 
-A Randomness Beacon... \mtjnote{TODO: Definition from the previous semester}
+\mtjnote{THIS IS DIRECTLY FROM PREVIOUS SEMESTER}
+
+%A randomness beacon is a service that publishes random data at a known interval.
+Formally, let $B: f(I_t) \rightarrow O_t$, where $B$ is a beacon, $I_t$ is the input at time $t$, $O_t$ is the output at time $t$, and $f$ is a suitable function for transforming the input to the output.
+For $B$ to be a beacon, it is run at a known, regular interval, $\delta$, such that $t+n\delta$ for any $n \in \mathbb{N}$ are valid output intervals for the beacon.
+In \Vref{fig:abstract_beacon} an example of an abstract beacon can be seen.
+The green area is what can be defined as the beacon, or \emph{beacon protocol} --- i.e.\ how input is collected, transformed to output and then published.
+
+\subimport{}{simple_beacon_fig.tex}
+
 
 It consists of a round of input collection with a known deadline. At the deadline, input collection is stopped, and computation can begin. Meanwhile a new round of input collection can begin???
 
