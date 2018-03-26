@@ -1,0 +1,40 @@
+\begin{figure}[htb]\pgfdeclarelayer{background}
+    \pgfsetlayers{background,main}
+    \centering
+    \scriptsize
+    \begin{tikzpicture}[auto]
+        \node[block, text width=6em] (inputproc) {Input Processor};
+        \node[block, text width=6em, below= of inputproc] (computation) {Computation};
+
+        \node[minimum width=6em] (mid) at ($(inputproc)!0.5!(computation)$) {};
+
+        \node[smallblock, left=of mid] (inputcoll2) {};
+        \node[smallblock, above=1em of inputcoll2] (inputcoll1) {};
+        \node[smallblock, below=1em of inputcoll2] (inputcoll3) {};
+
+        \node[minimum width=7em, right=of inputcoll1] (fake1) {};
+        \node[minimum width=7em, right=of inputcoll2] (fake2) {};
+
+        \node[smallblock, right=of mid] (publish2) {};
+        \node[smallblock, above=1em of publish2] (publish1) {};
+        \node[smallblock, below=1em of publish2] (publish3) {};
+
+        \draw[arrow] (inputcoll1) -- (inputproc);
+        \draw[arrow] (inputcoll2) -- (inputproc);
+        \draw[arrow] (inputcoll3) -- (inputproc);
+
+        \draw[arrow] (inputproc) -- (computation);
+
+        \draw[arrow] (computation) -- (publish1);
+        \draw[arrow] (computation) -- (publish2);
+        \draw[arrow] (computation) -- (publish3);
+
+        \begin{pgfonlayer}{background}
+            \node[block] (inputcoll) [container, fit={(inputcoll1) (inputcoll3)}] {};
+            \node[above=0cm of inputcoll] {Input Collectors};
+            \node[block] (publish) [container, fit={(publish1) (publish3)}] {};
+            \node[above=0cm of publish] {Publishers};
+        \end{pgfonlayer}
+    \end{tikzpicture}
+    \caption{Abstract beacon architecture based on pipeline and services}\label{fig:beacon_arch}
+\end{figure}
