@@ -19,12 +19,12 @@ It consists of a round of input collection with a known deadline. At the deadlin
 We believe randomness beacons are universal --- a sufficiently general randomness beacon with enough entropy can be utilized for multiple use cases. Given the many use cases, we will therefore prioritize a use case agnostic beacon.
 This means that some requirements may be more relaxed in our case, compared to a specialized randomness beacon, suited for one use case only. However, the usefulness of such general randomness beacon is much higher as it can serve multiple use cases.
 
-The requirements of our randomness beacon are separated into two groups: functional and non-functional requirements, as defined by \citet[sec.\ 1.4.1]{swebok} \mtjnote{Or Sommerville if you guys prefer... Same same}.
+The requirements of our randomness beacon are separated into two groups: functional and non-functional requirements, as suggested by \citet[sec.\ 1.4.1]{swebok} \mtjnote{Or Sommerville if you guys prefer... Same same}.
 
 \subsection{Functional Requirements}
 \label{sub:functional_requirements}
 \begin{description}
-    \item[Extendable] The randomness beacon should be extendable or configurable by beacon operators, i.e.\ it should be highly modular in nature. This will allow for customization of the beacon to embrace different use cases \mtjnote{Do we want a universal beacon or a beacon framework?}. As an example, the beacon should accept input from and output to multiple sources, in an extendable and configurable manner.
+    \item[Modular Input and Output] The input and output channels of the randomness beacon should be extensible or configurable by beacon operators. This will allow a beacon operator to use their preferred input sources and output channels. For example, a given beacon operator may allow users to provide input through tweets, email, or direct TCP/IP\@. Similarly the output may be tweeted or published on a website.
 
     \item[Deterministic Randomness] The beacon should be able to deterministically compute a random output from a set of inputs.
 
