@@ -27,14 +27,6 @@ Under the \gls{soa} single instance of a randomness beacon will consist of the f
     \caption{Very primitive sketch of architecture}
 \end{figure}
 
-The service oriented nature also allows for parallel operation, i.e.\ input collectors can run continuously as can the computation service.
-This effectively means that we can reach the highest possible output of randomness, given a single computation service.
-One might argue that several computation services slightly offset in start time, could output more frequently, but this would by our design be considered as several different beacons.
-
-In some scenarios a beacon may consist of multiple computation services, as a mean of redundancy, as long as each computation is run on the same input.
-The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
-This brings forth the issue of consensus about which input to use\msmnote{out of scope or explain solutions?}.
-
 \subsection{Pipeline}%
 \label{sub:pipeline}
 Besides the \gls{soa}, we also use a pipeline architecture, to design the beacon.
@@ -44,6 +36,14 @@ The pipeline architecture can be seen as a specialization of the \gls{soa} patte
 
 When considering the system as a pipeline, we also get some restrictions compared to a more generic \gls{soa}, in that data only flows in one direction.
 Moreover, the pipeline architecture can be used to specify types of components as we did in~\vref{sub:components_of_a_beacon}, these types can then be aggregated according to a specification to define a complete beacon.
+
+The pipeline also allows for parallel operation, i.e.\ input collectors can run continuously as can the computation service.
+This effectively means that we can reach the highest possible output of randomness, given a single computation service.
+One might argue that several computation services slightly offset in start time, could output more frequently, but this would by our design be considered as several different beacons.
+
+In some scenarios a beacon may consist of multiple computation services, as a mean of redundancy, as long as each computation is run on the same input.
+The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
+This brings forth the issue of consensus about which input to use\msmnote{out of scope or explain solutions?}.
 
 \subsection{Security Design (Preliminary Security Analysis)}
 \mtjnote{Mention Slow Hashing functions here}
