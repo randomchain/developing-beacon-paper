@@ -37,22 +37,20 @@ The requirements of our randomness beacon are separated into two groups: functio
     \item[Verifiable] The output should be verifiable for any user, i.e.\ anyone should be able to verify the authenticity of both the computation and origin of the output.
 \end{description}
 
-\mtjnote{Do we want to sign the output with our own signature? We probably do not need it for tamper-detection, as clients using the random number should verify the computation and the presence of their own input. Maybe we should include some random nonce (the operators own input) and then we might need signing to see if the number came from us.}
-
 \subsection{Non-Functional Requirements}
 \label{sub:non_functional_requirements}
 
 \begin{description}
     \item[No Single Point of Failure] The beacon should not contain a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy.
     \item[Something something] Operating the beacon should be incentivized and distributable among multiple participants. \msmnote{e.g.\ input sourcing by some, computation by another, etc.} \mtjnote{Why are these two necessary?} \mtjnote{This is two requirements, no?}
-    \item[Usability] It should be easy for users to contribute with input, and to fetch outputs. In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified. \mtjnote{we need to discuss the implications of only using insecure channels. What if an adversary has complete knowledge of all inputs? Then he can only do it as fast as the original operator? But he cannot change anything besides the order of inputs --- but he needs to commit to the order before computing, and clients should not use a random number for which they have not seen the corresponding commitment to. So everything is good?}
+    \item[Usability] It should be easy for users to contribute with input, and to fetch outputs. In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified.
 \end{description}
 
+\subsection{Security Requirements}
+\mtjnote{Maybe they are in the above functional and non-functional requirements? Maybe re-iterate them. Which requirements are important to the security?}
 
-%%%%%%%%%%%
-\mtjnote{The following paragraph probably does not belong here. Should be moved elsewhere in this paper}
-\paragraph{The beacon is secure because:}
-The operator does not know the individual inputs before receiving them
-He commits to using the inputs, i.e. he cannot change the order of them to his own benefit. What keeps him from trying out multiple commitments before publishing one?
-The slow hash function ensures that he cannot try excessively many commitments.
+\mtjnote{Do we want to sign the output with our own signature? We probably do not need it for tamper-detection, as clients using the random number should verify the computation and the presence of their own input. Maybe we should include some random nonce (the operators own input) and then we might need signing to see if the number came from us.}
 
+\mtjnote{Maybe discuss the implications of above requirements. E.g.:}
+
+\mtjnote{We need to discuss the implications of only using insecure channels. What if an adversary has complete knowledge of all inputs? Then he can only do it as fast as the original operator? But he cannot change anything besides the order of inputs --- but he needs to commit to the order before computing, and clients should not use a random number for which they have not seen the corresponding commitment to. So everything is good?}

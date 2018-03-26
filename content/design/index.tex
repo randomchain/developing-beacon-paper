@@ -35,3 +35,12 @@ In some scenarios a beacon may consist of multiple computation services, as a me
 The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
 This brings forth the issue of consensus about which input to use\msmnote{out of scope or explain solutions?}.
 
+\subsection{Security Design (Preliminary Security Analysis)}
+\mtjnote{Mention Slow Hashing functions here}
+
+\mtjnote{Comparison with Drand}
+
+\mtjnote{The beacon is secure because:}
+The operator does not know the individual inputs before receiving them
+He commits to using the inputs, i.e. he cannot change the order of them to his own benefit. What keeps him from trying out multiple commitments before publishing one?
+The slow hash function ensures that he cannot try excessively many commitments.
