@@ -47,11 +47,17 @@ The same can be said about input processors, where a beacon may need redundancy 
 This brings forth the issue of consensus about which input to use\msmnote{out of scope or explain solutions?}.
 
 \subsection{Security Design (Preliminary Security Analysis)}
+When designing a composable system such as our randomness beacon, it is important to take into account, the inter component communication.
+From a security aspect, splitting up the system from a monolithic self contained architecture to a service oriented kind, exposes a myriad of new attack surfaces.
+For example this architecture can potentially make it possible for adversaries to cut off parts of the system, by means of \gls{dos} attacks.
+Moreover the protocol used to communicate from service to service, must be secure in a way that prevents adversaries from being able to undetectably manipulate the messages.
+
 \mtjnote{Mention Slow Hashing functions here}
 
 \mtjnote{Comparison with Drand}
 
 \mtjnote{The beacon is secure because:}
 The operator does not know the individual inputs before receiving them
-He commits to using the inputs, i.e. he cannot change the order of them to his own benefit. What keeps him from trying out multiple commitments before publishing one?
+He commits to using the inputs, i.e.\ he cannot change the order of them to his own benefit.
+What keeps him from trying out multiple commitments before publishing one?
 The slow hash function ensures that he cannot try excessively many commitments.
