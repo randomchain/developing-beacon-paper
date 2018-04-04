@@ -236,13 +236,24 @@
     breaklinks,
     linktoc=all,
     pdfprintscaling=None,
-    %plainpages=false,
     colorlinks,
+}
+
+\ifDarkTheme
+\hypersetup{
+    linkcolor=OceanicNextBase08,
+    citecolor=OceanicNextBase08,
+    urlcolor=OceanicNextBase08,
+    filecolor=OceanicNextBase08,
+}
+\else
+\hypersetup{
     linkcolor=aaublue,
     citecolor=aaublue,
     urlcolor=aaublue,
-    filecolor=aaublue
+    filecolor=aaublue,
 }
+\fi
 
 \usepackage[english, capitalise, noabbrev, nameinlink]{cleveref} % Load late
 \crefname{appchap}{appendix}{appendices}

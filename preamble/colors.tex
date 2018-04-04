@@ -17,7 +17,7 @@
 \definecolor{clcodeshade}{gray}{0.93}
 \definecolor{clnode}{gray}{0.85}
 
-\definecolor{aaublue}{gray}{0}
+\definecolor{aaublue}{RGB}{33,26,82}
 \definecolor{bluekeywords}{gray}{0}
 \definecolor{greencomments}{gray}{0.5}
 \definecolor{redstrings}{gray}{0.3}
@@ -59,4 +59,30 @@
 \definecolor{GoogleGrey}{HTML}{9E9E9E}
 \definecolor{GoogleBlueGrey}{HTML}{607D8B}
 
+\definecolor{OceanicNextBase00}{HTML}{1b2b34}
+\definecolor{OceanicNextBase01}{HTML}{343d46}
+\definecolor{OceanicNextBase02}{HTML}{4f5b66}
+\definecolor{OceanicNextBase03}{HTML}{65737e}
+\definecolor{OceanicNextBase04}{HTML}{a7adba}
+\definecolor{OceanicNextBase05}{HTML}{c0c5ce}
+\definecolor{OceanicNextBase06}{HTML}{cdd3de}
+\definecolor{OceanicNextBase07}{HTML}{d8dee9}
+\definecolor{OceanicNextBase08}{HTML}{ec5f67}
+\definecolor{OceanicNextBase09}{HTML}{f99157}
+\definecolor{OceanicNextBase0A}{HTML}{fac863}
+\definecolor{OceanicNextBase0B}{HTML}{99c794}
+\definecolor{OceanicNextBase0C}{HTML}{62b3b2}
+\definecolor{OceanicNextBase0D}{HTML}{6699cc}
+\definecolor{OceanicNextBase0E}{HTML}{c594c5}
+\definecolor{OceanicNextBase0F}{HTML}{ab7967}
+\definecolor{OceanicNextBase10}{HTML}{ffffff}
+
 \colorlet{Highlight}{GoogleBlue}
+\ifDarkTheme
+    \pagecolor{OceanicNextBase00}
+    \color{OceanicNextBase05}
+    \colorlet{sectioning}{OceanicNextBase0D}
+    \colorlet{subsectioning}{OceanicNextBase0E}
+    \colorlet{descriptionlabeling}{OceanicNextBase0F}
+    \colorlet{Highlight}{OceanicNextBase02}
+\fi
