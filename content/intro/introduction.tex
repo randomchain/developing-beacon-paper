@@ -2,6 +2,8 @@
 % Simple algorithms/protocols are everywhere, but often not secure
 % Adding a beacon may make these algorithms/protocols secure.
 
+Randomness is useful for many cases, but can be difficult to trust, as it is hard to guarantee that a random number really is \emph{random}, and not biased towards anyones benefit. 
+
 \emph{Randomness beacons}, services emitting randomness at fixed intervals, have been around for a long time.
 In 1983 Rabin coined the term and used one to add probabilistic security in several protocols~\cite{rabin1983transaction}.
 In this definition a randomness beacon was to be seen as a impartial party trusted to not be biased towards any outcome.
@@ -14,12 +16,12 @@ Conceptually, randomness beacons seem to fit this environment of mutual distrust
 
 In the recent literature, a major theme is how to avoid the necessity of relying on any single party --- either by decentralizing the beacon or making the operation so transparent that any single beacon operator cannot cheat without it being visible.
 
-%\subsection{The \enquote{Killer Use-Case} does not Exist}
+As such, randomness beacons are promising for applications where fairness and unbiasability is important.
 
-Randomness beacons indeed sound like useful concepts in applications where fairness and unbiasability is important.
-%But once one dives deeper into these use cases and problems, only a subset makes sense --- and questions of incentives and funding to run such a beacon further aggravates their diminishing usefulness.
-This recent literature presents some promising ways of creating an unbiasable beacon. Despite this, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon. \mtjnote{Elaborate what is meant by killer and use more formal language} However, we see many potential use cases, that we describe in the following section.
+Another aspect of such a beacon that must be considered is the security of the beacon. If an attacker is capable of disrupting the beacon's output, or even biasing it towards their own benefit, the beacon loses its value. Thus, it is important that the beacon be secure from attacks on its availability or integrity, defined as the output not being biased.
 
+
+This recent literature presents some promising ways of creating an unbiasable beacon. Despite this, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon. We see many potential use cases, and present a variety of them with roots in the litterature, before constructing a beacon of our own and performing a security analysis on it.
 
 %The simplest example of the usefulness of randomness beacons is a lottery (e.g.\ picking a winner to receive a monetary prize or picking out young men to go to war). Here, the draw must be fair. However, how can users trust that the draw is fair? The entity performing the lottery draw may be biased, unwillingly or not, and draw a number that favors a particular outcome. The participants of the lottery have no way of verifying the fairness of the outcome. Instead, the lottery entity could announce that the randomness beacon output at some fixed point in the future will be used as input to a publicly known function, mapping the beacon outcome to the lottery output space. This takes the responsibility
 
