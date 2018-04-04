@@ -13,7 +13,7 @@ However, as services needs knowledge about other relevant services, some mechani
 
 \subsection{Components of a Beacon}
 \label{sub:components_of_a_beacon}
-Under the \gls{soa} single instance of a randomness beacon will consist of the following:
+In the \gls{soa}, a single instance of a randomness beacon will consist of the following:
 \begin{description}
     \item[A number of input collector services] which can collect from a myriad of different sources.
     \item[An input processing service] which aggregates the input from all the collectors.
@@ -25,46 +25,45 @@ Under the \gls{soa} single instance of a randomness beacon will consist of the f
 
 \subsection{Pipeline}%
 \label{sub:pipeline}
-Besides the \gls{soa}, we also use a pipeline architecture, to design the beacon.
-Data only flows one way through the system, and each component performs an independent transformation.
-This effectively means that a beacon is a pipeline, where data flows into the system as inputs, is processed, transformed to a random output, and lastly published.
-The pipeline architecture can be seen as a specialization of the \gls{soa} pattern, since each step in the pipeline is a service as defined in a \gls{soa}.
+In our \gls{soa}, %Besides the \gls{soa}, we also utilize a pipeline architecture to design the beacon.%
+data only flows one way through the system, and each component performs an independent transformation.
+This effectively means that a beacon is a pipeline where data flows into the system as inputs, is processed, transformed to a random output, and lastly published.
 
-When considering the system as a pipeline, we also get some restrictions compared to a more generic \gls{soa}, in that data only flows in one direction.
-Moreover, the pipeline architecture can be used to specify types of components as we did in~\vref{sub:components_of_a_beacon}, these types can then be aggregated according to a specification to define a complete beacon.
+The pipeline architecture can be seen as a specialization of the \gls{soa} pattern, since each step in the pipeline is a service as defined in a \gls{soa}.
+When considering the system as a pipeline some restrictions are imposed compared to the more generic \gls{soa}, in that data only flows in one direction.
+Moreover, the pipeline architecture can be used to specify types of components as we did in~\vref{sub:components_of_a_beacon}. These types can then be aggregated according to a specification to define a complete beacon \mtjnote{What does this sentence mean? Isn't is obvious?}.
 
 The pipeline also allows for parallel operation, i.e.\ input collectors can run continuously as can the computation service.
-This effectively means that we can reach the highest possible output of randomness, given a single computation service.
-One might argue that several computation services slightly offset in start time, could output more frequently, but this would by our design be considered as several different beacons.
+This effectively means that we can reach the highest possible output of randomness given a single computation service.
+One might argue that several computation services slightly offset in start time, could output more frequently, but this would by our design be considered several different beacons.
 
 In some scenarios a beacon may consist of multiple computation services, as a mean of redundancy, as long as each computation is run on the same input.
 The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
 This brings forth the issue of consensus about which input to use\msmnote{out of scope or explain solutions?}.
 
 \subsection{Security Design (Preliminary Security Analysis)}
-When designing a composable system such as our randomness beacon, it is important to take into account, the inter component communication.
-From a security aspect, splitting up the system from a monolithic self contained architecture to a service oriented kind, exposes a myriad of new attack surfaces.
+When designing a composable system such as our randomness beacon, it is important to take into account, the inter-component communication.
+From a security aspect, splitting up the system from a monolithic self-contained architecture to a service oriented kind, exposes a myriad of new attack surfaces.
 For example this architecture can potentially make it possible for adversaries to cut off parts of the system, by means of \gls{dos} attacks.
 Moreover the protocol used to communicate from service to service, must be secure in a way that prevents adversaries from being able to undetectably manipulate the messages.
 
 \mtjnote{(maybe) Comparison with Drand}
 
-In the case of a randomness beacon, the security does also embody the operators ability to predict or manipulate the output.
-This means that we need some mechanism of preventing the operator from performing last-draw attacks, disguised as regular user inputs, or excluding certain inputs to alter the output.
-Moreover we also want to prevent the operator from being able to initiate multiple beacon computations, and then only publishing the output which benefits themself the most.
+In the case of a randomness beacon, the security also embodies the operators ability to predict or manipulate the output.
+This means that we need some mechanism of preventing the operator from performing last-draw attacks disguised as regular user inputs, or excluding certain inputs to alter the output.
+Moreover we also want to prevent the operator from being able to initiate multiple beacon computations, and then only publish the output which benefits the operator the most.
 
 Generally, these concerns can be mitigated by enforcing a \gls{cco} workflow in the beacon protocol.
-This effectively means that each published output is paired with a commitment, which can be used in the verification of the beacon.
-However, the commitment must be published before the output, and with a significant time delay.
-Otherwise, the beacon operator could just publish a commitment to a desired output.
+This effectively means that each published output is paired with a commitment which can be used in the verification of the beacon.
+The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output. Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desireable output.
 
 To guarantee that the time between publishing the commitment and output has been spent on computing the output, we utilize a delay function.
 Delay functions require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
-When deploying delay functions in randomness beacons, it is important to keep verification in mind.
-This means that a user should be able to run the delay function in reverse to confirm, that a commitment matches the output.
-To not require each user to execute the full delay function, we use a flavour of delay functions which are asymmetrically hard, i.e.\ hard to compute, but easy to verify.
+When deploying delay functions in randomness beacons it is important to keep verification in mind.
+A user should be able to run the delay function in reverse to confirm that a commitment matches the output.
+To avoid having to require each user to execute the full delay function, we use a flavour of delay functions which are asymmetrically hard, i.e.\ hard to compute but easy to verify.
 
-Combining these concepts, \gls{cco} and a delay function, effectively gives the following workflow for each cycle of the beacon:
+The combination of these concepts, \gls{cco} and a delay function, effectively gives the following workflow for each cycle of the beacon:
 
 \begin{enumberate}
     \item Collect inputs
