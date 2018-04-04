@@ -31,7 +31,6 @@ This effectively means that a beacon is a pipeline where data flows into the sys
 
 The pipeline architecture can be seen as a specialization of the \gls{soa} pattern, since each step in the pipeline is a service as defined in a \gls{soa}.
 When considering the system as a pipeline some restrictions are imposed compared to the more generic \gls{soa}, in that data only flows in one direction.
-Moreover, the pipeline architecture can be used to specify types of components as we did in~\vref{sub:components_of_a_beacon}. These types can then be aggregated according to a specification to define a complete beacon \mtjnote{What does this sentence mean? Isn't is obvious?}.
 
 The pipeline also allows for parallel operation, i.e.\ input collectors can run continuously as can the computation service.
 This effectively means that we can reach the highest possible output of randomness given a single computation service.
