@@ -1,0 +1,10 @@
+\subsection{Availability}
+One aspect of the beacon that is vulnerable to attacks is the availability. We consider two sides of availability, input and output, that are both vulnerable. An attack on either of these would prevent users from accessing the service, which would either prevent them from providing their own input to the beacon or accessing the output. Since the bias protection is a result of the ability to add your own input, preventing a user from inputting also compromises the output for that user, as they can no longer guarantee the input is not biased against them.
+The most straight-forward attack on either side of the availability is a \gls{dos} attack --- overwhelming the servers with requests to prevent them from servicing legitimate users. This type of attack is difficult to prevent, although it is possible to mitigate. %Bør uddybes en del.
+In addition to the two sides of availability it would also be possible to completely overwhelm the beacon if the computing node could be accessed from outside networks.
+
+\subsection{Secure Channels}
+One could also consider whether secure channels would be be needed for a beacon. However, a large part of the beacons trustlessness comes from publishing commitments to certain inputs before computing. Given that any input will need to be published before it is used, and the beacon operator has direct access to the inputs, secure channels are not a useful feature for a beacon.
+
+\subsection{Other ...}
+\fxnote{Add more security analysis things}
