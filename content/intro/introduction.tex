@@ -9,9 +9,9 @@ In 1983 Rabin coined the term and used one to add probabilistic security in seve
 In this definition a randomness beacon was to be seen as a impartial party trusted to not be biased towards any outcome.
 Soon, however, cryptographic secure variants of Rabin's protocols emerged~\mtjnote{cite} that did not rely on a randomness beacon.
 
-For quite a while, randomness beacons did not receive much attention. Then circa 2010 a renewed interest in beacons could be seen as an increase in literature.
-This might have been a reaction to the financial crisis, leading the global discussions towards questions of governmental and corporate trust.
-The financial crisis led to the emergence of cryptocurrencies and to the sharp rise in popularity of blockchains --- technologies that promote decentralization and facilitate cooperation of mutually distrustful users.
+For quite a while, randomness beacons did not receive much attention. Circa 2010 a renewed interest in beacons could be seen as an increase in beacon-related literature.
+This may have been a reaction to the financial crisis, leading the global discussions towards questions of governmental and corporate trust.
+The financial crisis led to the emergence of cryptocurrencies and to the sharp rise in popularity of blockchains --- technologies that promote decentralization and facilitate cooperation of mutually distrustful users. The litterature also contains a wealth of examples that combine blockchains and beacons to produce randomness either based on a blockchain, or as a smart contract running on a blockchain. 
 Conceptually, randomness beacons seem to fit this environment of mutual distrust (or distrust in government and corporations), as a randomness beacon is able to act as an impartial party.
 
 In the recent literature, a major theme is how to avoid the necessity of relying on any single party --- either by decentralizing the beacon or making the operation so transparent that any single beacon operator cannot cheat without it being visible.
@@ -19,7 +19,6 @@ In the recent literature, a major theme is how to avoid the necessity of relying
 As such, randomness beacons are promising for applications where fairness and unbiasability is important.
 
 Another aspect of such a beacon that must be considered is the security of the beacon. If an attacker is capable of disrupting the beacon's output, or even biasing it towards their own benefit, the beacon loses its value. Thus, it is important that the beacon be secure from attacks on its availability or integrity, defined as the output not being biased.
-
 
 This recent literature presents some promising ways of creating an unbiasable beacon. Despite this, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon. We see many potential use cases, and present a variety of them with roots in the litterature, before constructing a beacon of our own and performing a security analysis on it.
 
