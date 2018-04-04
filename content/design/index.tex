@@ -1,14 +1,13 @@
-\section{Beacon Design}
-\fxnote{The following is very \enquote{alpha-release-ish}}
+\section{Beacon Architecture}
 
 To meet the requirement of extendability, we use a \gls{soa} to design the beacon.
-This architecture splits systems into application components, also called services, which are aggregated to make the system as a whole.
-These components then serve a single purpose, i.e.\ executes a contained set of logic with a specified outcome.
-Communication between components is done through a well-defined protocol, such that no one component is reliant on the inner workings of another;
-a component, or service, should be seen as a black box.
+This architecture splits systems into application components, also called services.
+These services serve a single purpose, i.e.\ they each logically represent part of the activity needed for the entire system and have a specified outcome.
+Communication between components is done according to a well-defined protocol, such that no one component is reliant on the inner workings of another;
+a component, or service, should be seen as a self-contained black box.
 
-This architecture provides a loose coupling in the system, and also allows for easier fault tolerance, since services should be able to be swapped out if they fail.
-However, as services needs knowledge about other relevant services, some mechanism for service discovery is typically deployed, this can be a single point of failure.
+This architecture provides loose coupling in the system and also allows for easier fault tolerance since services, being a black box, are easily replaceable on failure.
+However, as services need knowledge about other relevant services, some mechanism for service discovery is typically deployed. This can be a single point of failure, but mitigated by having several of these. \mtjnote{Sass has the good source of having two of these and that in \enquote{95 \%} of cases, it is sufficient.}
 \fxnote{expand on this and how it can be decentralized}
 
 \subsection{Components of a Beacon}
