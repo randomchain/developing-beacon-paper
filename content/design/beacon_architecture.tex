@@ -19,15 +19,15 @@
         \node[smallblock, above=1em of publish2] (publish1) {};
         \node[smallblock, below=1em of publish2] (publish3) {};
 
-        \draw[arrow] (inputcoll1) -- (inputproc);
-        \draw[arrow] (inputcoll2) -- (inputproc);
-        \draw[arrow] (inputcoll3) -- (inputproc);
+        \draw (inputcoll1.east) edge[out=0,in=180,arrow] (inputproc.west);
+        \draw (inputcoll2.east) edge[out=0,in=180,arrow] (inputproc.west);
+        \draw (inputcoll3.east) edge[out=0,in=180,arrow] (inputproc.west);
 
         \draw[arrow] (inputproc) -- (computation);
 
-        \draw[arrow] (computation) -- (publish1);
-        \draw[arrow] (computation) -- (publish2);
-        \draw[arrow] (computation) -- (publish3);
+        \draw (computation.east) edge[out=0,in=180,arrow] (publish1.west);
+        \draw (computation.east) edge[out=0,in=180,arrow] (publish2.west);
+        \draw (computation.east) edge[out=0,in=180,arrow] (publish3.west);
 
         \begin{pgfonlayer}{background}
             \node[block] (inputcoll) [container, fit={(inputcoll1) (inputcoll3)}] {};
