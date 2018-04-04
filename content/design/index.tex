@@ -21,11 +21,6 @@ Under the \gls{soa} single instance of a randomness beacon will consist of the f
     \item[A number of publishing services] which can publish the commitment, output, and any relevant proofs, to different outlets.
 \end{description}
 
-% \begin{figure}[htpb]
-%     \centering
-%     \includegraphics[width=0.98\linewidth]{architecture.png}
-%     \caption{Very primitive sketch of architecture}
-% \end{figure}
 \subimport{}{beacon_architecture.tex}
 
 \subsection{Pipeline}%
@@ -52,12 +47,36 @@ From a security aspect, splitting up the system from a monolithic self contained
 For example this architecture can potentially make it possible for adversaries to cut off parts of the system, by means of \gls{dos} attacks.
 Moreover the protocol used to communicate from service to service, must be secure in a way that prevents adversaries from being able to undetectably manipulate the messages.
 
-\mtjnote{Mention Slow Hashing functions here}
+\mtjnote{(maybe) Comparison with Drand}
 
-\mtjnote{Comparison with Drand}
+In the case of a randomness beacon, the security does also embody the operators ability to predict or manipulate the output.
+This means that we need some mechanism of preventing the operator from performing last-draw attacks, disguised as regular user inputs, or excluding certain inputs to alter the output.
+Moreover we also want to prevent the operator from being able to initiate multiple beacon computations, and then only publishing the output which benefits themself the most.
+
+Generally, these concerns can be mitigated by enforcing a \gls{cco} workflow in the beacon protocol.
+This effectively means that each published output is paired with a commitment, which can be used in the verification of the beacon.
+However, the commitment must be published before the output, and with a significant time delay.
+Otherwise, the beacon operator could just publish a commitment to a desired output.
+
+To guarantee that the time between publishing the commitment and output has been spent on computing the output, we utilize a delay function.
+Delay functions require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
+When deploying delay functions in randomness beacons, it is important to keep verification in mind.
+This means that a user should be able to run the delay function in reverse to confirm, that a commitment matches the output.
+To not require each user to execute the full delay function, we use a flavour of delay functions which are asymmetrically hard, i.e.\ hard to compute, but easy to verify.
+
+Combining these concepts, \gls{cco} and a delay function, effectively gives the following workflow for each cycle of the beacon:
+
+\begin{enumberate}
+    \item Collect inputs
+    \item Process inputs
+    \item Publish commitment
+    \item Compute output
+    \item Publish output
+\end{enumberate}
 
 \mtjnote{The beacon is secure because:}
+\mtjnote{%
 The operator does not know the individual inputs before receiving them
 He commits to using the inputs, i.e.\ he cannot change the order of them to his own benefit.
 What keeps him from trying out multiple commitments before publishing one?
-The slow hash function ensures that he cannot try excessively many commitments.
+The slow hash function ensures that he cannot try excessively many commitments.}
