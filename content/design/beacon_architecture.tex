@@ -8,26 +8,26 @@
 
         \node[minimum width=6em] (mid) at ($(inputproc)!0.5!(computation)$) {};
 
-        \node[smallblock, left=of mid] (inputcoll2) {};
+        \node[smallblock, left=5em of mid] (inputcoll2) {};
         \node[smallblock, above=1em of inputcoll2] (inputcoll1) {};
         \node[smallblock, below=1em of inputcoll2] (inputcoll3) {};
 
         \node[minimum width=7em, right=of inputcoll1] (fake1) {};
         \node[minimum width=7em, right=of inputcoll2] (fake2) {};
 
-        \node[smallblock, right=of mid] (publish2) {};
+        \node[smallblock, right=5em of mid] (publish2) {};
         \node[smallblock, above=1em of publish2] (publish1) {};
         \node[smallblock, below=1em of publish2] (publish3) {};
 
-        \draw (inputcoll1.east) edge[out=0,in=180,arrow] (inputproc.west);
+        \draw (inputcoll1.east) edge[out=0,in=180,arrow] ([yshift=.8em]inputproc.west);
         \draw (inputcoll2.east) edge[out=0,in=180,arrow] (inputproc.west);
-        \draw (inputcoll3.east) edge[out=0,in=180,arrow] (inputproc.west);
+        \draw (inputcoll3.east) edge[out=0,in=180,arrow] ([yshift=-.8em]inputproc.west);
 
         \draw[arrow] (inputproc) -- (computation);
 
-        \draw (computation.east) edge[out=0,in=180,arrow] (publish1.west);
+        \draw ([yshift=.7em]computation.east) edge[out=0,in=180,arrow] (publish1.west);
         \draw (computation.east) edge[out=0,in=180,arrow] (publish2.west);
-        \draw (computation.east) edge[out=0,in=180,arrow] (publish3.west);
+        \draw ([yshift=-.7em]computation.east) edge[out=0,in=180,arrow] (publish3.west);
 
         \begin{pgfonlayer}{background}
             \node[block] (inputcoll) [container, fit={(inputcoll1) (inputcoll3)}] {};
