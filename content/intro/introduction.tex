@@ -1,75 +1,26 @@
 \section{Introduction}
-% Simple algorithms/protocols are everywhere, but often not secure
-% Adding a beacon may make these algorithms/protocols secure.
-
-Randomness is useful for many cases, but can be difficult to trust, as it is hard to guarantee that a random number really is \emph{random}, and not biased towards anyones benefit. 
+Randomness is useful for many cases, but can be difficult to trust, as it is hard to guarantee that a random number really is \emph{random}, and not biased towards anyones benefit.
 
 \emph{Randomness beacons}, services emitting randomness at fixed intervals, have been around for a long time.
 In 1983 Rabin coined the term and used one to add probabilistic security in several protocols~\cite{rabin1983transaction}.
-In this definition a randomness beacon was to be seen as a impartial party trusted to not be biased towards any outcome.
-Soon, however, cryptographic secure variants of Rabin's protocols emerged~\mtjnote{cite} that did not rely on a randomness beacon.
+In this definition a randomness beacon was to be seen as an impartial party trusted to not be biased towards any outcome.
+Soon, however, cryptographically secure variants of Rabin's protocols emerged~\mtjnote{cite} that did not rely on a randomness beacon.
 
-For quite a while, randomness beacons did not receive much attention. Circa 2010 a renewed interest in beacons could be seen as an increase in beacon-related literature.
+For quite a while, randomness beacons did not receive much attention.
+Circa 2010 a renewed interest in beacons could be seen as an increase in beacon-related literature.
 This may have been a reaction to the financial crisis, leading the global discussions towards questions of governmental and corporate trust.
-The financial crisis led to the emergence of cryptocurrencies and to the sharp rise in popularity of blockchains --- technologies that promote decentralization and facilitate cooperation of mutually distrustful users. The litterature also contains a wealth of examples that combine blockchains and beacons to produce randomness either based on a blockchain, or as a smart contract running on a blockchain. 
+The financial crisis led to the emergence of cryptocurrencies and to the sharp rise in popularity of blockchains --- technologies that promote decentralization and facilitate cooperation of mutually distrustful users.
+The literature also contains a wealth of examples that combine blockchains and beacons to produce randomness either based on a blockchain, or as a smart contract running on a blockchain.
 Conceptually, randomness beacons seem to fit this environment of mutual distrust (or distrust in government and corporations), as a randomness beacon is able to act as an impartial party.
 
 In the recent literature, a major theme is how to avoid the necessity of relying on any single party --- either by decentralizing the beacon or making the operation so transparent that any single beacon operator cannot cheat without it being visible.
 
 As such, randomness beacons are promising for applications where fairness and unbiasability is important.
 
-Another aspect of such a beacon that must be considered is the security of the beacon. If an attacker is capable of disrupting the beacon's output, or even biasing it towards their own benefit, the beacon loses its value. Thus, it is important that the beacon be secure from attacks on its availability or integrity, defined as the output not being biased.
+Another aspect of such a beacon that must be considered is the security of the beacon.
+If an attacker is capable of disrupting the beacon's output, or even biasing it towards their own benefit, the beacon loses its value.
+Thus, it is important that the beacon be secure from attacks on its availability or integrity, defined as the output not being biased.
 
-This recent literature presents some promising ways of creating an unbiasable beacon. Despite this, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon. We see many potential use cases, and present a variety of them with roots in the litterature, before constructing a beacon of our own and performing a security analysis on it.
+This recent literature presents some promising ways of creating an unbiasable beacon.  However, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon.
+We see many potential use cases, and present a variety of them with roots in the literature, before constructing a beacon of our own and performing a security analysis on it.
 
-%The simplest example of the usefulness of randomness beacons is a lottery (e.g.\ picking a winner to receive a monetary prize or picking out young men to go to war). Here, the draw must be fair. However, how can users trust that the draw is fair? The entity performing the lottery draw may be biased, unwillingly or not, and draw a number that favors a particular outcome. The participants of the lottery have no way of verifying the fairness of the outcome. Instead, the lottery entity could announce that the randomness beacon output at some fixed point in the future will be used as input to a publicly known function, mapping the beacon outcome to the lottery output space. This takes the responsibility
-
-%Conceptually, randomness beacons have several desireable properties. They are universal in the sense that a single randomness beacon service can support many use cases, given it emits enough entropy for those use cases. If they are designed in such a way that the emitted randomness can be verified to be unbiased, it is trustworthy to use.  %can be used universally as long as it outputs enough entropy for the given use case. As such, given a \enquote{perfect} and transparent design and implementation that anyone would trust, only one randomness beacon service is needed in the world (idealistically). Many use cases could then outsource the generation of randomness to a randomness beacon.
-
-
-%Examples of use cases and their merit:
-
-% \subsection{Some Section}
-
-% While many clever and convoluted cryptographic schemes and protocols have been developed over the years, few have actually been deployed in a wide sense, and \mtjnote{NIST paper} cites efficiency as a dominant reason.
-% An example such as zero-knowledge proofs requires many rounds of communication --- too many to be feasible in many situations.
-% \mtjnote{NIST paper} further argues that a randomness beacon can eliminate many rounds of communication by assuming a trusted randomness beacon.
-% The randomness beacon they propose is however to be trusted itself, as it is not possible for users to verify the outcome.
-
-% Since the publication of \mtjnote{NIST paper}, several other approaches to randomness beacons have seen the light.
-% We will especially focus on randomness beacons which are verifiably unbiased, as it solves the problem of needing to trust the beacon --- it is transparent and any bias will be detectable.
-
-% \mtjnote{NIST paper} claims that randomness beacons can make simple insecure algorithms secure.
-% In 1983 Rabin claimed the same --- the inclusion of a randomness beacon gave his protocols a probabilistic guarantee of security.
-% Even though randomness beacons supposedly are versatile, we have not observed them used for anything outside academia.
-% We have however seen many ideas of their usage. We will now present one of the promising ones.
-
-% \subsection{Example 1}
-
-% % Example 1
-% Despite the calendar says 2018, we still have
-% hardware in our everyday life, which is not as capable as our computers, smartphones, and TVs.
-% An example of this is \emph{smart cards}, small computers embedded in e.g.\ plastic cards capable of executing secure protocols.
-% We use them every day --- SIM cards in phones, paying in the supermarket with a payment card, unlocking and starting our car, watching satellite tv, and perhaps even authenticating ourselves before entering the workplace.
-% These smart cards have been developed to use cryptographic schemes, but their limited CPU and memory is a significant hindrance, compared to many of the clever cryptographic schemes we have today.
-
-% Maybe access to a randomness beacon can allow simpler authentication algorithms to be implemented in smart cards and still be secure.
-% In essence, part of the security is delegated to the randomness beacon, allowing cheaper smart cards with less computational power.
-% Smart cards are often bought by the thousands or millions~\mtjnote{cite: smart card book}, and thus even a slightly cheaper smart card is desireable.
-% The interesting question is then how the smart cards can collect the output from the randomness beacon.
-
-%\section{Old Intro}
-%In our modern society identification and authorization, by means of digital solutions, has become a central part of everyday life.
-%From unlocking our front door to verifying our payments at the local grocery store, a significant number of people are using so called smart cards, to facilitate the underlying authorization.
-%The most prominent type of smart cards is Java Cards, which leverage a subset of Java to develop \emph{applets} capable of executing secure and secret protocols on the smart card.
-
-%Authorization is a process with varying degrees of critical operation.
-%Some use cases require more timely processing, while other might sacrifice speed for an extra round of confirmation.
-%Common for all application of authorization is the requirement of no false positives, i.e.\ nobody should be able to gain access to something they are not authorized to~\mtjnote{I do not agree with this --- Visa expects a certain percentage of fraud transactions. It is a balance between cost/performance/usability/security}.
-%This obviously becomes a problem, in scenarios where the smart card is the only factor used in the authorization process, since a stolen smart card has no way of knowing who is using it.
-%To mitigate this, smart card authorization is often supported by pin codes or passwords.
-
-%\fxnote{Chosen cyphertext attacks, might be able to extract private keys with certain protocols}
-
-%\fxnote{Not possible in computationally expensive algorithms}
-%\fxnote{But expensive algorithms equals expensive smart cards}
