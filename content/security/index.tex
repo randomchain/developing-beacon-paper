@@ -1,4 +1,38 @@
 \section{Security Analysis}%
 \label{sec:security_analysis}
-Main security analysis of design and implementation.
+
+% Threat model --- who are we protecting against?
+%   Operator (inside)
+%       We cannot safeguard against an op. who shutdown the beacon
+%       able to benefit from keeping output to themself
+%       able to profit from selling early access to output
+%       able to manipulate inputs such that output can be biased or predicted
+%   Adversaries (outside, bad intentions)
+%       provide input which can manipulate the output to be bias or predictable
+%       deny service for other users by providing overwhelming amount of inputs
+%       deny beacon operation
+
+% Threat categorization --- use STRIDE
+%   Spoofing identity
+%       Not really a problem since users need not to be authorized to provide input
+%   Tampering with data
+%       Operator can manipulate inputs or the arrangement of them to change the output
+%       Tampering with the output (both op. and adversary)
+%   Repudiation
+%       Operator can precompute outputs for seemingly valid (but fake) inputs
+%       Operator can provide exclusive early access to outputs
+%       Operator can favour some inputs
+%   Information disclosure
+%       Not really relevant in our case, due to total transparency
+%       Might be a problem if user privacy is relevant?
+%   Denial of service
+%       Operator can ignore some users, thereby denying their participation
+%       Operator can choose to halt operation or not publish output
+%       Adversary can overwhelm beacon with inputs, either crashing it, or denying other users from providing input
+%       Adversary can eclipse certain users
+%       Adversary can deny service to outlets, thereby delaying or preventing output from being published
+%   Elevation of privilege
+%       Not really relevant, since no user has different privilege
+%       Perhaps relevant if adversary can hack operator and control beacon --- then all threats by beacon operator are possible for said adversary
+
 \subimport{}{availability.tex}
