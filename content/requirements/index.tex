@@ -28,7 +28,7 @@ The requirements of our randomness beacon are separated into two groups: functio
 
     \item[Deterministic Randomness] The beacon should be able to deterministically compute a random output from a set of inputs.
 
-    \item[Commitment to Input] The beacon should produce a commitment to a set of inputs and publish the commitment as soon as possible after the input collection deadline, but before initiating output computation. This ensures that the beacon operator cannot add, remove, or order the inputs to his own benefit.
+    \item[Commitment to Input] The beacon should produce a commitment to a set of inputs and publish the commitment as soon as possible after the input collection deadline, but before initiating output computation. This ensures that the beacon operator cannot add, remove, or order the inputs to his own benefit. \mtjnote{Maybe remove this from here --- this is a solution, not requirement}
 
     \item[Output] The beacon should publish the random output immediately after the computation is done, accompanied with any important meta data about the computation, e.g.\ parameters and witnesses to be used in verification.
 

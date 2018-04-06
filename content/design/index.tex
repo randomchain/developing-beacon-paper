@@ -1,4 +1,6 @@
-\section{Beacon Architecture}
+\section{Beacon Design}
+
+\mtjnote{We need to meet our requirements and take the previously found security concerns into account and design a suitable beacon that tries to overcome as many problems as possible.}
 
 To meet the requirement of extendability, we use a \gls{soa} to design the beacon.
 This architecture splits systems into application components, also called services.
@@ -7,7 +9,8 @@ Communication between components is done according to a well-defined protocol, s
 a component, or service, should be seen as a self-contained black box.
 
 This architecture provides loose coupling in the system and also allows for easier fault tolerance since services, being a black box, are easily replaceable on failure.
-However, as services need knowledge about other relevant services, some mechanism for service discovery is typically deployed. This can be a single point of failure, but mitigated by having several of these. \mtjnote{Sass has the good source of having two of these and that in \enquote{95 \%} of cases, it is sufficient.}
+However, as services need knowledge about other relevant services, some mechanism for service discovery is typically deployed.
+This can be a single point of failure, but mitigated by having several of these. \mtjnote{Sass has the good source of having two of these and that in \enquote{95 \%} of cases, it is sufficient.}
 \fxnote{expand on this and how it can be decentralized}
 
 \subsection{Components of a Beacon}
@@ -21,6 +24,7 @@ In the \gls{soa}, a single instance of a randomness beacon will consist of the f
 \end{description}
 
 \subimport{}{beacon_architecture.tex}
+\mtjnote{flyt figur til appropriate place.}
 
 \subsection{Pipeline}%
 \label{sub:pipeline}
@@ -34,18 +38,22 @@ When considering the system as a pipeline some restrictions are imposed compared
 The pipeline also allows for parallel operation, i.e.\ input collectors can run continuously as can the computation service.
 This effectively means that we can reach the highest possible output of randomness given a single computation service.
 One might argue that several computation services slightly offset in start time, could output more frequently, but this would by our design be considered several different beacons.
+\mtjnote{Make figure explaining this parallelization. Lego-klodser sat sammen.}
 
 In some scenarios a beacon may consist of multiple computation services, as a mean of redundancy, as long as each computation is run on the same input.
 The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
 This brings forth the issue of consensus about which input to use\msmnote{out of scope or explain solutions?}.
 
+\mtjnote{Rewrite all parts of this section to say when something from STRIDE has been solved or mitigated.}
+
 \subsection{Security Design (Preliminary Security Analysis)}
+
+\mtjnote{This section deals with some problems introduced by our chosen architecture and some parts of STRIDE.}
+
 When designing a composable system such as our randomness beacon, it is important to take into account, the inter-component communication.
 From a security aspect, splitting up the system from a monolithic self-contained architecture to a service oriented kind, exposes a myriad of new attack surfaces.
 For example this architecture can potentially make it possible for adversaries to cut off parts of the system, by means of \gls{dos} attacks.
 Moreover the protocol used to communicate from service to service, must be secure in a way that prevents adversaries from being able to undetectably manipulate the messages.
-
-\mtjnote{(maybe) Comparison with Drand}
 
 In the case of a randomness beacon, the security also embodies the operators ability to predict or manipulate the output.
 This means that we need some mechanism of preventing the operator from performing last-draw attacks disguised as regular user inputs, or excluding certain inputs to alter the output.
@@ -71,7 +79,7 @@ The combination of these concepts, \gls{cco} and a delay function, effectively g
     \item Publish output
 \end{enumberate}
 
-The delay function also partially protects against last-draw attacks by malicious attackers. A last-draw attack would attempt to bias the output by crafting their own input so as to produce favorable randomness. To do this, the attacker needs to compute the result of adding a specific input as the last input. Delay functions make this significantly more difficult to attempt due to the time needed to compute the result. Given a delay function that takes five minutes to complete, an attacker must dedicate five minutes of processor time to any given input he attempts to use. This means the attacker must dedicate large amounts of resources to perform any significant amount of attempts, and more importantly: if a single input is added to the beacon within that five minute period, all of the attackers work will be null, and he will be forced to restart. 
+The delay function also partially protects against last-draw attacks by malicious attackers. A last-draw attack would attempt to bias the output by crafting their own input so as to produce favorable randomness. To do this, the attacker needs to compute the result of adding a specific input as the last input. Delay functions make this significantly more difficult to attempt due to the time needed to compute the result. Given a delay function that takes five minutes to complete, an attacker must dedicate five minutes of processor time to any given input he attempts to use. This means the attacker must dedicate large amounts of resources to perform any significant amount of attempts, and more importantly: if a single input is added to the beacon within that five minute period, all of the attackers work will be null, and he will be forced to restart.
 
 \mtjnote{The beacon is secure because:}
 \mtjnote{%
