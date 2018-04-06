@@ -41,8 +41,10 @@ The requirements of our randomness beacon are separated into two groups: functio
 \label{sub:non_functional_requirements}
 
 \begin{description}
-    \item[No Single Point of Failure] The beacon should not contain a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy.
+    \item[Fault Tolerance] The beacon should not contain a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy.
+
     \item[Something something] Operating the beacon should be incentivized and distributable among multiple participants. \msmnote{e.g.\ input sourcing by some, computation by another, etc.} \mtjnote{Why are these two necessary?} \mtjnote{This is two requirements, no?}
+
     \item[Usability] It should be easy for users to contribute with input, and to fetch outputs. In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified.
 \end{description}
 
