@@ -3,21 +3,30 @@
 \mtjnote{THIS IS DIRECTLY FROM PREVIOUS SEMESTER}
 
 %A randomness beacon is a service that publishes random data at a known interval.
-Formally, let $B: f(I_t) \rightarrow O_t$, where $B$ is a beacon, $I_t$ is the input at time $t$, $O_t$ is the output at time $t$, and $f$ is a suitable function for transforming the input to the output.
+\mtjnote{Formally, let $B: f(I_t) \rightarrow O_t$, where $B$ is a beacon, $I_t$ is the input at time $t$, $O_t$ is the output at time $t$, and $f$ is a suitable function for transforming the input to the output.
 For $B$ to be a beacon, it is run at a known, regular interval, $\delta$, such that $t+n\delta$ for any $n \in \mathbb{N}$ are valid output intervals for the beacon.
 In \Vref{fig:abstract_beacon} an example of an abstract beacon can be seen.
-The green area is what can be defined as the beacon, or \emph{beacon protocol} --- i.e.\ how input is collected, transformed to output and then published.
+The green area is what can be defined as the beacon, or \emph{beacon protocol} --- i.e.\ how input is collected, transformed to output and then published.}
 
 \subimport{}{simple_beacon_fig.tex}
 
+A sufficiently general randomness beacon with enough entropy can be utilized for multiple use cases, and as such is of higher usefulness. Given the many use cases, we will therefore prioritize a use case agnostic beacon.
 
-It consists of a round of input collection with a known deadline. At the deadline, input collection is stopped, and computation can begin. Meanwhile a new round of input collection can begin???
+\subsection{A Note on Randomness}
+Some randomness beacons claim to produce true randomness~\cite{nistbeacon}. In our setting, producing true randomness is not an option. True randomness is often produced by observing quantum mechanical effects. These readings cannot be repeated by users (they are, after all, truly random and non-reproducible), so how can users be sure that the value is indeed from observing the quantum mechanical effect and not somehow crafted by the beacon operator? The users cannot know for sure, besides blind trust \mtjnote{Insert source}. As such, we cannot in our setting use true randomness.
+
+Fortunately, the vast majority of use cases do not actually require true randomness. Far more desireable is the side effect of producing randomness: \emph{unpredictability}. As long as the output is unpredictable for all parties including the beacon operator, we do not really need randomness, and the beacon output can be produced by a deterministic algorithm. So in a sense, the word \enquote{randomness} is a misleading name in our definition. No randomness is necessary but we care deeply about unpredictability.
+
+\subsection{something something}
+\mtjnote{Here, we should introduce the idea of users only trusting the output if they can verify that their input has been part of the computation.}
 
 \section{Randomness Beacon Requirements}
 \label{sec:beacon_requirements}
 
-A sufficiently general randomness beacon with enough entropy can be utilized for multiple use cases, and as such is of higher usefulness. Given the many use cases, we will therefore prioritize a use case agnostic beacon.
-This means that some requirements may be more relaxed in our case compared to a specialized randomness beacon suited for one use case only.% However, the usefulness of such general randomness beacon is much higher as it can serve multiple use cases.
+We have already briefly mentioned some requirements, and for the sake of completeness they will be re-iterated in this section.
+Given our use case agnostic beacon approach, some requirements may be more relaxed in our case compared to a specialized randomness beacon suited for one use case only. % However, the usefulness of such general randomness beacon is much higher as it can serve multiple use cases.
+
+As discussed in the previous section, we will not require our randomness beacon to be random. Instead, we will require a deterministic output and unpredictability.
 
 The requirements of our randomness beacon are separated into two groups: functional and non-functional requirements, as suggested by \citet[sec.\ 1.4.1]{swebok}.
 
@@ -26,7 +35,7 @@ The requirements of our randomness beacon are separated into two groups: functio
 \begin{description}
     \item[Modular Input and Output] The input and output channels of the randomness beacon should be extensible or configurable by beacon operators. This will allow a beacon operator to use their preferred input sources and output channels. For example, a beacon operator may allow users to provide inputs through TCP/IP, email, and even tweets. Similarly the output may be tweeted, published on a website, or both.
 
-    \item[Deterministic Randomness] The beacon should deterministically compute a random output from a set of inputs. \mtjnote{So our beacon is deterministic. It cannot be random. Specify that by \enquote{random output} we actually mean unpredictable output. Maybe this definition could be moved up earlier in this paper?}
+    \item[Deterministic Output] The beacon should deterministically compute a \enquote{random} output from a set of inputs. Strictly, it is not possible to be truly random, however for the vast majority of use cases this pseudo-randomness is good enough. Far more important is the following requirement.
 
     \item[Unpredictable] The output should be unpredictable before the computation is done, even for the beacon operator.
 
@@ -48,8 +57,12 @@ The requirements of our randomness beacon are separated into two groups: functio
     \item[Usability] It should be easy for users to contribute with input, and to fetch outputs. In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified.
 \end{description}
 
-\subsection{Security Requirements}
-\mtjnote{Maybe they are in the above functional and non-functional requirements? Maybe re-iterate them. Which requirements are important to the security?}
+\subsection{Requirements Discussion}
+\mtjnote{A discussion of the listed requirements. How do they add up to something meaningful?}
+
+Our requirement of deterministic output allows the process to be repeated. Repeatability is an important property that allows users to verify the computation --- this is the verification requirement.
+
+\mtjnote{Security Requirements? Maybe they are in the above functional and non-functional requirements? Maybe re-iterate them. Which requirements are important to the security?}
 
 \mtjnote{Do we want to sign the output with our own signature? We probably do not need it for tamper-detection, as clients using the random number should verify the computation and the presence of their own input. Maybe we should include some random nonce (the operators own input) and then we might need signing to see if the number came from us.}
 
