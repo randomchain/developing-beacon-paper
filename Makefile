@@ -33,7 +33,8 @@ clean:
 	rm -f chktex.txt biblatexcheck.html
 
 once: $(MAIN).tex .refresh $(SOURCES) $(FIGURES) bibtex.bib
-	./onfail.sh $(LATEXMK) $(LATEXMKOPT) -pdflatex=\"$(LATEX) $(LATEXOPT) $(NONSTOP) %O %S\" $(MAIN)
+	./onfail.sh $(LATEXMK) $(LATEXMKOPT) -pdflatex=\"$(LATEX) $(LATEXOPT) $(NONSTOP) %O %S\" $(MAIN) \
+		-- rubber-info $(MAIN)
 
 continuous: $(MAIN).tex .refresh $(SOURCES) $(FIGURES) bibtex.bib
 	$(LATEXMK) $(LATEXMKOPT) $(CONTINUOUS) \
