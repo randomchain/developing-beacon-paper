@@ -8,16 +8,30 @@
 
         \node[minimum width=6em] (mid) at ($(inputproc)!0.5!(computation)$) {};
 
-        \node[smallblock, left=5em of mid] (inputcoll2) {};
+        \node[smallblock, left=4em of mid] (inputcoll2) {};
         \node[smallblock, above=1em of inputcoll2] (inputcoll1) {};
         \node[smallblock, below=1em of inputcoll2] (inputcoll3) {};
 
         \node[minimum width=7em, right=of inputcoll1] (fake1) {};
         \node[minimum width=7em, right=of inputcoll2] (fake2) {};
 
-        \node[smallblock, right=5em of mid] (publish2) {};
+        \node[smallblock, right=4em of mid] (publish2) {};
         \node[smallblock, above=1em of publish2] (publish1) {};
         \node[smallblock, below=1em of publish2] (publish3) {};
+
+        % In and out arrows of inputs and outputs
+        \node[left=2em of inputcoll1] (dummyin1) {};
+        \node[left=2em of inputcoll2] (dummyin2) {};
+        \node[left=2em of inputcoll3] (dummyin3) {};
+        \node[right=2em of publish1] (dummyout1) {};
+        \node[right=2em of publish2] (dummyout2) {};
+        \node[right=2em of publish3] (dummyout3) {};
+        \draw[arrow] (dummyin1) -- (inputcoll1);
+        \draw[arrow] (dummyin2) -- (inputcoll2);
+        \draw[arrow] (dummyin3) -- (inputcoll3);
+        \draw[arrow] (publish1) -- (dummyout1);
+        \draw[arrow] (publish2) -- (dummyout2);
+        \draw[arrow] (publish3) -- (dummyout3);
 
         \draw (inputcoll1.east) edge[out=0,in=180,arrow] ([yshift=.8em]inputproc.west);
         \draw (inputcoll2.east) edge[out=0,in=180,arrow] (inputproc.west);
