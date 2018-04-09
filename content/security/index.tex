@@ -3,16 +3,6 @@
 
 \mtjnote{Threat model, categorization STRIDE}
 
-% Threat model --- who are we protecting against?
-%   Operator (inside)
-%       We cannot safeguard against an op. who shutdown the beacon
-%       able to benefit from keeping output to themself
-%       able to profit from selling early access to output
-%       able to manipulate inputs such that output can be biased or predicted
-%   Adversaries (outside, bad intentions)
-%       provide input which can manipulate the output to be bias or predictable
-%       deny service for other users by providing overwhelming amount of inputs
-%       deny beacon operation
 
 % Threat categorization --- use STRIDE
 %   Spoofing identity
@@ -36,7 +26,7 @@
 %   Elevation of privilege
 %       Not really relevant, since no user has different privilege
 %       Perhaps relevant if adversary can hack operator and control beacon --- then all threats by beacon operator are possible for said adversary
-
+\subimport{}{threat_model.tex}
 %\subimport{}{availability.tex}
 
 \mtjnote{Say immediately at each bullet when something isn't relevant or solvable. Delimintations}
