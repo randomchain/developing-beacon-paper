@@ -5,7 +5,8 @@ As part of analysing the security of a randomness beacon, we must first define w
     \item [Shutdown] A malicious beacon operator can shut the beacon down, completely denying availability. 
     \item [Withholding Output] The operator can withhold outputs that are not favourable to his interests. 
     \item [Selling Early Access] The operator can give access to the output earlier to some parties than others.
-    \item [Input Manipulation] The operator can manipulate the input to bias the output of the beacon. 
+    \item [Input Manipulation] The operator can manipulate the input to bias the output of the beacon. He can also selectively exclude inputs from certain sources to deny them availability. 
+
 \end{description} 
 
 It should be noted that these attacks could be performed for the benefit of other users, if they manage to corrupt the beacon operator through bribes or similar means. 
@@ -14,7 +15,7 @@ The other type of adversary is the outsider, which encompasses any regular user 
 
 \begin{description}
     \item [Input Biasing Attack] Adversaries can attempt to provide input that bias the output to their benefit. Most commonly this will be a Last-draw attack, where they attempt to provide the last input to bias the output. 
-    \item [Denial of Service] Adversaries can attempt to overwhelm the beacon with inputs to prevent other users from contributing their own input, thus denying service. Another approach could be perform a standard \gls{DoS} attack on central of the beacon to prevent operation.
+    \item [Denial of Service] Adversaries can attempt to overwhelm the beacon with inputs to prevent other users from contributing their own input, thus denying service. Another approach could be perform a standard \gls{DoS} attack on central of the beacon to prevent operation, or performing an eclipse attack on certain users to deny them access. 
     \item [Hijacking] Attackers can attempt to seize control of the beacon, either by directly gaining access to the beacon and all accompanying operator privileges, or indirectly by corrupting the operator. If successful, this allows them to perform all of the insider attacks previously listed.  
 \end{description}
 
