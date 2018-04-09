@@ -16,8 +16,8 @@ It consists of a round of input collection with a known deadline. At the deadlin
 \section{Randomness Beacon Requirements}
 \label{sec:beacon_requirements}
 
-We believe randomness beacons are universal --- a sufficiently general randomness beacon with enough entropy can be utilized for multiple use cases. Given the many use cases, we will therefore prioritize a use case agnostic beacon.
-This means that some requirements may be more relaxed in our case, compared to a specialized randomness beacon, suited for one use case only. However, the usefulness of such general randomness beacon is much higher as it can serve multiple use cases.
+A sufficiently general randomness beacon with enough entropy can be utilized for multiple use cases, and as such is of higher usefulness. Given the many use cases, we will therefore prioritize a use case agnostic beacon.
+This means that some requirements may be more relaxed in our case compared to a specialized randomness beacon suited for one use case only.% However, the usefulness of such general randomness beacon is much higher as it can serve multiple use cases.
 
 The requirements of our randomness beacon are separated into two groups: functional and non-functional requirements, as suggested by \citet[sec.\ 1.4.1]{swebok} \mtjnote{Or Sommerville if you guys prefer... Same same}.
 
@@ -26,13 +26,13 @@ The requirements of our randomness beacon are separated into two groups: functio
 \begin{description}
     \item[Modular Input and Output] The input and output channels of the randomness beacon should be extensible or configurable by beacon operators. This will allow a beacon operator to use their preferred input sources and output channels. For example, a beacon operator may allow users to provide inputs through TCP/IP, email, and even tweets. Similarly the output may be tweeted, published on a website, or both.
 
-    \item[Deterministic Randomness] The beacon should be able to deterministically compute a random output from a set of inputs.
-
-    \item[Commitment to Input] The beacon should produce a commitment to a set of inputs and publish the commitment as soon as possible after the input collection deadline, but before initiating output computation. This ensures that the beacon operator cannot add, remove, or order the inputs to his own benefit. \mtjnote{Maybe remove this from here --- this is a solution, not requirement}
-
-    \item[Output] The beacon should publish the random output immediately after the computation is done, accompanied with any important meta data about the computation, e.g.\ parameters and witnesses to be used in verification.
+    \item[Deterministic Randomness] The beacon should deterministically compute a random output from a set of inputs. \mtjnote{So our beacon is deterministic. It cannot be random. Specify that by \enquote{random output} we actually mean unpredictable output. Maybe this definition could be moved up earlier in this paper?}
 
     \item[Unpredictable] The output should be unpredictable before the computation is done, even for the beacon operator.
+
+    %\item[Commitment to Input] The beacon should produce a commitment to a set of inputs and publish the commitment as soon as possible after the input collection deadline, but before initiating output computation. This ensures that the beacon operator cannot add, remove, or order the inputs to his own benefit. \mtjnote{Maybe remove this from here --- this is a solution, not requirement}
+
+    \item[Output] The beacon should publish the random output immediately after the computation is done, accompanied with any data necessary for the verification.
 
     \item[Verifiable] The output should be verifiable for any user, i.e.\ anyone should be able to verify the authenticity of both the computation and origin of the output.
 \end{description}
@@ -41,8 +41,10 @@ The requirements of our randomness beacon are separated into two groups: functio
 \label{sub:non_functional_requirements}
 
 \begin{description}
-    \item[No Single Point of Failure] The beacon should not contain a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy.
+    \item[Fault Tolerance] The beacon should not contain a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy.
+
     \item[Something something] Operating the beacon should be incentivized and distributable among multiple participants. \msmnote{e.g.\ input sourcing by some, computation by another, etc.} \mtjnote{Why are these two necessary?} \mtjnote{This is two requirements, no?}
+
     \item[Usability] It should be easy for users to contribute with input, and to fetch outputs. In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified.
 \end{description}
 
