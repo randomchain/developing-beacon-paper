@@ -27,9 +27,9 @@ As such, the users need to blindly trust the beacon operator \mtjnote{Insert sou
 
 Fortunately, the vast majority of use cases do not actually require true randomness.
 Far more desirable is the side effect of producing randomness: \emph{unpredictability}.
-As long as the output is unpredictable for all parties including the beacon operator, we do not really need randomness, and the beacon output can be produced by a deterministic algorithm.
-In a sense, the word \enquote{randomness} is misleading in our definition.
-No randomness is necessary but we care deeply about unpredictability.\msmnote{that's a bold strategy}
+As long as the output is unpredictable for all parties including the beacon operator, we do not really need true randomness, and the beacon output can be produced by a deterministic algorithm.
+And if implemented correctly, deterministic pseudo-randomness is just as good for virtually all use cases and provides a good level of unpredictability.
+%No true randomness is necessary but we care deeply about the unpredictability from deterministic pseudo-randomness.
 
 \subsection{Input Sources}
 As we argued, true randomness cannot be used in a randomness beacon for our setting;
