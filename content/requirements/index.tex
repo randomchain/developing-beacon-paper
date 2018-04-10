@@ -1,85 +1,124 @@
-
-
 \section{Beacon Definition}
 
 \mtjnote{THIS IS DIRECTLY FROM PREVIOUS SEMESTER}
 
 %A randomness beacon is a service that publishes random data at a known interval.
-\mtjnote{Formally, let $B: f(I_t) \rightarrow O_t$, where $B$ is a beacon, $I_t$ is the input at time $t$, $O_t$ is the output at time $t$, and $f$ is a suitable function for transforming the input to the output.
+\enquote{Formally, let $B: f(I_t) \rightarrow O_t$, where $B$ is a beacon, $I_t$ is the input at time $t$, $O_t$ is the output at time $t$, and $f$ is a suitable function for transforming the input to the output.
 For $B$ to be a beacon, it is run at a known, regular interval, $\delta$, such that $t+n\delta$ for any $n \in \mathbb{N}$ are valid output intervals for the beacon.
 In \Vref{fig:abstract_beacon} an example of an abstract beacon can be seen.
 The green area is what can be defined as the beacon, or \emph{beacon protocol} --- i.e.\ how input is collected, transformed to output and then published.}
 
 \subimport{}{simple_beacon_fig.tex}
 
-A sufficiently general randomness beacon with enough entropy can be utilized for multiple use cases, and as such is of higher usefulness. Given the many use cases, we will therefore prioritize a use case agnostic beacon.
+A sufficiently general randomness beacon with enough entropy can be utilized for multiple use cases, and as such is of higher usefulness.
+Given the many use cases, we will therefore prioritize a use case agnostic beacon.
 
 \subsection{Trust Assumptions}
 
-We take the view of \enquote{Everybody is secretly colluding against you and willing to put an unlimited amount of money towards manipulating or biasing the process for their own benefit}. The only one you can trust is yourself.
+We take the view of \enquote{Everybody is secretly colluding against you and willing to put an unlimited amount of money towards manipulating or biasing the process for their own benefit}.
+The only one you can trust is yourself.
 
 \subsection{A Note on Randomness}
-Some randomness beacons claim to produce true randomness~\cite{nistbeacon}. In our setting, producing true randomness is not an option. True randomness is often produced by observing quantum mechanical effects. These observations cannot be repeated by users (they are, after all, truly random and non-reproducible), and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effect and not somehow crafted by the beacon operator. As such, the users need to blindly trust the beacon operator \mtjnote{Insert source} --- an assumption we do not want to make.
+Some randomness beacons claim to produce true randomness~\cite{nistbeacon}.
+In our setting, producing true randomness is not an option.
+True randomness is often produced by observing quantum mechanical effects.
+These observations cannot be repeated by users (they are, after all, truly random and non-reproducible), and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effect and not crafted by the beacon operator.
+As such, the users need to blindly trust the beacon operator \mtjnote{Insert source} --- an assumption we do not want to make.
 
-Fortunately, the vast majority of use cases do not actually require true randomness. Far more desireable is the side effect of producing randomness: \emph{unpredictability}. As long as the output is unpredictable for all parties including the beacon operator, we do not really need randomness, and the beacon output can be produced by a deterministic algorithm. So in a sense, the word \enquote{randomness} is a misleading name in our definition. No randomness is necessary but we care deeply about unpredictability.
+Fortunately, the vast majority of use cases do not actually require true randomness.
+Far more desirable is the side effect of producing randomness: \emph{unpredictability}.
+As long as the output is unpredictable for all parties including the beacon operator, we do not really need randomness, and the beacon output can be produced by a deterministic algorithm.
+In a sense, the word \enquote{randomness} is misleading in our definition.
+No randomness is necessary but we care deeply about unpredictability.\msmnote{that's a bold strategy}
 
 \subsection{Input Sources}
-As we argued, true randomness cannot be used in a randomness beacon for our setting. And since we use a deterministic algorithm to convert input to output, the input must have certain qualities. The user must be able to reason about it and trust it.
+As we argued, true randomness cannot be used in a randomness beacon for our setting;
+and since we use a deterministic algorithm to convert input to output, the input must have certain qualities.
+The user must be able to reason about it and trust it.
 
 Here, there are two approaches to input:
 
 \begin{description}
-    \item[Publicly Available Sources] Using a publicly available source that everyone can agree on the value of, such as bitcoin transaction hashes, stock market data or lottery winning numbers from several international lotteries. The user must trust the source. Problems: The sources dictate the output rate, and sources can be compromised, and provides no guarantee / does not really solve the issue (the users should also make a bitcoin transaction, have a stock company, or observe the drawing from the lotteries to make sure everybody is not colluding against them).
+    \item[Publicly Available Sources] Using a publicly available source that everyone can agree on the value of, such as bitcoin transaction hashes, stock market data or lottery winning numbers from several international lotteries.
+The user must trust the source.
+Problems: The sources dictate the output rate, and sources can be compromised, and provides no guarantee / does not really solve the issue (the users should also make a bitcoin transaction, have a stock company, or observe the drawing from the lotteries to make sure everybody is not colluding against them); although it is far more unlikely that any adversary will be able to control stock markets, lotteries, and the entire bitcoin network.
 
-    \item[User Input] In essence, the only thing a user can trust is him- or herself. Therefore the user can be allowed to directly provide input to the computation. The user should then be able to verify that his/her input has been used as part of the computation. If he/she can verify that, then he/she knows that the number is good. If his/her number is NOT part of the computation, he/she should not use the number. This seems like a reasonable assumption. In other words, if a given user needs to use the number, he/she should provide an input.
+    \item[User Input] In essence, the only thing a user can trust is themself.
+Therefore, the user can be allowed to directly provide input to the computation.
+The user should then be able to verify that their input has been used as part of the computation.
+If they can verify that, they know the number is good.
+If their number is not part of the computation, they should not use the number.
+This seems like a reasonable assumption.
+In other words, if a given user needs to use the number, they should provide an input.
 \end{description}
 
-We will use the latter (user input). It is important to stress that a should only use a given output if they can verify that their own input has been part of the computation.
+We will use the latter (user input).
+It is important to stress that a user should only use a given output if they can verify that the input of a trusted party has been part of the computation --- usually the only trusted party is the user itself.
 
 \section{Randomness Beacon Requirements}
 \label{sec:beacon_requirements}
 
-This section will list the requirements for a randomness beacon, suitable for our security assumptions (everyone is colluding against you). These requirements are separated into two groups: functional and non-functional requirements, as suggested by \citet[sec.\ 1.4.1]{swebok}. After these lists, a short discussion will examine the relationships between the individual requirements. In subsequent sections, we will perform a preliminary analysis of these requirements to reveal possible attacks, and then design a beacon that fits these requirements and circumvents the found attacks.
+This section will list the requirements for a randomness beacon, suitable for our aforementioned trust assumptions.
+These requirements are separated into two groups: functional and non-functional requirements, as suggested by \citet[sec.\ 1.4.1]{swebok}.
+After these lists, a short discussion will examine the relationships between the individual requirements.
+In subsequent sections, we will perform a preliminary analysis of these requirements to reveal possible security threats, and design a beacon that fits these requirements and circumvents as many as possible of the found threats.
 
 \subsection{Functional Requirements}
 \label{sub:functional_requirements}
 \begin{description}
-    \item[Modular Input and Output] The input and output channels of the randomness beacon should be extensible or configurable by beacon operators. This will allow a beacon operator to use and over time change their preferred input sources and output channels. For example, a beacon operator may allow users to provide inputs through TCP/IP, email, and even tweets. Similarly the output may be tweeted, published on a website, or both.
+    \item[Modular Input and Output]
+The input and output channels of the randomness beacon should be extensible or configurable by beacon operators.
+This will allow a beacon operator to use and over time change their preferred input sources and output channels.
+For example, a beacon operator may allow users to provide inputs through TCP/IP, email, and even tweets.
+Similarly, the output may be tweeted, published on a website, or both.
 
-    \item[Deterministic Output] The beacon should deterministically compute a output from a set of inputs. As we argued, this is because adding randomness will not allow users to reproduce the output. Being able to reproduce the output is important for the later requirement of verification. %Strictly, it is not possible to be truly random, however for the vast majority of use cases this pseudo-randomness is good enough. Far more important is the following requirement.
+    \item[Deterministic Output]
+The beacon should deterministically compute a output from a set of inputs.
+As we argued, this is because adding randomness will not allow users to reproduce the output.
+Being able to reproduce the output is important for the later requirement of verification.
+%Strictly, it is not possible to be truly random, however for the vast majority of use cases this pseudo-randomness is good enough.
+% Far more important is the following requirement.
 
-    \item[Unpredictable Output] The output should be unpredictable before the computation is done, even for the beacon operator.
+    \item[Unpredictable Output]
+The output should be unpredictable before the computation is done, even for the beacon operator.
 
-    %\item[Commitment to Input] The beacon should produce a commitment to a set of inputs and publish the commitment as soon as possible after the input collection deadline, but before initiating output computation. This ensures that the beacon operator cannot add, remove, or order the inputs to his own benefit. \mtjnote{Maybe remove this from here --- this is a solution, not requirement}
+    %\item[Commitment to Input] The beacon should produce a commitment to a set of inputs and publish the commitment as soon as possible after the input collection deadline, but before initiating output computation.
+% This ensures that the beacon operator cannot add, remove, or order the inputs to his own benefit. \mtjnote{Maybe remove this from here --- this is a solution, not requirement}
 
-    \item[Timely Output] The beacon should publish the random output immediately after the computation is done, and any data necessary for the verification should be made available.
+    \item[Timely Output]
+The beacon should publish the random output immediately after the computation is done, and any data necessary for the verification should be available to the user.
 
-    \item[Verifiable] The output should be verifiable for any user, i.e.\ anyone should be able to verify the correctness of the computation and any user should be able to verify that his/her input has been part of the computation.
+    \item[Verifiable]
+The output should be verifiable for any user, i.e.\ anyone should be able to verify the correctness of the computation and any user should be able to verify that his/her input has been part of the computation.
 \end{description}
 
 \subsection{Non-Functional Requirements}
 \label{sub:non_functional_requirements}
 
 \begin{description}
-    \item[Fault Tolerance] The beacon should not contain a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy.
+    \item[Fault Tolerance]
+The beacon should not contain a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy.
 
-    \item[Something something] Operating the beacon should be incentivized and distributable among multiple participants. \msmnote{e.g.\ input sourcing by some, computation by another, etc.} \mtjnote{Why are these two necessary?} \mtjnote{This is two requirements, no?}
+    % REDACTED \item[Something something] Operating the beacon should be incentivized and distributable among multiple participants. \msmnote{e.g.\ input sourcing by some, computation by another, etc.} \mtjnote{Why are these two necessary?} \mtjnote{This is two requirements, no?}
 
-    \item[Usability] It should be easy for users to contribute with input, and to fetch outputs. In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified.
+    \item[Usability]
+It should be easy for users to contribute with input, and to fetch outputs.
+In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified.
 \end{description}
 
-\subsection{Requirements Discussion}
-
-\mtjnote{Security Requirements? Maybe they are in the above functional and non-functional requirements? Maybe re-iterate them. Which requirements are important to the security?}
-
 \subsection{Non-requirements}
-\mtjnote{We probably do not need this section. Take inspiration from this text and incorporate the pieces somewhere else}
+\mtjnote{We probably do not need this section.
+Take inspiration from this text and incorporate the pieces somewhere else}
 This section lists some requirements which may at first seem beneficial, but actually do not matter.
 
 \paragraph{Signing output with signature:}
 \mtjnote{Do we want to sign the output with our own signature? We probably do not need it for tamper-detection, as clients using the random number should verify the computation and the presence of their own input.}
 
 \paragraph{Secure channels for input and output:}
-\mtjnote{Inputs and outputs are not secret. What if an adversary has complete knowledge of all inputs? Then he can only do it as fast as the original operator. But he cannot change anything besides the order of inputs --- and he needs to commit to the order before computing. What about fiddling with the output? Users can verify the computation AND should not use an output for which they have not seen the corresponding commitment to AND they should verify that their own number has been part of the computation. So everything is good.}
+\mtjnote{Inputs and outputs are not secret.
+What if an adversary has complete knowledge of all inputs? Then he can only do it as fast as the original operator.
+But he cannot change anything besides the order of inputs --- and he needs to commit to the order before computing.
+What about fiddling with the output? Users can verify the computation AND should not use an output for which they have not seen the corresponding commitment to AND they should verify that their own number has been part of the computation.
+So everything is good.}
 
 \mtjnote{The above note mentions \enquote{commitments}, but we have not introduced these yet}
