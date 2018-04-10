@@ -1,32 +1,32 @@
 \subsection{STRIDE Threat Categorization}
-We categorize the threats towards the beacon using the STRIDE framework. STRIDE consists of six categories of threats to a given system: Spoofing identity, Tampering wiht data, Repudiation, Information Disclosure, Denial of Service, and Elevation of privilege. We categorize each of the threats according to this system to better structure them. This categorization contains threats from both types of adversaries, both external and internal from the operator. 
+We categorize the threats towards the beacon using the STRIDE framework. STRIDE consists of six categories of threats to a given system: Spoofing identity, Tampering with data, Repudiation, Information Disclosure, Denial of Service, and Elevation of privilege. We categorize each of the threats according to this system to better structure them. This categorization contains threats from both types of adversaries, both external and internal from the operator.
 
 \begin{description}
-    \item [Spoofing Identity] There are no threats in this category, as there are no identities other than the operator. 
+    \item [Spoofing Identity] There are no threats in this category, as there are no identities other than the operator.
     \item [Tampering with Data] \begin{itemize}
                                     \item Operator can manipulate inputs or their arrangement to change the output.
-                                    \item Adversaries can submit inputs in attempts to bias the output. 
+                                    \item Adversaries can submit inputs in attempts to bias the output.
                                 \end{itemize}
     \item [Repudiation] \begin{itemize}
                             \item Operator can precompute outputs for seemingly valid (but fake) inputs.
                             \item Operator can provide early access to inputs.
-                            \item Operator can favour certain inputs. 
+                            \item Operator can favor certain inputs.
                         \end{itemize}
-    \item [Information Disclosure] This is not a threat if the beacon is designed to be transparent. 
+    \item [Information Disclosure] This is not a threat if the beacon is designed to be transparent.
     \item [Denial of Service] \begin{itemize}
-                                \item Operator can ignore certain users or their inputs. 
-                                \item Operator can seize operations. 
-                                \item Adversaries can overwhelm the beacon with inputs. 
-                                \item Adversaries can eclipse users. 
-                                \item Adversary can deny service out outlets to delay or prevent publication of the input. 
+                                \item Operator can ignore certain users or their inputs.
+                                \item Operator can seize operations.
+                                \item Adversaries can overwhelm the beacon with inputs.
+                                \item Adversaries can eclipse users.
+                                \item Adversary can deny service out outlets to delay or prevent publication of the input.
                               \end{itemize}
     \item [Elevation of privilege] \begin{itemize}
-                                     \item Adversaries can corrupt the operator. 
-                                     \item Adversaries can hack their way into the operators position.  
+                                     \item Adversaries can corrupt the operator.
+                                     \item Adversaries can hack their way into the operators position.
                                    \end{itemize}
 \end{description}
 
-These make up an ordered list of threats to a public randomness beacon. These will serve as guidelines for a secure design of a beacon that prevents or mitigates as many of these as possible. 
+These make up an ordered list of threats to a public randomness beacon. These will serve as guidelines for a secure design of a beacon that prevents or mitigates as many of these as possible.
 %   Spoofing identity
 %       Not really a problem since users need not to be authorized to provide input
 %   Tampering with data
