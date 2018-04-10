@@ -1,7 +1,4 @@
-\section{Security Assumptions}
-\mtjnote{Security Model???}
 
-We take the view of \enquote{Everybody is secretly colluding against you and willing to put an unlimited amount of money towards manipulating or biasing the process for their own benefit}. The only one you can trust is yourself.
 
 \section{Beacon Definition}
 
@@ -16,6 +13,10 @@ The green area is what can be defined as the beacon, or \emph{beacon protocol} -
 \subimport{}{simple_beacon_fig.tex}
 
 A sufficiently general randomness beacon with enough entropy can be utilized for multiple use cases, and as such is of higher usefulness. Given the many use cases, we will therefore prioritize a use case agnostic beacon.
+
+\subsection{Trust Assumptions}
+
+We take the view of \enquote{Everybody is secretly colluding against you and willing to put an unlimited amount of money towards manipulating or biasing the process for their own benefit}. The only one you can trust is yourself.
 
 \subsection{A Note on Randomness}
 Some randomness beacons claim to produce true randomness~\cite{nistbeacon}. In our setting, producing true randomness is not an option. True randomness is often produced by observing quantum mechanical effects. These observations cannot be repeated by users (they are, after all, truly random and non-reproducible), and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effect and not somehow crafted by the beacon operator. As such, the users need to blindly trust the beacon operator \mtjnote{Insert source} --- an assumption we do not want to make.
