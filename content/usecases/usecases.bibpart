@@ -20,3 +20,19 @@
     keywords={Cryptography;Noise;Electronic commerce;Electronic voting;Randomness server},
 }
 
+@inproceedings{bernstein2015manipulate,
+  title={How to Manipulate Curve Standards: A White Paper for the Black Hat},
+  author={Bernstein, Daniel J and Chou, Tung and Chuengsatiansup, Chitchanok and H{\"u}lsing, Andreas and Lambooij, Eran and Lange, Tanja and Niederhagen, Ruben and van Vredendaal, Christine},
+  booktitle={International Conference on Research in Security Standardisation},
+  pages={109--139},
+  year={2015},
+  organization={Springer}
+}
+
+@online{nytimes-nsabackdoors,
+  title={N.S.A. Able to Foil Basic Safeguards of Privacy on Web},
+  author={Nicole Perlroth and Jeff Larson and Scott Shane},
+  url={http://www.nytimes.com/2013/09/06/us/nsa-foils-much-internet-encryption.html},
+  year={2013},
+  urldate={2017-12-18}
+}
