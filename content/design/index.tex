@@ -1,10 +1,8 @@
 \section{Beacon Design}
 
-\mtjnote{Write that we prioritize several design goals: Security, scalability... We probably also think of Mother Earth to not waste electricity (as Bitcoin arguably does).}
-
 \mtjnote{SWEBOK: \enquote{Design for security is concerned with how to prevent unauthorized disclosure, creation, change, deletion, or denial of access to information and other resources. It is also concerned with how to tolerate security-related attacks or violations by limiting damage, continuing service, speeding repair and recovery, and failing and recovering securely. Access control is a fundamental concept of security, and one should also ensure the proper use of cryptology.}}
 
-\mtjnote{We need to meet our requirements and take the previously found security concerns into account and design a suitable beacon that tries to overcome as many problems as possible.}
+We design a beacon to both meet the previously stated requirements, and to prevent as many of the threats identified and categorized in the STRIDE analysis. We want the beacon to be as secure as possible while still being practically viable, so we will also consider the usability and scalability of the beacon. 
 
 To meet the requirement of extendability, we use a \gls{soa} to design the beacon.
 This architecture splits systems into application components, also called services.
@@ -14,7 +12,7 @@ a component, or service, should be seen as a self-contained black box.
 
 This architecture provides loose coupling in the system and also allows for easier fault tolerance since services, being a black box, are easily replaceable on failure.
 However, as services need knowledge about other relevant services, some mechanism for service discovery is typically deployed.
-This can be a single point of failure, but mitigated by having several of these. \mtjnote{Sass has the good source of having two of these and that in \enquote{95 \%} of cases, it is sufficient.}
+This can be a single point of failure, but mitigated by using redundancy \cite{soa_redundancy}.
 \fxnote{expand on this and how it can be decentralized}
 
 \subsection{Components of a Beacon}
@@ -31,8 +29,7 @@ In the \gls{soa}, a single instance of a randomness beacon will consist of the f
 
 \subsection{Pipeline}%
 \label{sub:pipeline}
-In our \gls{soa}, %Besides the \gls{soa}, we also utilize a pipeline architecture to design the beacon.%
-data only flows one way through the system, and each component performs an independent transformation.
+In our \gls{soa}, data only flows one way through the system, and each component performs an independent transformation.
 This effectively means that a beacon is a pipeline where data flows into the system as inputs, is processed, transformed to a random output, and lastly published.
 
 The pipeline architecture can be seen as a specialization of the \gls{soa} pattern, since each step in the pipeline is a service as defined in a \gls{soa}.
@@ -66,11 +63,16 @@ Generally, these concerns can be mitigated by enforcing a \gls{cco} workflow in 
 This effectively means that each published output is paired with a commitment which can be used in the verification of the beacon.
 The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output. Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desireable output.
 
+The commitment consists of the hashes of the inputs to the beacon, structured in a merkle tree, the root of which is inputted to the delay function. This allows any other party to compute the randomness alongside the beacon operator. It also ensures that the operator can not withhold any numbers, and effectively reduces the 'market value' of the output, making it less attractive to sell early access to it.  
+
 To guarantee that the time between publishing the commitment and output has been spent on computing the output, we utilize a delay function.
 Delay functions require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
 When deploying delay functions in randomness beacons it is important to keep verification in mind.
 A user should be able to run the delay function in reverse to confirm that a commitment matches the output.
 To avoid having to require each user to execute the full delay function, we use a flavour of delay functions which are asymmetrically hard, i.e.\ hard to compute but easy to verify.
+
+The delay function also partially protects against last-draw attacks by adversaries. A last-draw attack would attempt to bias the output by crafting an input so as to produce favorable randomness. The adversary needs to compute the result of adding a specific input as the last input. Delay functions make this significantly more difficult to attempt due to the time needed to compute the result. 
+Given a delay function that takes five minutes to complete, an adversary must dedicate five minutes of processor time to any given input he attempts to use. This means he must dedicate large amounts of resources to perform any significant amount of attempts, and more importantly: if a single input is added to the beacon within that five minute period, all of his work will be null, and he will be forced to restart.
 
 The combination of these concepts, \gls{cco} and a delay function, effectively gives the following workflow for each cycle of the beacon:
 \mtjnote{Make a nice figure of this with $t_{-1}, t_0, t_1$... and describe time intervals.}
@@ -83,9 +85,7 @@ The combination of these concepts, \gls{cco} and a delay function, effectively g
     \item Publish output
 \end{enumberate}
 
-\mtjnote{Write here what the commitment is. It includes the hashed inputs. It is a good discussion when to release the inputs. It would also be possible to release the inputs together with the output --- this allows the operator to know that only HE can calculate the output and nobody can know the result beforehand. On the other hand, this allows the operator to provide early access to paying customers. We will therefore release all (hashed) inputs when releasing the commitment.}
 
-The delay function also partially protects against last-draw attacks by malicious attackers. A last-draw attack would attempt to bias the output by crafting their own input so as to produce favorable randomness. To do this, the attacker needs to compute the result of adding a specific input as the last input. Delay functions make this significantly more difficult to attempt due to the time needed to compute the result. Given a delay function that takes five minutes to complete, an attacker must dedicate five minutes of processor time to any given input he attempts to use. This means the attacker must dedicate large amounts of resources to perform any significant amount of attempts, and more importantly: if a single input is added to the beacon within that five minute period, all of the attackers work will be null, and he will be forced to restart.
 
 \mtjnote{The beacon is secure because:}
 \mtjnote{%
