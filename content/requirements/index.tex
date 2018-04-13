@@ -43,12 +43,14 @@ Here, there are two approaches to input:
 The user must trust the source.
 Problems: The sources dictate the output rate, and sources can be compromised, and provides no guarantee / does not really solve the issue (the users should also make a bitcoin transaction, have a stock company, or observe the drawing from the lotteries to make sure everybody is not colluding against them); although it is far more unlikely that any adversary will be able to control stock markets, lotteries, and the entire bitcoin network.
 
+    \rene{Consider: ideal situation vs. "good enough"}
+
     \item[User Input] In essence, the only thing a user can trust is themself.
 Therefore, the user can be allowed to directly provide input to the computation.
 The user should then be able to verify that their input has been used as part of the computation.
 If they can verify that, they know the number is good.
 If their number is not part of the computation, they should not use the number.
-This seems like a reasonable assumption.
+This seems like a reasonable assumption \rene{I guess that depends on the use-case; it also carries the risk of obvious DoS attacks}.
 In other words, if a given user needs to use the number, they should provide an input.
 \end{description}
 
@@ -72,12 +74,16 @@ This will allow a beacon operator to use and over time change their preferred in
 For example, a beacon operator may allow users to provide inputs through TCP/IP, email, and even tweets.
 Similarly, the output may be tweeted, published on a website, or both.
 
+\rene{Remember: Security Rule \#1: KISS (complexity kills security); I would recommend looking at the design/architecture of  "qmail"}
+
     \item[Deterministic Output]
-The beacon should deterministically compute a output from a set of inputs.
+The beacon should deterministically compute an output from a set of inputs.
 As we argued, this is because adding randomness will not allow users to reproduce the output.
 Being able to reproduce the output is important for the later requirement of verification.
 %Strictly, it is not possible to be truly random, however for the vast majority of use cases this pseudo-randomness is good enough.
 % Far more important is the following requirement.
+
+\rene{Maybe worth noting that the input can be (truly) random?}
 
     \item[Unpredictable Output]
 The output should be unpredictable before the computation is done, even for the beacon operator.
@@ -103,7 +109,7 @@ The beacon should not contain a single point of failure, i.e.\ it should be conf
 
     \item[Usability]
 It should be easy for users to contribute with input, and to fetch outputs.
-In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified.
+In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel \rene{What about integrity of the submitted input? Is probably also covered by re-computing the result, but need an argument} because the correctness of computation can be verified.
 \end{description}
 
 \subsection{Non-requirements}
