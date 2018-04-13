@@ -2,7 +2,7 @@
 
 \mtjnote{SWEBOK: \enquote{Design for security is concerned with how to prevent unauthorized disclosure, creation, change, deletion, or denial of access to information and other resources. It is also concerned with how to tolerate security-related attacks or violations by limiting damage, continuing service, speeding repair and recovery, and failing and recovering securely. Access control is a fundamental concept of security, and one should also ensure the proper use of cryptology.}}
 
-We design a beacon to both meet the previously stated requirements, and to prevent as many of the threats identified and categorized in the STRIDE analysis. We want the beacon to be as secure as possible while still being practically viable, so we will also consider the usability and scalability of the beacon. 
+We design a beacon to both meet the previously stated requirements, and to prevent as many of the threats identified and categorized in the STRIDE analysis. We want the beacon to be as secure as possible while still being practically viable, so we will also consider the usability and scalability of the beacon.
 
 To meet the requirement of extendability, we use a \gls{soa} to design the beacon.
 This architecture splits systems into application components, also called services.
@@ -63,7 +63,7 @@ Generally, these concerns can be mitigated by enforcing a \gls{cco} workflow in 
 This effectively means that each published output is paired with a commitment which can be used in the verification of the beacon.
 The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output. Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desireable output.
 
-The commitment consists of the hashes of the inputs to the beacon, structured in a merkle tree, the root of which is inputted to the delay function. This allows any other party to compute the randomness alongside the beacon operator. It also ensures that the operator can not withhold any numbers, and effectively reduces the 'market value' of the output, making it less attractive to sell early access to it.  
+The commitment consists of the hashes of the inputs to the beacon, structured in a merkle tree, the root of which is inputted to the delay function. This allows any other party to compute the randomness alongside the beacon operator. It also ensures that the operator can not withhold any numbers, and effectively reduces the \enquote{market value} of the output, making it less attractive to sell early access to it.
 
 To guarantee that the time between publishing the commitment and output has been spent on computing the output, we utilize a delay function.
 Delay functions require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
@@ -71,7 +71,7 @@ When deploying delay functions in randomness beacons it is important to keep ver
 A user should be able to run the delay function in reverse to confirm that a commitment matches the output.
 To avoid having to require each user to execute the full delay function, we use a flavour of delay functions which are asymmetrically hard, i.e.\ hard to compute but easy to verify.
 
-The delay function also partially protects against last-draw attacks by adversaries. A last-draw attack would attempt to bias the output by crafting an input so as to produce favorable randomness. The adversary needs to compute the result of adding a specific input as the last input. Delay functions make this significantly more difficult to attempt due to the time needed to compute the result. 
+The delay function also partially protects against last-draw attacks by adversaries. A last-draw attack would attempt to bias the output by crafting an input so as to produce favorable randomness. The adversary needs to compute the result of adding a specific input as the last input. Delay functions make this significantly more difficult to attempt due to the time needed to compute the result.
 Given a delay function that takes five minutes to complete, an adversary must dedicate five minutes of processor time to any given input he attempts to use. This means he must dedicate large amounts of resources to perform any significant amount of attempts, and more importantly: if a single input is added to the beacon within that five minute period, all of his work will be null, and he will be forced to restart.
 
 The combination of these concepts, \gls{cco} and a delay function, effectively gives the following workflow for each cycle of the beacon:
