@@ -50,8 +50,9 @@ Therefore, the user can be allowed to directly provide input to the computation.
 The user should then be able to verify that their input has been used as part of the computation.
 If they can verify that, they know the number is good.
 If their number is not part of the computation, they should not use the number.
-This seems like a reasonable assumption \rene{I guess that depends on the use-case; it also carries the risk of obvious DoS attacks}.
-In other words, if a given user needs to use the number, they should provide an input.
+This seems like a reasonable assumption. 
+In other words, if a given user needs to use the number, they should provide an input and look for it in the commitment.
+However, this also opens up a new avenue of \gls{dos} attack, as an adversary can attempt to prevent a user from contributing input --- without their input they should not use the output.  
 \end{description}
 
 We will use the latter (user input).
@@ -78,8 +79,8 @@ Similarly, the output may be tweeted, published on a website, or both.
 
     \item[Deterministic Output]
 The beacon should deterministically compute an output from a set of inputs.
-As we argued, this is because adding randomness will not allow users to reproduce the output.
-Being able to reproduce the output is important for the later requirement of verification.
+As we argued, this is because adding randomness will not allow users to reproduce the output, although true randomness could be used to generate the inputs. 
+Being able to reproduce the output is important for the later requirement of verification. 
 %Strictly, it is not possible to be truly random, however for the vast majority of use cases this pseudo-randomness is good enough.
 % Far more important is the following requirement.
 
@@ -109,7 +110,8 @@ The beacon should not contain a single point of failure, i.e.\ it should be conf
 
     \item[Usability]
 It should be easy for users to contribute with input, and to fetch outputs.
-In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel \rene{What about integrity of the submitted input? Is probably also covered by re-computing the result, but need an argument} because the correctness of computation can be verified.
+In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified.
+This will also verify the presence and integrity of the submitted input. 
 \end{description}
 
 \subsection{Non-requirements}
