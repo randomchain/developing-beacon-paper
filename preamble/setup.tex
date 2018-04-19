@@ -149,8 +149,8 @@
 \usetikzlibrary{%
     calc, positioning, fit, arrows.meta, backgrounds, math, external
 }
-\tikzexternalize[prefix=figures/]
-\tikzexternalenable{}
+% \tikzexternalize[prefix=figures/]
+% \tikzexternalenable{}
 
 \tikzset{every picture/.style={/utils/exec={\sffamily}}}
 
@@ -161,8 +161,8 @@
 \tikzstyle{arrow} = [draw, -{Stealth[length=2mm, width=2mm]}, thick]
 \tikzstyle{container} = [draw=GoogleLightGreen, fill=GoogleLightGreen!40, dashed, inner sep=0.3cm]
 %Two uml packages. I love it
-%\usepackage{packages/tikz-uml}
-%\usepackage{pgf-umlsd}
+\usepackage{packages/tikz-uml}
+\usepackage{pgf-umlsd}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SOURCE CODE
