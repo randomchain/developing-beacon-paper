@@ -53,7 +53,7 @@ A randomness beacon emits an unpredictable random value at a fixed interval, e.g
 The beacon is constructed in a way that allows all users of it to see that the emitted value is indeed unpredictable and does not favor any particular outcome.
 In other words, users should not need to trust the beacon operator to do what the beacon operator says he is doing, but the user can immediately see that nothing fishy has happened.
 
-\subsection{A Note on Randomness}
+\subsubsection{A Note on Randomness}
 Some randomness beacons claim to produce true randomness~\cite{nistbeacon}.
 In our setting, producing true randomness is not an option.
 True randomness is often produced by observing quantum mechanical effects.
@@ -66,7 +66,7 @@ As long as the output is unpredictable for all parties including the beacon oper
 And if implemented correctly, deterministic pseudo-randomness is just as good for virtually all use cases and provides a good level of unpredictability.
 %No true randomness is necessary but we care deeply about the unpredictability from deterministic pseudo-randomness.
 
-\subsection{Input Sources}
+\subsubsection{Input Sources}
 As we argued, true randomness cannot be used in a randomness beacon for our setting;
 and since we use a deterministic algorithm to convert input to output, the input must have certain qualities.
 The user must be able to reason about it and trust it.
