@@ -1,0 +1,67 @@
+\section{Randomness Beacon Requirements}
+\label{sec:beacon_requirements}
+
+This section will list the requirements for a randomness beacon, suitable for our security goals.
+These requirements are separated into two groups: functional and non-functional requirements, as suggested by \citet[sec.\ 1.4.1]{swebok}.
+After these lists, a short discussion will examine the relationships between the individual requirements.
+In subsequent sections, we will perform a preliminary analysis of these requirements to reveal possible security threats, and design a beacon that fits these requirements and circumvents as many as possible of the found threats.
+
+\subsection{Functional Requirements}
+\label{sub:functional_requirements}
+\begin{description}
+    \item[Modular Input and Output]
+The input and output channels of the randomness beacon should be extensible or configurable by beacon operators.
+This will allow a beacon operator to use and over time change their preferred input sources and output channels.
+For example, a beacon operator may allow users to provide inputs through TCP/IP, email, and even tweets.
+Similarly, the output may be tweeted, published on a website, or both.
+
+    \item[Deterministic Output]
+The beacon should deterministically compute a output from a set of inputs.
+As we argued, this is because adding randomness will not allow users to reproduce the output.
+Being able to reproduce the output is important for the later requirement of verification.
+%Strictly, it is not possible to be truly random, however for the vast majority of use cases this pseudo-randomness is good enough.
+% Far more important is the following requirement.
+
+    \item[Unpredictable Output]
+The output should be unpredictable before the computation is done, even for the beacon operator.
+
+    %\item[Commitment to Input] The beacon should produce a commitment to a set of inputs and publish the commitment as soon as possible after the input collection deadline, but before initiating output computation.
+% This ensures that the beacon operator cannot add, remove, or order the inputs to his own benefit. \mtjnote{Maybe remove this from here --- this is a solution, not requirement}
+
+    \item[Timely Output]
+The beacon should publish the random output immediately after the computation is done, and any data necessary for the verification should be available to the user.
+
+    \item[Verifiable]
+The output should be verifiable for any user, i.e.\ anyone should be able to verify the correctness of the computation and any user should be able to verify that his/her input has been part of the computation.
+\end{description}
+
+\subsection{Non-Functional Requirements}
+\label{sub:non_functional_requirements}
+
+\begin{description}
+    \item[Fault Tolerance]
+The beacon should not contain a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy.
+
+    % REDACTED \item[Something something] Operating the beacon should be incentivized and distributable among multiple participants. \msmnote{e.g.\ input sourcing by some, computation by another, etc.} \mtjnote{Why are these two necessary?} \mtjnote{This is two requirements, no?}
+
+    \item[Usability]
+It should be easy for users to contribute with input, and to fetch outputs.
+In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified.
+\end{description}
+
+\subsection{Non-requirements}
+\mtjnote{We probably do not need this section.
+Take inspiration from this text and incorporate the pieces somewhere else}
+This section lists some requirements which may at first seem beneficial, but actually do not matter.
+
+\paragraph{Signing output with signature:}
+\mtjnote{Do we want to sign the output with our own signature? We probably do not need it for tamper-detection, as clients using the random number should verify the computation and the presence of their own input.}
+
+\paragraph{Secure channels for input and output:}
+\mtjnote{Inputs and outputs are not secret.
+What if an adversary has complete knowledge of all inputs? Then he can only do it as fast as the original operator.
+But he cannot change anything besides the order of inputs --- and he needs to commit to the order before computing.
+What about fiddling with the output? Users can verify the computation AND should not use an output for which they have not seen the corresponding commitment to AND they should verify that their own number has been part of the computation.
+So everything is good.}
+
+\mtjnote{The above note mentions \enquote{commitments}, but we have not introduced these yet}
