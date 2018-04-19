@@ -58,7 +58,7 @@ Some randomness beacons claim to produce true randomness~\cite{nistbeacon}.
 In our setting, producing true randomness is not an option.
 True randomness is often produced by observing quantum mechanical effects.
 These observations cannot be repeated by users (they are, after all, truly random and non-reproducible), and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effect and not crafted by the beacon operator.
-As such, the users need to blindly trust the beacon operator, which in the case of NIST can be hard given their history\cite{nytimes-nsabackdoors, nytimes-nsaconstants, nist2014backdoor}.
+As such, the users need to blindly trust the beacon operator, which in the case of NIST can be hard given their history~\cite{nytimes-nsabackdoors, nytimes-nsaconstants, nist2014backdoor}.
 
 Fortunately, the vast majority of use cases do not actually require true randomness.
 Far more desirable is the side effect of producing randomness: \emph{unpredictability}.
@@ -90,25 +90,19 @@ In other words, if a given user needs to use the number, they should provide an 
 We will use the latter (user input).
 It is important to stress that a user should only use a given output if they can verify that the input of a trusted party has been part of the computation --- usually the only trusted party is the user itself.
 
-\subsubsection{Approaches}
+\subsubsection{Operation Approaches}
 \mtjnote{Describe the 4 beacon types: MPC, Autocratic collector, everbody calculates, one entity calculates.}
 We identify a total of four ways in which a beacon are typically operated:
 
 \begin{description}
-    \item [\gls{mpc}] Users use multiparty computation to produce randomness. While notable examples of such beacons exist, they either have problem scaling outside of small groups or require honest majorities. This makes them less suited for public use, where we do not control the amount of users or their identities.
-    \item [Autocratic Collector] A single entity collects and publishes randomness with no option for verification of the output. Absolute trust in the entity is required to trust the output.
-    \item [Transparent Authority] A single entity collects inputs and publishes it with a focus on transparency - users can verify that the beacon behaves according to protocol. Typically uses publicly available input or user inputs.
+    \item [Autocratic Collector] A single entity collects and publishes randomness with no option for verification of the output. Absolute trust in the entity is required to trust the output. This type is directly synonymous with the trust-requiring beacon that we described earlier.
+
+    \item [\gls{mpc}] Users utilize multiparty computation to produce randomness. While notable examples of such beacons exist, they either have problem scaling outside of small groups or they require honest majorities. This makes them less suited for public use, where we do not control the amount of users or their identities.
+
+    \item [Transparent Authority] A single entity collects input and publishes it with a focus on transparency --- users can verify that the beacon behaves according to protocol. This type uses publicly available input or user inputs.
+
     \item [Data Publisher] An entity outputs or refers to publicly available data, that can be used to generate random numbers. They also provide the algorithm to do so, allowing users to generate their own random numbers.
 \end{description}
 
-
-
-
 \subsection{Contributions}
 \mtjnote{Todo: Contributions}
-
-
-%\subsection{misc}
-%Another aspect of such a beacon that must be considered is the security of the beacon.
-%If an attacker is capable of disrupting the beacon's output, or even biasing it towards their own benefit, the beacon loses its value.
-%Thus, it is important that the beacon be secure from attacks on its availability or integrity, defined as the output not being biased.
