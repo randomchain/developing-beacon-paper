@@ -1,25 +1,61 @@
 \section{Introduction}
 %Randomness is useful for many cases, but can be difficult to trust, as it is hard to guarantee that a random number really is \emph{random}, and not biased towards anyone's benefit.
 
-\emph{Randomness beacons}, services emitting randomness at fixed intervals, have been around for a long time.
+\emph{Randomness beacons}, services emitting unpredictable random values at fixed intervals, have been around for a long time.
 In 1983 Rabin coined the term and used one to add probabilistic security in several protocols~\cite{rabin1983transaction}.
-In this definition a randomness beacon was to be seen as an impartial party trusted to not be biased towards any outcome.
-Soon, however, cryptographically secure variants of Rabin's protocols emerged \cite{BGMR} that did not rely on a randomness beacon.
+In this definition, a randomness beacon was to be seen as an impartial third-party trusted to unbiased towards any outcome.
+%Soon, however, cryptographically secure variants of Rabin's protocols emerged~\cite{BGMR} that did not rely on a randomness beacon.
+As such, Rabin's beacon is to be trusted, i.e.\ you should trust the beacon operator (the entity running the beacon service) to not be biased, because you cannot verify that he is unbiased.
 
-For quite a while, randomness beacons did not receive much attention.
-Circa 2010 a renewed interest in beacons could be seen as an increase in beacon-related literature.
-This may have been a reaction to the financial crisis, leading the global discussions towards questions of governmental and corporate trust.
-The financial crisis led to the emergence of cryptocurrencies and to the sharp rise in popularity of blockchains --- technologies that promote decentralization and facilitate cooperation of mutually distrustful users.
-The literature also contains a wealth of examples that combine blockchains and beacons to produce randomness either based on a blockchain, or as a smart contract running on a blockchain.
-Conceptually, randomness beacons seem to fit this environment of mutual distrust (or distrust in government and corporations), as a randomness beacon is able to act as an impartial party.
+For quite a while, randomness beacons did not receive much attention, probably because alternatives to Rabin's protocols not requiring a trusted beacon were used instead (such as~\cite{BGMR}).
+Circa 2010 a renewed interest in beacons was seen as an increase in beacon-related literature, and the trend in this new literature was to soften the need to trust the beacon operator.
+We believe it may have been a reaction to the financial crisis, which led the global discussions towards questions of trust in governments and corporations. In other words, people had their eyes opened to the fact that \emph{trust} can be an issue in itself, and that removing the need for trust in any one entity could, in some cases, be beneficial.
+As an example, cryptocurrencies emerged shortly after (and some might argue as a direct consequence of) the financial crisis, and a sharp rise in popularity of blockchains was seen --- two technologies that seek to facilitate cooperation of mutually distrustful users.
+%The literature also contains a wealth of examples that combine blockchains and beacons to produce randomness either based on a blockchain, or as a smart contract running on a blockchain.
 
-In the recent literature, a major theme is how to avoid the necessity of relying on any single party --- either by decentralizing the beacon or making the operation so transparent that any single beacon operator cannot cheat without it being visible.
+Conceptually, randomness beacons seem to fit this environment of minimizing the need to trust, as a randomness beacon is acting as an impartial party. However, the \enquote{old} way, requiring users to trust the operator, simply shifts the trust issue to the beacon operator. If anyone is using a randomness beacon, it is specifically because they do not wish to trust some entity. Therefore, we think trusting the randomness beacon (also an entity) is a moot point --- the two entities might for all intents and purposes collude against the unknowing user. Therefore we only really consider the kind of randomness beacon that has been proposed in the recent literature --- the one that does not require users to trust it.
 
-As such, randomness beacons are promising for applications where fairness and unbiasability is important.
+%Therefore, the interesting part is in the recent literature, with promising ways of implementing a beacon in such a way that the beacon operator does not need to be trusted either.
 
-Another aspect of such a beacon that must be considered is the security of the beacon.
-If an attacker is capable of disrupting the beacon's output, or even biasing it towards their own benefit, the beacon loses its value.
-Thus, it is important that the beacon be secure from attacks on its availability or integrity, defined as the output not being biased.
+%The body of this work will be to discuss, design, and implement a beacon following the concept of not requiring users to trust it.% Before doing so, let's take a small detour and talk about potential use cases and the motivation for using a beacon at all.
 
-This recent literature presents some promising ways of creating an unbiasable beacon.  However, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon.
-We see many potential use cases, and present a variety of them with roots in the literature, before constructing a beacon of our own and performing a security analysis on it.
+\subsection{Terminology}
+As discussed, we see two distinct groups of randomness beacons; the ones which require users to blindly trust the beacon operator (a la Rabin's original beacon), and the \enquote{new generation} randomness beacons of recent literature which convincingly prove to all users of the beacon that nothing fishy happened during the \enquote{generation} of the random number.
+
+In this work, we will use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably --- both will equivalently refer to the second, new generation group of randomness beacons (the ones not requiring trust), unless clearly stated otherwise.
+We will not dwell too much on the original group of randomness beacons (the ones requiring trust in the operator). However, we cannot ignore this group for the sake of history and examples of what not to do, and in these few cases we will make it clear that we are talking about the first group, the \enquote{trust-requiring beacons}.
+
+\subsection{Use Cases}
+
+In which environments are beacons suitable? \mtjnote{Todo}
+
+%As a side note, all examples of use cases mentioned in this section also work with a trust-requiring beacon, \emph{if} it is reasonable to assume users are willing to trust the beacon.
+
+While we like the concept a randomness beacon offers (a tool to remove trust), we struggle to follow many of the use cases proposed in the literature.
+
+Classic use cases include \mtjnote{TODO}
+
+\mtjnote{Write about zk-snarks}
+
+%This recent literature presents some promising ways of creating an unbiasable beacon.  However, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon.
+%We see many potential use cases, and present a variety of them with roots in the literature, before constructing a beacon of our own and performing a security analysis on it.
+
+
+\subsection{Beacon Definition}
+To clarify our view of a beacon, we will for now give this preliminary (and vague) definition: A randomness beacon emits an unpredictable random value at a fixed interval, e.g.\ every 5 minutes. The beacon is constructed in a way that allows all users of it to see that the emitted value is indeed unpredictable and does not favor any particular outcome. In other words, users should not need to trust the beacon operator to do what the beacon operator says he is doing, but the user can immediately see that nothing fishy has happened.
+\mtjnote{Maybe move this vague definition earlier? Does it help, or is the reader fully aware of what a beacon is after reading the introduction?}
+
+\mtjnote{This section is reserved for a full beacon definition}
+
+\subsubsection{Approaches}
+\mtjnote{Describe the 4 beacon types, MPC, Autocratic collector, everbody calculates, one entity calculates.}
+
+
+\subsection{Contributions}
+
+
+
+%\subsection{misc}
+%Another aspect of such a beacon that must be considered is the security of the beacon.
+%If an attacker is capable of disrupting the beacon's output, or even biasing it towards their own benefit, the beacon loses its value.
+%Thus, it is important that the beacon be secure from attacks on its availability or integrity, defined as the output not being biased.
