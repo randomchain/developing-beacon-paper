@@ -1,0 +1,22 @@
+\subsection{Threat Analysis}
+We consider a wide variety of threats, and analyze their severity according the DREAD framework with some modifications. DREAD consists of five metrics\cite{DREAD}, that are scored on a scale of 1 to 10:
+\begin{description}
+    \item [Damage] How bad would such an attack be?
+    \item [Reproducibility] How easy is it to reproduce such an attack?
+    \item [Exploitability] How much work is it to launch the attack?
+    \item [Affected Users] How many users will be impacted?
+    \item [Discoverability] How easy is it to discover the threat ? 
+\end{description}
+
+However, the \emph{Discoverability} is somewhat controversial, as it can be considered to reward security through obscurity. As such we do not consider it, as an adversary with unlimited resources would naturally also know of all exploits. 
+%Were gonna need a pretty solution to DREAD structure
+\begin{description}
+    \item [Input Biasing Attack] Adversaries can provide input that biases the output to their benefit. 
+    \item [Denial of Service] Adversaries can overwhelm the beacon with inputs to prevent other users from contributing their own input, thus denying service. Another approach could be perform a standard \gls{dos} attack on the central server of the beacon to prevent operation, or performing an eclipse attack on certain users to deny them access. 
+    \item [Hijacking] Attackers can attempt to seize control of the beacon, either by directly gaining access to the beacon and all accompanying operator privileges, or indirectly by corrupting the operator. 
+    \item [Shutdown] A malicious beacon operator can shut the beacon down, completely denying availability.
+    \item [Withholding Output] The operator can withhold outputs that are not favorable to his interests.
+    \item [Selling Early Access] The operator can give access to the output earlier to some parties than others.
+    \item [Input Manipulation] The operator can manipulate the input to bias the output of the beacon. He can also selectively exclude inputs from certain sources to deny them availability.
+
+\end{description}
