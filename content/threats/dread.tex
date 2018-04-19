@@ -1,5 +1,5 @@
 \subsection{Threat Analysis}
-We consider a wide variety of threats, and analyze their severity according the DREAD framework with some modifications. DREAD consists of five metrics\cite{DREAD}, that are scored on a scale of 1 to 10:
+We consider a wide variety of threats, and analyze their severity according the DREAD framework with some modifications. DREAD consists of five metrics\cite{dread}, that are scored on a scale of 1 to 10:
 \begin{description}
     \item [Damage] How bad would such an attack be?
     \item [Reproducibility] How easy is it to reproduce such an attack?
@@ -8,7 +8,7 @@ We consider a wide variety of threats, and analyze their severity according the 
     \item [Discoverability] How easy is it to discover the threat ? 
 \end{description}
 
-However, the \emph{Discoverability} is somewhat controversial, as it can be considered to reward security through obscurity. As such we do not consider it, as an adversary with unlimited resources would naturally also know of all exploits. 
+However, the \emph{Discoverability} can be considered to reward security through obscurity. As such we do not consider it, as an adversary with unlimited resources would naturally also know of all exploits. 
 %Were gonna need a pretty solution to DREAD structure
 \begin{description}
     \item [Input Biasing Attack] Adversaries can provide input that biases the output to their benefit. 
