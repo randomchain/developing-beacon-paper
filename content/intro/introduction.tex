@@ -29,6 +29,13 @@ In this work, we will use the terms \enquote{randomness beacon} and \enquote{bea
 We will not dwell too much on the original group of randomness beacons (the ones requiring trust in the operator).
 However, we cannot ignore this group for the sake of history and examples of what not to do, and in these few cases we will make it clear that we are talking about the first group, the \enquote{trust-requiring beacons}.
 
+\subsection{Trust Assumptions}
+
+We take the view of \enquote{Everybody, including the beacon operator, is secretly colluding against you and willing to put an unlimited amount of money towards manipulating or biasing the process for their own benefit}.
+
+The only one you can trust is yourself, and this extends to the beacon. If you have not influenced the beacon output, it should be considered biased against you by default. In addition, even if you have influenced the output, given enough time resources to work around your influence, the output could still be biased against you.
+
+
 \subsection{Use Cases}
 
 \mtjnote{Ideas needed: How to structure this section?}
@@ -46,12 +53,13 @@ However, we cannot ignore this group for the sake of history and examples of wha
 %This recent literature presents some promising ways of creating an unbiasable beacon.  However, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon.
 %We see many potential use cases, and present a variety of them with roots in the literature, before constructing a beacon of our own and performing a security analysis on it.
 
-
 \subsection{Beacon Definition}
 
 A randomness beacon emits an unpredictable random value at a fixed interval, e.g.\ every 5 minutes.
 The beacon is constructed in a way that allows all users of it to see that the emitted value is indeed unpredictable and does not favor any particular outcome.
 In other words, users should not need to trust the beacon operator to do what the beacon operator says he is doing, but the user can immediately see that nothing fishy has happened.
+
+\subimport{}{simple_beacon_fig.tex}
 
 \subsubsection{A Note on Randomness}
 Some randomness beacons claim to produce true randomness~\cite{nistbeacon}.
