@@ -8,38 +8,38 @@ In subsequent sections, we will perform a preliminary analysis of these requirem
 \subsection{Functional Requirements}
 \label{sub:functional_requirements}
 \begin{description}
-    \item [Transparency] 
-Users should be able to observe which inputs have been used to produce a random output. This is important because it allows them to find their own input, and be able to trust an output, and contributes to both the \emph{Trust} and \emph{Byzantine Behavior Detection} goal. 
+    \item [Transparency]
+Users should be able to observe which inputs have been used to produce a random output. This is important because it allows them to find their own input, and be able to trust an output, and contributes to both the \emph{Trust} and \emph{Byzantine Behavior Detection} goal.
 
     \item[Verifiable]
-The output should be verifiable for any user, i.e.\ anyone must be able to verify that the beacon protocol produced the published output from the published input. This contributes to the \emph{Byzantine Behavior Detection} and \emph{Trust} goals. 
+The output should be verifiable for any user, i.e.\ anyone must be able to verify that the beacon protocol produced the published output from the published input. This contributes to the \emph{Byzantine Behavior Detection} and \emph{Trust} goals.
 
     \item[Deterministic Output]
 As a function of the previous requirement, the beacon should deterministically compute an output from a set of inputs.
 As previously argued, this is because using true randomness will not allow users to reproduce the output.
 
     \item[Unpredictable Output]
-The output should be unpredictable before the computation is done, even for the beacon operator. 
+The output should be unpredictable before the computation is done, even for the beacon operator.
 
     \item[Timely Output]
-The beacon should publish the random output immediately after the computation is done, and any data necessary for the verification should be available to the user, contributing to the \emph{Byzantine Behavior Detection} goal. 
+The beacon should publish the random output immediately after the computation is done, and any data necessary for the verification should be available to the user, contributing to the \emph{Byzantine Behavior Detection} goal.
 
     \item[Modular Input and Output]
 The input and output channels of the randomness beacon should be extensible or configurable by beacon operators, to satisfy the \emph{Availability} goal.
 This will allow a beacon operator to use multiple input sources and output channels.
-For example, a beacon operator may allow users to provide inputs through TCP/IP, email, and even tweets.
-Similarly, the output may be tweeted, published on a website, and will subsequently be harder to prevent from being published. 
+For example, a beacon operator may allow users to provide inputs through APIs, email, and even tweets.
+Similarly, the output may be tweeted, published on a website, and will subsequently be harder to prevent from being published.
 
-    
+
 %Strictly, it is not possible to be truly random, however for the vast majority of use cases this pseudo-randomness is good enough.
 % Far more important is the following requirement.
 
     %\item[Commitment to Input] The beacon should produce a commitment to a set of inputs and publish the commitment as soon as possible after the input collection deadline, but before initiating output computation.
 % This ensures that the beacon operator cannot add, remove, or order the inputs to his own benefit. \mtjnote{Maybe remove this from here --- this is a solution, not requirement}
 
-    
+
 \item [Internal Sanity \& Reasonability Checks]
-The beacon should have both sanity and reasonability checks to detect as much byzantine behavior as possible, as stated in the \emph{Byzantine Behavior Detection} goal, and prevent it from spreading to other components as per the \emph{Fault Isolation} goal. 
+The beacon should have both sanity and reasonability checks to detect as much byzantine behavior as possible, as stated in the \emph{Byzantine Behavior Detection} goal, and prevent it from spreading to other components as per the \emph{Fault Isolation} goal.
 
 \end{description}
 
@@ -48,7 +48,7 @@ The beacon should have both sanity and reasonability checks to detect as much by
 
 \begin{description}
     \item[Fault Tolerance]
-The beacon architecture should be designed so as not to have a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy, as a way to satisfy the \emph{Fault Isolation} and \emph{Availability} goals. 
+The beacon architecture should be designed so as not to have a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy, as a way to satisfy the \emph{Fault Isolation} and \emph{Availability} goals.
 
     % REDACTED \item[Something something] Operating the beacon should be incentivized and distributable among multiple participants. \msmnote{e.g.\ input sourcing by some, computation by another, etc.} \mtjnote{Why are these two necessary?} \mtjnote{This is two requirements, no?}
 
