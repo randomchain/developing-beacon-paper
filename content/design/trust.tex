@@ -46,6 +46,8 @@ Moreover, if the malicious operator cannot compute a outcome which they deem ben
 This will leave Alice without any output, but she will not be able to know if the operator was malicious or disrupted by a third party adversary.
 Hereby deploying a withholding-attack on Alice.
 
+\subimport{}{beacon_timeline.tex}
+
 \subsection{Probabilistic Trust}%
 \label{sub:probabilistic_trust}
 In our approach to a randomness beacon, we want to push beyond the need for honest operators, and naïve users.
@@ -67,61 +69,11 @@ The operation must be sequential, which means that we must collect input before 
 However, because we want to spend more time computing, than we are collecting input, a strictly sequential beacon will contain dead spots, where no user is submitting input.
 This may be acceptable in some scenarios, but we want to design a beacon which always accepts inputs, and which wont be suspected of malicious operation.
 To achieve this we parallelize the beacon protocol, meaning that several delay functions will run in parallel but offset in time, and using different input.
-In~\cref{fig:beacon_parallel_timeline} we illustrate this.
 
-\begin{figure}
-    \centering
-    \footnotesize
-    \begin{tikzpicture}
-    \foreach \x in {0, 1, 2,...,3} {
-        \draw[|-|, black, line width=0.5mm] (\x,-\x*0.7) to (\x+1,-\x*0.7);
-        \path (\x,-\x*0.7) -- (\x+1,-\x*0.7) node [midway, above] {inp};
-        \draw[-|, black, line width=0.5mm] (\x+1,-\x*0.7) to (\x+4,-\x*0.7);
-        \path (\x+1,-\x*0.7) -- (\x+4,-\x*0.7) node [midway, above] {computation};
-    }
-    \end{tikzpicture}
-    \caption{Parallelized beacon protocol, with offset input collection and overlapping computation.}\label{fig:beacon_parallel_timeline}
-\end{figure}
+In~\cref{fig:beacon_parallel_timeline} this is illustrated, where these offset but parallel beacons are seen.
+We observe that no input collection is run in parallel nor overlapping, which resembles a constant stream of input collection.
+Moreover, the computation components can eventually be reused for future beacon computations, thereby eliminating the need for spinning up new computation services.
+These observations are depicted in~\cref{fig:beacon_parallel_timeline_real}, where the beacon would output at each circle shown in the diagram.
 
-\begin{figure}
-    \centering
-    \footnotesize
-    \begin{tikzpicture}
-    \pgfdeclarelayer{background}
-    \pgfsetlayers{background,main}
-    \draw[|-ss, line width=0.5mm, black] (0,0.7) to (8.3,0.7);
-    \path (0,0.7) -- (8,0.7) node [midway, above] {Input Collection Stream};
-
-    \foreach \x in {0, 1, 2} {
-        \begin{pgfonlayer}{background}
-            \draw[latex reversed-, dotted, black, line width=0.2mm] (\x+1,0.7) to (\x+1,-\x*0.7);
-        \end{pgfonlayer}
-        \draw[-o, GoogleIndigo, line width=0.5mm] (\x+1,-\x*0.7) to (\x+4,-\x*0.7);
-        \path (\x+1,-\x*0.7) -- (\x+4,-\x*0.7) node [midway, above] {\contour{white}{Computation}};
-    }
-    \foreach \x in {3, 4} {
-        \begin{pgfonlayer}{background}
-        \draw[latex reversed-, dotted, black, line width=0.2mm] (\x+1,0.7) to (\x+1,{-(\x-3)*0.7});
-        \end{pgfonlayer}
-        \draw[-o, GoogleIndigo, line width=0.5mm] (\x+1,{-(\x-3)*0.7}) to (\x+4,{-(\x-3)*0.7});
-        \path (\x+1,{-(\x-3)*0.7}) -- (\x+4,{-(\x-3)*0.7}) node [midway, above] {\contour{white}{Computation}};
-    }
-
-    \begin{pgfonlayer}{background}
-    \draw[latex reversed-, dotted, black, line width=0.2mm] (6,0.7) to (6,-0.7*2);
-    \end{pgfonlayer}
-    \draw[-ss, GoogleIndigo, line width=0.5mm] (6,-0.7*2) to (8.3,-0.7*2);
-
-    \begin{pgfonlayer}{background}
-    \draw[latex reversed-, dotted, black, line width=0.2mm] (7,0.7) to (7,0);
-    \end{pgfonlayer}
-    \draw[-ss, GoogleIndigo, line width=0.5mm] (7,0) to (8.3,0);
-
-    \begin{pgfonlayer}{background}
-    \draw[latex reversed-, dotted, black, line width=0.2mm] (8,0.7) to (8,-0.7);
-    \end{pgfonlayer}
-    \draw[-ss, GoogleIndigo, line width=0.5mm] (8,-0.7) to (8.3,-0.7);
-
-    \end{tikzpicture}
-    \caption{Parallelized beacon protocol, with input collection stream and overlapping computation.}\label{fig:beacon_parallel_timeline_real}
-\end{figure}
+\subimport{}{beacon_timeline_parallel.tex}
+\subimport{}{beacon_timeline_parallel_real.tex}
