@@ -52,13 +52,13 @@ In our approach to a randomness beacon, we want to push beyond the need for hone
 To achieve this, we first need to quantify trusting the beacon and then determine thresholds for reasonable behaviour.
 This effectively will provide a measure of probabilistic trust, where users much decide for themselves, if the probability of honest operation is adequate.
 
-We present an equation, which if satisfied, says that the user can trust that the beacon operator is not capable of fooling them.
-The equation is true, if the user determines that nobody will be able to compute the delay function in the time between they sent their input and received the commitment.
-It boils down to:
+We present an property, which if satisfied, says that the user can trust that the beacon operator is not capable of fooling them.
+The property is true, if the user determines that nobody will be able to compute the delay function in the time between they sent their input and received the commitment.
+This can be condensed to:
 \begin{equation}
-    t_{input} - t_{commitment} < T_{delay function}
+    t_{INPUT} - t_{COMMITMENT} < T_{DELAY FUNCTION}
 \end{equation}
-given that $t_{input}$ is the time when the user sent the input, $t_{commitment}$ is when the user received the commitment, and $T_{delay function}$ is the fastest computation of the given delay function.
+given that $t_{INPUT}$ is the time when the user sent the input, $t_{COMMITMENT}$ is when the user received the commitment, and $T_{DELAY FUNCTION}$ is the fastest computation of the given delay function.
 This tells us that for users to be more likely to trust a beacon, the time between they send their input and receive the commitment, must be significantly smaller than the time between the commitment and the output.
 In fact, it must be smaller than the shortest time a given user thinks the operator could be able to compute the delay function.
 
@@ -80,5 +80,48 @@ In~\cref{fig:beacon_parallel_timeline} we illustrate this.
         \path (\x+1,-\x*0.7) -- (\x+4,-\x*0.7) node [midway, above] {computation};
     }
     \end{tikzpicture}
-    \caption{Parallelized beacon protocol with four computation services.}\label{fig:beacon_parallel_timeline}
+    \caption{Parallelized beacon protocol, with offset input collection and overlapping computation.}\label{fig:beacon_parallel_timeline}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \footnotesize
+    \begin{tikzpicture}
+    \pgfdeclarelayer{background}
+    \pgfsetlayers{background,main}
+    \draw[|-ss, line width=0.5mm, black] (0,0.7) to (8.3,0.7);
+    \path (0,0.7) -- (8,0.7) node [midway, above] {Input Collection Stream};
+
+    \foreach \x in {0, 1, 2} {
+        \begin{pgfonlayer}{background}
+            \draw[latex reversed-, dotted, black, line width=0.2mm] (\x+1,0.7) to (\x+1,-\x*0.7);
+        \end{pgfonlayer}
+        \draw[-o, GoogleIndigo, line width=0.5mm] (\x+1,-\x*0.7) to (\x+4,-\x*0.7);
+        \path (\x+1,-\x*0.7) -- (\x+4,-\x*0.7) node [midway, above] {\contour{white}{Computation}};
+    }
+    \foreach \x in {3, 4} {
+        \begin{pgfonlayer}{background}
+        \draw[latex reversed-, dotted, black, line width=0.2mm] (\x+1,0.7) to (\x+1,{-(\x-3)*0.7});
+        \end{pgfonlayer}
+        \draw[-o, GoogleIndigo, line width=0.5mm] (\x+1,{-(\x-3)*0.7}) to (\x+4,{-(\x-3)*0.7});
+        \path (\x+1,{-(\x-3)*0.7}) -- (\x+4,{-(\x-3)*0.7}) node [midway, above] {\contour{white}{Computation}};
+    }
+
+    \begin{pgfonlayer}{background}
+    \draw[latex reversed-, dotted, black, line width=0.2mm] (6,0.7) to (6,-0.7*2);
+    \end{pgfonlayer}
+    \draw[-ss, GoogleIndigo, line width=0.5mm] (6,-0.7*2) to (8.3,-0.7*2);
+
+    \begin{pgfonlayer}{background}
+    \draw[latex reversed-, dotted, black, line width=0.2mm] (7,0.7) to (7,0);
+    \end{pgfonlayer}
+    \draw[-ss, GoogleIndigo, line width=0.5mm] (7,0) to (8.3,0);
+
+    \begin{pgfonlayer}{background}
+    \draw[latex reversed-, dotted, black, line width=0.2mm] (8,0.7) to (8,-0.7);
+    \end{pgfonlayer}
+    \draw[-ss, GoogleIndigo, line width=0.5mm] (8,-0.7) to (8.3,-0.7);
+
+    \end{tikzpicture}
+    \caption{Parallelized beacon protocol, with input collection stream and overlapping computation.}\label{fig:beacon_parallel_timeline_real}
 \end{figure}

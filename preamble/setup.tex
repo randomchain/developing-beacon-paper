@@ -154,6 +154,12 @@
 
 \tikzset{every picture/.style={/utils/exec={\sffamily}}}
 
+\tikzset{
+.../.tip={[sep=0pt 1]
+Round Cap[]. Circle[length=0pt 1] Circle[length=0pt 1] Circle[length=0pt 1, sep=0pt]},
+ss/.tip={[sep=0pt 1]
+Butt Cap[]. Square[length=0pt 1] Square[length=0pt 1, sep=0pt]}}
+
 \tikzstyle{node} = [thick, circle, draw, fill=clnode, text width=1.5em, text centered, minimum height=1.5em]
 %\tikzstyle{block-textdepthfix} = [rectangle, draw, thick, fill=clcodeshade, text width=7.5em, text centered, minimum height=3em, text depth=.25ex]
 \tikzstyle{block} = [rectangle, draw, thick, fill=clcodeshade, text width=7.5em, text centered, minimum height=3em]
@@ -163,6 +169,9 @@
 %Two uml packages. I love it
 \usepackage{packages/tikz-uml}
 \usepackage{pgf-umlsd}
+
+\usepackage{contour}
+\contourlength{1.2pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SOURCE CODE
