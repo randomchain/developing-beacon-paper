@@ -1,0 +1,44 @@
+\begin{figure}
+    \centering
+    \footnotesize
+    \begin{tikzpicture}[xscale=0.95]
+    \pgfdeclarelayer{background}
+    \pgfsetlayers{background,main}
+    \draw[|-ss, line width=0.5mm, black] (0,0.7) to (8.5,0.7);
+    \path (0,0.7) -- (8,0.7) node [midway, above] {Input Collection Stream};
+
+    \foreach \x in {0, 1, 2} {
+        \begin{pgfonlayer}{background}
+            \draw[latex reversed-, dotted, black, line width=0.2mm] (\x+1,0.7) to (\x+1,-\x*0.7);
+        \end{pgfonlayer}
+        \draw[-o, GoogleIndigo, line width=0.5mm] (\x+1,-\x*0.7) to (\x+4,-\x*0.7);
+        \path (\x+1,-\x*0.7) -- (\x+4,-\x*0.7) node [midway, above] {\contour{white}{Computation}};
+    }
+    \foreach \x in {3, 4} {
+        \begin{pgfonlayer}{background}
+        \draw[latex reversed-, dotted, black, line width=0.2mm] (\x+1,0.7) to (\x+1,{-(\x-3)*0.7});
+        \end{pgfonlayer}
+        \draw[-o, GoogleIndigo, line width=0.5mm] (\x+1,{-(\x-3)*0.7}) to (\x+4,{-(\x-3)*0.7});
+        \path (\x+1,{-(\x-3)*0.7}) -- (\x+4,{-(\x-3)*0.7}) node [midway, above] {\contour{white}{Computation}};
+    }
+
+    \begin{pgfonlayer}{background}
+    \draw[latex reversed-, dotted, black, line width=0.2mm] (6,0.7) to (6,-0.7*2);
+    \end{pgfonlayer}
+    \draw[-ss, GoogleIndigo, line width=0.5mm] (6,-0.7*2) to (8.5,-0.7*2);
+    \path (6+1.5,-0.7*2) node [above] {\contour{white}{Computation}};
+
+    \begin{pgfonlayer}{background}
+    \draw[latex reversed-, dotted, black, line width=0.2mm] (7,0.7) to (7,0);
+    \end{pgfonlayer}
+    \draw[-ss, GoogleIndigo, line width=0.5mm] (7,0) to (8.5,0);
+
+    \begin{pgfonlayer}{background}
+    \draw[latex reversed-, dotted, black, line width=0.2mm] (8,0.7) to (8,-0.7);
+    \end{pgfonlayer}
+    \draw[-ss, GoogleIndigo, line width=0.5mm] (8,-0.7) to (8.5,-0.7);
+
+    \end{tikzpicture}
+    \caption{Parallelized beacon protocol, with input collection stream and overlapping computation. A circle denotes outputting at the end of the computation.}\label{fig:beacon_parallel_timeline_real}
+\end{figure}
+
