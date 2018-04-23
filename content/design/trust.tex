@@ -23,6 +23,8 @@ With this honest beacon, Alice knows exactly how long the computation took, and 
 However, assuming honesty is not advised, since it leaves Alice vulnerable by exploiting this trust.
 If Alice trusts the beacon operator to be honest, she will not suspect them to act according to the following scenario.
 
+\subimport{}{beacon_honest_timeline.tex}
+
 \paragraph{Scenario \#2 --- A malicious operator.}
 This is the worst case scenario for Alice; a beacon operator, which is trying to choose the output, yet still make it seem valid for Alice.
 The malicious operator will not resort to excluding Alice's input, since they are interested in fooling her to trust a forged output.
@@ -47,7 +49,7 @@ In this scenario the operator will effectively carry out a last-draw attack agai
 Moreover, if the malicious operator cannot compute an outcome which they deem beneficial, they are capable of claiming disrupted operation before publishing any commitment.
 This will leave Alice without any output, a withholding attack, and she will not be able to know if the operator was malicious or disrupted by a third party adversary.
 
-\subimport{}{beacon_timeline.tex}
+\subimport{}{beacon_malicious_timeline.tex}
 
 \subsection{Probabilistic Trust}%
 \label{sub:probabilistic_trust}
