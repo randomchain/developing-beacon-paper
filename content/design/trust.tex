@@ -5,7 +5,7 @@ We propose two scenarios, which can be used to describe the users trust assumpti
 In both of these scenarios, we focus on a given user named Alice, while all other users are regarded as potentially colluding adversaries with malicious intent.
 The only assumption about these adversaries, is that they can interact with the beacon in the same manner as Alice; i.e.\ send inputs to the beacon.
 
-Because network latency is dependent on many variables in a system and virtually impossible to verify, we assume the latency is non existent.
+Because network latency is dependent on many variables in a system and virtually impossible to verify, we assume the latency is non-existent.
 As a consequence of this, Alice will assume that any inputs she sends is received immediately by the beacon, and vice versa --- any message from the beacon is received instantly by her.
 This means that the beacon will not be able to claim different timings than what Alice observes.
 
@@ -29,7 +29,7 @@ Moreover, the malicious operator should be expected to collude with all other us
 
 When the operator is acting malicious they will try to manipulate the output, while displaying correct operation outwards.
 This means that Alice still will receive a commitment, output, and proof, which she can use to verify the correctness of the output.
-As will she received these messages at virtually the same timing as described in the honest operator scenario.
+As she will receive these messages at virtually the same timing as described in the honest operator scenario.
 The main difference here, is that Alice should not assume correlation between timings of received messages, and timings of beacon process.
 
 Assume the following behaviour of a malicious operator:
@@ -42,7 +42,7 @@ Assume the following behaviour of a malicious operator:
 \end{eletterate*}
 
 In this scenario the operator will effectively carry out a last-draw attack against Alice.
-Moreover, if the malicious operator cannot compute a outcome which they deem beneficial, they are capable of claiming disrupted operation before publishing any commitment.
+Moreover, if the malicious operator cannot compute an outcome which they deem beneficial, they are capable of claiming disrupted operation before publishing any commitment.
 This will leave Alice without any output, but she will not be able to know if the operator was malicious or disrupted by a third party adversary.
 Hereby deploying a withholding-attack on Alice.
 
@@ -54,7 +54,7 @@ In our approach to a randomness beacon, we want to push beyond the need for hone
 To achieve this, we first need to quantify trusting the beacon and then determine thresholds for reasonable behaviour.
 This effectively will provide a measure of probabilistic trust, where users much decide for themselves, if the probability of honest operation is adequate.
 
-We present an property, which if satisfied, says that the user can trust that the beacon operator is not capable of fooling them.
+We present a property, which if satisfied, says that the user can trust that the beacon operator is not capable of fooling them.
 The property is true, if the user determines that nobody will be able to compute the delay function in the time between they sent their input and received the commitment.
 This can be condensed to:
 \begin{equation}
@@ -67,7 +67,7 @@ In fact, it must be smaller than the shortest time a given user thinks the opera
 Taking this into consideration we present a beacon operation protocol, which can be adjusted to increase or decrease this limit.
 The operation must be sequential, which means that we must collect input before computing the delay function.
 However, because we want to spend more time computing, than we are collecting input, a strictly sequential beacon will contain dead spots, where no user is submitting input.
-This may be acceptable in some scenarios, but we want to design a beacon which always accepts inputs, and which wont be suspected of malicious operation.
+This may be acceptable in some scenarios, but we want to design a beacon which always accepts inputs, and which will not be suspected of malicious operation.
 To achieve this we parallelize the beacon protocol, meaning that several delay functions will run in parallel but offset in time, and using different input.
 
 In~\cref{fig:beacon_parallel_timeline} this is illustrated, where these offset but parallel beacons are seen.
