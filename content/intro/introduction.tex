@@ -100,17 +100,21 @@ We will use the latter (user input).
 It is important to stress that a user should only use a given output if they can verify that the input of a trusted party has been part of the computation --- usually the only trusted party is the user itself.
 
 \subsubsection{Operation Approaches}
-We identify a total of four ways in which a beacon are typically operated:
+We identify two ways in which a beacon is typically operated~\mtjnote{Cite ourselves}:
 
 \begin{description}
-    \item [Autocratic Collector] A single entity collects and publishes randomness with no option for verification of the output. Absolute trust in the entity is required to trust the output. This type is directly synonymous with the trust-requiring beacon that we described earlier.
+    \item[Autocratic Collector] This type is synonymous with the \enquote{trust-requiring beacon}. As such, we do not wish to further consider this type.
 
-    \item [Specialized \acrshort{mpc}] Users utilize \acrfull{mpc} to produce randomness. While notable examples of such beacons exist, they either have problem scaling outside of small groups or they require honest majorities. This makes them less suited for public use, where we do not control the amount of users or their identities.
+    \item [Specialized \acrshort{mpc}] Users utilize \acrfull{mpc} to produce randomness.
+    While notable examples of such beacons exist, they either have problem scaling outside of small groups or they require honest majorities.
+    This makes them less suited for public use, where we do not control the amount of users or their identities.
 
-    \item [Transparent Authority] A single entity collects input and publishes it with a focus on transparency --- users can verify that the beacon behaves according to protocol. This type uses publicly available input or user inputs.
+    \item [Transparent Authority] A single entity collects input and publishes it with a focus on transparency --- users can verify that the beacon behaves according to protocol.
+    This type uses publicly available input or user inputs.
 
-    \item [Data Publisher] An entity outputs or refers to publicly available data, that can be used to generate random numbers. They also provide the algorithm to do so, allowing users to generate their own random numbers.
 \end{description}
+
+\mtjnote{Write that we choose the TA approach.}
 
 \subsection{Contributions}
 \mtjnote{Todo: Contributions}
