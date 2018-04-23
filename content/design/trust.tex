@@ -5,9 +5,9 @@ We propose two scenarios, which can be used to describe the users' trust assumpt
 In both of these scenarios, we focus on a given user named Alice, while all other users are regarded as potentially colluding adversaries with malicious intent.
 The only assumption about these adversaries, is that they can interact with the beacon in the same manner as Alice; i.e.\ send inputs to the beacon.
 
-Because network latency is dependent on many variables in a system and virtually impossible to verify, we assume the latency is non-existent.
-As a consequence of this, Alice will assume that any inputs she sends is received immediately by the beacon, and vice versa --- any message from the beacon is received instantly by her.
-This means that the beacon will not be able to claim different timings than what Alice observes.
+Because network latency is dependent on many variables in a system and virtually impossible to verify, Alice should not trust any claim from the beacon operator regarding latency.
+To protect herself, Alice will assume that any inputs she sends is received immediately by the beacon, and vice versa --- any message from the beacon is received instantly by her. This can be thought of as a \enquote{worst-case} time.
+This means that the beacon will not be able to claim different timings than what Alice observes --- and as this observation is all she can trust, she should base her decisions on that.
 
 \paragraph{Scenario \#1 --- An honest operator.}
 This is the best case scenario for Alice.

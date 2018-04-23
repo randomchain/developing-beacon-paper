@@ -35,16 +35,14 @@ This effectively means that a beacon is a pipeline where data flows into the sys
 The pipeline architecture can be seen as a specialization of the \gls{soa} pattern, since each step in the pipeline is a service as defined in a \gls{soa}.
 When considering the system as a pipeline some restrictions are imposed compared to the more generic \gls{soa}, in that data only flows in one direction.
 
-The pipeline also allows for parallel operation, i.e.\ input collectors can run continuously as can the computation service.
-This effectively means that we can reach the highest possible output of randomness given a single computation service.
-One might argue that several computation services slightly offset in start time, could output more frequently, but this would by our design be considered several different beacons.
-\mtjnote{Make figure explaining this parallelization. Lego-klodser sat sammen.}
+%The pipeline also allows for parallel operation, i.e.\ input collectors can run continuously as can the computation service.
+%This effectively means that we can reach the highest possible output of randomness given a single computation service.
+%One might argue that several computation services slightly offset in start time could output more frequently, but this would by our design be considered several different beacons.
+Parallelizing a pipeline to increase the output frequency is also possible. We will discuss this topic later.
 
-In some scenarios a beacon may consist of multiple computation services, as a mean of redundancy, as long as each computation is run on the same input.
+In some scenarios a beacon may consist of multiple computation services as a mean of redundancy, as long as each computation is run on the same input.
 The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
 This brings forth the issue of consensus about which input to use\msmnote{out of scope or explain solutions?}.
-
-\mtjnote{Rewrite all parts of this section to say when something from STRIDE has been solved or mitigated.}
 
 \subsection{Security Design}
 
@@ -74,24 +72,6 @@ To avoid having to require each user to execute the full delay function, we use 
 The delay function also partially protects against last-draw attacks by adversaries. A last-draw attack would attempt to bias the output by crafting an input so as to produce favorable randomness. The adversary needs to compute the result of adding a specific input as the last input. Delay functions make this significantly more difficult to attempt due to the time needed to compute the result.
 Given a delay function that takes five minutes to complete, an adversary must dedicate five minutes of processor time to any given input he attempts to use. This means he must dedicate large amounts of resources to perform any significant amount of attempts, and more importantly: if a single input is added to the beacon within that five minute period, all of his work will be null, and he will be forced to restart.
 
-The combination of these concepts, \gls{cco} and a delay function, effectively gives the following workflow for each cycle of the beacon:
-\mtjnote{Make a nice figure of this with $t_{-1}, t_0, t_1$... and describe time intervals.}
-
-\begin{enumberate}
-    \item Collect inputs
-    \item Process inputs
-    \item Publish commitment
-    \item Compute output
-    \item Publish output
-\end{enumberate}
-
-
-
-\mtjnote{The beacon is secure because:}
-\mtjnote{%
-The operator does not know the individual inputs before receiving them
-He commits to using the inputs, i.e.\ he cannot change the order of them to his own benefit.
-What keeps him from trying out multiple commitments before publishing one?
-The slow hash function ensures that he cannot try excessively many commitments.}
+The combination of these concepts, \gls{cco} and a delay function, effectively gives the following workflow for each cycle of the beacon: First, it collects inputs and processes them. Then, it publishes a commitment containing all inputs, before beginning the computation. When the computation is finished, it publishes the output.
 
 \subimport{}{trust.tex}
