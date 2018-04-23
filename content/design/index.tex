@@ -46,16 +46,14 @@ This brings forth the issue of consensus about which input to use\msmnote{out of
 
 \subsection{Security Design}
 
-\mtjnote{This section deals with some problems introduced by our chosen architecture and some parts of STRIDE.}
+From a security perspective, new attack surfaces are introduced by splitting up the system from a monolithic self-contained architecture to a service-oriented kind.
+When designing a composable system such as our randomness beacon it is important to take the inter-component communication into account.
+For example, this architecture can potentially make it possible for adversaries to block out parts of the system, by means of \gls{dos} attacks.
+Moreover, the protocol used to communicate from service to service must be secure in a way that prevents adversaries from being able to undetectably manipulate the messages.
 
-When designing a composable system such as our randomness beacon, it is important to take into account, the inter-component communication.
-From a security aspect, splitting up the system from a monolithic self-contained architecture to a service oriented kind, exposes a myriad of new attack surfaces.
-For example this architecture can potentially make it possible for adversaries to cut off parts of the system, by means of \gls{dos} attacks.
-Moreover the protocol used to communicate from service to service, must be secure in a way that prevents adversaries from being able to undetectably manipulate the messages.
-
-In the case of a randomness beacon, the security also embodies the operators ability to predict or manipulate the output.
-This means that we need some mechanism of preventing the operator from performing last-draw attacks disguised as regular user inputs, or excluding certain inputs to alter the output.
-Moreover we also want to prevent the operator from being able to initiate multiple beacon computations, and then only publish the output which benefits the operator the most.
+In the case of a randomness beacon, the security also embodies the operator's ability to predict or manipulate the output.
+This means we need some mechanism to prevent the operator from performing last-draw attacks disguised as regular user inputs, or excluding certain inputs to alter the output.
+Moreover, we also want to prevent the operator from being able to initiate multiple beacon computations, and then only publish the output which benefits the operator the most.
 
 Generally, these concerns can be mitigated by enforcing a \gls{cco} workflow in the beacon protocol.
 This effectively means that each published output is paired with a commitment which can be used in the verification of the beacon.
@@ -63,7 +61,7 @@ The operator must publish the commitment a significant amount of time before the
 
 The commitment consists of the hashes of the inputs to the beacon, structured in a merkle tree, the root of which is inputted to the delay function. This allows any other party to compute the randomness alongside the beacon operator. It also ensures that the operator can not withhold any numbers, and effectively reduces the \enquote{market value} of the output, making it less attractive to sell early access to it.
 
-To guarantee that the time between publishing the commitment and output has been spent on computing the output, we utilize a delay function.
+To guarantee that the time between publishing the commitment and output has been spent on computing the output, we utilize a \emph{delay function}.
 Delay functions require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
 When deploying delay functions in randomness beacons it is important to keep verification in mind.
 A user should be able to run the delay function in reverse to confirm that a commitment matches the output.
