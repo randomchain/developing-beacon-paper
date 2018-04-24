@@ -84,5 +84,20 @@ backgroundcolor=clshade]{formal}
     leftline=true]}
 {\end{mdframed}}
 
+\def\innerdrea(#1,#2,#3,#4,#5) {%
+    \begin{tikzpicture}[xscale=0.25, yscale=0.25, baseline=-.5ex]
+        \scriptsize
+        \foreach \x/\name/\value in {0/D/#1,1/R/#2,2/E/#3,3/A/#4} {
+            \node[GoogleGrey] at (\x,1) {\name};
+            \node[GoogleBlueGrey, thick] at (\x,0) {\value};
+        }
+        \node[GoogleGrey] at (4.5,1) {$\Sigma$};
+        \node[GoogleBlueGrey, thick] at (4.5,0) {#5};
+    \end{tikzpicture}
+}
+
+\def\drea#1{\innerdrea(#1)}
+
+
 \newcommand{\stefan}[1]{\fxnote[nofootnote,inline,author=Stefan]{\color{GoogleBlue}#1}}
 \newcommand{\rene}[1]{\fxnote[nofootnote,inline,author=Rene]{\color{GoogleBlue}#1}}
