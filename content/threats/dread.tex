@@ -12,21 +12,30 @@ However, the \emph{discoverability} can be considered to reward security through
 %Were gonna need a pretty solution to DREAD structure
 \begin{description}
     \item [Input Biasing Attack] Adversaries can provide input that biases the output to their benefit --- typically in the form of Last Draw Attacks, where they provide the last input to the computation.
-    %D3 - Ruins the output for everyone, and breaks unbiased / unpredictable - R 3, everyone can do it with a web browser - E 2, requires the ability to precompute results, A 3, all users affected. D - 3
+    %D3 - Ruins the output for everyone, and breaks unbiased / unpredictable, R 3 - everyone can do it with a web browser, E 2 - requires the ability to precompute results, A 3 - all users affected
     \item [Denial of Service] Adversaries can overwhelm the beacon with inputs to prevent other users from contributing their own input, thus denying service. Another approach could be perform a standard \gls{dos} attack on the central server of the beacon to prevent operation, or performing an eclipse attack on certain users to deny them access.
-    %D 2, the beacon will be back - R 3, anyone can borrow a botnet for dos attacks, and operator can pull the plug - E 2, they need to use a dos tool. - A 3, noone can use the beacon, but eclipse would only hit 1 user.
+    %D 2 - the beacon will be back, R 3 - anyone can borrow a botnet for dos attacks, and operator can pull the plug, E 2 - they need to use a dos tool,  A 3 - noone can use the beacon, but eclipse would only hit 1 user.
     \item [Man in the Middle Attack] Adversaries can intercept and change data sent between user and beacon.
-    %D 3 - ruins beacons output, R 1 needs to send to all users , E 1 must be done to all users, A 3 affects all users.
+    %D 3 - ruins beacons output, R 1 - needs to send to all users , E 1 - must be done to all users, A 3 - affects all users.
     \item [Hijacking] Adversaries can attempt to seize control of the beacon, either by directly gaining access to the beacon and all accompanying operator privileges, or indirectly by corrupting the operator.
     %Not a thing
     \item [Shutdown] A malicious beacon operator can shut the beacon down, completely denying availability.
+    %D 3 - complete shutdown, R 3 - easy to pull the plug, E 2, A 3 - affects all users. We cant prevent this attack,
     \item [Withholding Attack] The operator can withhold outputs that are not favorable to his interests.
+    %D 3 - ruins output, R 3 - easy, E 2, A 3 - affects all users.
     \item [Selling Early Access] The operator can give access to the output earlier to some parties than others.
+    %D 3 - beacon can precompute simple outputs, R 3 - easy to repeat, E 2, A 3 - worst case everyone is affected
     \item [Input Manipulation] The operator can manipulate the input to bias the output of the beacon. He can also selectively exclude inputs from certain sources to deny them availability.
+    %D 3 - ruins output and beacon reputation, R 3 - easy life, E 2 - must be operator, A 3 - everyone is affected
     \item [False Output] A malicious operator can output false results of the computation that benefit him.
+    %Equivalent to withholding attack, as users can verify that the output is false.
     \item [Exploitable Crypto] Weaknesses in the cryptography that allow adversaries to easily manipulate the beacon could exist.
-    \item [Output Quality Attack] Adversaries can supply bad input and deny good to reduce the quality of the output.
+    %D 3 - adversaries gain extreme power to manipulate beacon, R 3 - easy to reproduce once found, E 1 - very hard to find, A 3 - beacon is compromised. Also consider quantum computers. They are the root of all evil.
+    \item [Output Quality Attack] Adversaries can supply bad input to reduce the quality of the output.
+    %D 3 - bad randomness, R 3 - easy to give bad input, E 3 - this could happen by accident, A 3
     \item [Eclipse Attack] TODO
+    %D 2 - no use for a single user, R 1 - extremely difficult to accomplish, E 1 - likewise, A 1 - only one user affected.
+
 
 \end{description}
 
