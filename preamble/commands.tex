@@ -89,10 +89,10 @@ backgroundcolor=clshade]{formal}
         \scriptsize
         \foreach \x/\name/\value in {0/D/#1,1/R/#2,2/E/#3,3/A/#4} {
             \node[GoogleGrey] at (\x,1) {\name};
-            \node[GoogleBlueGrey, thick] at (\x,0) {\value};
+            \node[descriptionlabeling, thick] at (\x,0) {\value};
         }
         \node[GoogleGrey] at (4.5,1) {$\Sigma$};
-        \node[GoogleBlueGrey, thick] at (4.5,0) {#5};
+        \node[descriptionlabeling, thick] at (4.5,0) {#5};
     \end{tikzpicture}
 }
 

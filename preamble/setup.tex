@@ -37,7 +37,7 @@
 \DeclareTextCommand{\nobreakspace}{T1}{\leavevmode\nobreak\ } % Fix for some build issue on certain machines
 
 % Fonts
-\usepackage[bitstream-charter]{mathdesign} % Serif font
+\usepackage[bitstream-charter, greekuppercase=upright]{mathdesign} % Serif font
 \def\sfdefault{SourceSansPro-TLF} % Sans serif font
 \usepackage{inconsolata} % Mono font
 
@@ -82,6 +82,7 @@
 
 % Tables
 \usepackage{booktabs}
+\usepackage{makecell}
 \usepackage{multirow}
 \usepackage{tabularx}
 \renewcommand{\arraystretch}{1.1} % Stretch arrays (in tabulars)
@@ -99,7 +100,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 %\usepackage[group-separator={,}]{siunitx}
-\usepackage{fixmath} % Ensures math is typeset according to ISO standard
+% \usepackage{fixmath} % Ensures math is typeset according to ISO standard
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MISCELLANEOUS
