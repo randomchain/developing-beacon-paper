@@ -102,16 +102,15 @@ We identify three ways in which a beacon is typically operated~\mtjnote{Cite our
 \begin{description}
     \item[Autocratic Collector] This type is synonymous with the \enquote{trust-requiring beacon}. As such, we do not wish to further consider this type.
 
-    \item [Specialized \acrshort{mpc}] Users utilize \acrfull{mpc} to produce randomness.
-    While notable examples of such beacons exist, they either have problems scaling outside of small groups or they require honest majorities.
-    This makes them less suited for public use, where we do not control the number of users or their identities.
+    \item [Specialized \acrshort{mpc}] Users utilize \acrfull{mpc} to collectively produce randomness.
 
     \item [Transparent Authority] A single entity collects input and publishes it with a focus on transparency --- users can verify that the beacon behaves according to protocol.
-    This type uses publicly available input or user inputs.
 
 \end{description}
 
-\mtjnote{Write that we choose the TA approach.}
+While notable beacons implementing specialized \acrshort{mpc} exist, they seem to focus on how to remedy scalability issues \mtjnote{citations}. This makes them less suited for public use, in which we do not control the number of users or their identities.
+
+The transparent authority type leaves much room for creative implementations that do not have these scalability issues. Therefore, we will select the transparent authority approach and base our own beacon design and implementation on it.
 
 \subsection{Contributions}
 \mtjnote{Todo: Contributions}
