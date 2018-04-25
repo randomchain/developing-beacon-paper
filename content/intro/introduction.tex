@@ -25,14 +25,14 @@ Consequently, we only consider the kind of randomness beacon that has been propo
 %The body of this work will be to discuss, design, and implement a beacon following the concept of not requiring users to trust it.% Before doing so, let's take a small detour and talk about potential use cases and the motivation for using a beacon at all.
 
 \subsection{Terminology}
-As discussed, we see two distinct groups of randomness beacons: the ones which require users to blindly trust the beacon operator (a la Rabin's original beacon); and the \enquote{new generation} randomness beacons of recent literature, which convincingly prove to all users of the beacon that nothing fishy happened during the \enquote{generation} of the random output.
+As discussed, we see two distinct groups of randomness beacons: the ones which require users to blindly trust the beacon operator (à la Rabin's original beacon); and the \enquote{new generation} randomness beacons of recent literature, which convincingly prove to all users of the beacon that nothing dubious happened during the \enquote{generation} of the random output.
 
 In this work, we will use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably --- both will equivalently refer to the second, new generation group of randomness beacons, those not requiring trust, unless clearly stated otherwise.
 We will not dwell too much on the original group of randomness beacons; those requiring trust in the operator.
 However, we cannot ignore this group for the sake of history and examples of what not to do, and in these few cases we will make it clear that we are talking about the first group, the \enquote{trust-requiring beacons}.
 
 \subsection{Trust Assumptions}
-Knowing nothing about the design or construction about the beacon, the only assumption of trust we reasonably can make is:
+Knowing nothing about the design or construction of the beacon, the only assumption of trust we reasonably can make is:
 \enquote{Everybody, including the beacon operator, is secretly colluding against you and willing to put an unlimited amount of money and resources towards manipulating or biasing the process for their own benefit}.
 
 %The only one you can trust is yourself, and this extends to the beacon. If you have not influenced the beacon output, it should be considered biased against you by default.
@@ -74,16 +74,13 @@ And if implemented correctly, deterministic pseudo-randomness is just as good fo
 %No true randomness is necessary but we care deeply about the unpredictability from deterministic pseudo-randomness.
 
 \subsubsection{Input Sources}
-As we argued, true randomness cannot be used in a randomness beacon for our setting;
-and since we use a deterministic algorithm to convert input to output, the input must have certain qualities.
-The user must be able to reason about it and trust it.
-
-Here, there are two approaches to input:
+As we argued, true randomness as input cannot be trusted in our setting, since it cannot reliably be distinguished from carefully crafted values that appear to be random.
+It is important that the user can trust the input to not be biased in such a way that it negatively affects the output. We therefore see two approaches to sourcing the input:
 
 \begin{description}
     \item[Publicly Available Sources] Using a publicly available source that everyone can agree on the value of, such as bitcoin transaction hashes, stock market data or lottery winning numbers from several international lotteries.
-The user must trust the source.
-Problems: The sources dictate the output rate, and sources can be compromised, and provides no guarantee / does not really solve the issue (the users should also make a bitcoin transaction, have a stock company, or observe the drawing from the lotteries to make sure everybody is not colluding against them); although it is far more unlikely that any adversary will be able to control stock markets, lotteries, and the entire bitcoin network.
+The user must trust the source, and this is reasonable because these sources are governed by some guarantees. E.g.\ in case of bitcoin, the transaction hashes have a monetary value and they are hard to preimage.
+Problems: The sources dictate the output rate, and sources can be compromised, and provides no guarantee / does not really solve the issue (the users should also make a bitcoin transaction, have a stock company, or observe the drawing from the lotteries to make sure everybody is not colluding against them); although it is far more unlikely that any adversary will be able to control stock markets, lotteries, and the entire bitcoin network. \mtjnote{Rewrite this to better language}
 
     \item[User Input] In essence, the only thing a user can trust is themself.
 Therefore, the user can be allowed to directly provide input to the computation.
@@ -99,15 +96,15 @@ In other words, if a given user needs to use the number, they should provide an 
 We will use the latter (user input).
 It is important to stress that a user should only use a given output if they can verify that the input of a trusted party has been part of the computation --- usually the only trusted party is the user itself.
 
-\subsubsection{Operation Approaches}
-We identify two ways in which a beacon is typically operated~\mtjnote{Cite ourselves}:
+\subsubsection{Operational Approaches}
+We identify three ways in which a beacon is typically operated~\mtjnote{Cite ourselves}:
 
 \begin{description}
     \item[Autocratic Collector] This type is synonymous with the \enquote{trust-requiring beacon}. As such, we do not wish to further consider this type.
 
     \item [Specialized \acrshort{mpc}] Users utilize \acrfull{mpc} to produce randomness.
-    While notable examples of such beacons exist, they either have problem scaling outside of small groups or they require honest majorities.
-    This makes them less suited for public use, where we do not control the amount of users or their identities.
+    While notable examples of such beacons exist, they either have problems scaling outside of small groups or they require honest majorities.
+    This makes them less suited for public use, where we do not control the number of users or their identities.
 
     \item [Transparent Authority] A single entity collects input and publishes it with a focus on transparency --- users can verify that the beacon behaves according to protocol.
     This type uses publicly available input or user inputs.

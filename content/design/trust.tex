@@ -4,6 +4,7 @@
 We propose two scenarios, which can be used to describe the users' trust assumptions towards the beacon.
 In both of these scenarios, we focus on a given user named Alice, while all other users are regarded as potentially colluding adversaries with malicious intent.
 The only assumption about these adversaries, is that they can interact with the beacon in the same manner as Alice; i.e.\ send inputs to the beacon.
+However, in the second scenario below, any adversary can have total control of the beacon.
 
 Because network latency is dependent on many variables in a system and virtually impossible to verify, Alice should not trust any claim from the beacon operator regarding latency.
 To protect herself, Alice will assume that any inputs she sends is received immediately by the beacon, and vice versa --- any message from the beacon is received instantly by her. This can be thought of as a \enquote{worst-case} time.
@@ -30,7 +31,7 @@ This is the worst case scenario for Alice; a beacon operator, which is trying to
 The malicious operator will not resort to excluding Alice's input, since they are interested in fooling her to trust a forged output.
 Moreover, the malicious operator should be expected to collude with all other users against Alice --- she is effectively alone in Wonderland.
 
-When the operator is acting malicious they will try to manipulate the output, while displaying correct operation outwards.
+When the operator is acting maliciously they will try to manipulate the output, while displaying correct operation outwards.
 This means that Alice still will receive a commitment, output, and proof, which she can use to verify the correctness of the output.
 She will receive these messages at virtually the same timing as described in the honest operator scenario.
 The main difference here, is that Alice should not assume correlation between timings of received messages, and timings of beacon process.
