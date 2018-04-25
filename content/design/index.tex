@@ -59,7 +59,7 @@ Generally, these concerns can be mitigated by enforcing a \gls{cco} workflow in 
 This effectively means that each published output is paired with a commitment which can be used in the verification of the beacon.
 The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output. Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desireable output.
 
-The commitment consists of the hashes of the inputs to the beacon, structured in a merkle tree, the root of which is inputted to the delay function. This allows any other party to compute the randomness alongside the beacon operator. It also ensures that the operator can not withhold any numbers, and effectively reduces the \enquote{market value} of the output, making it less attractive to sell early access to it.
+The commitment consists of the hashes of the inputs to the beacon, structured in a Merkle tree, the root of which is inputted to the delay function. This allows any other party to compute the randomness alongside the beacon operator. It also ensures that the operator can not withhold any numbers, and effectively reduces the \enquote{market value} of the output, making it less attractive to sell early access to it.
 
 To guarantee that the time between publishing the commitment and output has been spent on computing the output, we utilize a \emph{delay function}.
 Delay functions require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
