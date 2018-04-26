@@ -39,7 +39,24 @@ Knowing nothing about the design or construction of the beacon, the only assumpt
 
 \subsection{Use Cases}
 
-\mtjnote{Ideas needed: How to structure this section?}
+The fundamental use case of a beacon is to generate randomness that multiple parties can agree is truly random. This is valuable in use cases where multiple have an interest in knowing outcomes are not biased.
+
+We present a series of use cases; some good, and some bad and argue why they do or do not benefit from using a randomness beacon.
+
+A classic use for randomness is sampling, however most cases of sampling are performed in environments with some levels of trust. In such cases, a beacon would not be needed, but there are some where it would. For election recounts, the competing parties would have a large interest in ensuring the results are not biased against them in any way. There has also previously been controversy surrounding such recounts, such as the American presidential election in 2000 (Bush V. Gore - Needs good source). The high stakes and public nature makes a transparent and unbiased source of randomness very valuable to the process.
+It could also be useful in scientific sampling for multiple reasons --- first of all, science should be able to withstand review, and sampling data based on a randomness beacon would ensure that others could later reproduce those results, and remove doubt that the scientists had been cherry-picking samples.
+A similar use case could be the proof-of-stake consensus algorithms used in certain blockchains. At regular intervals, they elect a leader to mint the next block of transactions, which carries a monetary reward from each transaction to the leader. This provides an incentive to use a public source of randomness such as a beacon, to prevent malicious users from biasing the leader election process.
+
+Another use case that seems natural for randomness is lotteries, that need to randomly award some prize to a participant. However, one should consider that in most cases, participants still need to trust whatever party is hosting the lottery to pay out the prize. Essentially, it does not matter whether the randomness could be biased against you, if it impossible to win at all.
+In addition, the average person participating in a lottery is not necessarily very critical of the randomness as their stake in the lottery is quite small.
+Despite this, randomness beacons could possibly see some use in online lotteries run by smart contracts, as they do not have any central authority that must be trusted.
+
+Cryptography also contains good use cases, namely parameter generation and protocol bootstrapping. Many cryptographic protocols require some parameters to initialize. Choosing these can be a lengthy process (ZKSNARK), but also requires a great deal of trust as they could contain backdoors (NIST dual elliptic source). A randomness beacon could be used to seed the pseudo-random generation of good parameters, to trustlessly generate good parameters for such protocols (financial).
+Another good use case is bootstrapping for ZK-snark systems. Such systems require a \emph{common reference string} that must be generated as part of the bootstrapping process. Generating this string can be an extremely complicated process, as the trust of the entire system rests on the string. Should any party possess the entire string \mtjnote{or the numbers that generated the string?}, they can effectively fake proofs of anything, undermining the system. Due to its complexity, it can be very hard to scale such a process, which in turn requires more users to trust the participants. Using a randomness beacon can allow the process to scale far beyond the norm, as demonstrated by~\citet{mpcsnarks}. This not only makes it possible for more users to contribute to the system, which reduces the burden of trust on each participant, but also makes it easier to scale.
+
+It has also previously been suggested to use randomness beacons to improve challenge-response protocols, that could be reduced to single-message protocols if both parties could access the beacon.
+\citet{fischer2011publicrandomnessservice} suggest using a randomness beacon to improve a smart card challenge response protocol, which could be reduced to a single message and would be immune to chosen ciphertext attacks. However, this would necessitate that either the card could access the internet by itself, or that it was capable of verifying that a random number came from the beacon. This in turn would likely require some form of signature from the beacon the card would verify, in which case it might as well just use that algorithm for the challenge-response protocol. %This part seems weak and/or negative, consider removing ?
+
 
 %In which environments are beacons suitable? Users of the beacon output may be considered private individuals, scientists, companies, and corporations.
 
