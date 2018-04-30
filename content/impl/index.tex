@@ -1,19 +1,156 @@
 \section{Implementation}
 \label{sec:implementation}
-\mtjnote{Please rewrite totally.}
 
-\mtjnote{Focus on realizing the design, while discussing the trade-offs.}
+In this section we present: the general idea behind the implementation of our beacon design; technologies used in said implementation; and discussion of implementation details, which affect the beacon protocol.
+We seek to realize the design introduced in~\cref{sec:design}, while making reasonable trade-offs where necessary.
+This means that some parts of the implementation will be seen as future work, in the interest of time.
+However, the implemented beacon will be a functional \gls{poc}, with an underlying infrastructure suitable for real world deployment and usage.
 
-\mtjnote{Zeromq chosen because works in all languages. Python chosen for prototyping speed. Merkle trees is implementation of ordering and processing inputs. Sloth is implementation of delay function.}
+We believe that, although a more \enquote{ad-hoc} solution, regarding the infrastructure, might benefit the turnaround time of implementing the \gls{poc} prototype, the future refactoring and potential rewriting of code is not worth it.
+Furthermore, such an approach would leave us with a beacon implementation not fit for real world deployment, and therefore inequivalent of a real world beacon.
 
-We implement the beacon as  a set of independent components with their own responsibilities. Each component communicates with the others by sending and receiving messages, but are capable of running by themselves. We have four types of components, each with separate responsibilities, and multiple examples of some certain types.
-The first type is the \emph{input collector}, responsible for collecting user input, hashing the input and sending it to the next part of the pipeline. We have three components of this type, one for receiving HTTP input, one for TCP input, and a Telegram Messenger bot. Each of these allow users to provide input to upcoming computations. The input is hashed using SHA-512 for consistency and to prepare for the next step of the pipeline.
-The second type is the \emph{input processor}, responsible for processing input before it is used to produce randomness. We have two components of this type, one of which takes a set of inputs and constructs a Merkle tree from them. The root of the Merkle tree is then passed to the next step of the pipeline. The other takes the hashed inputs and concatenates them into a single string.
-The third type is the \emph{computation}, that computes the pseudorandom output of our beacon. It implements delay function based on the Sloth function used in \cite{randomzoo} to ensure that the randomness takes a large amount of time, and is resistant to being pre-computed.
-The fourth and final type is the \emph{output publisher}, responsible for publishing the randomness and proof for users. We have a single component of this type, namely a Twitter bot that publishes a random number alongside a sequence number for identification.
+\subsection{Overview}%
+\label{sub:overview}
+% SOA is achieved with concurrent and async message passing
+To achieve the \acrfull{soa} and pipelining presented in~\cref{sec:design}, we utilize a framework for asynchronous message passing and concurrency.
+This will allow us to develop the components separately and to gradually implement business logic, by mocking not-yet-complete services.
+As long as the inter-component communications protocol and message passing method is agreed upon.
+We choose to use \textit{ZeroMQ}\footnote{\url{http://zeromq.org/}}, also called \textit{ØMQ}, as this framework for message passing and concurrency.
 
-\subsection{Technologies}
-\label{sub:technologies}
-These are some key technologies and their advantages and drawbacks.
-We implement the beacon in Python for its ease of use, allowing us to rapidly develop and modify the beacon. We use ZeroMQ to facilitate communication between by message passing between components, and it also allows us to initialize each component independently of each other. \mtjnote{TODO: Describe what ZeroMQ is.}
-We use hashing algorithms prominently throughout the beacon. Inputs are hashed for the input processor, which in turn constructs a Merkle tree composed of hashes compounding up to the root node. The output is also a 512-bit hash, which can easily be shared and used. Using hashes allows users to contribute arbitrary data, as all inputs will be hashed into similar formats before being passed on in the pipeline. This also contains any negative effects that could arise from user inputs to the input collectors, as anything that is sent is in a pre-defined format.
+% ZeroMQ because language agnostic and fast. Ready for real world beacon
+\textit{ZeroMQ} does not get in the way of the implementation, meaning that it is language agnostic with bindings for virtually all programming languages, and that it is fast, flexible and scalable.
+The name \textit{ZeroMQ}, hints at its alternative approach to a messaging framework, in that no (or \textit{zero}) broker is needed between components.
+This means that our beacon implementation does not rely on any centralized broker for passing around messages --- no single point of failure in that aspect.
+
+% Fan-in, fan-out pipeline. Good patterns from ØMQ
+The pipelining with fan-in/fan-out at input processor and computation respectively, is implemented using the primitives of \textit{ZeroMQ}.
+These primitives provide useful patterns for communication, e.g.\ pipeline and publish/subscribe patterns.
+Using something like \textit{ZeroMQ} and not developing our own ad-hoc solution, allows us to leverage well-tested technologies, and focus on the beacon itself in stead.
+
+% Python for components for fast prototyping. Other languages where performance is important
+The components of the beacon, are mainly implemented using Python\footnote{I.e.\ Python 3 of course, not Legacy-Python}; both for fast prototype turnaround, but also because of a state of the art \textit{ZeroMQ} library.
+However, in some cases the performance overhead we get from Python is badly suited for the task at hand.
+Fortunately, Python programs can easily be extended with native C-code, and entire components can be implemented in a faster language if necessary.
+
+% Not focus on outlets and usability applications (e.g. tracking your input from start to finish)
+In the implementation of the beacon, we choose not to focus on usability applications, such as allowing a user to track their input automatically through the beacon.
+Instead, we implement a beacon with simple, secure, and succinct operation.
+It collects inputs, processes these inputs, does some computation, and lastly outputs data through a set of outlets.
+These steps will be further elaborated in the following sections.
+
+% All data out of the system will be correlated by sequence numbers (output, commit, proofs)
+The data, which the beacon outputs each cycle consists of:
+\begin{eletterate*}
+\item a commitment, containing all used inputs in the computation;
+\item an output, computed from the commitment; and
+\item a set of proofs, which can be used to verify the computation.
+\end{eletterate*}
+This data is correlated with sequence numbers, to keep track of all beacon outputs.
+
+\subsection{Infrastructure}%
+\label{sub:infrastructure}
+Establishing a solid and scalable infrastructure is a significant part of implementing our beacon.
+Moreover, we do not want to rely on running all components of the beacon on the same machine.
+Because of this, we use TCP sockets through \textit{ZeroMQ}.
+This means that operations such as actually reading bytes from the sockets, and reconnecting in case of networking issues, is handled by \textit{ZeroMQ}, which also maintains a local queue per socket, to mitigate network congestion.
+Sockets in \textit{ZeroMQ} requires one end to bind and the other to connect, and usually it is recommended that the most stable or consistent component binds, while dynamic or unstable components connect.
+Only one component can bind to a given socket, while many can connect to that same socket.
+
+In the \enquote{publish/subscribe} pattern \textit{ZeroMQ} handles the message routing based on subscription prefixes, which means less traffic on our network.
+Furthermore, the fan-in pipelining is implemented with a \enquote{PUSH/PULL} socket pair, which ensure fair operation, thereby avoiding starvation of components.
+Lastly, \textit{ZeroMQ} guarantee atomic delivery of messages, which means that we can assume all parts of a message or none at all.
+This is the most desirable scenario for us, since lost messages should be relatively insignificant, while malformed messages usually means strenuous error and edge case handling.
+
+\subsubsection{Proxies}
+In the interest of rapid iteration and ease of configuration, we deploy proxies at key points in the pipeline.
+This allows us to add and remove components easily from the network, since they do not need to know of each other only the proxies.
+We insert two proxies in the network: one between input collectors and the input processor, and one between computation and publishers.
+Another benefit of using proxies, is the ability to have a many-to-many connection, since the proxy binds both it frontend and backend socket, which components then connect to.
+
+These proxies are written in C for performance, and since they utilize a \textit{ZeroMQ} primitive for the actual forwarding, they operate quite stable.
+It should be noted that these proxies inherently introduces single points of failure in our beacon, which potentially could be bad for continuous and stable operations.
+
+\subsubsection{High-Availability}
+One way to mitigate single points of failures, could be to implement a pattern called \enquote{binary star} by \textit{ZeroMQ}.
+Here a component is configured with two instances, a primary and a backup.
+The backup can then take over, and signal for a new backup to be started, if the primary disappears from the network.
+This pattern can potentially be applied to all components exposed as a single point of failure, and would be sufficient in most cases of crashes.
+
+Another measure to provide high-availability in the beacon is the delegation of user interaction to input collectors and publishers.
+In the system user interaction is the most demanding task regarding availability, and the statelessness of the components means that adding new instances is as easy as executing a shell command.
+
+\subsection{System Interface}%
+\label{sub:system_interface}
+As previously mentioned the system boundaries, i.e.\ where users and the outside world interacts with the beacon, are handled by input collectors and publishers.
+We implement these and the surrounding infrastructure, to allow for a myriad of different sources and outlets, as well as vertical scaling it the load becomes to high on a single component.
+
+To limit the space of potential messages and message sizes passed around inside of our system, we sanitize the user inputs by hashing them at the entry point.
+Given a substantial amount of users, receiving and hashing inputs quickly becomes a costly affair, performance-wise.
+Fortunately the state of an input collector is only relevant to a single input request, meaning that scaling and even distributing across many machines is a trivial task.
+
+When we hash the users' inputs, we must inform them of the operation, such that they still will be able to confirm that their input was used in the output of the beacon.
+This means that the users must know which hashing algorithm is used, and for convenience we return the hash in the response of the input collectors.
+Currently we use the SHA512 hashing algorithm, since its digest size is 64 bytes, which gives us reasonably sized messages flowing through the system, while still having $2^{512}$ possible different values.
+It is important that the same hashing function is used throughout the system, since differences in output space will bias the outcome if the inputs are hashed multiple times --- which is the case.
+However, we implement the system such that the chosen hashing algorithm can be configured at beacon start.
+
+The beacon outputs using publishers to multiple different outlets.
+We implement several publishers, with different capabilities.
+This means that e.g.\ a JSON publisher can dump all publishing messages, while a Twitter publisher only is able to post messages with 280 characters.
+\msmnote{Maybe elaborate on publishers}
+
+\subsection{Input Processing and Computation}%
+\label{sub:input_processing_and_computation}
+The \enquote{core} of the beacon, i.e.\ input processing and computation, is what collects and compiles the user inputs, then computes the random output.
+In our beacon implementation we separate these steps into the two components as described in the design of the beacon.
+We develop these steps to be independent of each other, besides a well-defined contract consisting of:
+\begin{eletterate*}
+\item input processing condensed output, which is the input to the computation; and
+\item input processing data, which is the commitment to the computation.
+\end{eletterate*}
+
+\subsubsection{Parallel Computation}%
+\label{ssub:parallel_computation}
+As we discussed in~\cref{sub:probabilistic_trust}, we need parallel and time offset computations in the beacon.
+This is achieved by letting the input processor handle the scheduling of computations.
+
+The beacon is configured to process inputs at a lower bounded interval, which means that the input processor will send work at fixed times, given an available computation component.
+It should be noted that if no such computational component is freely available, the input processor will just continue collecting input.
+Does no computation service announce itself within a given threshold, the input processor will give a warning to the system operator.
+This scenario should be unlikely, since the beacon operator should configure the system to always have available computation components waiting for work.
+
+The worker announcements and subsequent work assignments are facilitated with \textit{ZeroMQ}'s \enquote{ROUTER/DEALER} socket pair, which allows asynchronous addressed messaging.
+When a computational node connects to the input processor, it sends a \enquote{ready} message, receives an \enquote{OK}, and proceeds to wait for incoming work.
+The input processor then keeps track of each announced worker, and when the time comes, sends condensed processing output and commitment data.
+If the worker does not acknowledge the work with an \enquote{OK} response, the inputs are reprocessed and the next free worker is assigned.
+This cycle continuous until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
+
+\subsubsection{Combining Inputs}%
+\label{ssub:combining_inputs}
+One way to combine and compile the inputs, is the simple operation of concatenating them.
+This is then used as commitment date, while a hash of the commitment data can be used as the condensed output.
+This processing method requires the users to acquire the full commitment, if they want to confirm the inclusion of their input --- which can be suboptimal in cases of significantly many users.
+
+Although our beacon implementation allows for virtually any input processing method, we choose to focus on a Merkle tree approach.
+A Merkle tree, is a special binary tree where the value of each node is the hash of the concatenation of its two children.
+In our implementation this means that the leaf nodes are user inputs, which are already hashes, and the root node is the condensed output.
+For consistency, the hashing algorithm used to construct the tree, is the same as the one applied to sanitize each input.
+
+Merkle trees as commitment data allows third party applications to provide verification, since the inclusion of a given leaf node in a Merkle tree, can be verified by providing all sibling nodes up to the root.
+This greatly limits the amount of date which the user needs to fetch and process to $\log{n}$ where $n$ is the number of leaf nodes.
+The commitment data consist of only the leaf nodes.
+This is possible if they retain their ordering, and the algorithm to construct the tree is openly available.
+
+Another property of the Merkle tree is that like hashing a concatenation of all collected inputs, each leaf node affects the root node equally.
+This means that any change to the set of inputs, completely changes the root node if the Merkle tree.
+
+\subsubsection{Delay Function}%
+\label{ssub:delay_function}
+For the computation we implement a delay function based on \textit{sloth} by \citet{randomzoo}.
+The general idea behind \textit{sloth}, is to use modular square root arithmetics to construct a deterministic time hard algorithm, while containing a trapdoor for fast reversal, i.e.\ verification --- we summarize the paper in \cref{sub:random_zoo}.
+
+When implementing delay functions in systems that rely on their time guarantees, it is important to focus on performance, since an obvious yet undeployed optimization of execution time would compromise the \enquote{time hardness} of the algorithm.
+Because of this, and the fact that python is not the best performing language, we implement \textit{sloth} as a python module with a C-extension for the actual algorithm.
+In the C-extension we utilize the GNU MP library\footnote{\url{https://gmplib.org/}} to perform integer arithmetics with extremely large numbers.
+\msmnote{Maybe discuss machine requirements and show performance numbers}
+
