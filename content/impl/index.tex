@@ -1,5 +1,11 @@
 \section{Implementation}
 \label{sec:implementation}
+\mtjnote{Please rewrite totally.}
+
+\mtjnote{Focus on realizing the design, while discussing the trade-offs.}
+
+\mtjnote{Zeromq chosen because works in all languages. Python chosen for prototyping speed. Merkle trees is implementation of ordering and processing inputs. Sloth is implementation of delay function.}
+
 We implement the beacon as  a set of independent components with their own responsibilities. Each component communicates with the others by sending and receiving messages, but are capable of running by themselves. We have four types of components, each with separate responsibilities, and multiple examples of some certain types.
 The first type is the \emph{input collector}, responsible for collecting user input, hashing the input and sending it to the next part of the pipeline. We have three components of this type, one for receiving HTTP input, one for TCP input, and a Telegram Messenger bot. Each of these allow users to provide input to upcoming computations. The input is hashed using SHA-512 for consistency and to prepare for the next step of the pipeline.
 The second type is the \emph{input processor}, responsible for processing input before it is used to produce randomness. We have two components of this type, one of which takes a set of inputs and constructs a Merkle tree from them. The root of the Merkle tree is then passed to the next step of the pipeline. The other takes the hashed inputs and concatenates them into a single string.
