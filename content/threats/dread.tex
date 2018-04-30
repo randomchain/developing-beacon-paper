@@ -1,5 +1,5 @@
 \subsection{Threats}
-We consider a wide variety of threats, and analyze their severity according the DREAD framework with some modifications. DREAD consists of five metrics~\cite{dread}, that are scored on a scale of 1 to 3 (low, medium, high):
+We consider a wide variety of threats, and analyze their severity according the DREAD framework with some modifications. DREAD consists of five metrics~\cite{dread}, that we score on a scale of 1 to 3 (low, medium, high):
 \begin{description}
     \item [Damage] How bad would such an attack be?
     \item [Reproducibility] How easy is it to reproduce such an attack?
@@ -13,6 +13,7 @@ However, \emph{discoverability} can be considered to reward security through obs
 
 Fundamentally, attackers can harm the \emph{availability} and \emph{integrity} of the beacon output. Therefore, we categorize the attacks by what they attack. Further, these can be categorized by who is able to perform these attacks. Here, an \enquote{outsider} is anyone who is not the beacon operator, i.e.\ a user. An \enquote{insider} is either the beacon operator, or an outsider who has gained access to the beacon, for example by hijacking it --- in a sense the outsider \emph{is} the beacon operator. Also note the insider can trivially perform the outsider attacks, too. \cref{tab:attacks-categorization} summarizes this and categorizes the found attacks, which will be explained in the following sections.
 
+\mtjnote{More text about what are insiders and outsiders. and why they can be eachother}
 \subimport{}{threat_table.tex}
 
 \subsubsection{Availability}

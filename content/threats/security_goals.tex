@@ -1,8 +1,9 @@
 \subsection{Security Goals}
+\mtjnote{rewrite meta text in section 2 and this so it fits}
 This section concerns the security goals that we have for our beacon design and implementation, which in turn will shape the requirements to the system. The goals are derived from our choice of trust assumptions (users can only trust themselves), our choice of user input, and our choice of the transparent authority approach.
 
 \begin{description}
-    \item [Trust] Users should only need to trust themselves. The output of the beacon must be impossible to bias against a user that has successfully contributed to it.
+	\item [Trust] Users should only need to trust themselves. The output of the beacon must be impossible to bias against a user that has successfully contributed to it. \mtjnote{Change this to extremely hard --- not impossible}
     \item [Byzantine Behavior Detection] If the beacon deviates from protocol, it should be easily detectable.
     \item [Fault Isolation] If a component acts byzantine, the behavior should not propagate to the rest of the system.
     \item [Availability] The beacon should have a variety of input and output options for both usability and redundancy. \mtjnote{Is this really what we should call \enquote{Availability}?}
