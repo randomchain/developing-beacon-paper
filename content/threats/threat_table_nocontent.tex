@@ -1,0 +1,26 @@
+\aboverulesep=0ex
+\belowrulesep=0ex
+\begin{figure}[htb]
+\centering
+\small
+\newcommand{\tabletitle}{\sffamily\color{descriptionlabeling}\bfseries}
+\begin{tabular}{@{}ll!{\color{clframe}\vrule}l@{}}
+    \arrayrulecolor{clframe}
+
+    & \multicolumn{1}{c}{\tabletitle Insider} & \multicolumn{1}{c}{\tabletitle Outsider} \\
+
+    \settowidth\rotheadsize{\parbox{2.1cm}{\centering\tabletitle Threats to availability}}
+    \rothead{\parbox{2cm}{\centering\tabletitle Threats to availability}} &
+    \makecell[l]{\hphantom{123456789123}} &
+    \makecell[l]{}\hphantom{123456789123} \\
+
+    \cmidrule(l){2-3}
+
+    \settowidth\rotheadsize{\parbox{2.1cm}{\centering\tabletitle Threats to integrity}}
+    \rothead{\parbox{2cm}{\centering\tabletitle Threats to integrity}} &
+    \makecell[l]{} &
+    \makecell[l]{} \\
+
+\end{tabular}
+\caption{A matrix visualizing the two dimensions we classify by. Threats target either availability or integrity of the beacon, and can be performed by adversaries either inside or outside the beacon.}\label{tab:threats-categories}
+\end{figure}

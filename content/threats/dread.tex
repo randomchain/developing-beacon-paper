@@ -1,4 +1,21 @@
-\subsection{Threats}
+\subsection{Threat Categorization}
+In order to facilitate the process of discovering threats to a general beacon, we will classify threats as they are found in a two-dimensional matrix.
+
+The important part of a beacon that must be protected is the output. Adversaries can harm the output in two ways: Either the threat targets the \emph{availability}, i.e.\ making the output unavailable, or it targets the \emph{integrity}, i.e.\ reducing the quality of the beacon output potentially to a state where the output should not be used at all. What the threat targets will as such be one of the dimensions.
+
+The other dimension will be who is able to perform a given threat.
+Here, we distinguish between \emph{insiders} and \emph{outsiders}.
+An insider is anyone with the capabilities of the beacon operator, which ideally is just the beacon operator, but for all intents and purposes may as well be anyone gaining inside access to the beacon by e.g.\ hijacking it.
+Because the beacon operator should not be trusted either, we see no reason to distinguish between a legit beacon operator, a malicious beacon operator, or anyone maliciously gaining access to the inside beacon.
+The beacon operator could be as malicious as other adversaries hijacking the system.
+An outsider is anyone who can influence the beacon operation from the outside network.
+An outsider does not possess inside access, except for the special case where the beacon operator launches threats on the same terms as outsiders.
+
+\cref{tab:threats-categories} visualizes these dimensions.
+
+\subimport{}{threat_table_nocontent.tex}
+
+\subsection{Scoring Framework}
 We consider a wide variety of threats, and analyze their severity according the DREAD framework with some modifications. DREAD consists of five metrics~\cite{dread}, that we score on a scale of 1 to 3 (low, medium, high):
 \begin{description}
     \item [Damage] How bad would such an attack be?
@@ -8,14 +25,11 @@ We consider a wide variety of threats, and analyze their severity according the 
     \item [Discoverability] How easy is it to discover the threat?
 \end{description}
 
-However, \emph{discoverability} can be considered to reward security through obscurity. As such we will not consider it, as an adversary with unlimited resources will naturally know of all exploits.
+\emph{Discoverability} can, however, be considered to reward security through obscurity. As such we will not consider it, as an adversary with unlimited resources will naturally know of all exploits.
 %Were gonna need a pretty solution to DREAD structure
 
-Fundamentally, attackers can harm the \emph{availability} and \emph{integrity} of the beacon output. Therefore, we categorize the attacks by what they attack. Further, these can be categorized by who is able to perform these attacks. Here, an \enquote{outsider} is anyone who is not the beacon operator, i.e.\ a user. An \enquote{insider} is either the beacon operator, or an outsider who has gained access to the beacon, for example by hijacking it --- in a sense the outsider \emph{is} the beacon operator. Also note the insider can trivially perform the outsider attacks, too. \cref{tab:attacks-categorization} summarizes this and categorizes the found attacks, which will be explained in the following sections.
 
-\mtjnote{More text about what are insiders and outsiders. and why they can be eachother}
-\subimport{}{threat_table.tex}
-
+With the categorization introduced, we will now present the found attacks.
 \mtjnote{Present our nice tikz inline drawing, such that it doesn't come as a surprise}
 
 \subsubsection{Availability}
@@ -48,3 +62,9 @@ Fundamentally, attackers can harm the \emph{availability} and \emph{integrity} o
 %D 3 - beacon can precompute simple outputs, R 3 - easy to repeat, E 2, A 3 - worst case everyone is affected
 \parathreat{Cryptography Exploit}\drea{3,3,1,3,10} Weaknesses or exploits may exist in the cryptographic techniques that may protect the beacon. This could potentially undermine the entire security foundation of the beacon. While we estimate it will be hard to find such exploits, they would likely be quite easy to apply once found, and would affect all users. In this case one might also consider the effect quantum computers would have on the use of cryptography, which could also threaten the beacon.
 %D 3 - adversaries gain extreme power to manipulate beacon, R 3 - easy to reproduce once found, E 1 - very hard to find, A 3 - beacon is compromised. Also consider quantum computers. They are the root of all evil.
+
+\subsection{Something}
+
+\cref{tab:threat-categorization} shows the above threats in the matrix.
+
+\subimport{}{threat_table.tex}
