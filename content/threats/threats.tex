@@ -1,10 +1,5 @@
 \section{Threat Analysis}
-Assuming a generic beacon, we now turn to considering possible threats to it in order to understand the surrounding environment. These threats assume the \emph{user input} model of input as well as a beacon based on the \emph{transparent authority} model.
-
-\mtjnote{I was rewriting this, but suddenly felt the urgent need to have a supoervisor meeting. The following is old:}
-
-To better envision a secure design of a randomness beacon, we first consider which threats exist to such a beacon. We describe a wide variety of threats that could theoretically exist towards a beacon, without considering any of the previously established security goals and requirements to our design. In essence we consider threats to a randomness beacon run by a single operator that takes user input and uses it to generate pseudorandomness. We also still consider our trust assumptions to hold, meaning a user should consider everyone else to be colluding against them.
+Assuming a generic beacon, we now turn to considering possible threats to it in order to understand the surrounding environment.
+These threats assume the \emph{user input} model of input as well as a beacon based on the \emph{transparent authority} model.
 
 Randomness is the fundamental resource that adversaries would attempt to threaten and control. It can be considered and used as a fair determinant, and adversaries could seize control of it to control the outcomes it is used to determinate. Once in control of the randomness, an adversary could bias it towards their own benefit, ensuring that otherwise fair outcomes would consistently favor them. Alternatively, an adversary colluding against a user would only have to make sure the randomness was either biased against or not available to that user.
-
-\subimport{}{security_goals.tex}

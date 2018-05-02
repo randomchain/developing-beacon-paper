@@ -46,7 +46,7 @@ The first four numbers each corresponds to the first four DREAD metrics. The fif
 \subsection{Threats}
 This section will list the threats we were able to find. The list is split into two; first attacks that threaten the availability of the output, and then attacks that threaten the integrity of the output.
 
-\subsubsection{Availability}
+\subsubsection{Threats to Availability}
 
 \newcommand{\parathreat}[1]{\paragraph{#1}\hspace{-1ex}}
 
@@ -59,7 +59,8 @@ This section will list the threats we were able to find. The list is split into 
 %D 3 - no use for all users, R 1 - extremely difficult to accomplish, E 1 - likewise, A 3 - entire system affected.
 \parathreat{Eclipsing (Select) Users}\drea{2,1,1,1,5} An outsider can deny select users from accessing the beacon to provide input or receive output. This is a quite small threat, as it is extremely hard to completely prevent a determined party from accessing the beacon, and such an eclipse would still only affect that party.
 %D 2 - no use for a single user, R 1 - extremely difficult to accomplish, E 1 - likewise, A 1 - only one user affected.
-\subsubsection{Integrity}
+
+\subsubsection{Threats to Integrity}
 
 \parathreat{Input Biasing}\drea{3,3,2,3,11} An outsider can provide input that knowingly biases the output to their benefit or others' disadvantage. Either the outsider knows how to construct an input such that it affects the output in a known way despite other users may contribute input later. If the outsider has the capability of providing the last input, it is a last-draw attack. This is a severe threat to the beacon, as it biases the output to the benefit of the adversary, and violates the unpredictability of the random number as the adversary now knows more than everybody else. The attack can be executed by anyone with access to the input collectors given that they have the ability to pre-compute outputs.
 %D3 - Ruins the output for everyone, and breaks unbiased / unpredictable, R 3 - everyone can do it with a web browser, E 2 - requires the ability to precompute results, A 3 - all users affected

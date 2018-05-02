@@ -69,7 +69,8 @@ It has also previously been suggested to use randomness beacons to improve chall
 A randomness beacon emits an unpredictable random value at a fixed interval, e.g.\ every five minutes.
 \subimport{}{simple_beacon_fig.tex}
 
-\subsubsection{Input Sources}
+\fxnote{Write that now we will tell about several things that describe a beacon.}
+\subsubsection{Input Source Models}
 It is important that the user can trust the input to not be biased in such a way that it negatively affects the output. We therefore see two approaches to sourcing the input:
 
 \paragraph{Private Input Sources} A beacon can use some private source of data to to produce randomness. This allows them to obtain produce randomness of high quality at a high rate, but requires users of the beacon to trust the beacon and its randomness.
@@ -98,14 +99,20 @@ The beacon then performs an operation on a set of user-supplied input, where eac
 
 If these are satisfied, the user knows that a value they trust to be random has been part of the random output generation. The computation performed by the beacon should ensure that users cannot knowingly bias the output to anyone's disadvantage. As such, the user knows that his input was not knowingly \enquote{counteracted} by another used.
 
-\subsubsection{Operational Approaches}
+\subsubsection{Operational Models}
 We identify three ways in which a beacon is typically operated:
 
-\paragraph{Autocratic Collector} This type is synonymous with the trust-requiring beacon - a single operator produces randomness from some private source of input, with no means of verifying the output.
+\paragraph{Autocratic Collector} This type is synonymous with the trust-requiring beacon - a single operator produces randomness from some private source of input, with no means of verifying the output. \mtjnote{Rewrite!}
 
-\paragraph{Specialized \acrshort{mpc}} Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs. This type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to larger groups~\cite{cascudo2017scrape, syta2017scalable}.
+\paragraph{Specialized \acrshort{mpc}} Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs. This type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to larger groups~\cite{cascudo2017scrape, syta2017scalable}. \mtjnote{Write they assume a honest majority.}
 
 \paragraph{Transparent Authority} A single entity collects input and publishes it with a focus on transparency. Users can by observing the beacon verify that the beacon behaves according to protocol. This does not directly prevent byzantine behavior, but rather makes it difficult or nearly impossible to hide such behavior. This type also support a wide variety of implementations, and is scalable to a public setting.
 
+\subsection{Delimitations}
+We want to create a randomness beacon that is secure under the assumption that everyone may be colluding against a given user, as per our security goals in \cref{sec:security_goals}. As such, we can immediately see that the autocratic collector is not suitable for our security goal, because it requires users to trust its hopefully honest operation. The \gls{mpc} model does not scale well enough for general use. Further, this model assumes an honest majority, which is a weaker assumption than our security goals. Therefore, it will not be suitable for us. This leaves us with the transparent authority model, which we adopt.
+
+Regarding input source models, we can immediately discard private input sources. They are tied to the autocratic collector model, and as such do not work for the transparent authority. The guarantees by publicly available sources are weak compared to user input. If sufficiently paranoid, the user will want to bias these publicly available sources to make sure all other users are not colluding. Therefore, user input is the simplest solution and provides the strongest guarantees for the user.
+
 \subsection{Contributions}
 \mtjnote{Todo: Contributions}
+\mtjnote{Something about we want to create a transparent authority beacon with user input.}
