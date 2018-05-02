@@ -1,80 +1,32 @@
 \section{Requirements}
 \label{sec:beacon_requirements}
 
-This section will list the requirements for a randomness beacon, suitable for our security goals.
-These requirements are separated into two groups: functional and non-functional requirements, as suggested by \citet[sec.\ 1.4.1]{swebok}.
-In subsequent sections, we will perform a preliminary analysis of these requirements to reveal possible security threats, and design a beacon that fits these requirements and circumvents as many as possible of the found threats.
-\mtjnote{This meta text is not really good.}
+This section will list the requirements for a randomness beacon, suitable for our security goals and the threats that exist towards beacons.
+We decided on using the \emph{Transparent Authority} type of beacon, which requires a high level of transparency. Users should be able to oversee that the beacon operates according to protocol, and catch any deviations from it. This in turn requires all aspects of the protocol to somehow publicly announce or display their work for users to verify. Fundamentally, users should be able to see which inputs have been used to produce randomness, and verify that they truly do produce the published output. This greatly benefits the integrity of the beacon, as some of the previously mentioned attacks would be detected in this setting. It also a necessity for our chosen type of input, \emph{User Input}, which requires users to be able verify their input is used to produce outputs.
 
-\mtjnote{Maybe the separation between functional and nonfunctional is not benefitting us? Maybe just one list.}
+The first part of this is the input - users should be able to see which inputs are used to produce an output of randomness. Recall the assumption that all other users are colluding against the user, and they can only trust an output that has used their own input.
+Being able to verify whether their own input has been used allows users to determine whether they should trust the output. If their input has not been used, they should not trust it.
+Secondly, they should be able to repeat the process on their own computers as a means of verification. This also requires the process to be deterministic, which in turn removes the option for true randomness. However, the output should still be unpredictable, even to the beacon operator.
 
-\mtjnote{Major overhaul: Maybe have a discussion first, arguing for the requirements, then in the end have a list summarizing them.}
+To make verification as easy as possible, the beacon should also output in a timely manner according to protocol. The inputs used, output, and any data needed for verification of an output should be published as soon as possible to make the beacon more transparent. By giving users all the tools to replicate and oversee the process, we make it difficult for adversaries to covertly manipulate the beacon to their benefit, and allow users to complete it themselves if it stalls. This in turn mitigates one of the greatest threat from the operator, input manipulation.
+Additionally, by requiring timeliness, we restrict the time a malicious operator has to diverge from protocol, before users will suspect him. A beacon that does not reveal which inputs where used before publishing the output will essentially be admitting that they picked the inputs to bias the output.
 
-\subsection{Functional Requirements}
-\label{sub:functional_requirements}
-\begin{description}
-    \item [Transparency]
-Users should be able to observe which inputs have been used to produce a random output. This is important because it allows them to find their own input, and be able to trust an output, and contributes to both the \emph{Trust} and \emph{Byzantine Behavior Detection} goal.
+It would also be beneficial to allow different channels for input and output, both to make the beacon easier to access for users, but also to make it resilient to having any single channel attacked. Should a single channel be attacked, input could still be submitted another.
 
-    \item[Verifiable]
-The output should be verifiable for any user, i.e.\ anyone must be able to verify that the beacon protocol produced the published output from the published input. This contributes to the \emph{Byzantine Behavior Detection} and \emph{Trust} goals.
+It could also be useful for the beacon to sanity and check the inputs received along different channels, to prevent bad inputs from breaking the protocol. Containing errors would allow the protocol to continue even if some parts of the system failed.
+Reasonability checks could also allow control of the quality of input, preventing poor inputs from affecting the quality of the output.
 
-    \item[Deterministic Output]
-As a function of the previous requirement, the beacon should deterministically compute an output from a set of inputs.
-As previously argued, this is because using true randomness will not allow users to reproduce the output.
+To summarize, we have the following requirements for our beacon:
 
-    \item[Unpredictable Output]
-The output should be unpredictable before the computation is done, even for the beacon operator.
+\begin{itemize}
+    \item Transparent
+    \item Verifiable Input and Output
+    \item Modular Input and Output
+    \item Deterministic and Unpredictable Output
+    \item Timely Publication
+    \item Sanity and Reasonability checks
+    \item Fault Tolerance
+    \item Usability
+\end{itemize}
 
-    \item[Timely Output]
-The beacon should publish the random output immediately after the computation is done, and any data necessary for the verification should be available to the user, contributing to the \emph{Byzantine Behavior Detection} goal.
-
-    \item[Modular Input and Output]
-The input and output channels of the randomness beacon should be extensible or configurable by beacon operators, to satisfy the \emph{Availability} goal.
-This will allow a beacon operator to use multiple input sources and output channels.
-For example, a beacon operator may allow users to provide inputs through APIs, email, and even tweets.
-Similarly, the output may be tweeted, published on a website, and will subsequently be harder to prevent from being published.
-
-
-%Strictly, it is not possible to be truly random, however for the vast majority of use cases this pseudo-randomness is good enough.
-% Far more important is the following requirement.
-
-    %\item[Commitment to Input] The beacon should produce a commitment to a set of inputs and publish the commitment as soon as possible after the input collection deadline, but before initiating output computation.
-% This ensures that the beacon operator cannot add, remove, or order the inputs to his own benefit. \mtjnote{Maybe remove this from here --- this is a solution, not requirement}
-
-
-\item [Internal Sanity \& Reasonability Checks]
-The beacon should have both sanity and reasonability checks to detect as much byzantine behavior as possible, as stated in the \emph{Byzantine Behavior Detection} goal, and prevent it from spreading to other components as per the \emph{Fault Isolation} goal.
-
-\end{description}
-
-\subsection{Non-Functional Requirements}
-\label{sub:non_functional_requirements}
-
-\begin{description}
-    \item[Fault Tolerance]
-The beacon architecture should be designed so as not to have a single point of failure, i.e.\ it should be configurable to be fault-tolerant by utilizing redundancy, as a way to satisfy the \emph{Fault Isolation} and \emph{Availability} goals.
-
-    % REDACTED \item[Something something] Operating the beacon should be incentivized and distributable among multiple participants. \msmnote{e.g.\ input sourcing by some, computation by another, etc.} \mtjnote{Why are these two necessary?} \mtjnote{This is two requirements, no?}
-
-    \item[Usability]
-It should be easy for users to contribute with input, and to fetch outputs, which in turn contributes to the \emph{Availability} goal.
-In practice this should not be a major problem, since input can be contributed over an insecure channel (they are not secret), and likewise the output can be retrieved over an insecure channel because the correctness of computation can be verified.
-\end{description}
-
-\subsection{Non-requirements}
-\mtjnote{We probably do not need this section.
-Take inspiration from this text and incorporate the pieces somewhere else}
-This section lists some requirements which may at first seem beneficial, but actually do not matter.
-
-\paragraph{Signing output with signature:}
-\mtjnote{Do we want to sign the output with our own signature? We probably do not need it for tamper-detection, as clients using the random number should verify the computation and the presence of their own input.}
-
-\paragraph{Secure channels for input and output:}
-\mtjnote{Inputs and outputs are not secret.
-What if an adversary has complete knowledge of all inputs? Then he can only do it as fast as the original operator.
-But he cannot change anything besides the order of inputs --- and he needs to commit to the order before computing.
-What about fiddling with the output? Users can verify the computation AND should not use an output for which they have not seen the corresponding commitment to AND they should verify that their own number has been part of the computation.
-So everything is good.}
-
-\mtjnote{The above note mentions \enquote{commitments}, but we have not introduced these yet}
+These requirements will serve as a foundation of our design.
