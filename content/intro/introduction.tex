@@ -75,7 +75,7 @@ It is important that the user can trust the input to not be biased in such a way
 
 \paragraph{Private Input Sources} A beacon can use some private source of data to to produce randomness. This allows them to obtain produce randomness of high quality at a high rate, but requires users of the beacon to trust the beacon and its randomness.
 As we argued, true randomness as input cannot be trusted in our setting, since it cannot reliably be distinguished from carefully crafted values that appear to be random.
-An example of this is the NIST~\cite{nistbeacon} randomness beacon that observes quantum mechanical effects to produce high-quality randomness.
+An example of this is the \gls{nist}~\cite{nistbeacon} randomness beacon that observes quantum mechanical effects to produce high-quality randomness.
 Ultimately it requires trust, since the observations cannot be repeated, and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effect.
 As such, the users need to blindly trust the beacon operator, which in the case of \gls{nist} can be hard given their history~\cite{nytimes-nsabackdoors, nytimes-nsaconstants, nist2014backdoor}.
 
@@ -102,7 +102,7 @@ If these are satisfied, the user knows that a value they trust to be random has 
 \subsubsection{Operational Models}
 We identify three ways in which a beacon is typically operated:
 
-\paragraph{Autocratic Collector} This type is synonymous with the trust-requiring beacon - a single operator produces randomness from some private source of input, with no means of verifying the output. \mtjnote{Rewrite!}
+\paragraph{Autocratic Collector} A beacon is run by a party, which deems it irrelevant to prove honesty. Instead, they require users to trust them to do what they say. This type is also synonymous with the old generation of beacons.
 
 \paragraph{Specialized \acrshort{mpc}} Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs. This type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to larger groups~\cite{cascudo2017scrape, syta2017scalable}. \mtjnote{Write they assume a honest majority.}
 
