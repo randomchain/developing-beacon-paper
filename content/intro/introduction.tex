@@ -69,13 +69,14 @@ It has also previously been suggested to use randomness beacons to improve chall
 
 \subsection{Beacon Definition}
 
-A randomness beacon emits an unpredictable random value at a fixed interval, e.g.\ every five minutes.
+A randomness beacon emits an unpredictable random value at a fixed interval, e.g.\ every five minutes. \cref{fig:abstract_beacon} shows the operation of an abstract beacon.
 \subimport{}{simple_beacon_fig.tex}
+\mtjnote{We should probably write more here?}
 
-\fxnote{Write that now we will tell about several things that describe a beacon.}
+A beacon can further be seen as following specific models describing behavior. Here, we distinguish between an input source model and operational model. The input source model describes the way the beacon sources its input, and the operational model describes the way it performs the computation. These models are based on our earlier work \fxnote{Insert reference to own work previous semester?}.
 
 \subsubsection{Input Source Models}
-It is important that the user can trust the input to not be biased in such a way that it negatively affects the output. We therefore see two approaches to sourcing the input:
+It is important that the user can trust the input to not be biased in such a way that it negatively affects the output. We therefore see three approaches to sourcing the input:
 
 \paragraph{Private Input Sources} A beacon can use some private source of data to to produce randomness. This allows them to obtain produce randomness of high quality at a high rate, but requires users of the beacon to trust the beacon and its randomness.
 As we argued, true randomness as input cannot be trusted in our setting, since it cannot reliably be distinguished from carefully crafted values that appear to be random.
@@ -106,9 +107,9 @@ If these are satisfied, the user knows that a value they trust to be random has 
 \subsubsection{Operational Models}
 We identify three ways in which a beacon is typically operated:
 
-\paragraph{Autocratic Collector} A beacon is run by a party, which deems it irrelevant to prove honesty. Instead, they require users to trust them to do what they say. This type is also synonymous with the old generation of beacons.
+\paragraph{Autocratic Collector} A beacon is run by a party, which deems it irrelevant to prove honesty. Instead, they require users to trust them to do what they say. As such, the computation will be a black box with no possibility for proof of honesty. This type is also synonymous with the old generation of beacons.
 
-\paragraph{Specialized \acrshort{mpc}} Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs. This type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to larger groups~\cite{cascudo2017scrape, syta2017scalable}. \mtjnote{Write they assume a honest majority.}
+\paragraph{Specialized \acrshort{mpc}} Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs. Given an honest majority, this type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to large groups~\cite{cascudo2017scrape, syta2017scalable}.
 
 \paragraph{Transparent Authority} A single entity collects input and publishes it with a focus on transparency. Users can by observing the beacon verify that the beacon behaves according to protocol. This does not directly prevent byzantine behavior, but rather makes it difficult or nearly impossible to hide such behavior. This type also support a wide variety of implementations, and is scalable to a public setting.
 
