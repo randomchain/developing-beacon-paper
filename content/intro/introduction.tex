@@ -112,7 +112,8 @@ We identify three ways in which a beacon is typically operated:
 
 \paragraph{Transparent Authority} A single entity collects input and publishes it with a focus on transparency. Users can by observing the beacon verify that the beacon behaves according to protocol. This does not directly prevent byzantine behavior, but rather makes it difficult or nearly impossible to hide such behavior. This type also support a wide variety of implementations, and is scalable to a public setting.
 
-\subsection{Delimitations}
+\subsection{Delimitations}%
+\label{sub:delimitations}
 We want to create a randomness beacon that is secure under the assumption that everyone may be colluding against a given user, as per our security goals in \cref{sec:security_goals}. As such, we can immediately see that the autocratic collector is not suitable for our security goal, because it requires users to trust its hopefully honest operation. The \gls{mpc} model does not scale well enough for general use. Further, this model assumes an honest majority, which is a weaker assumption than our security goals. Therefore, it will not be suitable for us. This leaves us with the transparent authority model, which we adopt.
 
 Regarding input source models, we can immediately discard private input sources. They are tied to the autocratic collector model, and as such do not work for the transparent authority. The guarantees by publicly available sources are weak compared to user input. If sufficiently paranoid, the user will want to bias these publicly available sources to make sure all other users are not colluding. Therefore, user input is the simplest solution and provides the strongest guarantees for the user.

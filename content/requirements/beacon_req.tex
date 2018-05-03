@@ -1,32 +1,49 @@
-\section{Requirements}
+\section{Requirements}%
 \label{sec:beacon_requirements}
+In this section we list the requirements for a randomness beacon, suitable for our security goals and the threats that exist towards beacons.
+We decided on using the \emph{transparent authority} type of beacon in \cref{sub:delimitations}, which requires a high level of transparency.
+Users should be able to oversee that the beacon operates according to protocol, and catch any deviations from it.
+This in turn requires all aspects of the protocol to somehow publicly announce or display their work for users to verify.
+Fundamentally, users should be able to see which inputs have been used to produce randomness, and verify that they truly do produce the published output.
+This greatly benefits the integrity of the beacon, as some previously mentioned attacks would be detected in this setting.
+It also a necessity for our chosen type of input, \emph{User Input}, which requires users to be able verify that their input is used to produce outputs.
 
-This section will list the requirements for a randomness beacon, suitable for our security goals and the threats that exist towards beacons.
-We decided on using the \emph{Transparent Authority} type of beacon, which requires a high level of transparency. Users should be able to oversee that the beacon operates according to protocol, and catch any deviations from it. This in turn requires all aspects of the protocol to somehow publicly announce or display their work for users to verify. Fundamentally, users should be able to see which inputs have been used to produce randomness, and verify that they truly do produce the published output. This greatly benefits the integrity of the beacon, as some of the previously mentioned attacks would be detected in this setting. It also a necessity for our chosen type of input, \emph{User Input}, which requires users to be able verify their input is used to produce outputs.
+The first part of this is the input --- users should be able to see which inputs are used to produce an output of randomness.
+Recall the assumption that all other users are colluding against a given user, and they can only trust an output that has used their own input.
+Being able to verify whether their own input has been used allows users to determine whether they should trust the output.
+If their input has not been used, they should not trust it.
+Secondly, they should be able to repeat the process on their own computers as a means of verification.
+This also requires the process to be deterministic, which in turn removes the option for true randomness.
+However, the output should still be unpredictable, even to the beacon operator.
 
-The first part of this is the input - users should be able to see which inputs are used to produce an output of randomness. Recall the assumption that all other users are colluding against the user, and they can only trust an output that has used their own input.
-Being able to verify whether their own input has been used allows users to determine whether they should trust the output. If their input has not been used, they should not trust it.
-Secondly, they should be able to repeat the process on their own computers as a means of verification. This also requires the process to be deterministic, which in turn removes the option for true randomness. However, the output should still be unpredictable, even to the beacon operator.
+To make verification as easy as possible, the beacon should also output in a timely manner according to protocol.
+The inputs used, output, and any data needed for verification of an output should be published as soon as possible to make the beacon more transparent.
+By giving users all the tools to replicate and oversee the process, we make it difficult for adversaries to covertly manipulate the beacon to their benefit, and allow users to complete output computation themselves if the beacon stalls.
+This in turn mitigates one of the greatest threats from the operator, input manipulation.
+Additionally, by requiring timeliness, we restrict the time a malicious operator has to diverge from protocol, before users will suspect him.
+A beacon that does not reveal which inputs where used before publishing the output will essentially be admitting that they picked the inputs to bias the output.
 
-To make verification as easy as possible, the beacon should also output in a timely manner according to protocol. The inputs used, output, and any data needed for verification of an output should be published as soon as possible to make the beacon more transparent. By giving users all the tools to replicate and oversee the process, we make it difficult for adversaries to covertly manipulate the beacon to their benefit, and allow users to complete it themselves if it stalls. This in turn mitigates one of the greatest threat from the operator, input manipulation.
-Additionally, by requiring timeliness, we restrict the time a malicious operator has to diverge from protocol, before users will suspect him. A beacon that does not reveal which inputs where used before publishing the output will essentially be admitting that they picked the inputs to bias the output.
+It would also be beneficial to allow different channels for input and output, both to make the beacon easier to access for users, but also to make it resilient to having any single channel attacked.
+Should a single channel be attacked, input could still be submitted to another.
 
-It would also be beneficial to allow different channels for input and output, both to make the beacon easier to access for users, but also to make it resilient to having any single channel attacked. Should a single channel be attacked, input could still be submitted another.
-
-It could also be useful for the beacon to sanity and check the inputs received along different channels, to prevent bad inputs from breaking the protocol. Containing errors would allow the protocol to continue even if some parts of the system failed.
+It could also be useful for the beacon to check the inputs received along different channels, to prevent bad inputs from breaking the protocol.
+Containing errors would allow the protocol to continue even if some parts of the system failed.
 Reasonability checks could also allow control of the quality of input, preventing poor inputs from affecting the quality of the output.
 
 To summarize, we have the following requirements for our beacon:
 
 \begin{itemize}
-    \item Transparent
-    \item Verifiable Input and Output
-    \item Modular Input and Output
-    \item Deterministic and Unpredictable Output
-    \item Timely Publication
-    \item Sanity and Reasonability checks
-    \item Fault Tolerance
-    \item Usability
+    \setlength\itemsep{0em}
+    \item Transparent operation
+    \item Verifiable input and output
+    \item Modular input and output methods
+    \item Deterministic and unpredictable output
+    \item Timely publication
+    \item Sanity and reasonability checks
+    \item Fault tolerance
 \end{itemize}
 
 These requirements will serve as a foundation of our design.
+
+\msmnote{Maybe include non-requirements. Hmm not sure}
+
