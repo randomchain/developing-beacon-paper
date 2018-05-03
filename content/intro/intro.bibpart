@@ -84,3 +84,11 @@ address="Berlin, Heidelberg",
 pages="43--52",
 isbn="978-3-540-39557-7"
 }
+
+@Online{bushgore,
+  title={Bush v. Gore, 531 U.S. 98 (2000)},
+  author={Skelton, Chris},
+  url={https://supreme.justia.com/cases/federal/us/531/98/},
+  urldate={2018-03-05},
+  year={2000}
+  }
