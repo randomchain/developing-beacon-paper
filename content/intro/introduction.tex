@@ -2,31 +2,34 @@
 \emph{Randomness beacons}, services emitting unpredictable random values at fixed intervals, have been around for a long time.
 In 1983 Michael O.\ Rabin coined the term and used one to add probabilistic security in several protocols~\cite{rabin1983transaction}.
 In this definition, a randomness beacon was to be seen as an impartial third-party trusted to be unbiased towards any outcome.
-As such, Rabin's beacon is to be trusted, i.e.\ you should trust the beacon operator (the entity running the beacon service) to not be biased, because you cannot verify that they are unbiased.
+As such, Rabin's beacon is to be \emph{trusted}, i.e.\ you should trust the beacon operator (the entity running the beacon service) to not be biased because you cannot verify that they are unbiased.
 
 For quite a while, randomness beacons did not receive much attention, probably because alternatives to Rabin's protocols not requiring a trusted beacon were used instead (such as~\cite{BGMR}).
-Circa 2010 a renewed interest in beacons was seen as an increase in beacon-related literature, and the trend in this new literature was to soften the need to trust the beacon operator.
-We believe it may have been a reaction to revelations like the NSA whistle-blower leaks that diminished people's trust in authorities.
-In other words, people had their eyes opened to the fact that \emph{trust} can be an issue in itself, and that removing the need for trust in any one entity could, in some cases, be beneficial.
-As an example, cryptocurrencies have flourished in recent years alongside a sharp rise in the popularity of blockchains --- two technologies that seek to facilitate cooperation of mutually distrustful users.
+Circa 2010 a renewed interest in beacons was seen as an increase in beacon-related literature, and the trend in this new literature was to remedy the need to trust the beacon operator.
+We believe it may have been a reaction to revelations like the NSA whistleblower leaks that diminished people's trust in authorities.
+In other words, people had their eyes opened to the fact that \emph{trust} can be an issue in itself and that removing the need for trust in any one entity could, in some cases, be beneficial.
+As an example, cryptocurrencies have flourished in recent years alongside a sharp rise in the popularity of blockchains --- two technologies seeking to facilitate cooperation of mutually distrustful users.
 
-Conceptually, randomness beacons seem to fit this environment of minimizing the need to trust, as a randomness beacon is acting as an impartial party.
-However, the \enquote{old} way, requiring users to trust the operator, simply shifts the trust issue to the centralized entity of the beacon operator.
-If anyone uses a randomness beacon, it is specifically because they do not wish to trust some other entity to produce randomness.
-Therefore, we believe trusting the randomness beacon is a moot point --- the two entities might collude against a naïve user.
-
+Conceptually, randomness beacons seem to fit this environment of minimizing the need to trust as a randomness beacon is acting as an impartial party.
+However, the \enquote{old} way, requiring users to trust the operator, simply shifts the trust issue to the centralized entity, i.e.\ the beacon operator.
+If anyone uses a randomness beacon, it is often specifically because they do not wish to trust anyone.
+Therefore, we believe trusting the randomness beacon is a moot point, especially since the recent literature presents several ways of avoiding it.
 %The body of this work will be to discuss, design, and implement a beacon following the concept of not requiring users to trust it.% Before doing so, let's take a small detour and talk about potential use cases and the motivation for using a beacon at all.
 
-\subsection{Terminology}
-As discussed, we see two distinct groups of randomness beacons: the ones which require users to blindly trust the beacon operator (à la Rabin's original beacon); and the \enquote{new generation} randomness beacons of recent literature, which convincingly prove to all users of the beacon that nothing dubious happened during the \enquote{generation} of the random output.
+Even though the literature theoretically argues for a particular solution, we have not seen many implementation of them. There is a bridge from theoretical solution to an actual running beacon, and we believe this bridge is uncharted territory. The literature only lightly touches the subject. We want to touch this subject, and find out which implications appear underway.
 
-In this work, we will use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably, and make no initial assumptions on the properties of a beacon. We also use \enquote{old} and \enquote{new} to refer to the generations of beacons.
+\subsection{Terminology}
+As discussed, we see two distinct groups of randomness beacons: the ones requiring users to blindly trust the beacon operator (à la Rabin's original beacon); and the \enquote{new generation} randomness beacons of recent literature, which convincingly prove to all users of the beacon that nothing dubious happened during the \enquote{generation} of the random output.
+
+In this work, we will use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably, and make no initial assumptions on the properties of a beacon. We also use \enquote{old} and \enquote{new} to refer to the generations of beacons. \mtjnote{Maybe this is not so scientific naming? Maybe trust-requiring and non-trust-requiring instead?}
 
 \subsection{Security Goals}\label{sec:security_goals}
-We design a beacon for a hostile world-view described as follows:
-\enquote{Everybody, including the beacon operator, is secretly colluding against you and willing to put an unlimited amount of money and resources towards manipulating or biasing the process for their own benefit}.
+Requiring users to trust the beacon operation does not solve the issue in the majority of cases --- it simply shifts the issue. A beacon that does not require trust of users is more general and will support a wider array of use cases.
+
+Therefore, we design and implement a beacon for a hostile world-view described as follows:
+\enquote{Everybody, including the beacon operator, may be secretly colluding against you and willing to put an unlimited amount of money and resources towards manipulating or biasing the process for their own benefit}.
+
 The intent is for the beacon to be usable under the assumption that everyone colludes against the user.
-%The only one you can trust is yourself, and this extends to the beacon. If you have not influenced the beacon output, it should be considered biased against you by default.
 
 \subsection{Use Cases}
 The fundamental use case of a beacon is to generate randomness that multiple parties can agree is truly random. This is valuable in use cases where multiple have an interest in knowing outcomes are not biased.
@@ -70,6 +73,7 @@ A randomness beacon emits an unpredictable random value at a fixed interval, e.g
 \subimport{}{simple_beacon_fig.tex}
 
 \fxnote{Write that now we will tell about several things that describe a beacon.}
+
 \subsubsection{Input Source Models}
 It is important that the user can trust the input to not be biased in such a way that it negatively affects the output. We therefore see two approaches to sourcing the input:
 
