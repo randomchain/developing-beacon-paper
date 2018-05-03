@@ -4,7 +4,7 @@
     \footnotesize
     \begin{tikzpicture}[auto]
         \node[blockdef] (input) {Input\\source};
-        \node[blockdef, right=1cm of input, text width=7em] (computation) {Computation\\$f(I_t)$};
+        \node[blockdef, right=1cm of input, text width=7em] (computation) {Computation};
         \draw[arrow] (input) -- (computation);
         \node[blockdef, right=1cm of computation] (users) {Users};
         \draw[arrow] (computation) -- (users);
