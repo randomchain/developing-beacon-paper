@@ -19,10 +19,11 @@ This can be a single point of failure, but mitigated by using redundancy \cite{s
 \label{sub:components_of_a_beacon}
 In the \gls{soa}, a single instance of a randomness beacon will consist of the following (see \cref{fig:beacon_arch}):
 \begin{description}
-    \item[Input Collector Services] which collect from a myriad of different sources.
-    \item[Input Processing Service] which aggregates the input from all the collectors.
-    \item[Computation Service] which commits to the aggregated input, runs the computation to generate an output.
-    \item[Publishing Services] which publishes the commitment, output, and any relevant proofs to different outlets.
+    \setlength\itemsep{0em}
+    \item[Input Collector Services]\hfill \\ which collect from a myriad of different sources.
+    \item[Input Processing Service]\hfill \\ which aggregates the input from all the collectors.
+    \item[Computation Service]\hfill \\ which commits to the aggregated input, runs the computation to generate an output.
+    \item[Publishing Services]\hfill \\ which publishes the commitment, output, and any relevant proofs to different outlets.
 \end{description}
 
 \subimport{}{beacon_architecture.tex}
@@ -52,9 +53,11 @@ Moreover, we also want to prevent the operator from being able to initiate multi
 
 Generally, these concerns can be mitigated by enforcing a \gls{cco} workflow in the beacon protocol.
 This effectively means that each published output is paired with a commitment which can be used in the verification of the beacon.
-The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output. Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desireable output.
+The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output. Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desirable output.
 
-The commitment consists of the hashes of the inputs to the beacon, structured in a Merkle tree, the root of which is inputted to the delay function. This allows any other party to compute the randomness alongside the beacon operator. It also ensures that the operator can not withhold any numbers, and effectively reduces the \enquote{market value} of the output, making it less attractive to sell early access to it.
+The commitment consists of the data which is inputted to the delay function.
+This allows any other party to compute the randomness alongside the beacon operator.
+It also ensures that the operator can not withhold any numbers, and effectively reduces the \enquote{market value} of the output, making it less attractive to sell early access to it.
 
 To guarantee that the time between publishing the commitment and output has been spent computing the output, we utilize a \emph{delay function}.
 Delay functions require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
@@ -67,5 +70,10 @@ Given a delay function that takes five minutes to complete, an adversary must de
 
 The combination of a \gls{cco} protocol and a delay function, effectively gives the following workflow for each cycle of the beacon: First, it collects inputs and processes them. Then, it publishes a commitment containing all inputs, before beginning the computation. When the computation is finished, it publishes the output.
 
+\paragraph{Hash Functions} are used to produce random outputs from our input.
+In the literature on beacons, hashing algorithms have been considered random oracles, that produce unpredictable pseudo-random outputs.
+For our beacon, hashing algorithms help ensure the unpredictability of the output as they are can not feasibly be reversed.
+An adversary can not feasibly know which inputs are needed to compute an output, without exploring the space of possibilities by themselves.
+
 \subimport{}{trust.tex}
-\subimport{}{hash_functions.tex}
+
