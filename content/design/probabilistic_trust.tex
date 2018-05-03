@@ -7,9 +7,9 @@ This effectively will provide a measure of probabilistic trust, where users much
 We present a property which, if satisfied, says that the user can trust that the beacon operator is not capable of fooling them.
 The property is true if the user determines that nobody will be able to compute the delay function in the time between they sent their input and received the commitment.
 This can be condensed to:
-\begin{equation}
+\begin{equation*}
     t_\text{COMMITMENT} - t_\text{INPUT} < T_\text{DELAY FUNCTION}
-\end{equation}
+\end{equation*}
 given that $t_\text{INPUT}$ is the time when the user sent the input, $t_\text{COMMITMENT}$ is when the user received the commitment, and $T_\text{DELAY FUNCTION}$ is the fastest computation of the delay function.
 This tells us that for users to be more likely to trust a beacon, the time between them sending their input and receiving the commitment, must be significantly smaller than the time between the commitment and the output.
 In fact, it must be smaller than the shortest time a given user thinks the operator could be able to compute the delay function.
@@ -86,6 +86,3 @@ These observations are depicted in~\cref{fig:beacon_parallel_timeline_real}, whe
     \end{tikzpicture}
     \caption{Parallelized beacon protocol, with input collection stream and overlapping computation. A circle denotes outputting at the end of the computation.}\label{fig:beacon_parallel_timeline_real}
 \end{figure}
-
-
-
