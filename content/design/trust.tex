@@ -1,7 +1,6 @@
 \subsection{Trusting the beacon}%
 \label{sub:trusting_the_beacon}
-
-\mtjnote{Some meta text is missing (motivational). Don't start with "We propose two scenarious" --- softer start, please.}
+Even given the precautions taken in the design, the amount of trust required to use the beacon should be minimal or non-existent.
 We propose two scenarios, which can be used to describe the users' trust assumptions towards the beacon.
 In both of these scenarios, we focus on a given user named Alice, while all other users are regarded as potentially colluding adversaries with malicious intent.
 The only assumption about these adversaries, is that they can interact with the beacon in the same manner as Alice; i.e.\ send inputs to the beacon.
@@ -32,9 +31,9 @@ This is the worst case scenario for Alice; a beacon operator, which is trying to
 The malicious operator will not resort to excluding Alice's input, since they are interested in fooling her to trust a forged output.
 Moreover, the malicious operator should be expected to collude with all other users against Alice --- she is effectively alone in Wonderland.
 
-When the operator is acting maliciously they will try to manipulate the output, while displaying correct operation outwards.
-This means that Alice still will receive a commitment, output, and proof, which she can use to verify the correctness of the output.
-She will receive these messages at virtually the same timing as described in the honest operator scenario.
+When the operator acts maliciously they try to manipulate the output, while displaying correct operation outwards.
+This means that Alice still receives a commitment, output, and proof, which she can use to verify the correctness of the output.
+She will receive these messages at seemingly the same timing as described in the honest operator scenario.
 The main difference here, is that Alice should not assume correlation between timings of received messages, and timings of beacon process.
 
 Assume the following behaviour of a malicious operator:
@@ -65,8 +64,8 @@ This can be condensed to:
 \begin{equation}
     t_\text{COMMITMENT} - t_\text{INPUT} < T_\text{DELAY FUNCTION}
 \end{equation}
-given that $t_\text{INPUT}$ is the time when the user sent the input, $t_\text{COMMITMENT}$ is when the user received the commitment, and $T_\text{DELAY FUNCTION}$ is the fastest computation of the given delay function.
-This tells us that for users to be more likely to trust a beacon, the time between they send their input and receive the commitment, must be significantly smaller than the time between the commitment and the output.
+given that $t_\text{INPUT}$ is the time when the user sent the input, $t_\text{COMMITMENT}$ is when the user received the commitment, and $T_\text{DELAY FUNCTION}$ is the fastest computation of the delay function.
+This tells us that for users to be more likely to trust a beacon, the time between them sending their input and receiving the commitment, must be significantly smaller than the time between the commitment and the output.
 In fact, it must be smaller than the shortest time a given user thinks the operator could be able to compute the delay function.
 
 Taking this into consideration we present a beacon operation protocol, which can be adjusted to increase or decrease this limit.

@@ -1,2 +1,4 @@
 \subsection{Hash Functions}
-\mtjnote{A discussion about which hashing function to use. Is SHA512 overkill?}
+We use hashing functions as to produce random outputs from our input. In the literature on beacons, hashing algorithms have been considered random oracles, that produce unpredictable pseudo-random outputs.
+For our beacon, hashing algorithms help ensure the unpredictability of the output as they are can not feasibly be reversed. An adversary can not feasibly know which inputs are needed to compute an output, without exploring the space of possibilities by themselves.
+We specifically use SHA-512 as our hashing algorithm of choice, and output 512-bit hashes from the beacon. While this means we output a large amount of randomness, one could question whether any use case needs that much randomness. Neither SHA-512 or SHA-256 have been broken, so we could reasonably use the shorter and still be secure. We would then be trading output length for performance, especially in input processing, where a large amount of hashing goes into producing a merkle tree.
