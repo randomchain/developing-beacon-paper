@@ -1,3 +1,14 @@
+\subsection{Components of a Beacon}
+\label{sub:components_of_a_beacon}
+In the \gls{soa}, a single instance of a randomness beacon will consist of the following (see \cref{fig:beacon_arch}):
+\begin{description}
+    \setlength\itemsep{0em}
+    \item[Input Collector Services]\hfill \\ which collect from a myriad of different sources.
+    \item[Input Processing Service]\hfill \\ which aggregates the input from all the collectors.
+    \item[Computation Service]\hfill \\ which commits to the aggregated input, runs the computation to generate an output.
+    \item[Publishing Services]\hfill \\ which publishes the commitment, output, and any relevant proofs to different outlets.
+\end{description}
+
 \begin{figure}[htb]\pgfdeclarelayer{background}
     \pgfsetlayers{background,main}
     \centering
@@ -52,3 +63,5 @@
     \end{tikzpicture}
     \caption{Abstract beacon architecture based on pipeline and services}\label{fig:beacon_arch}
 \end{figure}
+
+

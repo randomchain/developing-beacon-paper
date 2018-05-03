@@ -24,7 +24,30 @@ With this honest beacon, Alice knows exactly how long the computation took, and 
 However, assuming honesty is not advised, since it leaves Alice vulnerable by exploiting this trust.
 If Alice trusts the beacon operator to be honest, she will not suspect them to act according to the following scenario.
 
-\subimport{}{beacon_honest_timeline.tex}
+\begin{figure}[htb]
+    \centering
+    \footnotesize
+    \begin{sequencediagram}
+        \newthread[GoogleGreen]{a}{Alice}
+        \tikzstyle{inststyle}+=[xshift=1cm]
+        \newthread[GoogleBlue]{b}{Honest Beacon}
+
+        \begin{call}{b}{collectInputs()}{b}{}
+            \begin{call}{a}{sendInput()}{b}{hash of input}
+            \end{call}
+        \end{call}
+        \begin{call}{b}{processInputs()}{b}{commitment}
+        \end{call}
+        \prelevel
+        \mess{b}{commitment}{a}
+        \begin{call}{b}{computeOutput()}{b}{output, proof}
+            \postlevel\postlevel
+        \end{call}
+        \prelevel
+        \mess{b}{output, proof}{a}
+    \end{sequencediagram}
+    \caption{Sequence diagram depicting one beacon iteration form the perspective of Alice. The beacon operator is honest.}\label{fig:beacon_honest_timeline}
+\end{figure}
 
 \paragraph{Scenario \#2 --- A malicious operator.}
 This is the worst case scenario for Alice; a beacon operator, which is trying to choose the output, yet still make it seem valid for Alice.
@@ -50,34 +73,33 @@ In this scenario the operator will effectively carry out a last-draw attack agai
 Moreover, if the malicious operator cannot compute an outcome which they deem beneficial, they are capable of claiming disrupted operation before publishing any commitment.
 This will leave Alice without any output, a withholding attack, and she will not be able to know if the operator was malicious or disrupted by a third party adversary.
 
-\subimport{}{beacon_malicious_timeline.tex}
+\begin{figure}[htb]
+    \centering
+    \footnotesize
+    \begin{sequencediagram}
+        \newthread[GoogleGreen]{a}{Alice}
+        \tikzstyle{inststyle}+=[xshift=1cm]
+        \newthread[GoogleBlue]{b}{Malicious Beacon}
 
-\subsection{Probabilistic Trust}%
-\label{sub:probabilistic_trust}
-In our approach to a randomness beacon, we want to push beyond the need for honest operators, and naïve users.
-To achieve this, we first need to quantify trusting the beacon and then determine thresholds for reasonable behaviour.
-This effectively will provide a measure of probabilistic trust, where users much decide for themselves, if the probability of honest operation is adequate.
+        \begin{call}{b}{collectInputs()}{b}{}
+            \begin{call}{a}{sendInput()}{b}{hash of input}
+            \end{call}
+        \end{call}
+        \begin{sdblock}{Pre-Computing output}{}
+            \begin{call}{b}{addFakeInputs()}{b}{}
+            \end{call}
+            \begin{call}{b}{processInputs()}{b}{commitment}
+            \end{call}
+            \begin{call}{b}{computeOutput()}{b}{output, proof}
+            \end{call}
+        \end{sdblock}
+        \begin{call}{b}{selectBestOutput()}{b}{}
+        \end{call}
+        \mess{b}{commitment}{a}
+        \postlevel\postlevel
+        \mess{b}{output, proof}{a}
+    \end{sequencediagram}
+    \caption{Sequence diagram depicting one beacon iteration form the perspective of Alice. The beacon operator is malicious.}\label{fig:beacon_malicious_timeline}
+\end{figure}
 
-We present a property which, if satisfied, says that the user can trust that the beacon operator is not capable of fooling them.
-The property is true if the user determines that nobody will be able to compute the delay function in the time between they sent their input and received the commitment.
-This can be condensed to:
-\begin{equation}
-    t_\text{COMMITMENT} - t_\text{INPUT} < T_\text{DELAY FUNCTION}
-\end{equation}
-given that $t_\text{INPUT}$ is the time when the user sent the input, $t_\text{COMMITMENT}$ is when the user received the commitment, and $T_\text{DELAY FUNCTION}$ is the fastest computation of the delay function.
-This tells us that for users to be more likely to trust a beacon, the time between them sending their input and receiving the commitment, must be significantly smaller than the time between the commitment and the output.
-In fact, it must be smaller than the shortest time a given user thinks the operator could be able to compute the delay function.
 
-Taking this into consideration we present a beacon operation protocol, which can be adjusted to increase or decrease this limit.
-The operation must be sequential, which means that we must collect input before computing the delay function.
-However, because we want to spend more time computing, than we are collecting input, a strictly sequential beacon will contain dead spots, where no user is submitting input.
-This may be acceptable in some scenarios, but we want to design a beacon which always accepts inputs, and which will not be suspected of malicious operation.
-To achieve this we parallelize the beacon protocol, meaning that several delay functions will run in parallel but offset in time, and using different input.
-
-In~\cref{fig:beacon_parallel_timeline} this is illustrated, where these offset but parallel beacons are seen.
-We observe that no input collection is run in parallel nor overlapping, which resembles a constant stream of input collection.
-Moreover, the computation components can eventually be reused for future beacon computations, thereby eliminating the need for spinning up new computation services.
-These observations are depicted in~\cref{fig:beacon_parallel_timeline_real}, where the beacon would output at each circle shown in the diagram.
-
-\subimport{}{beacon_timeline_parallel.tex}
-\subimport{}{beacon_timeline_parallel_real.tex}

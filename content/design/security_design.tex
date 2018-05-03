@@ -1,0 +1,36 @@
+\subsection{Security Design}
+
+From a security perspective, new attack surfaces are introduced by splitting up the system from a monolithic self-contained architecture to a service-oriented kind.
+When designing a composable system such as our randomness beacon it is important to take the inter-component communication into account.
+For example, the architecture can potentially make it possible for adversaries to block out parts of the system, by means of \gls{dos} attacks.
+Moreover, the protocol used to communicate from service to service must be secure in a way that prevents adversaries from being able to covertly manipulate the messages.
+
+In the case of a randomness beacon, the security also embodies the operator's ability to predict or manipulate the output.
+This means we need some mechanism to prevent the operator from performing last-draw attacks disguised as regular user inputs, or excluding certain inputs to alter the output.
+Moreover, we also want to prevent the operator from being able to initiate multiple beacon computations, and then only publish the output which benefits the operator the most.
+
+Generally, these concerns can be mitigated by enforcing a \gls{cco} workflow in the beacon protocol.
+This effectively means that each published output is paired with a commitment which can be used in the verification of the beacon.
+The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output. Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desirable output.
+
+The commitment consists of the data which is inputted to the delay function.
+This allows any other party to compute the randomness alongside the beacon operator.
+It also ensures that the operator can not withhold any numbers, and effectively reduces the \enquote{market value} of the output, making it less attractive to sell early access to it.
+
+To guarantee that the time between publishing the commitment and output has been spent computing the output, we utilize a \emph{delay function}.
+Delay functions require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
+When deploying delay functions in randomness beacons it is important to keep verification in mind.
+A user should be able to run the delay function in reverse to confirm that a commitment matches the output.
+To avoid having to require each user to execute the full delay function, we use a flavor of delay functions which is asymmetrically hard, i.e.\ hard to compute but easy to verify.
+
+The delay function also partially protects against last-draw attacks by adversaries. A last-draw attack would attempt to bias the output by crafting an input so as to produce favorable randomness. The adversary needs to compute the result of adding a specific input as the last input. Delay functions make this significantly more difficult to attempt due to the time needed to compute the result.
+Given a delay function that takes five minutes to complete, an adversary must dedicate five minutes of processor time to any given input he attempts to use. This means he must dedicate large amounts of resources to perform any significant amount of attempts, and more importantly: if a single input is added to the beacon within that five minute period, all of his work will be null, and he will be forced to restart.
+
+The combination of a \gls{cco} protocol and a delay function, effectively gives the following workflow for each cycle of the beacon: First, it collects inputs and processes them. Then, it publishes a commitment containing all inputs, before beginning the computation. When the computation is finished, it publishes the output.
+
+\paragraph{Hash Functions} are used to produce random outputs from our input.
+In the literature on beacons, hashing algorithms have been considered random oracles, that produce unpredictable pseudo-random outputs.
+For our beacon, hashing algorithms help ensure the unpredictability of the output as they are can not feasibly be reversed.
+An adversary can not feasibly know which inputs are needed to compute an output, without exploring the space of possibilities by themselves.
+
+
