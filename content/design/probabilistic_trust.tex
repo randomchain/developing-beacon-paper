@@ -14,6 +14,9 @@ given that $t_\text{INPUT}$ is the time when the user sent the input, $t_\text{C
 This tells us that for users to be more likely to trust a beacon, the time between them sending their input and receiving the commitment must be significantly smaller than the time between the commitment and the output.
 In fact, it must be smaller than the shortest time a given user thinks the operator could be able to compute the delay function.
 
+An example could be a user that can compute the delay function in 10 minutes may believe that the world's fastest computer can do so 5 times faster, i.e. in 2 minutes. In this case the user should trust the output if he sees a commit to a set of inputs containing his input within 2 minutes of his input.
+This relation between the time taken to compute the delay function and the time before a commit is seen allows users to flexibly adjust, when they are willing to trust the outcome has not been biased against them.
+
 Taking this into consideration we present a beacon operation protocol which can be adjusted to increase or decrease this limit.
 The operation must be sequential which means that we must collect input before computing the delay function.
 However, because we want to spend more time computing than we are collecting input, a strictly sequential beacon will contain dead spots where no user is submitting input.
