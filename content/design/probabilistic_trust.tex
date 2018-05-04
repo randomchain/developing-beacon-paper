@@ -20,8 +20,8 @@ This relation between the time taken to compute the delay function and the time 
 Taking this into consideration we present a beacon operation protocol which can be adjusted to increase or decrease this limit.
 The operation must be sequential which means that we must collect input before computing the delay function.
 However, because we want to spend more time computing than we are collecting input, a strictly sequential beacon will contain dead spots where no user is submitting input.
-This may be acceptable in some scenarios, but we want to design a beacon which always accepts inputs and which will not be suspected of malicious operation.
-To achieve this we parallelize the beacon protocol, meaning that several delay functions will run in parallel but offset in time and using different input.
+This may be acceptable in some scenarios, but we want to design a beacon which always accepts inputs and will not be suspected of malicious operation.
+To achieve this we parallelize the beacon protocol, meaning that several delay functions run in parallel but offset in time and on different input.
 
 In~\cref{fig:beacon_parallel_timeline} this is illustrated, where these offset but parallel beacons are seen.
 We observe that no input collection is run in parallel nor overlapping, which resembles a constant stream of input collection.
