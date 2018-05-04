@@ -4,7 +4,7 @@ This section describes our beacon design and the majority of it will be concerne
 Our beacon design needs to meet the previously stated requirements and prevent as many of the threats identified and categorized in the threat analysis.
 
 \subsection{Architecture}\label{sec:design_architecture}
-To meet the requirement of extendability \mtjnote{Qué?}, we use a \gls{soa} to design the beacon.
+To meet the requirements of modular input and output and fault tolerance, we use a \gls{soa} in the beacon design.
 This architecture splits systems into application components, also called services.
 These services serve a single purpose, i.e.\ they each logically represent part of the activity needed for the entire system and have a specified outcome.
 Communication between components is done according to a well-defined protocol, such that no one component is reliant on the inner workings of another;

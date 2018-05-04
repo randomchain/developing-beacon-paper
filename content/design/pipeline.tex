@@ -1,13 +1,11 @@
 \subsection{Pipeline}%
 \label{sub:pipeline}
-In our \gls{soa}, data only flows one way through the system, and each component performs an independent transformation.
+In our \gls{soa}, as illustrated in \cref{fig:beacon_arch}, data only flows one way through the system, and each component performs an independent transformation.
 This effectively means that a beacon is a pipeline where data flows into the system as inputs, is processed, transformed to a random output, and lastly published.
 
-The pipeline architecture can be seen as a specialization of the \gls{soa} pattern, since each step in the pipeline is a service as defined in a \gls{soa}.
-When considering the system as a pipeline some restrictions are imposed compared to the more generic \gls{soa}, in that data only flows in one direction.
+The pipeline architecture can be seen as a specialization of the \gls{soa} pattern, since each step in the pipeline is a service as defined in a \gls{soa}. When considering the system as a pipeline some restrictions are imposed compared to the more generic \gls{soa}, in that data only flows in one direction.
 Parallelizing a pipeline to increase the output frequency is also possible.
 
 In some scenarios a beacon may consist of multiple computation services as a mean of redundancy, as long as each computation is run on the same input.
 The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
 This presents the issue of consensus about which input to use, but that is out of scope for this report.
-
