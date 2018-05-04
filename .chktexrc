@@ -396,7 +396,7 @@ WipeArg
     \label:{} \ref:{} \vref:{} \pageref:{} \index:{} \cite:[]{}
     \input:{} \verbatiminput:[]{} \listinginput:[]{}{}
     \verbatimtabinput:[]{} \include:{} \includeonly:{}
-    \bibitem:[]{} \stefan:{}
+    \bibitem:[]{} \stefan:{} \rene:{} \msmnote:{} \mtjnote:{}
 }
 
 #####################################################################
