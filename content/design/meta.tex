@@ -1,10 +1,10 @@
 \section{Design}\label{sec:design}
 
-\mtjnote{SWEBOOK \enquote{Design for security is concerned with how to prevent unauthorized disclosure, creation, change, deletion, or denial of access to information and other resources. It is also concerned with how to tolerate security-related attacks or violations by limiting damage, continuing service, speeding repair and recovery, and failing and recovering securely. Access control is a fundamental concept of security, and one should also ensure the proper use of cryptology.}}
+This section describes our beacon design and the majority of it will be concerned with security since it is the most important aspect of any randomness beacon. Since we emphasize examining the bridge between theory and a functioning beacon we will naturally also consider practicalities such as usability and scalability.
+Our beacon design needs to meet the previously stated requirements and prevent as many of the threats identified and categorized in the threat analysis.
 
-We design a beacon to both meet the previously stated requirements, and to prevent as many of the threats identified and categorized in the threat analysis. We want the beacon to be as secure as possible while remaining practical, so we will also consider the usability and scalability of the beacon.
-
-To meet the requirement of extendability, we use a \gls{soa} to design the beacon.
+\subsection{Architecture}\label{sec:design_architecture}
+To meet the requirement of extendability \mtjnote{Qué?}, we use a \gls{soa} to design the beacon.
 This architecture splits systems into application components, also called services.
 These services serve a single purpose, i.e.\ they each logically represent part of the activity needed for the entire system and have a specified outcome.
 Communication between components is done according to a well-defined protocol, such that no one component is reliant on the inner workings of another;
@@ -12,7 +12,5 @@ a component, or service, should be seen as a self-contained black box.
 
 This architecture provides loose coupling in the system and also allows for easier fault tolerance since services, being a black box, are easily replaceable on failure.
 However, as services need knowledge about other relevant services, some mechanism for service discovery is typically deployed.
-This can be a single point of failure, but mitigated by using redundancy \cite{soa_redundancy}.
+This can be a single point of failure, but mitigated by using redundancy~\cite{soa_redundancy}.
 \fxnote{expand on this and how it can be decentralized}
-
-
