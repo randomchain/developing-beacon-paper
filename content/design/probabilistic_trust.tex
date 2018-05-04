@@ -8,7 +8,7 @@ We present a property which, if satisfied, says that the user can trust that the
 The property is true if the user determines that nobody will be able to compute the delay function in the time between they sent their input and received the commitment.
 This can be condensed to:
 \begin{equation*}
-    t_\text{COMMITMENT} - t_\text{INPUT} < T_\text{DELAY FUNCTION}
+    t_\text{COMMITMENT} - t_\text{INPUT}\enspace <\enspace T_\text{DELAY FUNCTION}
 \end{equation*}
 given that $t_\text{INPUT}$ is the time when the user sent the input, $t_\text{COMMITMENT}$ is when the user received the commitment, and $T_\text{DELAY FUNCTION}$ is the fastest computation of the delay function.
 This tells us that for users to be more likely to trust a beacon, the time between them sending their input and receiving the commitment must be significantly smaller than the time between the commitment and the output.
@@ -26,4 +26,3 @@ Moreover, the computation components can eventually be reused for future beacon 
 These observations are depicted in \cref{fig:beacon_parallel_timeline_real}, where the beacon would output at each circle shown in the diagram.
 
 \subimport{}{timeline_diagrams.tex}
-
