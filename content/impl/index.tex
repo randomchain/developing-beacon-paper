@@ -89,7 +89,7 @@ Fortunately, the state of an input collector is only relevant to a single input 
 
 When we hash the users' inputs we must inform them of the operation, such that they still will be able to confirm that their input was used in the output of the beacon.
 This means that the users must know which hashing algorithm is used (also for the sake of them verifying correct hashing), and for convenience we return the hash in the response of the input collectors.
-Currently we use the SHA512 hashing algorithm since its digest size is 64 bytes, which gives us reasonably sized messages flowing through the system, while still having $2^{512}$ possible different values \mtjnote{assuming a perfect distribution?}.
+Currently we use the SHA512 hashing algorithm since its digest size is 64 bytes, which gives us reasonably sized messages flowing through the system, while still having $2^{512}$ possible different values.
 It is important that the same hashing function is used throughout the system, since differences in output space will bias the outcome if the inputs are hashed multiple times --- which is the case.
 However, we implement the system such that the chosen hashing algorithm can be configured at beacon start.
 
