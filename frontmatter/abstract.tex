@@ -1,1 +1,12 @@
-Not concrete.
+Randomness beacons are services that emit a random number at a regular interval.
+A recent trend in these beacons is how to make them transparent or secure such that no party can influence the output without being detected.
+While some research and literature exist, there is still a gap concerning a structured security analysis of such a randomness beacon.
+Furthermore, work is still needed to bridge from theoretical solution to an implementation ready for real world deployment and usage.
+We design and implement a randomness beacon capable of supporting a broad range of use cases while focusing on describing this bridge of going from theoretical solution to an actual implementation.% As such, we carefully assess and choose appropriate architectures, algorithms, and tools, that we combine into a functioning and highly scalable beacon.
+
+Our randomness beacon is based on a service oriented architecture with pipeline features.
+It sources input from a varying number of inlets and similarly emits its output (the random number) to a varying number of outlets.
+The transformation from input to output is done using a delay function which computes modular square roots, a technique which produces a witness that provides a shortcut for subsequent verification.
+All in all, our beacon provides security properties that minimizes the amount of trust required from users, provided they successfully verify that their own input has been part of the output.
+
+\fxnote{Evaluation}
