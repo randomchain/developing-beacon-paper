@@ -19,9 +19,10 @@ Therefore, we believe trusting the randomness beacon is a moot point, especially
 Even though the literature theoretically argues for a particular solution, we have not seen many implementation of them. There is a bridge from theoretical solution to an actual running beacon, and we believe this bridge is uncharted territory. The literature only lightly touches the subject. We want to touch this subject, and find out which implications appear underway.
 
 \subsection{Terminology}
-As discussed, we see two distinct groups of randomness beacons: the ones requiring users to blindly trust the beacon operator (à la Rabin's original beacon); and the \enquote{new generation} randomness beacons of recent literature, which convincingly prove to all users of the beacon that nothing dubious happened during the \enquote{generation} of the random output.
+In this work, we will use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably. %, and make no initial assumptions on the properties of a beacon.
+As discussed, we see two distinct groups of randomness beacons: the ones requiring users to blindly trust the beacon operator (à la Rabin's original beacon) --- we will refer to these as \emph{trust-requiring} beacons; and the \enquote{new generation} randomness beacons of recent literature, which convincingly prove to all users of the beacon that nothing dubious happened during the creation of the random output --- we will refer to these as \emph{trust-minimizing} beacons.
 
-In this work, we will use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably, and make no initial assumptions on the properties of a beacon. We also use \enquote{old} and \enquote{new} to refer to the generations of beacons. \mtjnote{Maybe this is not so scientific naming? Maybe trust-requiring and non-trust-requiring instead?}
+%In this work, we will use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably, and make no initial assumptions on the properties of a beacon. We also use \enquote{trust-requiring} and \enquote{trust minimizing} to refer to the generations of beacons.
 
 \subsection{Security Goals}\label{sec:security_goals}
 Requiring users to trust the beacon operation does not solve the issue in the majority of cases --- it simply shifts the issue. A beacon that does not require trust of users is more general and will support a wider array of use cases.
@@ -117,7 +118,7 @@ If these are satisfied, the user knows that a value they trust to be random has 
 \subsubsection{Operational Models}
 We identify three ways in which a beacon is typically operated:
 
-\paragraph{Autocratic Collector} A beacon is run by a party, which deems it irrelevant to prove honesty. Instead, they require users to trust them to do what they say. As such, the computation will be a black box with no possibility for proof of honesty. This type is also synonymous with the old generation of beacons.
+\paragraph{Autocratic Collector} A beacon is run by a party, which deems it irrelevant to prove honesty. Instead, they require users to trust them to do what they say. As such, the computation will be a black box with no possibility for proof of honesty. This type always lies in the trust-requiring category of beacons.
 
 \paragraph{Specialized \acrshort{mpc}} Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs. Given an honest majority, this type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to large groups~\cite{cascudo2017scrape, syta2017scalable}.
 
