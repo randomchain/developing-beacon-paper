@@ -14,7 +14,7 @@
     note = {\url{https://eprint.iacr.org/2017/1050}},
 }
 
-@article{snarkparameters,
+@misc{snarkparameters,
     author = {Sean Bowe and Ariel Gabizon and Matthew D. Green},
     title = {A multi-party protocol for constructing the public parameters of the Pinocchio zk-SNARK},
     howpublished = {Cryptology ePrint Archive, Report 2017/602},
