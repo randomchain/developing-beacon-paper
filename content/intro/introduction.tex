@@ -131,5 +131,5 @@ We want to create a randomness beacon that is secure under the assumption that e
 Regarding input source models, we can immediately discard private input sources. They are tied to the autocratic collector model, and as such do not work for the transparent authority. The guarantees by publicly available sources are weak compared to user input. If sufficiently paranoid, the user will want to bias these publicly available sources to make sure all other users are not colluding. Therefore, user input is the simplest solution and provides the strongest guarantees for the user.
 
 \subsection{Contributions}
-\mtjnote{Todo: Contributions}
-\mtjnote{Something about we want to create a transparent authority beacon with user input.}
+We bridge the gap between the literature and the real world by designing and implementing a secure, trust-minimizing randomness beacon based on the transparent authority model with user input. To this end, we conduct a structured analysis of the threats to a randomness beacon and design a beacon to mitigate as many of these as possible. We discuss the trust assumptions for use of the beacon, implement the beacon, and provide an actionable guide for when an output should be trusted. We implement the beacon, while discussing the implementations fit to the design. Finally we evaluate the security of the implementation to estimate how well it measures up the design.
+%Last line is bogus, we havent evaluated yet.
