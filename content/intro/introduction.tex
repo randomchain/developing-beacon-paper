@@ -80,11 +80,11 @@ It has also previously been suggested to use randomness beacons to improve chall
 
 \subsection{Beacon Definition}
 
-A randomness beacon emits an unpredictable random value at a fixed interval, e.g.\ every five minutes. \cref{fig:abstract_beacon} shows the operation of an abstract beacon.
+A randomness beacon emits an unpredictable random value at a regular interval, e.g.\ every five minutes. \cref{fig:abstract_beacon} shows the operation of an abstract beacon.
 \subimport{}{simple_beacon_fig.tex}
 \mtjnote{We should probably write more here?}
 
-A beacon can further be seen as following specific models describing behavior. Here, we distinguish between an input source model and operational model. The input source model describes the way the beacon sources its input, and the operational model describes the way it performs the computation. These models are based on our earlier work \fxnote{Insert reference to own work previous semester?}.
+A beacon can further be seen as following specific models describing behavior. Here, we distinguish between an input source model and operational model. The input source model describes the way the beacon sources its input, and the operational model describes the design of the protocol, i.e.\ how to perform the computation and publish the output. These models are based on our earlier work \fxnote{Insert reference to own work previous semester?}.
 
 \subsubsection{Input Source Models}
 It is important that the user can trust the input to not be biased in such a way that it negatively affects the output. We therefore see three approaches to sourcing the input:
