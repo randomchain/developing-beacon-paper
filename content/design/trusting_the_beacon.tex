@@ -16,7 +16,7 @@ This is the best case scenario for Alice.
 The operation of the beacon is honest, which means that
 \begin{eletterate*}
 \item the beacon operator will accept all inputs, i.e.\ not exclude any;
-\item the commitment is published as soon as possible, i.e.\ right after a batch of inputs has been processed;
+\item the commitment is published as soon as possible, i.e.\ right after a batch of inputs has been processed; and
 \item the output and proof is published immediately after the computation is done.
 \end{eletterate*}
 This operation is also depicted in \cref{fig:beacon_honest_timeline}.
@@ -28,16 +28,16 @@ If Alice trusts the beacon operator to be honest, she will not suspect them to a
 \subimport{}{sequence_diagram_honest_operator.tex}
 
 \paragraph{Scenario \#2: A malicious operator}
-This is the worst case scenario for Alice; a beacon operator, which is trying to choose the output, yet still make it appear valid to Alice.
+This is the worst case scenario for Alice; a beacon operator which is trying to choose the output, yet still make it appear valid to Alice.
 The malicious operator will not exclude Alice's input, since they are interested in fooling her to trust a forged output.
 Moreover, the malicious operator should be expected to collude with all other users against Alice --- she is effectively alone in Wonderland.
 
 When the operator acts maliciously, they try to manipulate the output, while displaying correct operation outwards.
 This means that Alice still receives a commitment, output, and proof, which she can use to verify the correctness of the output.
 She will receive these messages at seemingly the same timing as described in the honest operator scenario.
-The main difference here, is that Alice should not assume correlation between the timing of received messages, and timing of beacon process.
+The main difference here is that Alice should not assume correlation between the timing of received messages and timing of beacon process.
 
-Assume the following behaviour of a malicious operator:
+Assume the following behavior of a malicious operator:
 \begin{eletterate*}
 \item the beacon operator will stop input collection after receiving Alice's input;
 \item they will attempt to publish the commitment, output, and proof when it is expected by Alice;
