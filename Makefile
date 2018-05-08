@@ -50,7 +50,6 @@ lint: bibtex.bib
 	-chktex -H1 -o chktex.txt -v2 -b0 $(shell find . -type f -name "*.tex")
 	-python biblatex_check.py -b bibtex.bib -a main.aux -o biblatexcheck.html
 
-
 test: clean bibtex.bib
 	latexmk -pdf -pdflatex="echo X | lualatex --draftmode --shell-escape --interaction=errorstopmode %O %S \; touch %D" $(MAIN)
 

@@ -320,7 +320,7 @@ Silent
     \z@ \p@ \@warning \typeout
 
     \dots \ldots \input \endinput \nextline \leavevmode \cdots
--    \appendix \listfiles \and \quad
+    \appendix \listfiles \and \quad
     \vfill \vfil \hfill \hfil \topmargin \oddsidemargin
     \frenchspacing \nonfrenchspacing
     \begingroup \endgroup \par
@@ -393,7 +393,7 @@ WordDash
 
 WipeArg
 {
-    \label:{} \ref:{} \vref:{} \pageref:{} \index:{} \cite:[]{}
+    \label:{} \ref:{} \vref:{} \cref:{} \pageref:{} \index:{} \cite:[]{}
     \input:{} \verbatiminput:[]{} \listinginput:[]{}{}
     \verbatimtabinput:[]{} \include:{} \includeonly:{}
     \bibitem:[]{} \stefan:{} \rene:{} \msmnote:{} \mtjnote:{}
