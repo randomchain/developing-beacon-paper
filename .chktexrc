@@ -578,7 +578,7 @@ NotPreSpaced
 
 Linker
 {
-    \ref \vref \pageref \cite
+    \ref \pageref \cite
 }
 
 #####################################################################
