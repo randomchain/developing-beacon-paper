@@ -2,13 +2,13 @@
 \label{sub:trusting_the_beacon}
 
 Even given the precautions taken in the design, the amount of trust required to use the beacon should be minimal or non-existent.
-We propose two scenarios, which can be used to describe the users' trust assumptions towards the beacon.
-In both of these scenarios, we focus on a given user named Alice, while all other users are regarded as potentially colluding adversaries with malicious intent.
+We propose two scenarios, which explore the users' trust assumptions towards the beacon.
+In both of these scenarios, we focus on a user named Alice, while all other users are regarded as potentially colluding adversaries with malicious intent.
 The only assumption about these adversaries, is that they can interact with the beacon in the same manner as Alice; i.e.\ send inputs to the beacon.
-However, in the second scenario below, any adversary can have total control of the beacon.
+However, in the second scenario, an adversary has total control of the beacon.
 
 Because network latency is dependent on many variables in a system and virtually impossible to verify, Alice should not trust any claim from the beacon operator regarding latency.
-To protect herself, Alice will assume that any inputs she sends is received immediately by the beacon, and vice versa --- any message from the beacon is received instantly by her. This can be thought of as a \enquote{worst-case} time.
+To protect herself, Alice should assume that any inputs she sends is received immediately by the beacon, and vice versa --- any message from the beacon is received instantly by her. This can be considered a \enquote{worst-case} time.
 This means that the beacon will not be able to claim different timings than what Alice observes --- and as this observation is all she can trust, she should base her decisions on that.
 
 \paragraph{Scenario \#1: An honest operator}
@@ -16,7 +16,7 @@ This is the best case scenario for Alice.
 The operation of the beacon is honest, which means that
 \begin{eletterate*}
 \item the beacon operator will accept all inputs, i.e.\ not exclude any;
-\item the commitment is published as soon as possible, i.e.\ right after a batch of inputs has been processed; and
+\item the commitment is published as soon as possible, i.e.\ right after a batch of inputs has been processed;
 \item the output and proof is published immediately after the computation is done.
 \end{eletterate*}
 This operation is also depicted in \cref{fig:beacon_honest_timeline}.
@@ -28,14 +28,14 @@ If Alice trusts the beacon operator to be honest, she will not suspect them to a
 \subimport{}{sequence_diagram_honest_operator.tex}
 
 \paragraph{Scenario \#2: A malicious operator}
-This is the worst case scenario for Alice; a beacon operator, which is trying to choose the output, yet still make it seem valid for Alice.
-The malicious operator will not resort to excluding Alice's input, since they are interested in fooling her to trust a forged output.
+This is the worst case scenario for Alice; a beacon operator, which is trying to choose the output, yet still make it appear valid to Alice.
+The malicious operator will not exclude Alice's input, since they are interested in fooling her to trust a forged output.
 Moreover, the malicious operator should be expected to collude with all other users against Alice --- she is effectively alone in Wonderland.
 
-When the operator acts maliciously they try to manipulate the output, while displaying correct operation outwards.
+When the operator acts maliciously, they try to manipulate the output, while displaying correct operation outwards.
 This means that Alice still receives a commitment, output, and proof, which she can use to verify the correctness of the output.
 She will receive these messages at seemingly the same timing as described in the honest operator scenario.
-The main difference here, is that Alice should not assume correlation between timings of received messages, and timings of beacon process.
+The main difference here, is that Alice should not assume correlation between the timing of received messages, and timing of beacon process.
 
 Assume the following behaviour of a malicious operator:
 \begin{eletterate*}
@@ -48,7 +48,7 @@ Assume the following behaviour of a malicious operator:
 This behaviour is also depicted in \cref{fig:beacon_malicious_timeline}.
 
 In this scenario the operator will effectively carry out a last-draw attack against Alice.
-Moreover, if the malicious operator cannot compute an outcome which they deem beneficial, they are capable of claiming disrupted operation before publishing any commitment.
-This will leave Alice without any output, a withholding attack, and she will not be able to know if the operator was malicious or disrupted by a third party adversary.
+Moreover, if the malicious operator cannot compute an outcome they deem beneficial, they can claim disrupted operation before publishing any commitment.
+This will leave Alice without any output, a withholding attack, and she will not know if the operator was malicious or disrupted by a third party adversary.
 
 \subimport{}{sequence_diagram_malicious_operator.tex}
