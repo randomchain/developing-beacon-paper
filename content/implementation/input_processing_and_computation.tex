@@ -1,0 +1,55 @@
+\subsection{Input Processing and Computation}%
+\label{sub:input_processing_and_computation}
+The \enquote{core} of the beacon, i.e.\ input processing and computation, is what collects and compiles the user inputs, and then computes the random output.
+In our beacon implementation we separate these steps into the two distinct components as described in the design of the beacon.
+We develop these steps to be independent of each other, besides a well-defined contract consisting of two messages from the input processing to the computation, specifically:
+\begin{eletterate*}
+\item condensed output from input processing, which is the input to the computation; and
+\item data from input processing, which is the commitment to the computation.
+\end{eletterate*}
+
+\subsubsection{Parallel Computation}%
+\label{ssub:parallel_computation}
+As we discussed in \cref{sub:probabilistic_trust}, we need parallel and time offset computations in the beacon.
+This is achieved by letting the input processor handle the scheduling of computations.
+
+The beacon is configured to process inputs at a lower bounded interval, which means that the input processor will send work at fixed times, given an available computation component.
+It should be noted that if no such computational component is freely available, the input processor will just continue collecting input.
+Does no computation service announce itself within a given threshold, the input processor will give a warning to the system operator.
+This scenario should be unlikely since the beacon operator should configure the system to always have available computation components waiting for work.
+
+The worker announcements and subsequent work assignments are facilitated with \textit{ZeroMQ}'s \enquote{router/dealer} socket pair which allows asynchronous addressed messaging.
+When a computational node connects to the input processor it sends a \code{READY} message, receives an \code{OK}, and proceeds to wait for incoming work.
+The input processor then keeps track of each announced worker, and when the time comes, sends condensed processing output and commitment data.
+If the worker does not acknowledge the work with an \code{OK} response, the inputs are reprocessed, and the next free worker is assigned.
+This cycle continuous until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
+
+\subsubsection{Combining Inputs}%
+\label{ssub:combining_inputs}
+One way to combine and compile the inputs is the simple operation of concatenating them.
+This is then used as commitment data, while a hash of the commitment data can be used as the condensed output.
+This processing method requires the users to acquire the full commitment, if they want to confirm the inclusion of their input --- which can be suboptimal in cases of significantly many users.
+
+Although our beacon implementation allows for virtually any input processing method, we choose to focus on a Merkle tree approach.
+A Merkle tree is a special binary tree where the value of each node is the hash of the concatenation of its two children.
+In our implementation this means that the leaf nodes are user inputs, which are already hashes, and the root node is the condensed output.
+For consistency, the hashing algorithm used to construct the tree is the same as the one applied to sanitize each input (SHA512).
+
+Merkle trees as commitment data allows third-party applications to provide verification, since the inclusion of a given leaf node in a Merkle tree can be verified by providing all siblings to the nodes on the path up to the root.
+This greatly limits the amount of data which the user needs to fetch and process to $\log{(n)}+1$ where $n$ is the number of leaf nodes\footnote{There are $\log{n}$ sibling nodes of the path to the root, and for comparing you need the root node as well (the $+1$). You already know your own input. The rest (i.e.\ the nodes on the path to the root) is easily calculable.}.
+The commitment data consist of only the leaf nodes.
+This is possible if they retain their ordering, and the algorithm to construct the tree is openly available.
+
+Another property of the Merkle tree is that, like hashing a concatenation of all collected inputs, each leaf node equally affects the root node.
+This means that any change to the set of inputs completely changes the root node in the Merkle tree.
+
+\subsubsection{Delay Function}%
+\label{ssub:delay_function}
+For the computation we implement a delay function based on \textit{sloth} by \citet{randomzoo}.
+The general idea behind \textit{sloth} is to use modular square root arithmetics to construct a deterministic time hard algorithm, while containing a trapdoor for fast reversal, i.e.\ verification --- we summarize the paper in \cref{sub:random_zoo}.
+
+When implementing delay functions in systems that rely on their time guarantees, it is important to focus on performance, since an obvious yet undeployed optimization of execution time would compromise the \enquote{time hardness} of the algorithm.
+Because of this, and the fact that Python is not the best performing language, we implement \textit{sloth} as a Python module with a C-extension for the actual algorithm.
+In the C-extension we utilize the GNU MP library\footnote{\url{https://gmplib.org/}} to perform integer arithmetics with extremely large numbers.
+\msmnote{Maybe discuss machine requirements and show performance numbers}
+

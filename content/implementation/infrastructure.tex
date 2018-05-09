@@ -1,0 +1,33 @@
+\subsection{Infrastructure}%
+\label{sub:infrastructure}
+Establishing a solid and scalable infrastructure is a significant part of implementing our beacon.
+Moreover, we do not want to rely on running all components of the beacon on the same machine.
+Because of this, we use TCP sockets through \textit{ZeroMQ}.
+This means that operations such as actually reading bytes from the sockets and reconnecting in case of networking issues is handled by \textit{ZeroMQ}, which also maintains a local queue per socket to mitigate network congestion.
+Sockets in \textit{ZeroMQ} require one end to bind and the other to connect, and usually it is recommended that the most stable or consistent component binds, while dynamic or unstable components connect.
+Only one component can bind to a given socket while many can connect to that same socket.
+
+In the \enquote{publish/subscribe} pattern \textit{ZeroMQ} handles the message routing based on subscription prefixes, which means less traffic on our network.
+Furthermore, the fan-in pipelining is implemented with a \enquote{push/pull} socket pair which ensure fair operation, thereby avoiding starvation of components.
+Lastly, \textit{ZeroMQ} guarantees atomic delivery of messages, which means that we can assume all parts of a message or none at all. This is the most desirable scenario for us since lost messages should be relatively insignificant, while malformed messages usually means strenuous error and edge case handling.
+
+\subsubsection{Proxies}
+In the interest of rapid iteration and ease of configuration, we deploy proxies at key points in the pipeline.
+This allows us to add and remove components easily from the network, since components then do not need to know of each other --- they only need to know of the proxies.
+We insert two proxies in the network: one between input collectors and the input processor, and one between computation and publishers.
+\mtjnote{Perhaps an updated architecture-esque diagram would be nice here?}
+Another benefit of using proxies is the ability to have a many-to-many connection, since the proxy binds both its frontend and backend socket, which components then connect to.
+
+These proxies are written in C for performance and since they utilize a \textit{ZeroMQ} primitive for the actual forwarding, their operation is quite stable.
+It should be noted that these proxies inherently introduces single points of failure in our beacon, which potentially could be bad for continuous and stable operations.
+
+\subsubsection{High-Availability}
+One way to mitigate single points of failures, could be to implement a pattern called \enquote{binary star} by \textit{ZeroMQ}.
+Here a component is configured with two instances, a primary and a backup.
+The backup can then take over and signal for a new backup to be started, if the primary disappears from the network.
+This pattern can potentially be applied to all components exposed as a single point of failure and would be sufficient in most cases of crashes.
+
+Another measure to provide high-availability in the beacon is the delegation of user interaction to input collectors and publishers.
+In the system, user interaction is the most demanding task regarding availability, and the statelessness of the components means that adding new instances is as easy as executing a shell command.
+
+
