@@ -1,0 +1,59 @@
+\tikzstyle{implsmallblock} = [rectangle, draw, thick, fill=clcodeshade, text width=5em, text centered, minimum height=2em]
+\tikzstyle{implblock} = [rectangle, draw, thick, fill=clcodeshade, text width=7.5em, text centered, minimum height=3em]
+
+\begin{figure*}[htb]
+    \pgfdeclarelayer{background}
+    \pgfsetlayers{background,main}
+    \centering\scriptsize
+    \begin{tikzpicture}[auto, remember picture]
+
+        % Input collectors:
+        \node[implsmallblock] (ic1) {HTTP};
+        \node[implsmallblock, below=1em of ic1] (ic2) {Twitter};
+        \node[below=0em of ic2] (icdots) {$\vdots$};
+        \node[implsmallblock, below=.8em of icdots] (ic3) {Telegraph};
+        \begin{pgfonlayer}{background}
+            \node[block] (icframe) [container, fit={(ic1) (ic3)}] {};
+        \end{pgfonlayer}
+        \node[above=0cm of icframe] {Input Collectors};
+
+        % Proxy
+        \node[implblock, text width=4em, right=of icframe] (proxy1) {Proxy};
+
+        % Input processor
+        \node[implblock, text width=5em, right=2em of proxy1] (ip) {Input Processor};
+
+        % Computation
+        \node[right=of ip] (compi) {
+            \begin{tikzpicture}
+                \node[implsmallblock] (comp1) {Node 1};
+                \node[implsmallblock, below=1em of comp1] (comp2) {Node 2};
+                \node[below=0em of comp2] (compdots) {$\vdots$};
+                \node[implsmallblock, below=.8em of compdots] (compn) {Node n};
+                \begin{pgfonlayer}{background}
+                    \node[block] (compframe) [container, fit={(comp1) (compn)}] {};
+                \end{pgfonlayer}
+            \end{tikzpicture}
+        };
+        \node[above=0cm of compframe] {Computation};
+
+        % Proxy
+        \node[implblock, text width=4em, right=of compframe] (proxy2) {Proxy};
+
+        % Publishers
+        \node[right=of proxy2] (pubi) {
+            \begin{tikzpicture}
+                \node[implsmallblock] (pub1) {File dump};
+                \node[implsmallblock, below=1em of pub1] (pub2) {Twitter};
+                \node[below=0em of pub2] (pubdots) {$\vdots$};
+                \node[implsmallblock, below=.8em of pubdots] (pubn) {Email};
+                \begin{pgfonlayer}{background}
+                    \node[block] (pubframe) [container, fit={(pub1) (pubn)}] {};
+                \end{pgfonlayer}
+            \end{tikzpicture}
+        };
+        \node[above=0cm of pubframe] {Publishers\vphantom{j}};
+
+    \end{tikzpicture}
+    \caption{Caption.}\label{fig:impl_figure}
+\end{figure*}
