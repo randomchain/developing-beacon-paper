@@ -1,4 +1,4 @@
-\tikzstyle{implsmallblock} = [rectangle, draw, thick, fill=clcodeshade, text width=5em, text centered, minimum height=2em]
+\tikzstyle{implsmallblock} = [rectangle, draw, thick, fill=clcodeshade, text width=4.8em, text centered, minimum height=2em]
 \tikzstyle{implblock} = [rectangle, draw, thick, fill=clcodeshade, text width=7.5em, text centered, minimum height=3em]
 
 \begin{figure*}[htb]
@@ -6,7 +6,6 @@
     \pgfsetlayers{background,main}
     \centering\scriptsize
     \begin{tikzpicture}[auto, remember picture]
-
         % Input collectors:
         \node[implsmallblock] (ic1) {HTTP};
         \node[implsmallblock, below=1em of ic1] (ic2) {Twitter};
@@ -16,6 +15,13 @@
             \node[block] (icframe) [container, fit={(ic1) (ic3)}] {};
         \end{pgfonlayer}
         \node[above=0cm of icframe] {Input Collectors};
+
+        \node[left=2em of ic1] (dummyin1) {};
+        \node[left=2em of ic2] (dummyin2) {};
+        \node[left=2em of ic3] (dummyin3) {};
+        \draw[arrow] (dummyin1) -- (ic1);
+        \draw[arrow] (dummyin2) -- (ic2);
+        \draw[arrow] (dummyin3) -- (ic3);
 
         % Proxy
         \node[implblock, text width=4em, right=of icframe] (proxy1) {Proxy};
@@ -53,7 +59,26 @@
             \end{tikzpicture}
         };
         \node[above=0cm of pubframe] {Publishers\vphantom{j}};
+        \node[right=2em of pub1] (dummyout1) {};
+        \node[right=2em of pub2] (dummyout2) {};
+        \node[right=2em of pubn] (dummyout3) {};
+        \draw[arrow] (pub1) -- (dummyout1);
+        \draw[arrow] (pub2) -- (dummyout2);
+        \draw[arrow] (pubn) -- (dummyout3);
+
+        % Arrows
+        \draw (ic1) edge[out=0, in=180, arrow] node[]{$H(i)$} ([yshift=.8em]proxy1.west);
+        \draw (ic2) edge[out=0, in=180, arrow] node[below]{$H(i)$} ([yshift=0em]proxy1.west);
+        \draw (ic3) edge[out=0, in=180, arrow] node[below]{$H(i)$}([yshift=-.8em]proxy1.west);
+
+        \draw[arrow] (proxy1) -- (ip);
+
+        \draw (ip) edge[arrow, loop, looseness=6, out=70, in=110] node[above, align=center]{Building\\Merkle Tree} (ip);
+
+        \draw ([yshift=.8em]ip.east) edge[out=0, in=180, arrow] (comp1);
+        \draw ([yshift=0em]ip.east) edge[out=0, in=180, arrow] (comp2);
+        \draw ([yshift=-.8em]ip.east) edge[out=0, in=180, arrow] (compn);
 
     \end{tikzpicture}
-    \caption{Caption.}\label{fig:impl_figure}
+    \caption{Caption. THIS FIGURE IS WORK IN PROGRESS. NOT DONE.}\label{fig:impl_figure}
 \end{figure*}
