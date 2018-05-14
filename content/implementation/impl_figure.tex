@@ -67,23 +67,24 @@
         \draw[arrow] (pubn) -- (dummyout3);
 
         % Arrows
-        \draw (ic1) edge[out=0, in=180, arrow] node[]{$H(i)$} ([yshift=.8em]proxy1.west);
-        \draw (ic2) edge[out=0, in=180, arrow] node[below]{$H(i)$} ([yshift=0em]proxy1.west);
-        \draw (ic3) edge[out=0, in=180, arrow] node[below]{$H(i)$}([yshift=-.8em]proxy1.west);
+        \draw (ic1) edge[out=0, in=180, arrow] node[inner sep=1pt]{$H(i)$} ([yshift=.8em]proxy1.west);
+        \draw (ic2) edge[out=0, in=180, arrow] node[below, inner sep=1pt]{$H(i)$} ([yshift=0em]proxy1.west);
+        \draw (ic3) edge[out=0, in=180, arrow] node[below, inner sep=1pt]{$H(i)$}([yshift=-.8em]proxy1.west);
 
         \draw[arrow] (proxy1) -- (ip);
 
-        \draw (ip) edge[arrow, loop, looseness=6, out=70, in=110] node[above, align=center]{Building\\Merkle Tree} (ip);
+        \draw (ip) edge[arrow, loop, looseness=6, out=250, in=290] node[below, align=center]{Building\\Merkle Tree} (ip);
 
-        \draw ([yshift=.9em]ip.east) edge[out=0, in=180, arrow, bend left=30] ([yshift=.1em]comp1.west);
-        \draw ([yshift=-.1em]comp1.west) edge[out=180, in=0, arrow, bend left=25] ([yshift=.8em]ip.east);
-        \draw ([yshift=.1em]ip.east) edge[out=0, in=180, arrow, bend left=20] ([yshift=.1em]comp2.west);
-        \draw ([yshift=-.1em]comp2.west) edge[out=0, in=180, arrow, bend left=20] ([yshift=-.1em]ip.east);
+        \draw ([yshift=.9em]ip.east) edge[out=0, in=180, arrowrev, bend left=30, postaction={decorate,decoration={raise=0.6ex, text along path, text align=center, text={1. Ready}}}] ([yshift=.1em]comp1.west);
+        \draw ([yshift=.8em]ip.east) edge[out=180, in=0, arrow, bend right=25, postaction={decorate,decoration={raise=0.5ex, text along path, text align=center, text={2. Data}}}] ([yshift=-.1em]comp1.west);
+
+        \draw ([yshift=.1em]comp2.west) edge[out=0, in=180, arrow, bend right=20]([yshift=.1em]ip.east);
+        \draw ([yshift=-.1em]comp2.west) edge[out=0, in=180, arrowrev, bend left=20] ([yshift=-.1em]ip.east);
+
         \draw ([yshift=-.8em]ip.east) edge[out=0, in=180, arrow, bend left=30] ([yshift=.1em]compn.west);
         \draw ([yshift=-.1em]compn.west) edge[out=0, in=180, arrow, bend left=30] ([yshift=-.9em]ip.east);
 
         % Explanations
-        \node[text width=9em, align=left, anchor=east, below=5ex of ip.east] {1. \code{Ready}\\2. Data};
 
     \end{tikzpicture}
     \caption{Caption. THIS FIGURE IS WORK IN PROGRESS. NOT DONE.}\label{fig:impl_figure}
