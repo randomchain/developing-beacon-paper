@@ -17,10 +17,9 @@ An outsider does not possess inside access, except for the special case where th
 
 \subsection{Scoring Framework}
 We consider a wide variety of threats, and analyze their severity according the DREAD framework with some modifications. DREAD consists of five metrics~\cite{dread}, that we score on a scale of 1 to 3 (low, medium, high):
-
 \textsc{Damage}: How bad would such an attack be?
 \textsc{Reproducibility}: How easy is it to reproduce such an attack?
-\textsc{Exploitability}: How much work is required to launch the attack?
+\textsc{Exploitability}: How little work is required to launch the attack (3 being the least)?
 \textsc{Affected users}: How many users will be impacted?
 \textsc{Discoverability}: How easy is it to discover the threat?
 
@@ -44,7 +43,7 @@ All threats are accompanied with a DREAD scoring which looks like this:
 The first four numbers each corresponds to the first four DREAD metrics. The fifth, discoverability, is omitted. The last number, $\Sigma$, is the sum of the prior numbers, and used as a severity indicator.
 
 \subsection{Threats}
-This section will list the threats we were able to find. The list is split into two; first attacks that threaten the availability of the output, and then attacks that threaten the integrity of the output. A summary of the threats can be seen in \vref{tab:threat-categorization}.
+This section will list the threats we were able to find along with our best educated guess on a DREAD score. The list is split into two; first attacks that threaten the availability of the output, and then attacks that threaten the integrity of the output. A summary of the threats can be seen in \vref{tab:threat-categorization}.
 
 \subsubsection{Threats to Availability}
 
