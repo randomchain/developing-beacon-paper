@@ -10,16 +10,16 @@ In the case of a randomness beacon, the security also embodies the operator's ab
 This means we need some mechanism to prevent the operator from performing last-draw attacks disguised as regular user inputs, or excluding certain inputs to alter the output.
 Moreover, we also want to prevent the operator from being able to initiate multiple beacon computations, and then only publish the output which benefits the operator the most.
 
-Generally, these concerns can be mitigated by enforcing a \gls{cco} workflow in the beacon protocol.
-This effectively means that each published output is paired with a commitment which can be used in the verification of the beacon.
+Our solution for this problem is to enforce what we will call a \gls{cco} workflow in the beacon protocol. We have designed this workflow to govern the security of the beacon, and is one of our contributions.
+It means that each published output is paired with a commitment which can be used in the verification of the beacon.
 The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output.
 Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desirable output.
 
-The commitment consists of the data which is inputted to the delay function.
+The commitment consists of the data which is used for the computation.
 This allows any other party to compute the randomness alongside the beacon operator.
-It also ensures that the operator can not withhold any numbers, and effectively reduces the \enquote{market value} of the output, making it less attractive to sell early access to it.
+It ensures that the operator can not cause much damage by withholding output. In essence, it reduces the \enquote{market value} of the output, making it less attractive to sell early access to it because everyone can just compute it. While it does not prevent the operator of performing a withholding attack, it minimizes the effects of it.
 
-To guarantee that the time between publishing the commitment and output has been spent computing the output, we utilize a \emph{delay function}.
+To decrease the possibilities of the operator trying different commits before releasing them, we utilize a \emph{delay function}. It ensures that the output cannot be instantly computed, and ensures that the operator cannot try more than 1 commit before running out of time. As such, the operator is unable to perform the input manipulation attack.
 Delay functions require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
 When deploying delay functions in randomness beacons it is important to keep verification in mind.
 A user should be able to run the delay function in reverse to confirm that a commitment matches the output.
@@ -40,4 +40,3 @@ When the computation is finished, it publishes the output.
 In the literature on beacons, hashing algorithms have been considered random oracles, that produce unpredictable pseudo-random outputs.
 For our beacon, hashing algorithms help ensure the unpredictability of the output as they are can not feasibly be reversed.
 An adversary can not feasibly know which inputs are needed to compute an output, without exploring the space of possibilities by themselves.
-

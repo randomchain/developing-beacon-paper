@@ -1,6 +1,6 @@
 \subsection{Probabilistic Trust}%
 \label{sub:probabilistic_trust}
-In our approach to a randomness beacon we want to push beyond the need for honest operators, and naïve users.
+In our approach to a randomness beacon we want to push beyond the need for honest operators and naïve users.
 To achieve this we first need to quantify trusting the beacon and then determine thresholds for reasonable behavior.
 This will effectively provide a measure of probabilistic trust, where users decide for themselves if the probability of honest operation is adequate.
 
@@ -29,3 +29,14 @@ Moreover, the computation components can eventually be reused for future beacon 
 These observations are depicted in \cref{fig:beacon_parallel_timeline_real}, where the beacon would output at each circle shown in the diagram.
 
 \subimport{}{timeline_diagrams.tex}
+
+\subsection{Scalability}
+Individual services in the \gls{soa} can be scaled as needed.
+Parallelizing a pipeline to increase the output frequency is also possible.
+
+In some scenarios a beacon may consist of multiple computation services as a mean of redundancy, as long as each computation is run on the same input.
+The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
+This presents the issue of consensus about which input to use, but that is out of scope for this report.
+
+\subsection{Threats}
+\mtjnote{A section that evaluates which threats have been solved}

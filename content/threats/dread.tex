@@ -59,6 +59,7 @@ This section will list the threats we were able to find along with our best educ
 
 \subsubsection{Threats to Integrity}
 
+
 \parathreat{Input Biasing}\drea{3,3,2,3,11} An outsider can provide input that knowingly biases the output to their benefit or others' disadvantage. Either the outsider knows how to construct an input such that it affects the output in a known way despite other users may contribute input later. If the outsider has the capability of providing the last input, it is a last-draw attack. This is a severe threat to the beacon, as it biases the output to the benefit of the adversary, and violates the unpredictability of the random number as the adversary now knows more than everybody else. The attack can be executed by anyone with access to the input collectors given that they have the ability to pre-compute outputs.
 %D3 - Ruins the output for everyone, and breaks unbiased / unpredictable, R 3 - everyone can do it with a web browser, E 2 - requires the ability to precompute results, A 3 - all users affected
 \parathreat{Output Degradation}\drea{3,3,3,3,12} As a variation of the previous attack, adversaries can supply \enquote{bad} input to reduce the quality of the output. This is also a large threat as it will affect the quality of randomness provided to all users, which may not even be useful. In addition, it is easy to do given access to the input collectors, and could even happen by accident.
