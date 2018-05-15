@@ -1,0 +1,14 @@
+\subsection{Smart Contracts}
+Trustless environments are an obvious settings for a randomness beacons, and one of the most obvious types of these are blockchains. As such it is interesting to consider implementing a randomness beacon in a smart contract on a blockchain.
+
+This has also been examined in the literature, where \citet{proofofdelay} implements an ethereum smart contract to publish and challenge the output of the beacon. This in turn ties the beacon into the monetary incentive structures that dictate smart contract behavior. Since any public transaction costs money, and smart contracts also need to pay for gas on the ethereum blockchain, driving the beacon rapidly becomes costly.
+
+The beacon requires money to publish outputs on the blockchain, and users must pay to challenge a given output. \citet{proofofdelay} provide a detailed structure of incentives the beacon should provide to ensure correct behavior. This illustrates the difference in structure that follows implementing part of a beacon in a smart contract.
+
+The RanDAO\cite{randao} is an example of a working randomness beacon in an ethereum smart contract. This in turn means that the beacon is not run by an operator, but by the network as a whole. However, the operation of the beacon is still dictated by financial incentives. At each block, users can contribute commits to inputs, alongside a small deposit. They must then later reveal the committed values, or lose their deposits. If no users contribute or reveal their commitments, the beacon will not output any value at that block.
+
+Smart contracts pay a small fee for using the output of the RanDAO, the profits of which go to the contributing users. Again we see a strong tendency towards having financial incentives drive the correct behavior of users, which ultimately requires the beacon to demand payment.
+
+Another thing to consider is that everything that occurs on a blockchain occurs because someone put it into a block. This is typically the job of miners, who have different interests than other users, as they want to include the transactions that give them the greatest rewards for the block. Thus a user would have to pay a competitive fee to even input to a beacon on a blockchain.
+
+If we also consider the trust assumption of everyone being against the user, they would have to mine the block themselves to guarantee their input was used, which is a very steep requirement.
