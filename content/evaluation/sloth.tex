@@ -33,19 +33,18 @@ Something something dark side.
         \centering
         \begin{tikzpicture}
         \begin{axis}[%
-        width=0.9\textwidth,
-        xlabel=iterations,
-        ylabel=bits,
-        ytick={1024,2048,3072,4096},
-        zlabel=time (s),
-        grid=major,
-        x dir=reverse]
-        \addplot3+[only marks, scatter, shader=interp] table[y={BITS}, x={ITERATIONS}, z={COMPUTATION}, col sep=comma] {sloth_data.csv};
+            width=0.9\textwidth,
+            xlabel=iterations,
+            ylabel=bits,
+            ytick={1024,2048,3072,4096},
+            zlabel=time (s),
+            grid=major,
+            x dir=reverse]
         \addplot3 [only marks, scatter, shader=interp, mark=cube, mark size=3] table[y={BITS}, x={ITERATIONS}, z={VERIFICATION}, col sep=comma] {sloth_data.csv};
-    \legend{Computation,Verification};
+        \addplot3+[only marks, scatter, shader=interp, mark=*] table[y={BITS}, x={ITERATIONS}, z={COMPUTATION}, col sep=comma] {sloth_data.csv};
+    \legend{Verification,Computation};
     \end{axis}
 \end{tikzpicture}
 \caption{Correlation between bits and iterations in relation to time of both computation and verification.}
     \end{subfigure}%
 \end{figure*}
-
