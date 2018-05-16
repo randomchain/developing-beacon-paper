@@ -1,0 +1,51 @@
+\subsubsection{Sloth Parameters}%
+\label{ssub:sloth_parameters}
+
+The computation and verification time of the delay functions we use, Sloth, can be configured by adjusting two parameters.
+These are the number of bits in the prime used and number of square root permutations, i.e.\ iterations.
+
+Something something dark side.
+
+\begin{figure*}
+    \centering
+        \footnotesize
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \begin{axis}[%
+        width=1.075\textwidth,
+        xlabel=bits,
+        xtick={1024,2048,3072,4096},
+        ymode=log,
+        log basis y={10},
+        yticklabel pos=right,
+        legend pos=north west,
+        grid=major]
+        \addplot[scatter, shader=interp] table[y={COMPUTATION}, x={BITS}, col sep=comma, restrict expr to domain={\thisrow{ITERATIONS}}{9500:10500}] {sloth_data.csv};
+        \addplot[scatter, mark=square, shader=interp] table[y={VERIFICATION}, x={BITS}, col sep=comma, restrict expr to domain={\thisrow{ITERATIONS}}{9500:10500}] {sloth_data.csv};
+        \legend{Computation,Verification};
+    \end{axis}
+\end{tikzpicture}
+\caption{Computation and verification time at 75000 iterations.}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.55\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \begin{axis}[%
+        width=0.9\textwidth,
+        xlabel=iterations,
+        ylabel=bits,
+        ytick={1024,2048,3072,4096},
+        zlabel=time (s),
+        grid=major,
+        x dir=reverse]
+        \addplot3+[only marks, scatter, shader=interp] table[y={BITS}, x={ITERATIONS}, z={COMPUTATION}, col sep=comma] {sloth_data.csv};
+        \addplot3 [only marks, scatter, shader=interp, mark=cube, mark size=3] table[y={BITS}, x={ITERATIONS}, z={VERIFICATION}, col sep=comma] {sloth_data.csv};
+    \legend{Computation,Verification};
+    \end{axis}
+\end{tikzpicture}
+\caption{Correlation between bits and iterations in relation to time of both computation and verification.}
+    \end{subfigure}%
+\end{figure*}
+
