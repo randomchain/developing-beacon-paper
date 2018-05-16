@@ -14,8 +14,7 @@ Lastly, \textit{ZeroMQ} guarantees atomic delivery of messages, which means that
 \subsubsection{Proxies}
 In the interest of rapid iteration and ease of configuration, we deploy proxies at key points in the pipeline.
 This allows us to add and remove components easily from the network, since components then do not need to know of each other --- they only need to know of the proxies.
-We insert two proxies in the network: one between input collectors and the input processor, and one between computation and publishers.
-\mtjnote{Perhaps an updated architecture-esque diagram would be nice here?}
+We insert two proxies in the network: one between input collectors and the input processor, and one between computation and publishers (as depicted in \vref{fig:impl_figure}).
 Another benefit of using proxies is the ability to have a many-to-many connection, since the proxy binds both its frontend and backend socket, which components then connect to.
 
 These proxies are written in C for performance and since they utilize a \textit{ZeroMQ} primitive for the actual forwarding, their operation is quite stable.
@@ -29,5 +28,3 @@ This pattern can potentially be applied to all components exposed as a single po
 
 Another measure to provide high-availability in the beacon is the delegation of user interaction to input collectors and publishers.
 In the system, user interaction is the most demanding task regarding availability, and the statelessness of the components means that adding new instances is as easy as executing a shell command.
-
-

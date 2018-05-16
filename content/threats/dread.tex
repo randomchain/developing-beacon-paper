@@ -17,18 +17,15 @@ An outsider does not possess inside access, except for the special case where th
 
 \subsection{Scoring Framework}
 We consider a wide variety of threats, and analyze their severity according the DREAD framework with some modifications. DREAD consists of five metrics~\cite{dread}, that we score on a scale of 1 to 3 (low, medium, high):
-
 \textsc{Damage}: How bad would such an attack be?
 \textsc{Reproducibility}: How easy is it to reproduce such an attack?
-\textsc{Exploitability}: How much work is required to launch the attack?
+\textsc{Exploitability}: How little work is required to launch the attack (3 being the least)?
 \textsc{Affected users}: How many users will be impacted?
 \textsc{Discoverability}: How easy is it to discover the threat?
-
 Discoverability can, however, be considered to reward security through obscurity. As such we will not consider it, as an adversary with unlimited resources will naturally know of all exploits.
 
-With the categorization introduced, we will now present the found threats.
-All threats are accompanied with a DREAD scoring which looks like this:
-
+In the following section, all threats are accompanied with a DREAD scoring which looks like this:
+\vspace{\dimexpr-1\parsep-1\parskip\relax}% Fixing centering spacing
 \begin{center}
 \begin{tikzpicture}[xscale=0.25, yscale=0.25, baseline=-.5ex]
     \scriptsize
@@ -40,11 +37,11 @@ All threats are accompanied with a DREAD scoring which looks like this:
     \node[descriptionlabeling, thick] at (4.5,0) {10};
 \end{tikzpicture}
 \end{center}
-
+\vspace{\dimexpr-1\parsep-1\parskip\relax}%
 The first four numbers each corresponds to the first four DREAD metrics. The fifth, discoverability, is omitted. The last number, $\Sigma$, is the sum of the prior numbers, and used as a severity indicator.
 
 \subsection{Threats}
-This section will list the threats we were able to find. The list is split into two; first attacks that threaten the availability of the output, and then attacks that threaten the integrity of the output. A summary of the threats can be seen in \vref{tab:threat-categorization}.
+This section will list the threats we were able to find along with our best educated guess on a DREAD score. The list is split into two; first attacks that threaten the availability of the output, and then attacks that threaten the integrity of the output. A summary of the threats can be seen in \vref{tab:threat-categorization}.
 
 \subsubsection{Threats to Availability}
 
@@ -61,6 +58,7 @@ This section will list the threats we were able to find. The list is split into 
 %D 2 - no use for a single user, R 1 - extremely difficult to accomplish, E 1 - likewise, A 1 - only one user affected.
 
 \subsubsection{Threats to Integrity}
+
 
 \parathreat{Input Biasing}\drea{3,3,2,3,11} An outsider can provide input that knowingly biases the output to their benefit or others' disadvantage. Either the outsider knows how to construct an input such that it affects the output in a known way despite other users may contribute input later. If the outsider has the capability of providing the last input, it is a last-draw attack. This is a severe threat to the beacon, as it biases the output to the benefit of the adversary, and violates the unpredictability of the random number as the adversary now knows more than everybody else. The attack can be executed by anyone with access to the input collectors given that they have the ability to pre-compute outputs.
 %D3 - Ruins the output for everyone, and breaks unbiased / unpredictable, R 3 - everyone can do it with a web browser, E 2 - requires the ability to precompute results, A 3 - all users affected

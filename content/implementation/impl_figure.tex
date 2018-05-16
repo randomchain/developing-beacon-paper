@@ -1,4 +1,4 @@
-\tikzstyle{implsmallblock} = [rectangle, draw, thick, fill=clcodeshade, text width=5em, text centered, minimum height=2em]
+\tikzstyle{implsmallblock} = [rectangle, draw, thick, fill=clcodeshade, text width=4.8em, text centered, minimum height=2em]
 \tikzstyle{implblock} = [rectangle, draw, thick, fill=clcodeshade, text width=7.5em, text centered, minimum height=3em]
 
 \begin{figure*}[htb]
@@ -6,10 +6,9 @@
     \pgfsetlayers{background,main}
     \centering\scriptsize
     \begin{tikzpicture}[auto, remember picture]
-
         % Input collectors:
         \node[implsmallblock] (ic1) {HTTP};
-        \node[implsmallblock, below=1em of ic1] (ic2) {Twitter};
+        \node[implsmallblock, below=1.5em of ic1] (ic2) {Twitter};
         \node[below=0em of ic2] (icdots) {$\vdots$};
         \node[implsmallblock, below=.8em of icdots] (ic3) {Telegraph};
         \begin{pgfonlayer}{background}
@@ -17,17 +16,24 @@
         \end{pgfonlayer}
         \node[above=0cm of icframe] {Input Collectors};
 
+        \node[left=3em of ic1] (dummyin1) {};
+        \node[left=3em of ic2] (dummyin2) {};
+        \node[left=3em of ic3] (dummyin3) {};
+        \draw[arrow] (dummyin1) -- node[pos=.4]{$i$} (ic1);
+        \draw[arrow] (dummyin2) -- (ic2);
+        \draw[arrow] (dummyin3) -- (ic3);
+
         % Proxy
-        \node[implblock, text width=4em, right=of icframe] (proxy1) {Proxy};
+        \node[implblock, text width=4em, right=3em of icframe] (proxy1) {Input\\Proxy};
 
         % Input processor
         \node[implblock, text width=5em, right=2em of proxy1] (ip) {Input Processor};
 
         % Computation
-        \node[right=of ip] (compi) {
+        \node[right=5em of ip] (compi) {
             \begin{tikzpicture}
                 \node[implsmallblock] (comp1) {Node 1};
-                \node[implsmallblock, below=1em of comp1] (comp2) {Node 2};
+                \node[implsmallblock, below=1.5em of comp1] (comp2) {Node 2};
                 \node[below=0em of comp2] (compdots) {$\vdots$};
                 \node[implsmallblock, below=.8em of compdots] (compn) {Node n};
                 \begin{pgfonlayer}{background}
@@ -38,13 +44,13 @@
         \node[above=0cm of compframe] {Computation};
 
         % Proxy
-        \node[implblock, text width=4em, right=of compframe] (proxy2) {Proxy};
+        \node[implblock, text width=4em, right=of compframe] (proxy2) {Output\\Proxy};
 
         % Publishers
-        \node[right=of proxy2] (pubi) {
+        \node[right=2.5em of proxy2] (pubi) {
             \begin{tikzpicture}
                 \node[implsmallblock] (pub1) {File dump};
-                \node[implsmallblock, below=1em of pub1] (pub2) {Twitter};
+                \node[implsmallblock, below=1.5em of pub1] (pub2) {Twitter};
                 \node[below=0em of pub2] (pubdots) {$\vdots$};
                 \node[implsmallblock, below=.8em of pubdots] (pubn) {Email};
                 \begin{pgfonlayer}{background}
@@ -53,7 +59,43 @@
             \end{tikzpicture}
         };
         \node[above=0cm of pubframe] {Publishers\vphantom{j}};
+        \node[right=2em of pub1] (dummyout1) {};
+        \node[right=2em of pub2] (dummyout2) {};
+        \node[right=2em of pubn] (dummyout3) {};
+        \draw[arrow] (pub1) -- (dummyout1);
+        \draw[arrow] (pub2) -- (dummyout2);
+        \draw[arrow] (pubn) -- (dummyout3);
+
+        % Arrows
+        \draw (ic1) edge[out=0, in=180, arrow] node[inner sep=1pt]{$H(i)$} ([yshift=.8em]proxy1.west);
+        \draw (ic2) edge[out=0, in=180, arrow] ([yshift=0em]proxy1.west);
+        \draw (ic3) edge[out=0, in=180, arrow] ([yshift=-.8em]proxy1.west);
+
+        \draw[arrow] (proxy1) -- (ip);
+
+        \draw (ip) edge[arrow, loop, looseness=6, out=250, in=290] node[below, align=center]{Building\\Merkle Tree} (ip);
+
+        \draw ([yshift=.9em]ip.east) edge[out=0, in=180, arrowrev, bend left=30, postaction={decorate,decoration={raise=0.6ex, text along path, text align=center, text={1. Ready}}}] ([yshift=.1em]comp1.west);
+        \draw ([yshift=.8em]ip.east) edge[out=180, in=0, arrow, bend right=22, postaction={decorate,decoration={raise=0.5ex, text along path, text align=center, text={2. Data*}}}] ([yshift=-.1em]comp1.west);
+
+        \draw ([yshift=.1em]comp2.west) edge[out=0, in=180, arrow, bend right=18]([yshift=.1em]ip.east);
+        \draw ([yshift=-.1em]comp2.west) edge[out=0, in=180, arrowrev, bend left=20] ([yshift=-.1em]ip.east);
+
+        \draw ([yshift=-.8em]ip.east) edge[out=0, in=180, arrow, bend left=30] ([yshift=.1em]compn.west);
+        \draw ([yshift=-.1em]compn.west) edge[out=0, in=180, arrow, bend left=30] ([yshift=-.9em]ip.east);
+
+        \draw (comp1) edge[arrow, loop, looseness=3, out=240, in=300] node[right, align=left, xshift=1em]{3. Delay} (comp1);
+
+        \draw (comp1.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{4. Output} ([yshift=.8em]proxy2.west);
+        \draw (comp2.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{} ([yshift=0em]proxy2.west);
+        \draw (compn.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{} ([yshift=-.8em]proxy2.west);
+
+        \draw ([yshift=.8em]proxy2.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{} (pub1.west);
+        \draw ([yshift=0em]proxy2.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{} (pub2.west);
+        \draw ([yshift=-.8em]proxy2.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{} (pubn.west);
+
+        % Explanations
 
     \end{tikzpicture}
-    \caption{Caption.}\label{fig:impl_figure}
+    \caption{Significant data flows in the beacon. Input collectors hash inputs and sends them to the input proxy which forwards the hashed inputs to the input processor. This input processor adds the inputs to the current Merkle tree as they arrive. When a computation node is finished with a job, it signals its readiness (1) to the input processor, and is either given data (2) or is requested to wait a bit (to keep computation nodes spaced apart in time). Once data is obtained, the delay function (3) is applied and the output (4) is sent through the output proxy to various publishers.}\label{fig:impl_figure}
 \end{figure*}
