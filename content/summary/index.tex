@@ -1,0 +1,20 @@
+\section{Summary for the bureaucrats}
+We examine the topic of randomness beacons - services that provide public randomness, and identify a gap in the current literature. The gap consists of the practical implementation and security analysis of a randomness beacons. We seek to design and implement a secure beacon that can be used in real life.
+
+We analyse the structure of beacons, and how they are commonly structured and used. We explore a set of use cases to motivate the use of randomness beacon, but also why they should be secure.
+
+We find that there are three main types of beacons, the \emph{Autocratic Collector}, \emph{Specialized \acrshort{mpc}} and \emph{Transparent Authority}.
+
+To better understand how to design a secure beacon, we analyze the threats the towards a randomness beacon. We identify threats both from insiders and outsiders to the beacon, and estimate their severities.
+
+Based on the threats discovered to beacons, as well as the general structures previously examined, we construct a set of requirements for our own beacon. These requirements form the base of our design, which encompasses both the architecture and security properties of the beacon.
+
+We also consider how users should trust the beacon, and design our major contribution, a beacon protocol that uses an offset series of delay functions to provide constant and secure randomness. We show it enables users to have a probabilistic level of trust in the beacon, while still being scalable.
+
+We also go in depth with the implementation of the beacon, and detail with choices have been made in the process. The tools and frameworks used in the construction is examined, and we also consider their effects on the security of the beacon. We also break down the beacon and explain how each component works, and how they live up to the requirements and design.
+
+To evaluate the design we ... (bullshit benchmarks etc.)
+
+To contextualize the beacon we designed and implemented, we present a series of applications of our beacon, detailing how the beacon should be used to guarantee security.
+
+Finally, we discuss some of the topics that have come up during the process, and conclude on the project. (conclusion etc)
