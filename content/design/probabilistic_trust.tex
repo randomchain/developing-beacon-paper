@@ -14,23 +14,60 @@ given that $t_\text{INPUT}$ is the time when the user sent the input, $t_\text{C
 This means that for users to be more likely to trust a beacon, the time between sending the input and receiving the commitment must be significantly smaller than the time between the commitment and the output.
 In fact, it must be smaller than the shortest time the user thinks the operator could compute the delay function.
 
-An example could be a that user that can compute the delay function in 10 minutes believes that the world's fastest computer can do so 5 times faster, i.e.\ in 2 minutes. In this case the user should trust the output if he sees a commit to a set of inputs containing his input within 2 minutes of his input.
-This relation between the time taken to compute the delay function and the time before a commit is seen allows users to flexibly adjust, when they are willing to trust the outcome has not been biased against them.
+An example could be a that user that can compute the delay function in 10 minutes believes that the world's fastest computer can do so 5 times faster, i.e.\ in 2 minutes. In this case the user can trust the output if he sees a commit to a set of inputs containing his input within 2 minutes of his input.
+This relation between the time taken to compute the delay function and the time before a commit is seen allows users to flexibly adjust their willingness to trust the outcome has not been biased against them.
 
 Taking this into consideration we present a beacon operation protocol which can be adjusted to increase or decrease this limit.
 The operation must be sequential which means that we must collect input before computing the delay function.
 However, because we want to spend more time computing than we are collecting input, a strictly sequential beacon will contain dead spots where no user is submitting input.
 This may be acceptable in some scenarios, but we want to design a beacon which always accepts inputs and will not be suspected of malicious operation.
 To achieve this we parallelize the beacon protocol, meaning that several delay functions run in parallel but offset in time and on different input.
-
 In~\cref{fig:beacon_parallel_timeline} this is illustrated, where these offset but parallel beacons are seen.
+\begin{figure}[htb]
+    \centering
+    \footnotesize
+    \begin{tikzpicture}
+    \foreach \x in {0, 1, 2,...,3} {
+        \draw[|-|, black, line width=0.5mm] (\x,-\x*0.7) to (\x+1,-\x*0.7);
+        \path (\x,-\x*0.7) -- (\x+1,-\x*0.7) node [midway, above] {inp};
+        \draw[-|, black, line width=0.5mm, shorten <=-0.1mm] (\x+1,-\x*0.7) to (\x+4,-\x*0.7);
+        \path (\x+1,-\x*0.7) -- (\x+4,-\x*0.7) node [midway, above] {computation};
+    }
+    \end{tikzpicture}
+    \caption{Parallelized beacon protocol, with offset input collection and overlapping computation.}\label{fig:beacon_parallel_timeline}
+\end{figure}
+
 We observe that no input collection is run in parallel nor overlapping, which resembles a constant stream of input collection.
 Moreover, the computation components can eventually be reused for future beacon computations, thereby eliminating the need for spinning up new computation services.
 These observations are depicted in \cref{fig:beacon_parallel_timeline_real}, where the beacon would output at each circle shown in the diagram.
 
 \subimport{}{timeline_diagrams.tex}
 
+The number of computation nodes required in this fashion is the duration of the delay function divided by the duration of input collection:
+\begin{equation*}
+    \#\text{Nodes} = \left\lceil\frac{T_\text{DELAY FUNCTION}}{T_\text{INPUT COLLECTION}}\right\rceil
+\end{equation*}
+
+As an example, an input collection time of 2 minutes and a delay function of 10 minutes will require 5 computation nodes to always begin a computation every 2 minutes.
+
+However, the delay function is not guaranteed to precisely take e.g.\ 10 minutes --- the computation nodes are expected to be running other processes such as an operating system which also require some CPU time.
+As such the delay function can be expected to from time to time finish a bit later than naïvely anticipated. This will over time cause the beacon output to be increasingly more skewed compared to the initial output frequency, since they can only be delayed and not catch up by being faster sometimes.
+
+To remedy this, a number of additional nodes should be kept at hand.
+Therefore, we update the prior equation to take this extra time for each delay function into account. Let $\delta$ be this extra time additional to the delay function.
+
+\begin{equation*}
+    \#\text{Nodes} = \left\lceil\frac{T_\text{DELAY FUNCTION}+\delta}{T_\text{INPUT COLLECTION}}\right\rceil
+\end{equation*}
+
+If, for example, the delay function is expected to always finish at most 2 minutes later than the expected time of 10 minutes (i.e.\ a worst-case time of 12 minutes) and the input collection is 2 minutes, 6 nodes in total are necessary to guarantee that a node is always ready every 2 minutes, given a maximum of 2 minutes expected delay.
+
+The beacon operator should find a sensible number of nodes that on one hand maximizes the chances of a ready computation node given expected delays, and on the other hand minimizes the idle time of the nodes.
+
 \subsection{Scalability}
+
+\mtjnote{This text has been cut and pasted from elsewhere, where I did not think it fit in.}
+
 Individual services in the \gls{soa} can be scaled as needed.
 Parallelizing a pipeline to increase the output frequency is also possible.
 
@@ -38,5 +75,5 @@ In some scenarios a beacon may consist of multiple computation services as a mea
 The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
 This presents the issue of consensus about which input to use, but that is out of scope for this report.
 
-\subsection{Threats}
-\mtjnote{A section that evaluates which threats have been solved}
+\subsection{Summary}
+\mtjnote{A section that summarizes and evaluates which threats have been solved}

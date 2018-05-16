@@ -1,17 +1,17 @@
-\subsection{Trusting the beacon}%
+\subsection{Exploring Trust Assumptions}%
 \label{sub:trusting_the_beacon}
 
 Even given the precautions taken in the design, the amount of trust required to use the beacon should be minimal or non-existent.
 We propose two scenarios, which explore the users' trust assumptions towards the beacon.
 In both of these scenarios, we focus on a user named Alice, while all other users are regarded as potentially colluding adversaries with malicious intent.
 The only assumption about these adversaries, is that they can interact with the beacon in the same manner as Alice; i.e.\ send inputs to the beacon.
-However, in the second scenario, an adversary has total control of the beacon.
+However, in the second scenario an adversary has total control of the beacon.
 
 Because network latency is dependent on many variables in a system and virtually impossible to verify, Alice should not trust any claim from the beacon operator regarding latency.
 To protect herself, Alice should assume that any inputs she sends is received immediately by the beacon, and vice versa --- any message from the beacon is received instantly by her. This can be considered a \enquote{worst-case} time.
 This means that the beacon will not be able to claim different timings than what Alice observes --- and as this observation is all she can trust, she should base her decisions on that.
 
-\paragraph{Scenario \#1: An honest operator}
+\paragraph{Scenario \#1: An Honest Operator}
 This is the best case scenario for Alice.
 The operation of the beacon is honest, which means that
 \begin{eletterate*}
@@ -22,12 +22,12 @@ The operation of the beacon is honest, which means that
 This operation is also depicted in \cref{fig:beacon_honest_timeline}.
 
 With this honest beacon, Alice knows exactly how long the computation took, and can trust the output to not be manipulated in any predictable way.
-However, assuming honesty is not advised, since it leaves Alice vulnerable by exploiting this trust.
-If Alice trusts the beacon operator to be honest, she will not suspect them to act according to the following scenario.
+However, assuming that the beacon is honest is not advised, since it leaves Alice vulnerable by exploiting this trust.
+If Alice trusts the beacon operator to be honest, she will not suspect them to act according to scenario \#2.
 
 \subimport{}{sequence_diagram_honest_operator.tex}
 
-\paragraph{Scenario \#2: A malicious operator}
+\paragraph{Scenario \#2: A Malicious Operator}
 This is the worst case scenario for Alice; a beacon operator which is trying to choose the output, yet still make it appear valid to Alice.
 The malicious operator will not exclude Alice's input, since they are interested in fooling her to trust a forged output.
 Moreover, the malicious operator should be expected to collude with all other users against Alice --- she is effectively alone in Wonderland.
