@@ -1,7 +1,21 @@
 \section{Discussion}%
 \label{sec:discussion}
-Here will be discussions.
+This section is dedicated to discussing some the topics that have come up during our work.
+%MostGenericMetaText
 
-\mtjnote{Discuss if we could implement a memory-hard delay function, and what implications this would have.}
+\subsection{Alternative Delay Functions}
+We currently use a time-hard function to compute our randomness. This provides us some indication of the computational effort needed to correctly produce a random number, and thus makes it harder to cheat.
+However, requirements on processing power is not an insurmountable obstacle for motivated attackers. An excellent example of this is the bitcoin blockchain, where mining consists of solving a computational puzzle by repeatedly hashing. Here, \acrfull{asic}s have allowed great speedups in the mining process, which has resulted in greatly raised mining difficulty, and ordinary computers becoming comparatively useless for mining purposes.
+If any party was to develop \acrshort{asic}s for our delay function, they would be able to solve it much faster than any other party. This would greatly diminish the security provided by the delay function, and open up for last-draw attacks from the party with the \acrshort{asic}.
 
-\mtjnote{Discuss salting: If a salt is added, it makes it easier for the operator to withhold the output. On the other hand, we can guarantee that the operator is the only one capable of doing the computations. To mitigate the withholding attacks, you could publish a timed commitment.}
+One way to mitigate this would be to greatly increase the difficulty of the delay function, like it has been done in bitcoin. However, this would have the side-effect of making the function much more costly to compute for any party without \acrshort{asic}s. This could even include the beacon operator, which would significantly impact operations.
+
+Another way to mitigate this would be to use a delay function that was also memory-hard, i.e. required large amounts of memory to compute. This would make it resistant to \acrshort{asic}-equipped adversaries, as these have very small amounts of memory to optimize for speed. While the function would require more resources, it should still be computable for an ordinary computer, but resistant to \acrshort{asic}s and the massive associated speedup.
+
+\subsection{Salting}
+
+One thing we considered in the design of the beacon was having the operator add a salt to the inputs.
+
+This would make the operator the only party capable of computing the output, which would prevent outsiders from pre-imaging and performing last-draw attacks without help from the operator.
+
+On the other hand, this would give the operator even more power. Specifically, he could easily perform withholding attacks, as he was the only party capable of producing the \textit{genuine} beacon output. However, this could be mitigated by having the operator published a timed commitment to the salt alongside the inputs - this second commit could then be revealed by outsiders given enough time, which would prevent the operator from withholding once both commits were published.
