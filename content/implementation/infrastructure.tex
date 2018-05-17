@@ -1,9 +1,10 @@
 \subsection{Infrastructure}%
 \label{sub:infrastructure}
 Establishing a solid and scalable infrastructure is a significant part of implementing our beacon.
-Moreover, we do not want to rely on running all components of the beacon on the same machine.
+We choose not to rely on running all components of the beacon on the same machine.
+
 Because of this, we use TCP sockets through \textit{ZeroMQ}.
-This means that operations such as actually reading bytes from the sockets and reconnecting in case of networking issues is handled by \textit{ZeroMQ}, which also maintains a local queue per socket to mitigate network congestion.
+This means that operations such as reading bytes from the sockets and reconnecting in case of networking issues is handled by \textit{ZeroMQ}, which also maintains a local queue per socket to mitigate network congestion.
 Sockets in \textit{ZeroMQ} require one end to bind and the other to connect, and usually it is recommended that the most stable or consistent component binds, while dynamic or unstable components connect.
 Only one component can bind to a given socket while many can connect to that same socket.
 
@@ -14,6 +15,7 @@ Lastly, \textit{ZeroMQ} guarantees atomic delivery of messages, which means that
 \subsubsection{Proxies}
 In the interest of rapid iteration and ease of configuration, we deploy proxies at key points in the pipeline.
 This allows us to add and remove components easily from the network, since components then do not need to know of each other --- they only need to know of the proxies.
+An alternative would be to use some form of service discovery to allow components to discover and connect to each other directly.
 We insert two proxies in the network: one between input collectors and the input processor, and one between computation and publishers (as depicted in \vref{fig:impl_figure}).
 Another benefit of using proxies is the ability to have a many-to-many connection, since the proxy binds both its frontend and backend socket, which components then connect to.
 

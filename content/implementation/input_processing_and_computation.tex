@@ -46,7 +46,7 @@ This means that any change to the set of inputs completely changes the root node
 \subsubsection{Delay Function}%
 \label{ssub:delay_function}
 For the computation we implement a delay function based on \textit{sloth} by \citet{randomzoo}.
-The general idea behind \textit{sloth} is to use modular square root arithmetics to construct a deterministic time hard algorithm, while containing a trapdoor for fast reversal, i.e.\ verification --- we summarize the paper in \cref{sub:random_zoo}.
+The general idea behind \textit{sloth} is to use modular square root arithmetics to construct a deterministic time hard algorithm, while containing a trapdoor for fast reversal, i.e.\ verification --- we summarize the paper in \cref{sub:random_zoo}. Previous work has also used hash chains for delay functions ~\cite{bunz2017proofsof}, with checkpoints for parallel verification.
 
 When implementing delay functions in systems that rely on their time guarantees, it is important to focus on performance, since an obvious yet undeployed optimization of execution time would compromise the \enquote{time hardness} of the algorithm.
 Because of this, and the fact that Python is not the best performing language, we implement \textit{sloth} as a Python module with a C-extension for the actual algorithm.
