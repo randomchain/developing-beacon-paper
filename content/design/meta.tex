@@ -1,6 +1,7 @@
 \section{Design}\label{sec:design}
 
-This section describes our beacon design and the majority of it will be concerned with security as it is the most important aspect of any randomness beacon. Since we emphasize examining the bridge between theory and a functioning beacon we will naturally also consider practicalities such as scalability.
+This section describes our beacon design the majority of which is concerned with security as it is the most important aspect of any randomness beacon.
+Since we emphasize examining the bridge between theory and a functioning beacon we naturally also consider practicalities such as scalability.
 
 The design choices are based on fulfilling the requirements and incorporating mechanisms to prevent as many of the threats identified in the threat analysis.
 
@@ -14,4 +15,6 @@ a component, or service, should be seen as a self-contained black box.
 This architecture provides loose coupling in the system and also allows for easier fault tolerance since services, being black boxes, are easily replaceable on failure.
 Furthermore, each service can be scaled as needed.
 
-The beacon could also have been designed as a monolithic program running on a single machine. This would likely be more efficient initially, but would fail to scale to meet large demands, and would also represent a single point of failure for the entire beacon.
+The beacon could also have been designed as a monolithic program running on a single machine.
+This would likely be more efficient initially, but would fail to scale to meet large demands, and would also represent a single point of failure for the entire beacon.
+

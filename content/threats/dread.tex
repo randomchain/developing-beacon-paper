@@ -1,30 +1,35 @@
 \subsection{Threat Discovery}
-In order to facilitate the process of discovering threats to a general beacon, we will classify threats as they are found in a two-dimensional matrix. This helps us discovering and exploring new threats from multiple sides.
+To facilitate the process of discovering threats to a general beacon, we classify threats as they are found in a two-dimensional matrix.
+This helps us discover and explore new threats from multiple sides.
 
-The important part of a beacon that must be protected is the output. Adversaries can harm the output in two ways: Either the threat targets the \emph{availability}, i.e.\ making the output unavailable, or it targets the \emph{integrity}, i.e.\ reducing the quality of the beacon output potentially to a state where the output should not be used at all. What the threat targets will as such be one of the dimensions.
+The important part of a beacon that must be protected is the output.
+Adversaries can harm the output in two ways:
+Either the threat targets the \emph{availability}, i.e.\ making the output unavailable, or it targets the \emph{integrity}, i.e.\ reducing the quality of the beacon output potentially to a state where the output should not be used at all.
+What the threat targets is as such one of the dimensions.
 
-The other dimension will be who is able to perform a given threat.
+The other dimension depicts who is able to exploit a given threat.
 Here, we distinguish between \emph{insiders} and \emph{outsiders}.
-An insider is anyone with the capabilities of the beacon operator, which ideally is just the beacon operator, but for all intents and purposes may as well be anyone gaining inside access to the beacon by e.g.\ hijacking it.
-Because the beacon operator should not be trusted either, we see no reason to distinguish between a legit beacon operator, a malicious beacon operator, or anyone maliciously gaining access to the inside beacon.
-The beacon operator could be as malicious as other adversaries could hijack the system or otherwise forcefully obtain sufficient privileges.
-An outsider is anyone who can influence the beacon operation from the outside network.
-An outsider does not possess inside access, except for the special case where the beacon operator launches threats on the same terms as outsiders.
+An insider is anyone with the capabilities of the beacon operator, which ideally is just the beacon operator, but for all intents and purposes may as well be anyone gaining inside access to the beacon, e.g.\ by hijacking it.
+Because the beacon operator should not be trusted either, we see no reason to distinguish between a legitimate beacon operator, a malicious beacon operator, or an adversary maliciously acquiring access to the inside of the beacon.
+An outsider is anyone who can influence the beacon operation from the outside network, and thus does not possess inside access.
 
-\cref{tab:threats-categories} visualizes these dimensions. After enumerating the found attacks in the following sections, we will relate them to this matrix.
+\cref{tab:threats-categories} visualizes these dimensions.
+After listing the found attacks in the following sections, we relate them to this matrix.
 
 \subimport{}{threat_table_nocontent.tex}
 
 \subsection{Scoring Framework}
-We consider a wide variety of threats, and analyze their severity according the DREAD framework with some modifications. DREAD consists of five metrics~\cite{dread}, that we score on a scale of 1 to 3 (low, medium, high):
+We consider a wide variety of threats, and analyze their severity according the DREAD framework with some modifications.
+DREAD consists of five metrics~\cite{dread}, that we score on a scale of 1 to 3 (low, medium, high):
 \textsc{Damage}: How bad would such an attack be?
 \textsc{Reproducibility}: How easy is it to reproduce such an attack?
 \textsc{Exploitability}: How little work is required to launch the attack (3 being the least)?
 \textsc{Affected users}: How many users will be impacted?
 \textsc{Discoverability}: How easy is it to discover the threat?
-Discoverability can, however, be considered to reward security through obscurity. As such we will not consider it, as an adversary with unlimited resources will naturally know of all exploits.
+Discoverability can, however, be considered to reward security through obscurity.
+As such we will not consider it, as an adversary with unlimited resources is expected to have knowledge of all possible exploits.
 
-In the following section, all threats are accompanied with a DREAD scoring which looks like this:
+In the following section, all threats are accompanied with a DREAD scoring which is portrayed as follows:
 \vspace{\dimexpr-1\parsep-1\parskip\relax}% Fixing centering spacing
 \begin{center}
 \begin{tikzpicture}[xscale=0.25, yscale=0.25, baseline=-.5ex]
@@ -38,45 +43,100 @@ In the following section, all threats are accompanied with a DREAD scoring which
 \end{tikzpicture}
 \end{center}
 \vspace{\dimexpr-1\parsep-1\parskip\relax}%
-The first four numbers each corresponds to the first four DREAD metrics. The fifth, discoverability, is omitted. The last number, $\Sigma$, is the sum of the prior numbers, and used as a severity indicator.
+The first four numbers each corresponds to the first four DREAD metrics.
+The fifth, discoverability, is omitted.
+The last number, $\Sigma$, is the sum of the prior numbers, and used as a severity indicator.
 
 \subsection{Threats}
-This section will list the threats we were able to find along with our best educated guess on a DREAD score. The list is split into two; first attacks that threaten the availability of the output, and then attacks that threaten the integrity of the output. A summary of the threats can be seen in \vref{tab:threat-categorization}.
+This section lists the threats we are able to find alongside our best educated guess on a DREAD score.
+The list is split into two parts; first attacks that threaten the availability of the output, and then attacks that threaten the integrity of the output.
+A summary of the threats can be seen in \vref{tab:threat-categorization}.
 
 \subsubsection{Threats to Availability}
 
 \newcommand{\parathreat}[1]{\paragraph{#1}\hspace{-1ex}}
 
-\parathreat{Input Flooding}\drea{2,3,2,3,10} Outsiders can overwhelm the beacon with inputs to prevent other users from contributing their own input, thus denying service. Another approach could be perform a standard \gls{dos} attack on the central server of the beacon to prevent operation. This is quite a big threat as users can temporarily be denied service, and the attack is quite easy to execute --- any determined adversary could rent a botnet to flood input collectors.    %D 2 - the beacon will be back, R 3 - anyone can borrow a bAll threats are accompanied with a DREAD scoring which looks like this: \drea{2,3,2,3,10}. The first four numbers are each for the first four DREAD metrics. The fifth, discoverability, is omitted. The last number, $\Sigma$ is the sum of the prior numbers, and used as a severity indicator.otnet for dos attacks, and operator can pull the plug, E 2 - they need to use a dos tool,  A 3 - noone can use the beacon, but eclipse would only hit 1 user.
-\parathreat{Shutdown}\drea{3,3,2,3,11} A malicious beacon operator can shut the beacon down, completely denying availability. This is a threat that is practically impossible to prevent for a beacon run by a single operator, as the operator can trivially always shut any part of the beacon down.
+\parathreat{Input Flooding}\drea{2,3,2,3,10}
+Outsiders can overwhelm the beacon with inputs to prevent other users from contributing their own input, thus denying service.
+Another approach could be perform a \gls{dos} attack on the central server of the beacon to prevent operation.
+This is quite a big threat as users can temporarily be denied service, and the attack is quite easy to execute --- any determined adversary could rent a botnet to flood input collectors.
+%D 2 - the beacon will be back, R 3 - anyone can borrow a bAll threats are accompanied with a DREAD scoring which looks like this: \drea{2,3,2,3,10}. The first four numbers are each for the first four DREAD metrics. The fifth, discoverability, is omitted. The last number, $\Sigma$ is the sum of the prior numbers, and used as a severity indicator.otnet for dos attacks, and operator can pull the plug, E 2 - they need to use a dos tool,  A 3 - noone can use the beacon, but eclipse would only hit 1 user.
+
+\parathreat{Shutdown}\drea{3,3,2,3,11}
+A malicious beacon operator can shut the beacon down, completely denying availability.
+This threat is practically impossible to prevent for a beacon run by a single operator, as the operator can trivially always shut any part of the beacon down.
 %D 3 - complete shutdown, R 3 - easy to pull the plug, E 2, A 3 - affects all users. We cant prevent this attack,
-\parathreat{Withholding Input}\drea{3,3,2,3,11} The operator can withhold outputs that are not favorable to his interests. This threat is also quite severe as it not only denies an output, but also ruins the beacon reputation. More gravely, it can be blamed on technical mishaps such as crashes to conceal malicious behavior, while remaining easy for the operator to execute.
+
+\parathreat{Withholding Input}\drea{3,3,2,3,11}
+The operator can withhold outputs that are not favorable to his interests.
+This threat is also quite severe as it not only denies an output, but also ruins the beacon reputation.
+More gravely, it can be blamed on technical mishaps such as crashes to conceal malicious behavior, while remaining easy for the operator to execute.
 %D 3 - ruins output, R 3 - easy, E 2, A 3 - affects all users.
-\parathreat{Eclipsing the Beacon}\drea{3,1,1,3,8} An outsider can deny all users from providing input or receiving the output by infiltrating the inbound and outbound connection to the beacon. We believe it is a difficult attack to execute, but if successful the outsider can potentially eclipse all outsiders.
+
+\parathreat{Eclipsing the Beacon}\drea{3,1,1,3,8}
+An outsider can deny all users from providing input or receiving the output by infiltrating the inbound and outbound connection to the beacon.
+We believe it is a difficult attack to execute, but if successful the outsider can potentially eclipse any and all users.
 %D 3 - no use for all users, R 1 - extremely difficult to accomplish, E 1 - likewise, A 3 - entire system affected.
-\parathreat{Eclipsing (Select) Users}\drea{2,1,1,1,5} An outsider can deny select users from accessing the beacon to provide input or receive output. This is a quite small threat, as it is extremely hard to completely prevent a determined party from accessing the beacon, and such an eclipse would still only affect that party.
+
+\parathreat{Eclipsing (Select) Users}\drea{2,1,1,1,5}
+An outsider can deny select users from accessing the beacon to provide input or receive output.
+This is a quite small threat, as it is extremely hard to completely prevent a determined party from accessing the beacon, and such an eclipse would still only affect that party.
 %D 2 - no use for a single user, R 1 - extremely difficult to accomplish, E 1 - likewise, A 1 - only one user affected.
 
 \subsubsection{Threats to Integrity}
 
 
-\parathreat{Input Biasing}\drea{3,3,2,3,11} An outsider can provide input that knowingly biases the output to their benefit or others' disadvantage. Either the outsider knows how to construct an input such that it affects the output in a known way despite other users may contribute input later. If the outsider has the capability of providing the last input, it is a last-draw attack. This is a severe threat to the beacon, as it biases the output to the benefit of the adversary, and violates the unpredictability of the random number as the adversary now knows more than everybody else. The attack can be executed by anyone with access to the input collectors given that they have the ability to pre-compute outputs.
+\parathreat{Input Biasing}\drea{3,3,2,3,11}
+An outsider can provide input that knowingly biases the output to their benefit or others' disadvantage.
+Either the outsider knows how to construct an input such that it affects the output in a known way despite other users may contribute input later.
+If the outsider has the capability of providing the last input, it is a last-draw attack.
+This is a severe threat to the beacon, as the adversary is able to freely manipulate the output with their input, and violates the unpredictability of the random number as the adversary now knows more than everybody else.
+The attack can be executed by anyone with access to the input collectors given that they have the ability to pre-compute outputs.
 %D3 - Ruins the output for everyone, and breaks unbiased / unpredictable, R 3 - everyone can do it with a web browser, E 2 - requires the ability to precompute results, A 3 - all users affected
-\parathreat{Output Degradation}\drea{3,3,3,3,12} As a variation of the previous attack, adversaries can supply \enquote{bad} input to reduce the quality of the output. This is also a large threat as it will affect the quality of randomness provided to all users, which may not even be useful. In addition, it is easy to do given access to the input collectors, and could even happen by accident.
+
+\parathreat{Output Degradation}\drea{3,3,3,3,12}
+As a variation of the previous attack, adversaries can supply \enquote{bad} input to reduce the quality of the output.
+This is also a large threat as it will affect the quality of randomness provided to all users, which may not even be usable.
+In addition, it is easy to do given access to the input collectors, and could even happen by accident.
 %D 3 - bad randomness, R 3 - easy to give bad input, E 3 - this could happen by accident, A 3
-\parathreat{Input Manipulation}\drea{3,3,2,3,11} The operator can manipulate the input to bias the output of the beacon. He can also selectively exclude inputs from certain users to deny them availability. This threat is quite severe as the operator has direct access to manipulate the inputs, and may even be able to do so in a way that can not be detected. It is also easy for any operator capable of pre-computing the output, and affects the randomness given to all users.
+
+\parathreat{Input Manipulation}\drea{3,3,2,3,11}
+The operator can manipulate the input to bias the output of the beacon.
+He can also selectively exclude inputs from certain users to deny them availability.
+This threat is quite severe as the operator has direct access to manipulate the inputs, and may even be able to do so in a way that cannot be detected.
+It is also easy for any operator capable of pre-computing the output, and affects the randomness given to all users.
 %D 3 - ruins output and beacon reputation, R 3 - easy life, E 2 - must be operator, A 3 - everyone is affected
-\parathreat{Man in the Middle}\drea{3,1,1,3,8} Adversaries can intercept and change data sent between user and beacon. This threat is potentially significantly damaging but also extremely hard to execute for adversaries. Due to the nature of beacons we recommend using them when you need to agree on some random number --- thus, to intercept and manipulate inputs and outputs, the adversary would have to distribute the manipulated number to all users, as they would otherwise disagree on the numbers, leading to the manipulation being discovered.
+
+\parathreat{Man in the Middle}\drea{3,1,1,3,8}
+Adversaries can intercept and change data sent between user and beacon.
+This threat is could be significantly damaging but also extremely hard to execute for adversaries.
+Due to the nature of beacons we recommend using them when you need to agree on some random number --- thus, to intercept and manipulate inputs and outputs, the adversary would have to distribute the manipulated number to all users, as they would otherwise disagree on the numbers, leading to the manipulation being discovered.
 %D 3 - ruins beacons output, R 1 - needs to send to all users , E 1 - must be done to all users, A 3 - affects all users.
-\parathreat{Emitting False Output}\drea{3,2,2,3,10} A malicious operator can output false results of the computation that benefit him. While this is technically a threat to the beacons integrity, the effects should be similar to those of a withholding attack. This is due to the fact that simply publishing false output would rapidly be discovered in a transparent authority beacon, making the input unusable.
+
+\parathreat{Emitting False Output}\drea{3,2,2,3,10}
+A malicious operator can output false results of the computation that benefit him.
+While this is technically a threat to the beacons integrity, the effects should be similar to those of a withholding attack.
+This is due to the fact that simply publishing false output would rapidly be discovered in a transparent authority beacon, making the output unusable.
 %Equivalent to withholding attack, as users can verify that the output is false.
-\parathreat{Leaking Output}\drea{3,3,2,3,11} The operator can give access to the output earlier to some parties than others --- potentially selling early access. This threat can also be quite large, as we know nothing of how early access can be granted compared to when the randomness is used. It also violates the unpredictability property of the beacon, and is easily executable for any malicious operator of the beacon. In worst case it would affect all users.
+
+\parathreat{Leaking Output}\drea{3,3,2,3,11}
+The operator can give access to the output earlier to some parties than others --- potentially selling early access.
+This threat can also be quite large, as we know nothing of how early access can be granted compared to when the randomness is used.
+It also violates the unpredictability property of the beacon, and is easily executable for any malicious operator of the beacon.
+In worst case it would affect all users.
 %D 3 - beacon can precompute simple outputs, R 3 - easy to repeat, E 2, A 3 - worst case everyone is affected
-\parathreat{Cryptography Exploit}\drea{3,3,1,3,10} Weaknesses or exploits may exist in the cryptographic techniques that may protect the beacon. This could potentially undermine the entire security foundation of the beacon. While we estimate it will be hard to find such exploits, they would likely be quite easy to apply once found, and would affect all users. In this case one might also consider the effect quantum computers would have on the use of cryptography, which could also threaten the beacon.
+
+\parathreat{Cryptography Exploit}\drea{3,3,1,3,10}
+Weaknesses or exploits may exist in the cryptographic techniques that protect the beacon.
+This could undermine the security of the beacon.
+While we estimate it will be hard to find such exploits, they would likely be quite easy to apply once found, and would affect all users.
+In this case one might also consider the effect quantum computers would have on the use of cryptography, which could also threaten the beacon.
 %D 3 - adversaries gain extreme power to manipulate beacon, R 3 - easy to reproduce once found, E 1 - very hard to find, A 3 - beacon is compromised. Also consider quantum computers. They are the root of all evil.
 
 \subsection{Summary}
 
-\cref{tab:threat-categorization} shows the above threats in the matrix. Again, an insider can perform outsider attacks, and outsiders can perform insider attacks if they obtain sufficient privileges.
+\cref{tab:threat-categorization} shows the above threats in the matrix.
+To reiterate, an insider can perform outsider attacks, and outsiders can perform insider attacks if they obtain sufficient privileges.
 
 \subimport{}{threat_table.tex}
+
