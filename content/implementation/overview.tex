@@ -1,22 +1,10 @@
 \subsection{Overview}%
 \label{sub:overview}
-An overview of our implementation can be seen in \vref{fig:impl_figure}. This chapter will elaborate on the figure and explain choices.
-\mtjnote{Some text giving an overview coming from the design to the implementation.}
+This chapter explains the choices leading to the specific implementation seen in \vref{fig:impl_figure}. As such, the figure can be used as a reference as we explain the various parts of the implementation.
 
-% Not focus on outlets and usability applications (e.g. tracking your input from start to finish)
-In the implementation of the beacon, we choose not to focus on usability applications, such as allowing a user to track their input automatically through the beacon.
-Instead, we implement a beacon with simple, secure, and succinct operation.
-It collects inputs, processes these inputs, does some computation, and outputs data through a set of outlets.
-These steps will be elaborated in the following sections.
+At a glance, the figure shows the services and how they interact. All services are controlled by the beacon operator. Examples of input collectors are shown, and each of them hash inputs as they are received and send them to a known proxy (fan-in pattern). The proxy forwards any message to the input processor. The input processor adds any input to a Merkle tree structure. Here the pipeline fans out. A computation node that is ready to take on work signals its readiness to the input processor (1). Here, the input processor internally adds the computation node to a queue. The input processor will at an interval equal to the input collection duration send the current Merkle tree (2) to the computation node in front of its queue and starts building a new Merkle tree with new input. This ensures that e.g.\ every minute a computation node is starting a computation based on the Merkle tree built during the past minute. Once given the Merkle tree, the computation node releases a commitment (3) to this input, and runs the delay function on it (4). Eventually the output (5) is sent to the output proxy (fan-in pattern). This proxy forwards the output to each publisher. A publisher then sends the received output to a specific outlet.
 
-% All data out of the system will be correlated by sequence numbers (output, commit, proofs)
-The data, which the beacon outputs each cycle consists of a few parts:
-\begin{eletterate*}
-\item a commitment, containing all used inputs in the computation;
-\item an output, computed from the commitment; and
-\item a set of proofs, which can be used to verify the computation.
-\end{eletterate*}
-This data is correlated with sequence numbers in order to keep track of matching parts of the output.
+
 
 \subsection{Frameworks, Libraries, and Language Choice}
 % SOA is achieved with concurrent and async message passing

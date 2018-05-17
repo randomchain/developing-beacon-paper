@@ -6,3 +6,9 @@ In this section we present the general idea behind the implementation of our bea
 We seek to realize the design introduced in \cref{sec:design} while making reasonable trade-offs where necessary.
 This means that some parts of the implementation will be seen as future work, in the interest of time.
 However, the implemented beacon will be a functional \gls{poc}, with an underlying infrastructure suitable for real world deployment and usage, and as such a good infrastructure is something we will prioritize.
+
+% Not focus on outlets and usability applications (e.g. tracking your input from start to finish)
+In the implementation of the beacon, we choose not to focus on usability applications, such as allowing a user to track their input automatically through the beacon.
+Instead, we implement a beacon with simple, secure, and succinct operation.
+It collects inputs, processes these inputs, does some computation, and lastly outputs data through a set of outlets.
+These steps will be further elaborated in the following sections.

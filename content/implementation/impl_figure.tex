@@ -24,10 +24,10 @@
         \draw[arrow] (dummyin3) -- (ic3);
 
         % Proxy
-        \node[implblock, text width=4em, right=3em of icframe] (proxy1) {Input\\Proxy};
+        \node[implblock, text width=4em, right=2em of icframe] (proxy1) {Input\\Proxy};
 
         % Input processor
-        \node[implblock, text width=5em, right=2em of proxy1] (ip) {Input Processor};
+        \node[implblock, text width=5em, right=1.8em of proxy1] (ip) {Input Processor};
 
         % Computation
         \node[right=5em of ip] (compi) {
@@ -44,10 +44,10 @@
         \node[above=0cm of compframe] {Computation};
 
         % Proxy
-        \node[implblock, text width=4em, right=of compframe] (proxy2) {Output\\Proxy};
+        \node[implblock, text width=4em, right=6.5em of compframe] (proxy2) {Output\\Proxy};
 
         % Publishers
-        \node[right=2.5em of proxy2] (pubi) {
+        \node[right=1.8em of proxy2] (pubi) {
             \begin{tikzpicture}
                 \node[implsmallblock] (pub1) {File dump};
                 \node[implsmallblock, below=1.5em of pub1] (pub2) {Twitter};
@@ -76,7 +76,7 @@
         \draw (ip) edge[arrow, loop, looseness=6, out=250, in=290] node[below, align=center]{Building\\Merkle Tree} (ip);
 
         \draw ([yshift=.9em]ip.east) edge[out=0, in=180, arrowrev, bend left=30, postaction={decorate,decoration={raise=0.6ex, text along path, text align=center, text={1. Ready}}}] ([yshift=.1em]comp1.west);
-        \draw ([yshift=.8em]ip.east) edge[out=180, in=0, arrow, bend right=22, postaction={decorate,decoration={raise=0.5ex, text along path, text align=center, text={2. Data*}}}] ([yshift=-.1em]comp1.west);
+        \draw ([yshift=.8em]ip.east) edge[out=180, in=0, arrow, bend right=22, postaction={decorate,decoration={raise=0.5ex, text along path, text align=center, text={2. Data}}}] ([yshift=-.1em]comp1.west);
 
         \draw ([yshift=.1em]comp2.west) edge[out=0, in=180, arrow, bend right=18]([yshift=.1em]ip.east);
         \draw ([yshift=-.1em]comp2.west) edge[out=0, in=180, arrowrev, bend left=20] ([yshift=-.1em]ip.east);
@@ -84,11 +84,15 @@
         \draw ([yshift=-.8em]ip.east) edge[out=0, in=180, arrow, bend left=30] ([yshift=.1em]compn.west);
         \draw ([yshift=-.1em]compn.west) edge[out=0, in=180, arrow, bend left=30] ([yshift=-.9em]ip.east);
 
-        \draw (comp1) edge[arrow, loop, looseness=3, out=240, in=300] node[right, align=left, xshift=1em]{3. Delay} (comp1);
+        \draw ([xshift=-2.2em]comp1.south) edge[arrow, loop, looseness=3.5, out=240, in=300] node[right, align=left, xshift=1em, yshift=.4em]{4. Delay} ([xshift=-1em]comp1.south);
+        \draw ([xshift=-2.2em]comp2.south) edge[arrow, loop, looseness=3.5, out=240, in=300] ([xshift=-1em]comp2.south);
+        \draw ([xshift=-2.2em]compn.south) edge[arrow, loop, looseness=3.5, out=240, in=300] ([xshift=-1em]compn.south);
 
-        \draw (comp1.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{4. Output} ([yshift=.8em]proxy2.west);
-        \draw (comp2.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{} ([yshift=0em]proxy2.west);
-        \draw (compn.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{} ([yshift=-.8em]proxy2.west);
+        % \draw (comp1.east) edge[out=0, in=180, arrow] node[inner sep=1pt, align=left]{3. Commitment\\5. Output} ([yshift=.8em]proxy2.west);
+        \draw ([yshift=.3em]comp1.east) edge[out=0, in=180, arrow, postaction={decorate,decoration={raise=0.5ex, text along path, text align=center, text={3. Commitment}}}] ([yshift=1.4em]proxy2.west);
+        \draw ([yshift=-.3em]comp1.east) edge[out=0, in=180, arrow, postaction={decorate,decoration={raise=-7pt, text along path, text align=center, text={5. Output}}}] ([yshift=.8em]proxy2.west);
+        \draw (comp2.east) edge[out=0, in=180, arrow, double] node[inner sep=1pt]{} ([yshift=0em]proxy2.west);
+        \draw (compn.east) edge[out=0, in=180, arrow, double] node[inner sep=1pt]{} ([yshift=-.8em]proxy2.west);
 
         \draw ([yshift=.8em]proxy2.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{} (pub1.west);
         \draw ([yshift=0em]proxy2.east) edge[out=0, in=180, arrow] node[inner sep=1pt]{} (pub2.west);
@@ -97,5 +101,5 @@
         % Explanations
 
     \end{tikzpicture}
-    \caption{Significant data flows in the beacon. Input collectors hash inputs and sends them to the input proxy which forwards the hashed inputs to the input processor. This input processor adds the inputs to the current Merkle tree as they arrive. When a computation node is finished with a job, it signals its readiness (1) to the input processor, and is either given data (2) or is requested to wait a bit (to keep computation nodes spaced apart in time). Once data is obtained, the delay function (3) is applied and the output (4) is sent through the output proxy to various publishers.}\label{fig:impl_figure}
+    \caption{Significant data flows in the beacon. Arrows signify data flow. Only the top-most arrows are labelled, but labels on the top arrow apply to all arrows beneath.}\label{fig:impl_figure}
 \end{figure*}

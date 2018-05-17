@@ -13,7 +13,13 @@ Currently we use the SHA512 hashing algorithm since its digest size is 64 bytes,
 It is important that the same hashing function is used throughout the system, since differences in output space will bias the outcome if the inputs are hashed multiple times --- which is the case.
 However, we implement the system such that the chosen hashing algorithm can be configured at beacon start.
 
-The beacon outputs through publishers to multiple different outlets.
+Notice that a beacon outputs twice per cycle. Before the delay function is applied, a commitment is released from the computation node and published through all publishers. Specifically, this commitment contains all leaf nodes of the Merkle tree, which corresponds to all inputs. After the delay function, the output is sent to the publishers. The output consists of two parts:
+\begin{eletterate*}
+    \item the result, computed from the commitment; and
+    \item a witness, which can be used to rapidly verify the result.
+\end{eletterate*}
+The commitment and output are correlated by an arbitrary sequence number.
+
+The publishers publish to multiple different outlets.
 We implement several publishers, with different capabilities.
 This means that e.g.\ a JSON publisher can dump all publishing messages, while a Twitter publisher only is able to post messages with 280 characters.
-\msmnote{Maybe elaborate on publishers}
