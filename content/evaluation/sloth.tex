@@ -40,9 +40,9 @@ Something something dark side.
             zlabel=time (s),
             grid=major,
             x dir=reverse]
-        \addplot3 [only marks, scatter, shader=interp, mark=cube, mark size=3] table[y={BITS}, x={ITERATIONS}, z={VERIFICATION}, col sep=comma] {sloth_data.csv};
-        \addplot3+[only marks, scatter, shader=interp, mark=*] table[y={BITS}, x={ITERATIONS}, z={COMPUTATION}, col sep=comma] {sloth_data.csv};
-    \legend{Verification,Computation};
+        %\addplot3 [surf, mesh/rows=10, mesh/ordering=colwise, mark=cube, mark size=3, opacity=.3] table[y={BITS}, x={ITERATIONS}, z={VERIFICATION}, col sep=comma] {sloth_data.csv};
+        \addplot3+[surf, mesh/rows=10, mesh/ordering=colwise, opacity=.7, scatter, shader=faceted] table[y={BITS}, x={ITERATIONS}, z={COMPUTATION}, col sep=comma] {sloth_data.csv};
+    % \legend{Verification,Computation};
     \end{axis}
 \end{tikzpicture}
 \caption{Correlation between bits and iterations in relation to time of both computation and verification.}
