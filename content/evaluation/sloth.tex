@@ -26,7 +26,7 @@ Something something dark side.
         \legend{Computation,Verification};
     \end{axis}
 \end{tikzpicture}
-\caption{Computation and verification time at 75000 iterations.}
+\caption{Computation and verification time at 40,000 iterations. Note the logarithmic x-axis.}
     \end{subfigure}%
     \hfill
     \begin{subfigure}[t]{0.55\textwidth}
@@ -45,6 +45,7 @@ Something something dark side.
     % \legend{Verification,Computation};
     \end{axis}
 \end{tikzpicture}
-\caption{Correlation between bits and iterations in relation to time of both computation and verification.}
+\caption{Correlation between bits and iterations in relation to time of computation.}
     \end{subfigure}%
+    \caption{Measuring performance of Sloth computation and verification with different parameters. As can be seen, the computation time rises polynomially (TODO: or exponentially?) as the number of bits rises, and linearly as the iterations increase. Verification time stays well below 2 seconds (TODO: CHECK THIS).}
 \end{figure*}
