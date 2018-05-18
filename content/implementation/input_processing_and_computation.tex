@@ -8,22 +8,6 @@ We develop these steps to be independent of each other, besides a well-defined c
 \item data from input processing, which is the commitment to the computation.
 \end{eletterate*}
 
-\subsubsection{Parallel Computation}%
-\label{ssub:parallel_computation}
-As we discussed in \cref{sub:probabilistic_trust}, we need parallel and time offset computations in the beacon.
-This is achieved by letting the input processor handle the scheduling of computations.
-
-The beacon is configured to process inputs at a lower bounded interval, which means that the input processor will send work at fixed times, given an available computation component.
-It should be noted that if no such computational component is freely available, the input processor will just continue collecting input.
-Does no computation service announce itself within a given threshold, the input processor will give a warning to the system operator.
-This scenario should be unlikely since the beacon operator should configure the system to always have available computation components waiting for work.
-
-The worker announcements and subsequent work assignments are facilitated with \textit{ZeroMQ}'s \enquote{router/dealer} socket pair which allows asynchronous addressed messaging.
-When a computational node connects to the input processor it sends a \code{READY} message, receives an \code{OK}, and proceeds to wait for incoming work.
-The input processor then keeps track of each announced worker, and when the time comes, sends condensed processing output and commitment data.
-If the worker does not acknowledge the work with an \code{OK} response, the inputs are reprocessed, and the next free worker is assigned.
-This cycle continuous until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
-
 \subsubsection{Combining Inputs}%
 \label{ssub:combining_inputs}
 One way to combine and compile the inputs is the simple operation of concatenating them.
@@ -43,6 +27,26 @@ This is possible if they retain their ordering, and the algorithm to construct t
 Another property of the Merkle tree is that, like hashing a concatenation of all collected inputs, each leaf node equally affects the root node.
 This means that any change to the set of inputs completely changes the root node in the Merkle tree.
 
+To the best of our knowledge Merkle trees has never been used in previous beacon implementations as a means of combining inputs.
+However, they are used in other cases where it is undesirable for users to fetch all data for verification, e.g.\ in \gls{btc} where a Merkle root of all transactions in a given block is stored in the block header.
+\msmnote{Might be too much to namedrop bitcoin just for merkle trees?}
+
+\subsubsection{Parallel Computation}%
+\label{ssub:parallel_computation}
+As we discussed in \cref{sub:probabilistic_trust}, we need parallel and time offset computations in the beacon.
+This is achieved by letting the input processor handle the scheduling of computations.
+
+The beacon is configured to process inputs at a lower bounded interval, which means that the input processor will send work at fixed times, given an available computation component.
+It should be noted that if no such computational component is freely available, the input processor will just continue collecting input.
+Does no computation service announce itself within a given threshold, the input processor will give a warning to the system operator.
+This scenario should be unlikely since the beacon operator should configure the system to always have available computation components waiting for work.
+
+The worker announcements and subsequent work assignments are facilitated with \textit{ZeroMQ}'s \enquote{router/dealer} socket pair which allows asynchronous addressed messaging.
+When a computational node connects to the input processor it sends a \code{READY} message, receives an \code{OK}, and proceeds to wait for incoming work.
+The input processor then keeps track of each announced worker, and when the time comes, sends condensed processing output and commitment data.
+If the worker does not acknowledge the work with an \code{OK} response, the inputs are reprocessed, and the next free worker is assigned.
+This cycle continuous until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
+
 \subsubsection{Delay Function}%
 \label{ssub:delay_function}
 For the computation we implement a delay function based on \textit{sloth} by \citet{randomzoo}.
@@ -58,6 +62,22 @@ Because of this, and the fact that Python is not the best performing language, w
 In the C-extension we utilize the GNU MP library\footnote{\url{https://gmplib.org/}} to perform integer arithmetics with extremely large numbers.
 
 In \vref{sub:sloth_parameters} we evaluate using \textit{sloth} as our delay function, and how execution time of the delay function can be adjusted.
+
+\subsubsection{Parallel Computation}%
+\label{ssub:parallel_computation}
+As we discussed in \cref{sub:probabilistic_trust}, we need parallel and time offset computations in the beacon.
+This is achieved by letting the input processor handle the scheduling of computations.
+
+The beacon is configured to process inputs at a lower bounded interval, which means that the input processor will send work at fixed times, given an available computation component.
+It should be noted that if no such computational component is freely available, the input processor will just continue collecting input.
+Does no computation service announce itself within a given threshold, the input processor will give a warning to the system operator.
+This scenario should be unlikely since the beacon operator should configure the system to always have available computation components waiting for work.
+
+The worker announcements and subsequent work assignments are facilitated with \textit{ZeroMQ}'s \enquote{router/dealer} socket pair which allows asynchronous addressed messaging.
+When a computational node connects to the input processor it sends a \code{READY} message, receives an \code{OK}, and proceeds to wait for incoming work.
+The input processor then keeps track of each announced worker, and when the time comes, sends condensed processing output and commitment data.
+If the worker does not acknowledge the work with an \code{OK} response, the inputs are reprocessed, and the next free worker is assigned.
+This cycle continuous until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
 
 \subsection{Summary}
 Together, these components form a working \acrshort{poc} implementation of a randomness beacon. The beacon approximates the design outlined in \cref{sec:design}, while making some practical compromises \mtjnote{Which?}.
