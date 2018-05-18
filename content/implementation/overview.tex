@@ -18,6 +18,8 @@ We choose to use \textit{ZeroMQ}\footnote{\url{http://zeromq.org/}} as this fram
 The name \textit{ZeroMQ} hints at its alternative approach to a messaging framework, in that no (or \textit{zero}) broker is needed between components.
 This means that our beacon implementation does not rely on any centralized broker for passing around messages --- no single point of failure in that aspect.
 
+\fxnote{Somewhere in this section, write about the security of ZeroMQ --- are there found many vulnerabilities? How often do they fix stuff? How fast?}
+
 % Fan-in, fan-out pipeline. Good patterns from ØMQ
 The pipelining with fan-in/fan-out at input processor and computation respectively \mtjnote{Fix wording such that figure is still relevant}, is implemented using the primitives of \textit{ZeroMQ}.
 These primitives provide useful patterns for communication, e.g.\ pipeline and publish/subscribe patterns.
