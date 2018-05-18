@@ -12,66 +12,54 @@ As an example, cryptocurrencies have flourished in recent years alongside a shar
 
 Conceptually, randomness beacons seem to fit this environment of minimizing the need to trust as a randomness beacon is acting as an impartial party.
 However, the \enquote{old} way, requiring users to trust the operator, simply shifts the trust issue to the centralized entity, i.e.\ the beacon operator.
-If anyone uses a randomness beacon, it is often specifically because they do not wish to trust anyone.
-Therefore, we believe trusting the randomness beacon is a moot point, especially since the recent literature presents several ways of avoiding it.
+% If anyone uses a randomness beacon, it is specifically because they do not wish to trust anyone.
+% Therefore, we believe trusting the randomness beacon is a moot point.
+The merit of a randomness beacon lies in contexts where a set of users needs to agree on some random outcome, but do not trust each other or any single party to make the decision.
+Therefore, a randomness beacon is \emph{not} required in the case a user needs randomness for just himself. In this case, standard ways of generating randomness on a computer are far easier, and probably provides \enquote{better} randomness.
+Similarly, if users trust each other or any other party, the randomness generation is also trivial.
+A randomness beacon is not necessarily generating better randomness --- it merely allows users to agree on the same randomness without trusting anyone.
 %The body of this work will be to discuss, design, and implement a beacon following the concept of not requiring users to trust it.% Before doing so, let's take a small detour and talk about potential use cases and the motivation for using a beacon at all.
 
-Even though the literature theoretically argues for a particular solution, we have not seen many implementation of them. There is a bridge from theoretical solution to an actual running beacon, and we believe this bridge is uncharted territory. The literature only lightly touches the subject. We want to touch this subject, and find out which implications appear underway.
+Even though the literature theoretically argues for a particular solution, we have not seen many implementations of them. There is a bridge from theoretical solution to an actual running beacon, and we believe this bridge is uncharted territory. The literature only lightly touches the subject. We want to touch this subject, and find out which implications appear underway.
+\mtjnote{If we have not seen this bridge (but have seen theory that is good), why do not need to invent our own theory and then implement it? Why not just implement some of the prior literature?. We need to write that we think we are smarter than all the prior literature.}
 
 \subsection{Terminology}
-In this work, we will use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably. %, and make no initial assumptions on the properties of a beacon.
-As discussed, we see two distinct groups of randomness beacons: the ones requiring users to blindly trust the beacon operator (à la Rabin's original beacon) --- we will refer to these as \emph{trust-requiring} beacons; and the \enquote{new generation} randomness beacons of recent literature, which convincingly prove to all users of the beacon that nothing dubious happened during the creation of the random output --- we will refer to these as \emph{trust-minimizing} beacons.
+In this work, we use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably. %, and make no initial assumptions on the properties of a beacon.
+As discussed, we see two distinct groups of randomness beacons: the ones requiring users to blindly trust the beacon operator (à la Rabin's original beacon) --- we refer to these as \emph{trust-requiring} beacons; and the \enquote{new generation} randomness beacons of recent literature, which convincingly prove to all users of the beacon that nothing dubious happened during the creation of the random output --- we refer to these as \emph{trust-minimizing} beacons.
 
 %In this work, we will use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably, and make no initial assumptions on the properties of a beacon. We also use \enquote{trust-requiring} and \enquote{trust minimizing} to refer to the generations of beacons.
 
 \subsection{Security Goals}\label{sec:security_goals}
-Requiring users to trust the beacon operation does not solve the issue in the majority of cases --- it simply shifts the issue. A beacon that does not require trust of users is more general and will support a wider array of use cases.
+A trust-requiring beacon simply shifts the issue of trust. Therefore, we strive to design and implement a trust-minimizing beacon that works on the most pessimistic assumption possible: Everybody, including the beacon operator, is secretly colluding against you and is willing to put an unlimited amount of money and resources towards manipulating or biasing the randomness. As such, you can only trust yourself.
 
-Therefore, we design and implement a beacon for a hostile world-view described as follows:
-\enquote{Everybody, including the beacon operator, may be secretly colluding against you and willing to put an unlimited amount of money and resources towards manipulating or biasing the process for their own benefit}.
+We realize it may not be possible to provide a bulletproof solution under these assumptions. However, these assumptions describe the mindset we take on while designing and implementing the beacon. For the actual solution, we relax the trust to \emph{probabilistic trust} where each user individually decides how much they desire to trust.
+In essence, a user can know with some very high probability that the randomness has not been manipulated.
 
-The intent is for the beacon to be usable under the assumption that everyone colludes against the user.
-\mtjnote{Add to this section something about that total trust is probably not achievable, but instead probabilistic trust is obtainable?}
+\subsection{Beacon Context}
+As stated, beacons are relevant in contexts where several users want to agree on some random outcome, but do not trust anyone to solely decide that outcome.
+This pattern might be a niche, but many use cases bear resemblances to it.
 
-\subsection{Use Cases}
+Consider the generic use case of sampling. Essentially, sampling is about selecting representative data points, potentially with high stake consequences. It would not be far-fetched to imagine someone wanting to bias this sampling process in order to skew the results. A very obvious sampling process is lotteries, which need to randomly sample winners.
+
+The field of cryptography also contains use cases.
+Many cryptographic schemes require some constants in the design, and it has been shown that some schemes have been intentionally built with specific constants in order to facilitate a backdoor~\cite{nist2014backdoor}.
+Selecting constants with a randomness beacon can prove to the users of such cryptographic schemes that the constants were not manipulated and thus are unlikely to contain backdoors~\cite{baigneres2015trap}.
+
+Staying with the cryptography, \gls{zksnark} require a lengthy process of bootstrapping in the very beginning. Traditionally, this bootstrapping has been performed by a \gls{mpc}. However, \gls{mpc} scales poorly because of the amount of communication between parties. \citet{mpcsnarks} suggests avoiding the \gls{mpc} and instead having users directly contribute a random number. To avoid a last-draw attack from the last user contributing, they apply an output from a randomness beacon. Thus a lengthy \gls{mpc} is substituted with a quick round of user input and sealing the deal with a randomness beacon.
+\begin{comment}
 \mtjnote{Rewrite so that we describe a generic use case: Wanting randomness that several people can agree on, but they do not trust each other.}
-In order to motivate the usefulness and value of a randomness beacon we present a series of use cases. Further, we present some use cases we have seen mentioned in various literature, but we do not find quite as good. This demonstrates the curious conditions under which a randomness beacon fits as a solution.
 
-The fundamental use case of a beacon is to generate randomness that multiple parties can agree is not biased to anyone's advantage or disadvantage.
+It is useful to consider what type of users the beacon may be useful to. In general, the beacon can be by any type of multitude that desire to use transparent randomness \mtjnote{wat}.
+The best fit for this is trustless applications where parties can be expected to cheat if it would benefit them.
 
-\subsubsection{Sampling}
-A classic use for randomness is sampling, however most cases of sampling are performed in environments with some levels of trust.
-In such cases, a beacon would not be needed, but there are some where it would.
-For election recounts, the competing parties would have a large interest in ensuring the results are not biased against them in any way.
-There has also previously been controversy surrounding such recounts, such as the American presidential election in 2000~\cite{bushgore}.
+A beacon is not needed for any single party, as they could simply generate their randomness themselves.
+It is the need for multiple parties to agree on something random that creates the need for public randomness.
 
-The high stakes and public nature makes a transparent and unbiased source of randomness valuable to the process.
-It could also be useful in scientific sampling for multiple reasons --- first, science should be able to withstand review, and sampling data based on a randomness beacon would ensure that others could later reproduce those results, and remove doubt that the scientists had been cherry-picking samples.
-A similar use case could be the proof-of-stake consensus algorithms used in certain blockchains.
-At regular intervals, they elect a leader to mint the next block of transactions, which carries a monetary reward from each transaction to the leader.
-This provides an incentive to use a public source of randomness such as a beacon, to prevent malicious users from biasing the leader election process.
-
-\subsubsection{Lotteries}
-Another use case that seems natural for randomness is lotteries, that need to randomly award some prize to a participant. However, one should consider that in most cases, participants still need to trust whatever party is hosting the lottery to pay out the prize. Essentially, it does not matter whether the randomness could be biased against you, if it impossible to win at all.
-In addition, the average person participating in a lottery is not necessarily critical of the randomness as their stake in the lottery is quite small.
-Despite this, randomness beacons could see some use in online lotteries run by smart contracts, as they do not have any central authority that must be trusted.
-
-\subsubsection{Cryptography}
-Cryptography also contains good use cases, namely parameter generation and protocol bootstrapping.
-Many cryptographic protocols require some parameters to initialize.
-Choosing these can be a lengthy process~\cite{mpcsnarks}, but also requires a great deal of trust as they could contain backdoors~\cite{nist2014backdoor}.
-A randomness beacon could be used to seed the pseudo-random generation of good parameters, to trustlessly generate good parameters for such protocols~\cite{baigneres2015trap}.
-
-An excellent use case is bootstrapping for \gls{zksnark} systems. Such systems require a \emph{common reference string} that must be generated as part of the bootstrapping process. Generating this string can be an extremely complicated process, as the trust of the entire system rests on the string. Should any party possess the numbers from which the string was generated, they can effectively fake proofs of anything, undermining the system. Due to its complexity, it can be hard to scale such a process, which in turn requires more users to trust the participants. Using a randomness beacon can allow the process to scale far beyond the norm, as demonstrated by~\citet{mpcsnarks}. This not only makes it possible for more users to contribute to the system, which reduces the burden of trust on each participant, but also makes it easier to scale.
-
-\subsubsection{Challenge-Response Protocols}
-\mtjnote{Move to Appendix \enquote{Misconcepted use cases}.}
-It has also previously been suggested to use randomness beacons to improve challenge-response protocols, that could be reduced to single-message protocols if both parties could access the beacon.
-\citet{fischer2011publicrandomnessservice} suggest using a randomness beacon to improve a smart card challenge response protocol, which could be reduced to a single message and would be immune to chosen ciphertext attacks. However, this would necessitate that either the card could access the internet by itself, or that it was capable of verifying that a random number came from the beacon. This in turn would likely require some form of signature from the beacon the card would verify, in which case it might as well just use that algorithm for the challenge-response protocol. %This part seems weak and/or negative, consider removing ?
-
-
+In addition, it is not needed for a setting with trust between the parties, as they could then simply trust each other to generate randomness.
+In trust-less settings this is not an option, and so users need randomness they can trust not to be biased, or at least detect if it is.
+This is where our beacon finds its niche of applications.
 %In which environments are beacons suitable? Users of the beacon output may be considered private individuals, scientists, companies, and corporations.
-
+\end{comment}
 %As a side note, all examples of use cases mentioned in this section also work with a trust-requiring beacon, \emph{if} it is reasonable to assume users are willing to trust the beacon.
 
 %While we like the concept a randomness beacon offers (a tool to remove trust), we struggle to follow many of the use cases proposed in the literature. Classic use cases include

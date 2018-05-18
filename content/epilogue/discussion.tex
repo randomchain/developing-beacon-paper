@@ -3,6 +3,9 @@
 This section is dedicated to discussing some the topics that have come up during our work.
 %MostGenericMetaText
 
+\mtjnote{Write here that our users must have no critical dependency on output because dos is possible}
+\mtjnote{You need to be flexible on e.g.\ input was not included in the output}
+
 \subsection{Alternative Delay Functions}
 We currently use a time-hard function to compute our randomness. This provides us some indication of the computational effort needed to correctly produce a random number, and thus makes it harder to cheat.
 However, requirements on processing power is not an insurmountable obstacle for motivated attackers. An excellent example of this is the bitcoin blockchain, where mining consists of solving a computational puzzle by repeatedly hashing. Here, \acrfull{asic}s have allowed great speedups in the mining process, which has resulted in greatly raised mining difficulty, and ordinary computers becoming comparatively useless for mining purposes.
