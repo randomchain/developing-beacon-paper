@@ -31,7 +31,7 @@ This is then used as commitment data, while a hash of the commitment data can be
 This processing method requires the users to acquire the full commitment, if they want to confirm the inclusion of their input --- which can be suboptimal in cases of significantly many users.
 
 Although our beacon implementation allows for virtually any input processing method, we choose to focus on a Merkle tree approach.
-A Merkle tree is a special binary tree where the value of each node is the hash of the concatenation of its two children.
+\mtjnote{cook some soup on the fact that we chose a very good data structure, which has never been used in randomness beacons before} A Merkle tree is a special binary tree where the value of each node is the hash of the concatenation of its two children.
 In our implementation this means that the leaf nodes are user inputs, which are already hashes, and the root node is the condensed output.
 For consistency, the hashing algorithm used to construct the tree is the same as the one applied to sanitize each input (SHA512).
 

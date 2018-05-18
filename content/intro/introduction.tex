@@ -31,8 +31,10 @@ Therefore, we design and implement a beacon for a hostile world-view described a
 \enquote{Everybody, including the beacon operator, may be secretly colluding against you and willing to put an unlimited amount of money and resources towards manipulating or biasing the process for their own benefit}.
 
 The intent is for the beacon to be usable under the assumption that everyone colludes against the user.
+\mtjnote{Add to this section something about that total trust is probably not achievable, but instead probabilistic trust is obtainable?}
 
 \subsection{Use Cases}
+\mtjnote{Rewrite so that we describe a generic use case: Wanting randomness that several people can agree on, but they do not trust each other.}
 In order to motivate the usefulness and value of a randomness beacon we present a series of use cases. Further, we present some use cases we have seen mentioned in various literature, but we do not find quite as good. This demonstrates the curious conditions under which a randomness beacon fits as a solution.
 
 The fundamental use case of a beacon is to generate randomness that multiple parties can agree is not biased to anyone's advantage or disadvantage.
@@ -63,6 +65,7 @@ A randomness beacon could be used to seed the pseudo-random generation of good p
 An excellent use case is bootstrapping for \gls{zksnark} systems. Such systems require a \emph{common reference string} that must be generated as part of the bootstrapping process. Generating this string can be an extremely complicated process, as the trust of the entire system rests on the string. Should any party possess the numbers from which the string was generated, they can effectively fake proofs of anything, undermining the system. Due to its complexity, it can be hard to scale such a process, which in turn requires more users to trust the participants. Using a randomness beacon can allow the process to scale far beyond the norm, as demonstrated by~\citet{mpcsnarks}. This not only makes it possible for more users to contribute to the system, which reduces the burden of trust on each participant, but also makes it easier to scale.
 
 \subsubsection{Challenge-Response Protocols}
+\mtjnote{Move to Appendix \enquote{Misconcepted use cases}.}
 It has also previously been suggested to use randomness beacons to improve challenge-response protocols, that could be reduced to single-message protocols if both parties could access the beacon.
 \citet{fischer2011publicrandomnessservice} suggest using a randomness beacon to improve a smart card challenge response protocol, which could be reduced to a single message and would be immune to chosen ciphertext attacks. However, this would necessitate that either the card could access the internet by itself, or that it was capable of verifying that a random number came from the beacon. This in turn would likely require some form of signature from the beacon the card would verify, in which case it might as well just use that algorithm for the challenge-response protocol. %This part seems weak and/or negative, consider removing ?
 
@@ -78,11 +81,10 @@ It has also previously been suggested to use randomness beacons to improve chall
 %This recent literature presents some promising ways of creating an unbiasable beacon. However, there still exists no \enquote{killer} \enquote{real-life} use cases of a randomness beacon.
 %We see many potential use cases, and present a variety of them with roots in the literature, before constructing a beacon of our own and performing a security analysis on it.
 
-\subsection{Beacon Definition}
+\subsection{Beacon Concepts}
 
 A randomness beacon emits an unpredictable random value at a regular interval, e.g.\ every five minutes. \cref{fig:abstract_beacon} shows the operation of an abstract beacon.
 \subimport{}{simple_beacon_fig.tex}
-\mtjnote{We should probably write more here?}
 
 A beacon can further be seen as following specific models describing behavior. Here, we distinguish between an input source model and operational model. The input source model describes the way the beacon sources its input, and the operational model describes the design of the protocol, i.e.\ how to perform the computation and publish the output. These models are based on our earlier work \fxnote{Insert reference to own work previous semester?}.
 
@@ -131,5 +133,6 @@ We want to create a randomness beacon that is secure under the assumption that e
 Regarding input source models, we can immediately discard private input sources. They are tied to the autocratic collector model, and as such do not work for the transparent authority. The guarantees by publicly available sources are weak compared to user input. If sufficiently paranoid, the user will want to bias these publicly available sources to make sure all other users are not colluding. Therefore, user input is the simplest solution and provides the strongest guarantees for the user.
 
 \subsection{Contributions}
+\mtjnote{We introduce novel ideas of structuring and operating the beacon to decrease the need for trust.}
 We bridge the gap between the literature and the real world by designing and implementing a secure, trust-minimizing randomness beacon based on the transparent authority model with user input. To this end, we conduct a structured analysis of the threats to a randomness beacon and design a beacon to mitigate as many of these as possible. We discuss the trust assumptions for use of the beacon, implement the beacon, and provide an actionable guide for when an output should be trusted. We implement the beacon, while discussing the implementations fit to the design. Finally we evaluate the security of the implementation to estimate how well it measures up the design.
 %Last line is bogus, we havent evaluated yet.

@@ -52,6 +52,8 @@ This section lists the threats we are able to find alongside our best educated g
 The list is split into two parts; first attacks that threaten the availability of the output, and then attacks that threaten the integrity of the output.
 A summary of the threats can be seen in \vref{tab:threat-categorization}.
 
+\mtjnote{REEVALUATE SCORES}
+
 \subsubsection{Threats to Availability}
 
 \newcommand{\parathreat}[1]{\paragraph{#1}\hspace{-1ex}}
@@ -133,10 +135,11 @@ While we estimate it will be hard to find such exploits, they would likely be qu
 In this case one might also consider the effect quantum computers would have on the use of cryptography, which could also threaten the beacon.
 %D 3 - adversaries gain extreme power to manipulate beacon, R 3 - easy to reproduce once found, E 1 - very hard to find, A 3 - beacon is compromised. Also consider quantum computers. They are the root of all evil.
 
+\mtjnote{Take top 3 scores (or the most interesting) and flesh out in an appendix}
+
 \subsection{Summary}
 
 \cref{tab:threat-categorization} shows the above threats in the matrix.
 To reiterate, an insider can perform outsider attacks, and outsiders can perform insider attacks if they obtain sufficient privileges.
 
 \subimport{}{threat_table.tex}
-
