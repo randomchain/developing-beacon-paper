@@ -45,7 +45,8 @@ The field of cryptography also contains use cases.
 Many cryptographic schemes require some constants in the design, and it has been shown that some schemes have been intentionally built with specific constants in order to facilitate a backdoor~\cite{nist2014backdoor}.
 Selecting constants with a randomness beacon can prove to the users of such cryptographic schemes that the constants were not manipulated and thus are unlikely to contain backdoors~\cite{baigneres2015trap}.
 
-Staying with the cryptography, \gls{zksnark} require a lengthy process of bootstrapping in the very beginning. Traditionally, this bootstrapping has been performed by a \gls{mpc}. However, \gls{mpc} scales poorly because of the amount of communication between parties. \citet{mpcsnarks} suggests avoiding the \gls{mpc} and instead having users directly contribute a random number. To avoid a last-draw attack from the last user contributing, they apply an output from a randomness beacon. Thus a lengthy \gls{mpc} is substituted with a quick round of user input and sealing the deal with a randomness beacon.
+Staying with the cryptography, \gls{zksnark} require a lengthy process of bootstrapping in the very beginning. Traditionally, this bootstrapping has been performed by a \gls{mpc}. However, \gls{mpc} scales poorly because of the amount of communication between parties. \citet{mpcsnarks} suggest avoiding the \gls{mpc} and instead having users directly contribute a random number. To avoid a last-draw attack from the last user contributing, they apply an output from a randomness beacon. Thus a lengthy \gls{mpc} is substituted with a quick round of user input and sealing the deal with a randomness beacon.
+
 \begin{comment}
 \mtjnote{Rewrite so that we describe a generic use case: Wanting randomness that several people can agree on, but they do not trust each other.}
 
