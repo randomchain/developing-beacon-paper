@@ -1,10 +1,11 @@
 
 \subsection{Lotteries}
-We consider two types of lottery applications, one between a group of friends, and one with a weekly lottery service. We illustrate the differences between the two, and how to structure the use of the beacon to obtain trustless randomness. Finally we also consider how to use the beacon for applications that require randomness at a higher frequency.
+\mtjnote{Rewrite all use cases to refer to the general use case described in the introduction.}
+We consider two types of lottery applications: one between a group of friends and one with a weekly lottery service. We illustrate the differences between the two, and how to structure the use of the beacon to obtain trustless randomness. Finally we also consider how to use the beacon for applications that require randomness at a higher frequency.
 
-Consider a group of three friends that hold a small lottery among themselves. To prevent cheating (however tongue-in-cheek it might be) they decide to use our beacon to provide the deciding randomness. Recall that a user can only trust an output that they have inputted to - so all three of them must be able to find their inputs in an output to use it.
+Consider a group of three friends that hold a small lottery among themselves. To prevent cheating (however tongue-in-cheek it might be) they decide to use our beacon to provide the deciding randomness. Recall that a user can only trust an output that they have inputted to --- so all three of them must be able to find their inputs in an output to use it.
 
-Practically, each friend should announce a commit to a specific input before repeatedly inputting it to the beacon. They should then take the first output that contains all three of their inputs and use that to determine who wins.
+Practically, each friend announces a commit to a specific input before repeatedly inputting it to the beacon. They should then take the first output that contains all three of their inputs and use that to determine who wins.
 
 While this approach works excellently for small groups, we cannot reasonably expect every participant in larger lotteries to repeatedly input to the beacon until a number is found.
 
@@ -12,7 +13,7 @@ Instead, we consider a weekly lottery that is open for anyone to purchase ticket
 
 Practically, we need some way to signal the last input to use, so the lottery must announce a commit to a \textit{stop message} at the beginning of the lottery.
 
-The lottery then collects all beacon outputs made during the duration of the lottery, and concatenates them for use in the final decision. Once the lottery nears it's end, the lottery contributes a signed version of the previously mentioned stop message. Once a commit from the beacon to that input has been seen, the lottery then announces both the signed version of the message, and its hash. The beacon output containing the stop message is then the final one used for the lottery, which can now determine it's winner(s).
+The lottery then collects all beacon outputs made during the duration of the lottery and concatenates them for use in the final decision. Once the lottery nears its end, the lottery contributes a signed version of the previously mentioned stop message. Once a commit from the beacon to that input has been seen, the lottery then announces both the signed version of the message, and its hash. The beacon output containing the stop message is then the final one used for the lottery, which can now determine its winner(s).
 
 This scheme relies on the lottery being able to end their collection of input securely, and gives three guarantees to users. First of all, they can verify the presence of the signed stop message in the output by checking for the published hash. Second, they can verify that the stop message was sent by the lottery, as they can decrypt the signed message to obtain the original stop message. Finally, they can be certain that the lottery did not craft the stop message to bias the input in a last-draw attack, as it was committed to at the beginning of the lottery.
 
