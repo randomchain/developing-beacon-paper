@@ -1,10 +1,17 @@
-\subsubsection{Sloth Parameters}%
-\label{ssub:sloth_parameters}
+\subsection{Sloth Parameters}%
+\label{sub:sloth_parameters}
 
 The computation and verification time of the delay functions we use, Sloth, can be configured by adjusting two parameters.
-These are the number of bits in the prime used and number of square root permutations, i.e.\ iterations.
+These are
+\begin{eletterate*}
+\item the size of the prime number, used in the computation, in bits (must be a multiple of 512); and
+\item the number of times to iterate through the permutation process of said prime.
+\end{eletterate*}
 
-Something something dark side.
+In \vref{fig:sloth_configs} we illustrate the correlation between these two parameters, and the time it subsequently takes to do a computation with a given combination of bits and iterations.
+We see that an increase in number of bits used for the prime number, results in an exponential growth of the computation time, while an increase in number of iterations cause a linear growth.
+\msmnote{Actually show numbers for these claims! And also talk about verification time!}
+This is a consequence of the operations used in the computation and verification of Sloth.
 
 \begin{figure*}
     \centering
@@ -47,5 +54,6 @@ Something something dark side.
 \end{tikzpicture}
 \caption{Correlation between bits and iterations in relation to time of computation.}
     \end{subfigure}%
-    \caption{Measuring performance of Sloth computation and verification with different parameters. As can be seen, the computation time rises polynomially (TODO: or exponentially?) as the number of bits rises, and linearly as the iterations increase. Verification time stays well below 2 seconds (TODO: CHECK THIS).}
+    \caption{Execution time of Sloth computation and verification with different parameters. The computation time grows exponentially as the number of bits is increased, and linearly as more iterations are performed. Verification time grows far less.}%
+    \label{fig:sloth_configs}
 \end{figure*}
