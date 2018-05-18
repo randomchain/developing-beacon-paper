@@ -27,11 +27,11 @@ In~\cref{fig:beacon_parallel_timeline} this is illustrated, where these offset b
     \centering
     \footnotesize
     \begin{tikzpicture}
-    \foreach \x in {0, 1, 2,...,3} {
+    \foreach \x in {0, ..., 3} {
         \draw[|-|, black, line width=0.5mm] (\x,-\x*0.7) to (\x+1,-\x*0.7);
-        \path (\x,-\x*0.7) -- (\x+1,-\x*0.7) node [midway, above] {inp};
+        \path (\x,-\x*0.7) -- (\x+1,-\x*0.7) node [midway, above] {Input};
         \draw[-|, black, line width=0.5mm, shorten <=-0.1mm] (\x+1,-\x*0.7) to (\x+4,-\x*0.7);
-        \path (\x+1,-\x*0.7) -- (\x+4,-\x*0.7) node [midway, above] {computation};
+        \path (\x+1,-\x*0.7) -- (\x+4,-\x*0.7) node [midway, above] {Computation};
     }
     \end{tikzpicture}
     \caption{Parallelized beacon protocol, with offset input collection and overlapping computation.}\label{fig:beacon_parallel_timeline}
