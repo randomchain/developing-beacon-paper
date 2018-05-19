@@ -21,7 +21,7 @@ A randomness beacon is not necessarily generating better randomness --- it merel
 %The body of this work will be to discuss, design, and implement a beacon following the concept of not requiring users to trust it.% Before doing so, let's take a small detour and talk about potential use cases and the motivation for using a beacon at all.
 
 Even though the literature theoretically argues for a particular solution, we have not seen many implementations of them. There is a bridge from theoretical solution to an actual running beacon, and we believe this bridge is uncharted territory. The literature only lightly touches the subject. We want to touch this subject, and find out which implications appear underway.
-\mtjnote{If we have not seen this bridge (but have seen theory that is good), why do not need to invent our own theory and then implement it? Why not just implement some of the prior literature?. We need to write that we think we are smarter than all the prior literature.}
+\mtjnote{If we have not seen this bridge (but have seen theory that is good), why do we need to invent our own theory and then implement it? Why not just implement some of the prior literature?. We need to write that we think we are smarter than all the prior literature.}
 
 \subsection{Terminology}
 In this work, we use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably. %, and make no initial assumptions on the properties of a beacon.
@@ -72,13 +72,15 @@ This is where our beacon finds its niche of applications.
 
 \subsection{Beacon Concepts}
 
-A randomness beacon emits an unpredictable random value at a regular interval, e.g.\ every five minutes. \cref{fig:abstract_beacon} shows the operation of an abstract beacon.
+A randomness beacon emits an unpredictable random value at a regular interval, e.g.\ every five minutes. \cref{fig:abstract_beacon} shows the workings of a simple, generic beacon. The beacon performs \emph{some} computation on an input source. The result of the computation is the output, which is sent to users. This workflow is repeated indefinitely at the specified interval.
 \subimport{}{simple_beacon_fig.tex}
 
-A beacon can further be seen as following specific models describing behavior. Here, we distinguish between an input source model and operational model. The input source model describes the way the beacon sources its input, and the operational model describes the design of the protocol, i.e.\ how to perform the computation and publish the output. These models are based on our earlier work \fxnote{Insert reference to own work previous semester?}.
+Examining existing beacons, a few common ways of composing the input sourcing and computation are discernible. 
+These can be described as specific models. 
+Here, we distinguish between an input source model and operational model. The input source model describes the way the beacon sources its input, and the operational model describes the design of the protocol, i.e.\ how to perform the computation and publish the output. These models are based on our earlier work \fxnote{Insert reference to own work previous semester?}.
 
 \subsubsection{Input Source Models}
-It is important that the user can trust the input to not be biased in such a way that it negatively affects the output. We therefore see three approaches to sourcing the input:
+\mtjnote{Cite outselves} describe three sources of input:
 
 \paragraph{Private Input Sources} A beacon can use some private source of data to to produce randomness. This allows them to obtain produce randomness of high quality at a high rate, but requires users of the beacon to trust the beacon and its randomness.
 As we argued, true randomness as input cannot be trusted in our setting, since it cannot reliably be distinguished from carefully crafted values that appear to be random.
@@ -93,7 +95,7 @@ As such, the users need to blindly trust the beacon operator, which in the case 
 %No true randomness is necessary but we care deeply about the unpredictability from deterministic pseudo-randomness.
 
 \paragraph{Publicly Available Sources} Using a publicly available source that everyone can agree on the value of, such as bitcoin transaction hashes, stock market data or lottery winning numbers from several international lotteries.
-The user must trust the source, and this is reasonable because these sources are governed by some guarantees. E.g.\ in case of bitcoin, the transaction hashes have a monetary value and they are hard to pre-image. The rate of the source also dictates that of the beacon which can be an issue for some use cases. Users will also have to interact with the source to indirectly influence the beacon and prevent collusion. However, it may also be harder for colluding adversaries to bias the beacon through the source unless they are in complete control of it.
+The user must trust the source, and this is reasonable because these sources are governed by some guarantees. E.g.\ in case of bitcoin, the transaction hashes have a monetary value and they are hard to pre-image. The rate of the source also dictates that of the beacon which can be an issue for some use cases. Users also have to interact with the source to indirectly influence the beacon and prevent collusion. However, it may also be harder for colluding adversaries to bias the beacon through the source unless they are in complete control of it.
 
 \paragraph{User Input}
 A user can be allowed to directly provide input to the computation.
@@ -107,9 +109,9 @@ The beacon then performs an operation on a set of user-supplied input, where eac
 If these are satisfied, the user knows that a value they trust to be random has been part of the random output generation. The computation performed by the beacon should ensure that users cannot knowingly bias the output to anyone's disadvantage. As such, the user knows that his input was not knowingly \enquote{counteracted} by another used.
 
 \subsubsection{Operational Models}
-We identify three ways in which a beacon is typically operated:
+\mtjnote{cite outselves} identify three ways in which a beacon is typically operated:
 
-\paragraph{Autocratic Collector} A beacon is run by a party, which deems it irrelevant to prove honesty. Instead, they require users to trust them to do what they say. As such, the computation will be a black box with no possibility for proof of honesty. This type always lies in the trust-requiring category of beacons.
+\paragraph{Autocratic Collector} A beacon is run by a party, which deems it irrelevant to prove honesty. Instead, they require users to trust them to do what they say. As such, the computation is a black box with no possibility for proof of honesty. This type always lies in the trust-requiring category of beacons, i.e.\ the old generation.
 
 \paragraph{Specialized \acrshort{mpc}} Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs. Given an honest majority, this type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to large groups~\cite{cascudo2017scrape, syta2017scalable}.
 
@@ -117,11 +119,10 @@ We identify three ways in which a beacon is typically operated:
 
 \subsection{Delimitations}%
 \label{sub:delimitations}
-We want to create a randomness beacon that is secure under the assumption that everyone may be colluding against a given user, as per our security goals in \cref{sec:security_goals}. As such, we can immediately see that the autocratic collector is not suitable for our security goal, because it requires users to trust its hopefully honest operation. The \gls{mpc} model does not scale well enough for general use. Further, this model assumes an honest majority, which is a weaker assumption than our security goals. Therefore, it will not be suitable for us. This leaves us with the transparent authority model, which we adopt.
+We want to create a randomness beacon that is secure under the assumption that everyone may be colluding against a given user, as per our security goals in \cref{sec:security_goals}. As such, we can immediately see that the autocratic collector is not suitable for our security goal, because it requires users to trust its hopefully honest operation. The \gls{mpc} model does not scale well enough for general use. Further, this model assumes an honest majority, which is a weaker assumption than our security goals. Therefore, it is not be suitable for us. This leaves us with the transparent authority model, which we adopt.
 
 Regarding input source models, we can immediately discard private input sources. They are tied to the autocratic collector model, and as such do not work for the transparent authority. The guarantees by publicly available sources are weak compared to user input. If sufficiently paranoid, the user will want to bias these publicly available sources to make sure all other users are not colluding. Therefore, user input is the simplest solution and provides the strongest guarantees for the user.
 
 \subsection{Contributions}
-\mtjnote{We introduce novel ideas of structuring and operating the beacon to decrease the need for trust.}
-We bridge the gap between the literature and the real world by designing and implementing a secure, trust-minimizing randomness beacon based on the transparent authority model with user input. To this end, we conduct a structured analysis of the threats to a randomness beacon and design a beacon to mitigate as many of these as possible. We discuss the trust assumptions for use of the beacon, implement the beacon, and provide an actionable guide for when an output should be trusted. We implement the beacon, while discussing the implementations fit to the design. Finally we evaluate the security of the implementation to estimate how well it measures up the design.
-%Last line is bogus, we havent evaluated yet.
+We bridge the gap between the literature and the real world by designing and implementing a secure, trust-minimizing randomness beacon based on the transparent authority model with user input. To this end, we conduct a structured analysis of the threats to a randomness beacon, and design a beacon based on these threats. We design the beacon from the ground up based on tried and tested methods as well as novel ideas. Specifically, we differ from previous transparent authority approaches by describing a way of parallelizing the beacon pipeline, we provide a thorough analysis of trust assumptions \mtjnote{what do we call it?}, and further we minimize the consequences of an output withholding attack performed by the beacon operator. Combined, our novel ideas decreases the need for trust and limits the severity of attacks.
+
