@@ -2,9 +2,20 @@
 \label{sub:overview}
 This chapter explains the choices leading to the specific implementation seen in \vref{fig:impl_figure}. As such, the figure can be used as a reference as we explain the various parts of the implementation.
 
-At a glance, the figure shows the services and how they interact. All services are controlled by the beacon operator. Examples of input collectors are shown, and each of them hash inputs as they are received and send them to a known proxy (fan-in pattern). The proxy forwards any message to the input processor. The input processor adds any input to a Merkle tree structure. Here the pipeline fans out. A computation node that is ready to take on work signals its readiness to the input processor (1). Here, the input processor internally adds the computation node to a queue. The input processor will at an interval equal to the input collection duration send the current Merkle tree (2) to the computation node in front of its queue and starts building a new Merkle tree with new input. This ensures that e.g.\ every minute a computation node is starting a computation based on the Merkle tree built during the past minute. Once given the Merkle tree, the computation node releases a commitment (3) to this input, and runs the delay function on it (4). Eventually the output (5) is sent to the output proxy (fan-in pattern). This proxy forwards the output to each publisher. A publisher then sends the received output to a specific outlet.
-
-
+At a glance, the figure shows the services and how they interact.
+All services are controlled by the beacon operator.
+Examples of input collectors are shown, and each of them hash inputs as they are received and send them to a known proxy (fan-in pattern).
+The proxy forwards any message to the input processor.
+The input processor adds any input to a Merkle tree structure.
+Here the pipeline fans out.
+A computation node that is ready to take on work signals its readiness to the input processor (1).
+Here, the input processor internally adds the computation node to a queue.
+The input processor will at an interval equal to the input collection duration send the current Merkle tree (2) to the computation node in front of its queue and starts building a new Merkle tree with new input.
+This ensures that e.g.\ every minute a computation node is starting a computation based on the Merkle tree built during the past minute.
+Once given the Merkle tree, the computation node releases a commitment (3) to this input, and runs the delay function on it (4).
+Eventually the output (5) is sent to the output proxy (fan-in pattern).
+This proxy forwards the output to each publisher.
+A publisher then sends the received output to a specific outlet.
 
 \subsection{Frameworks, Libraries, and Language Choice}
 % SOA is achieved with concurrent and async message passing
@@ -18,12 +29,18 @@ We choose to use \textit{ZeroMQ}\footnote{\url{http://zeromq.org/}} as this fram
 The name \textit{ZeroMQ} hints at its alternative approach to a messaging framework, in that no (or \textit{zero}) broker is needed between components.
 This means that our beacon implementation does not rely on any centralized broker for passing around messages --- no single point of failure in that aspect.
 
-\fxnote{Somewhere in this section, write about the security of ZeroMQ --- are there found many vulnerabilities? How often do they fix stuff? How fast?}
-
 % Fan-in, fan-out pipeline. Good patterns from ØMQ
 The pipelining with fan-in/fan-out at input processor and computation respectively \mtjnote{Fix wording such that figure is still relevant}, is implemented using the primitives of \textit{ZeroMQ}.
 These primitives provide useful patterns for communication, e.g.\ pipeline and publish/subscribe patterns.
 Using something like \textit{ZeroMQ} and not developing our own ad-hoc solution, allows us to leverage well-tested technologies, and focus on the beacon itself instead.
+
+Another reason for choosing \textit{ZeroMQ}, is the guarantees it gives us in relation to communication.
+Messages sent and received are atomic, meaning that we either receive everything or nothing at all.
+Loosing a message is not critical in our use case, and when messages are used to drive actions (e.g.\ control and status messages), we simply retransmit if an acknowledgement is not sent back.
+Furthermore, we can enable authorization and authentication protocols on \textit{ZeroMQ}, which limits who can send and receive which messages, using elliptic curve cryptography and certificates.
+However, as we are implementing a \gls{poc} we are not using any authentication and authorization, for simplicity and fast prototyping.
+Previously, some security vulnerabilities have been found in \textit{ZeroMQ} regarding privilege escalation; where crafted packages could downgrade the version of the protocol being used, but these were all patch in prior releases.
+
 
 \subsubsection{Python}
 % Python for components for fast prototyping. Other languages where performance is important

@@ -80,4 +80,7 @@ If the worker does not acknowledge the work with an \code{OK} response, the inpu
 This cycle continuous until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
 
 \subsection{Summary}
-Together, these components form a working \acrshort{poc} implementation of a randomness beacon. The beacon approximates the design outlined in \cref{sec:design}, while making some practical compromises \mtjnote{Which?}.
+Together, these components form a working \acrshort{poc} implementation of a randomness beacon. The beacon approximates the design outlined in \cref{sec:design}, while making some practical compromises, such as having duplex communication between the input processor and the computation nodes.
+
+Moreover, the reliability of the beacon could be greatly improved by eliminating single points of failure, such as the proxies and input processor.
+However, changes as these are fairly trivial to implement, and we deem them unnecessary for a \gls{poc} random beacon.
