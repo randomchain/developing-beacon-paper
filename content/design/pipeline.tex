@@ -3,4 +3,8 @@
 In our beacon, as illustrated in \cref{fig:beacon_arch}, data only flows one way through the system and each component performs an independent transformation.
 This effectively means that a beacon is a \emph{pipeline} where data flows into the system as inputs, is processed, transformed to a random output, and lastly published.
 
-The pipeline architecture can be seen as a specialization of the \gls{soa} pattern, since each step in the pipeline is a service as defined in a \gls{soa}. When considering the system as a pipeline some restrictions are imposed compared to the more generic \gls{soa}, because data only flows in one direction. \mtjnote{We should probably elaborate on what these restrictions mean for us!}
+The pipeline architecture can be seen as a specialization of the \gls{soa} pattern, since each step in the pipeline is a service as defined in a \gls{soa}.
+When considering the system as a pipeline some restrictions are imposed compared to the more generic \gls{soa}, because data only flows in one direction.
+This means that if data is lost due to failure, e.g.\ a component crashing, we cannot inform previous pipeline components to resend the data.
+However, since our beacon design is meant to operate in a forward-only manner, this loss of data should be tolerated, and even expected in some cases.
+This underlines the fact that users should always verify both inclusion of their input and correct computation of output --- users should not assume that a submitted input is always included in the next output.

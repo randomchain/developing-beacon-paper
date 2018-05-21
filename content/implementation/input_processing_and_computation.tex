@@ -63,22 +63,6 @@ In the C-extension we utilize the GNU MP library\footnote{\url{https://gmplib.or
 
 In \vref{sub:sloth_parameters} we evaluate using \textit{sloth} as our delay function, and how execution time of the delay function can be adjusted.
 
-\subsubsection{Parallel Computation}%
-\label{ssub:parallel_computation}
-As we discussed in \cref{sub:probabilistic_trust}, we need parallel and time offset computations in the beacon.
-This is achieved by letting the input processor handle the scheduling of computations.
-
-The beacon is configured to process inputs at a lower bounded interval, which means that the input processor will send work at fixed times, given an available computation component.
-It should be noted that if no such computational component is freely available, the input processor will just continue collecting input.
-Does no computation service announce itself within a given threshold, the input processor will give a warning to the system operator.
-This scenario should be unlikely since the beacon operator should configure the system to always have available computation components waiting for work.
-
-The worker announcements and subsequent work assignments are facilitated with \textit{ZeroMQ}'s \enquote{router/dealer} socket pair which allows asynchronous addressed messaging.
-When a computational node connects to the input processor it sends a \code{READY} message, receives an \code{OK}, and proceeds to wait for incoming work.
-The input processor then keeps track of each announced worker, and when the time comes, sends condensed processing output and commitment data.
-If the worker does not acknowledge the work with an \code{OK} response, the inputs are reprocessed, and the next free worker is assigned.
-This cycle continuous until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
-
 \subsection{Summary}
 Together, these components form a working \acrshort{poc} implementation of a randomness beacon. The beacon approximates the design outlined in \cref{sec:design}, while making some practical compromises, such as having duplex communication between the input processor and the computation nodes.
 

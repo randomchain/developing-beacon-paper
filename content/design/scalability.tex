@@ -1,0 +1,14 @@
+\subsection{Scalability}
+\msmnote{I tried writing more concise text, also with emphasis on the fact that scalability is the new black and super cool.}
+
+We consider the scalability of the beacon to be a significant factor in both performance, operation, and deployment.
+Potential bottlenecks in the system should be easy to mitigate, and beacon operators should not be burdened by the architecture and design choices, when trying to deploy and expand their randomness beacon.
+
+Our choice of pipeline and \gls{soa} fits well with our intentions for scaling the beacon.
+Individual services in the \gls{soa} can be scaled as needed, as they are designed to be stateless and loosely coupled with each other.
+As long as the overall contract of the pipeline is withheld, i.e.\ the order of component types, individual steps can be scaled up or down as needed.
+
+In some scenarios a beacon may consist of multiple computation services as a mean of redundancy, as long as each computation is run on the same input.
+The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
+This presents the issue of consensus about which input to use, but that is out of scope for this report.
+

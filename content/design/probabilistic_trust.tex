@@ -64,16 +64,3 @@ If, for example, the delay function is expected to always finish at most 2 minut
 
 The beacon operator should find a sensible number of nodes that on one hand maximizes the chances of a ready computation node given expected delays, and on the other hand minimizes the idle time of the nodes.
 
-\subsection{Scalability}
-
-\mtjnote{This text has been cut and pasted from elsewhere, where I did not think it fit in.}
-
-Individual services in the \gls{soa} can be scaled as needed.
-Parallelizing a pipeline to increase the output frequency is also possible.
-
-In some scenarios a beacon may consist of multiple computation services as a mean of redundancy, as long as each computation is run on the same input.
-The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.
-This presents the issue of consensus about which input to use, but that is out of scope for this report.
-
-\subsection{Summary}
-\mtjnote{A section that summarizes and evaluates which threats have been solved}
