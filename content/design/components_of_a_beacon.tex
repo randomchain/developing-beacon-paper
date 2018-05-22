@@ -3,7 +3,7 @@
 
 An instance of a randomness beacon designed in the \gls{soa} pattern will consist of a number of services.
 
-A number of \textsc{input collector} services collect input from a myriad of different sources. These sources could for example be email, irc, a bot for your favorite instant messaging service, tweets with a specific hashtag, raw TCP or HTTP connections, a pretty website, SMS, Morse telegraph, or carrier pigeon\footnote{For carrier pigeon we recommend IP over Avian Carriers: \url{https://en.wikipedia.org/wiki/IP_over_Avian_Carriers}}.
+A number of \textsc{input collector} services collect input from a myriad of different sources. These sources could for example be email, irc, a bot for your favorite instant messaging service, tweets with a specific hashtag, raw TCP or HTTP connections, a pretty website, SMS, Morse telegraph, or carrier pigeon\footnote{For carrier pigeon we recommend the \emph{IP over Avian Carriers} proposal: \url{https://en.wikipedia.org/wiki/IP_over_Avian_Carriers}}.
 An \textsc{input processor} service acts as an aggregator of the input from all collectors and hands it over to the \textsc{computation} service, which commits to the aggregated input and runs the computation to generate a pseudorandom output.
 Finally, various \textsc{publisher} services publish the commitment, output, and any relevant proofs to different outlets. These outlets could be the same media as input collectors use but can be different.
 
