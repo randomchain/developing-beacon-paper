@@ -1,59 +1,98 @@
-\subsection{Sloth Parameters}%
+\subsection{Parameters of \textit{sloth}}%
 \label{sub:sloth_parameters}
 
-The computation and verification time of the delay functions we use, Sloth, can be configured by adjusting two parameters.
+The computation and verification time of the delay functions we use, \textit{sloth}, can be configured by adjusting two parameters.
 These are
 \begin{eletterate*}
 \item the size of the prime number, used in the computation, in bits (must be a multiple of 512); and
 \item the number of times to iterate through the permutation process of said prime.
 \end{eletterate*}
 
-In \vref{fig:sloth_configs} we illustrate the correlation between these two parameters, and the time it subsequently takes to do a computation with a given combination of bits and iterations.
+To evaluate the \textit{sloth} delay function, we run a series of tests of the algorithm.
+The tests are executed on a server with an \textit{Intel Core i7-2600}~CPU, which runs at $3.40$~GHz.
+We use \textit{SHA512} as the internal hashing algorithm of \textit{sloth}.
+During the tests we sample multiple rounds with random inputs and take the average.
+This is done to mitigate testing inputs, which are significantly faster to find primes for.
+
+In \vref{fig:sloth_comptime} we illustrate the correlation between these two parameters, and the time it subsequently takes to do a computation with a given combination of bits and iterations.
 We see that an increase in number of bits used for the prime number, results in an exponential growth of the computation time, while an increase in number of iterations cause a linear growth.
-\msmnote{Actually show numbers for these claims! And also talk about verification time!}
-This is a consequence of the operations used in the computation and verification of Sloth.
+
+While computation time is important for the delay function, another significant metric is verification time --- especially in relation to the computation time.
+To illustrate this relationship we have \vref{fig:sloth_compfactor}, where the z-axis shows how many more times it took to compute the output relative to how long it took to verify.
+Although the data is more scattered than in the previous figure, we see a trend where the growth of this factor levels out around $10^2$.
+This means that in configurations with more than roughly 3000 iterations, the computation time is always more than two orders of magnitude larger than the verification time.
+
+We also see that the number of bits does not affect the factor, except for some irregularities in the data.
+These irregularities are believed to partly be caused by the extra time it potentially can take to initially find the prime number; an operation which can vary in time depending on how close the numeric representation of the hashed input string is to a prime.
+Since larger primes (given by number of bits) can be more difficult to find, the data fluctuates more at larger number of bits.
+
 
 \begin{figure*}
     \centering
         \footnotesize
-    \begin{subfigure}[t]{0.4\textwidth}
+    \begin{subfigure}[t]{0.48\textwidth}
         \centering
         \begin{tikzpicture}
         \begin{axis}[%
-        width=1.075\textwidth,
-        xlabel=bits,
-        xtick={1024,2048,3072,4096},
-        ymode=log,
-        log basis y={10},
-        yticklabel pos=right,
-        legend pos=north west,
-        grid=major]
-        \addplot[scatter, shader=interp] table[y={COMPUTATION}, x={BITS}, col sep=comma, restrict expr to domain={\thisrow{ITERATIONS}}{39000:41000}] {sloth_data.csv};
-        \addplot[scatter, mark=square, shader=interp] table[y={VERIFICATION}, x={BITS}, col sep=comma, restrict expr to domain={\thisrow{ITERATIONS}}{39000:41000}] {sloth_data.csv};
-        \legend{Computation,Verification};
-    \end{axis}
-\end{tikzpicture}
-\caption{Computation and verification time at 40,000 iterations. Note the logarithmic x-axis.}
-    \end{subfigure}%
-    \hfill
-    \begin{subfigure}[t]{0.55\textwidth}
-        \centering
-        \begin{tikzpicture}
-        \begin{axis}[%
-            width=0.9\textwidth,
+            width=0.95\textwidth,
             xlabel=iterations,
             ylabel=bits,
             ytick={1024,2048,3072,4096},
             zlabel=time (s),
+            zlabel shift=-12pt,
             grid=major,
             x dir=reverse]
-        %\addplot3 [surf, mesh/rows=10, mesh/ordering=colwise, mark=cube, mark size=3, opacity=.3] table[y={BITS}, x={ITERATIONS}, z={VERIFICATION}, col sep=comma] {sloth_data.csv};
-        \addplot3+[surf, mesh/rows=20, mesh/ordering=colwise, opacity=.7, scatter, shader=faceted] table[y={BITS}, x={ITERATIONS}, z={COMPUTATION}, col sep=comma] {sloth_data.csv};
-    % \legend{Verification,Computation};
+        \addplot3+[
+            surf,
+            mesh/rows=33,
+            mesh/ordering=colwise,
+            opacity=.7,
+            scatter,
+            shader=faceted
+        ] table [
+            y={BITS},
+            x={ITERATIONS},
+            z={COMPUTATION},
+            col sep=comma
+        ] {sloth_data/lessdata2.csv};
     \end{axis}
 \end{tikzpicture}
-\caption{Correlation between bits and iterations in relation to time of computation.}
+\caption{Correlation between bits and iterations in relation to time of computation.}%
+\label{fig:sloth_comptime}
     \end{subfigure}%
-    \caption{Execution time of Sloth computation and verification with different parameters. The computation time grows exponentially as the number of bits is increased, and linearly as more iterations are performed. Verification time grows far less.}%
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \begin{axis}[%
+        width=0.95\textwidth,
+        xlabel=iterations,
+        ylabel=bits,
+        ytick={1024,2048,3072,4096},
+        zlabel=computation factor,
+        zlabel shift=-4pt,
+        zmode=log,
+        log basis z={10},
+        x dir=reverse,
+        grid=major]
+        \addplot3+[
+            surf,
+            mesh/rows=33,
+            mesh/ordering=colwise,
+            opacity=.7,
+            scatter,
+            shader=faceted
+        ] table [
+            y={BITS},
+            x={ITERATIONS},
+            z={FACTOR},
+            col sep=comma
+        ] {sloth_data/lessdata2.csv};
+    \end{axis}
+\end{tikzpicture}
+\caption{Computation time as a factor of verification time. Note the logarithmic z-axis.}%
+\label{fig:sloth_compfactor}
+    \end{subfigure}%
+    \caption{Execution time of \textit{sloth} computation and verification with different parameters. The computation time grows exponentially as the number of bits is increased, and linearly as more iterations are performed. Verification time grows far less.}%
     \label{fig:sloth_configs}
 \end{figure*}
