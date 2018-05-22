@@ -15,7 +15,7 @@ However, the \enquote{old} way, requiring users to trust the operator, simply sh
 % If anyone uses a randomness beacon, it is specifically because they do not wish to trust anyone.
 % Therefore, we believe trusting the randomness beacon is a moot point.
 The merit of a randomness beacon lies in contexts where a set of users needs to agree on some random outcome, but do not trust each other or any single party to make the decision.
-Therefore, a randomness beacon is \emph{not} required in the case a user needs randomness for just himself. In this case, standard ways of generating randomness on a computer are far easier, and probably provides \enquote{better} randomness.
+Therefore, a randomness beacon is \emph{not} required in the case a user needs randomness for just himself. In this case, standard ways of generating randomness on a computer are far easier, and probably provide \enquote{better} randomness.
 Similarly, if users trust each other or any other party, the randomness generation is also trivial.
 A randomness beacon is not necessarily generating better randomness --- it merely allows users to agree on the same randomness without trusting anyone.
 %The body of this work will be to discuss, design, and implement a beacon following the concept of not requiring users to trust it.% Before doing so, let's take a small detour and talk about potential use cases and the motivation for using a beacon at all.
@@ -75,8 +75,8 @@ This is where our beacon finds its niche of applications.
 A randomness beacon emits an unpredictable random value at a regular interval, e.g.\ every five minutes. \cref{fig:abstract_beacon} shows the workings of a simple, generic beacon. The beacon performs \emph{some} computation on an input source. The result of the computation is the output, which is sent to users. This workflow is repeated indefinitely at the specified interval.
 \subimport{}{simple_beacon_fig.tex}
 
-Examining existing beacons, a few common ways of composing the input sourcing and computation are discernible. 
-These can be described as specific models. 
+Examining existing beacons, a few common ways of composing the input sourcing and computation are discernible.
+These can be described as specific models.
 Here, we distinguish between an input source model and operational model. The input source model describes the way the beacon sources its input, and the operational model describes the design of the protocol, i.e.\ how to perform the computation and publish the output. These models are based on our earlier work \fxnote{Insert reference to own work previous semester?}.
 
 \subsubsection{Input Source Models}
@@ -125,4 +125,3 @@ Regarding input source models, we can immediately discard private input sources.
 
 \subsection{Contributions}
 We bridge the gap between the literature and the real world by designing and implementing a secure, trust-minimizing randomness beacon based on the transparent authority model with user input. To this end, we conduct a structured analysis of the threats to a randomness beacon, and design a beacon based on these threats. We design the beacon from the ground up based on tried and tested methods as well as novel ideas. Specifically, we differ from previous transparent authority approaches by describing a way of parallelizing the beacon pipeline, we provide a thorough analysis of trust assumptions \mtjnote{what do we call it?}, and further we minimize the consequences of an output withholding attack performed by the beacon operator. Combined, our novel ideas decreases the need for trust and limits the severity of attacks.
-
