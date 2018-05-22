@@ -55,6 +55,7 @@ A summary of the threats can be seen in \vref{tab:threat-categorization}.
 \mtjnote{REEVALUATE SCORES}
 
 \subsubsection{Threats to Availability}
+Generally, availability attacks are not highly damaging. If the beacon is not available, users will potentially not have a stake in the output in the first place. The special case is an output withholding attack and eclipsing the beacon before output, both making users believe there is going to be an output, but it never comes. In these cases, users will have placed their stake in the beacon output, but the protocol fails. \mtjnote{Write something more general about our scores}
 
 \newcommand{\parathreat}[1]{\paragraph{#1}\hspace{-1ex}}
 
@@ -69,7 +70,7 @@ A malicious beacon operator can shut the beacon down, completely denying availab
 This threat is practically impossible to prevent for a beacon run by a single operator, as the operator can trivially always shut any part of the beacon down.
 %D 3 - complete shutdown, R 3 - easy to pull the plug, E 2, A 3 - affects all users. We cant prevent this attack,
 
-\parathreat{Withholding Input}\drea{3,3,2,3,11}
+\parathreat{Withholding Output}\drea{3,3,2,3,11}
 The operator can withhold outputs that are not favorable to his interests.
 This threat is also quite severe as it not only denies an output, but also ruins the beacon reputation.
 More gravely, it can be blamed on technical mishaps such as crashes to conceal malicious behavior, while remaining easy for the operator to execute.
@@ -86,7 +87,7 @@ This is a quite small threat, as it is extremely hard to completely prevent a de
 %D 2 - no use for a single user, R 1 - extremely difficult to accomplish, E 1 - likewise, A 1 - only one user affected.
 
 \subsubsection{Threats to Integrity}
-
+These threats are far more damaging if not detected. Where availability is binary and users obviously cannot use a missing output, successful integrity attacks provide an output, but not a safe one to use. As this arguably is the single most important property of a randomness beacon, we rate all of these as high damage. \mtjnote{Write something more general about our scoring}
 
 \parathreat{Input Biasing}\drea{3,3,2,3,11}
 An outsider can provide input that knowingly biases the output to their benefit or others' disadvantage.
