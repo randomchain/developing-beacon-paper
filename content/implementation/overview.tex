@@ -34,12 +34,12 @@ The pipelining with fan-in/fan-out at input processor and computation respective
 These primitives provide useful patterns for communication, e.g.\ pipeline and publish/subscribe patterns.
 Using something like \textit{ZeroMQ} and not developing our own ad-hoc solution, allows us to leverage well-tested technologies, and focus on the beacon itself instead.
 
-Another reason for choosing \textit{ZeroMQ}, is the guarantees it gives us in relation to communication.
+Another reason for choosing \textit{ZeroMQ} is the guarantees it provides us in relation to communication.
 Messages sent and received are atomic, meaning that we either receive everything or nothing at all.
 Loosing a message is not critical in our use case, and when messages are used to drive actions (e.g.\ control and status messages), we simply retransmit if an acknowledgement is not sent back.
 Furthermore, we can enable authorization and authentication protocols on \textit{ZeroMQ}, which limits who can send and receive which messages, using elliptic curve cryptography and certificates.
 However, as we are implementing a \gls{poc} we are not using any authentication and authorization, for simplicity and fast prototyping.
-Previously, some security vulnerabilities have been found in \textit{ZeroMQ} regarding privilege escalation; where crafted packages could downgrade the version of the protocol being used, but these were all patch in prior releases.
+Previously, some security vulnerabilities have been found in \textit{ZeroMQ} regarding privilege escalation where crafted packages could downgrade the version of the protocol being used, but these were all patched in prior releases.
 
 
 \subsubsection{Python}
