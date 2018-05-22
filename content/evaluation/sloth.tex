@@ -4,25 +4,23 @@
 The computation and verification time of the delay functions we use, \textit{sloth}, can be configured by adjusting two parameters.
 These are
 \begin{eletterate*}
-\item the size of the prime number, used in the computation, in bits (must be a multiple of 512); and
+\item the size of the prime number used in the computation, in bits (must be a multiple of 512); and
 \item the number of times to iterate through the permutation process of said prime.
 \end{eletterate*}
 
-To evaluate the \textit{sloth} delay function, we run a series of tests of the algorithm.
-The tests are executed on a server with an \textit{Intel Core i7-2600}~CPU, which runs at $3.40$~GHz.
-We use \textit{SHA512} as the internal hashing algorithm of \textit{sloth}.
+To evaluate the \textit{sloth} delay function we run a series of tests of the algorithm.
 During the tests we sample multiple rounds with random inputs and take the average.
 This is done to mitigate testing inputs, which are significantly faster to find primes for.
 
 In \vref{fig:sloth_comptime} we illustrate the correlation between these two parameters, and the time it subsequently takes to do a computation with a given combination of bits and iterations.
-We see that an increase in number of bits used for the prime number, results in an exponential growth of the computation time, while an increase in number of iterations cause a linear growth.
+We see that an increase in number of bits used for the prime number results in an exponential growth of the computation time, while an increase in number of iterations cause a linear growth.
 
 While computation time is important for the delay function, another significant metric is verification time --- especially in relation to the computation time.
-To illustrate this relationship we have \vref{fig:sloth_compfactor}, where the z-axis shows how many more times it took to compute the output relative to how long it took to verify.
-Although the data is more scattered than in the previous figure, we see a trend where the growth of this factor levels out around $10^2$.
+\vref{fig:sloth_compfactor} illustrates this relationship, where the $z$-axis shows how many more times it takes to compute the output relative to how long it takes to verify.
+Although the data is more scattered than in the previous figure, we see a trend where the growth of this factor levels out just above $10^2$.
 This means that in configurations with more than roughly 3000 iterations, the computation time is always more than two orders of magnitude larger than the verification time.
 
-We also see that the number of bits does not affect the factor, except for some irregularities in the data.
+We also see that the number of bits does not affect the factor except for some irregularities in the data.
 These irregularities are believed to partly be caused by the extra time it potentially can take to initially find the prime number; an operation which can vary in time depending on how close the numeric representation of the hashed input string is to a prime.
 Since larger primes (given by number of bits) can be more difficult to find, the data fluctuates more at larger number of bits.
 
@@ -90,7 +88,7 @@ Since larger primes (given by number of bits) can be more difficult to find, the
         ] {sloth_data/lessdata2.csv};
     \end{axis}
 \end{tikzpicture}
-\caption{Computation time as a factor of verification time. Note the logarithmic z-axis.}%
+\caption{Computation time as a factor of verification time. Note the logarithmic $z$-axis.}%
 \label{fig:sloth_compfactor}
     \end{subfigure}%
     \caption{Execution time of \textit{sloth} computation and verification with different parameters. The computation time grows exponentially as the number of bits is increased, and linearly as more iterations are performed. Verification time grows far less.}%

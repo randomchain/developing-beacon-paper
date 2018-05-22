@@ -1,4 +1,8 @@
 \section{Performance Evaluation}
+\mtjnote{Some meta text}
+
+All tests are executed on a server with an \textit{Intel Core i7-2600}~CPU, which runs at $3.40$~GHz and has 4 cores as well as hyper-threading.
+We use \textit{SHA512} as the hashing algorithm in both the Merkle tree, and in the \textit{sloth} delay function.
 
 \subimport{}{sloth.tex}
 
@@ -6,6 +10,3 @@
 \label{sub:bottlenecks}
 
 \msmnote{Test bottlenecks and show how much they can handle before scaling up is needed. E.g.\ time merkle tree building for n inputs, throughput of proxies, maybe more?}
-
-
-
