@@ -1,8 +1,9 @@
 \subsection{Probabilistic Trust}%
 \label{sub:probabilistic_trust}
 In our approach to a randomness beacon we want to push beyond the need for honest operators and naïve users.
-To achieve this we first need to quantify trusting the beacon and then determine thresholds for reasonable behavior.
+To achieve this we extend the work of \citet{randomzoo} to quantify trusting the beacon and then determine thresholds for reasonable behavior when using delay functions.
 This will effectively provide a measure of probabilistic trust, where users decide for themselves if the probability of honest operation is adequate.
+
 
 We present a property which, if satisfied, means a user can trust that the beacon operator is not capable of fooling them.
 This property is true if the user determines that nobody is able to compute the delay function in the time between the users input and the user receiving the beacon's commitment.
@@ -63,4 +64,3 @@ Therefore, we update the prior equation to take this extra time for each delay f
 If, for example, the delay function is expected to always finish at most 2 minutes later than the expected time of 10 minutes (i.e.\ a worst-case time of 12 minutes) and the input collection is 2 minutes, 6 nodes in total are necessary to guarantee that a node is always ready every 2 minutes, given a maximum of 2 minutes expected delay.
 
 The beacon operator should find a sensible number of nodes that on one hand maximizes the chances of a ready computation node given expected delays, and on the other hand minimizes the idle time of the nodes.
-
