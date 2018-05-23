@@ -31,6 +31,7 @@ A beacon that does not reveal which inputs were used before publishing the outpu
 Likewise, it would be beneficial to allow different channels for input and output, both to make the beacon easier to access for users, but also to make it resilient to having any single channel attacked.
 Should a single channel be attacked, input could still be submitted to another.
 This requirement further increases usability since different users may prefer different input and output channels.
+We also consider fault tolerance a valuable property to have, and having multiple channels still allows users to input if one fails.
 
 % To summarize, we have the following requirements for our beacon:
 % \paragraph{Transparent Operation} Users are able to oversee the protocol and see any deviation. This means that users are able to verify that the input is valid, i.e.\ their own input is included, and able to verify the output is valid, i.e.\ that the output is computed correctly from the input. Furthermore, the output is deterministic and unpredictable, which means that randomness is introduced because users are not able to reproduce or verify the randomness, but still, the output is unpredictable.
