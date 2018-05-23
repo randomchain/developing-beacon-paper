@@ -86,7 +86,7 @@ This is a quite small threat, as it is extremely hard to completely prevent a de
 %D 2 - no use for a single user, R 1 - extremely difficult to accomplish, E 1 - likewise, A 1 - only one user affected.
 
 \subsubsection{Threats to Integrity}
-These threats are far more damaging if not detected. Where availability is binary and users obviously cannot use a missing output, successful integrity attacks provide an output, that ideally appears legitimate, but is biased. As this arguably is the single most important property of a randomness beacon, we rate all of these as high damage. \mtjnote{Write something more general about our scoring}
+These threats are far more damaging if not detected. Where availability is binary and users obviously cannot use a missing output, successful integrity attacks provide an output, that ideally appears legitimate, but is biased. We consider using a biased output the worst thing a user can do, which makes these threats very serious.
 
 \parathreat{Input Biasing}\drea{3,3,2,3,11}
 An outsider can provide input that knowingly biases the output to their benefit or others' disadvantage.
@@ -141,4 +141,4 @@ To reiterate, an insider can perform outsider attacks, and outsiders can perform
 
 \subimport{}{threat_table.tex}
 
-\mtjnote{TODO: Write and make references to \cref{app:dread} (not necessarily just in this summary)}
+We go more in-depth with our use of the DREAD framework and explain our scoring of some specific threats in \cref{app:dread}.
