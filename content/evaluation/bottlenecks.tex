@@ -15,16 +15,15 @@ It should not take a significant amount of time, since this would extend the tim
 As such, we examine how the number of leaves, i.e.\ inputs, relates to the time it takes to build the Merkle tree.
 
 In \cref{fig:merkle_build}, a linear growth in build time is seen as a factor of the number of leaves.
-The growth is significantly slow, for it to be negligible in our beacon, since there need to be well over 2 million leaves to even result in a build time over three seconds.
+The growth is slow and is negligible in our beacon. There needs to be well over 2 million leaves to result in a build time over three seconds.
 We can describe the relationship as follows, where $N$ is the number of leaves:
 $$
-1.41 \mu\text{s} \cdot N + 1.41 \text{ms}
+1.41\,\mu\text{s} \cdot N + 1.41\,\text{ms}
 $$
 
 Admittedly, the build time could be a problem if significantly many inputs are used.
 However, in this case one might reimplement the input processor in a more performant language than Python, e.g.\ C.
-In fact, the build process could even be parallelized among multiple processes, each building sub trees.
-The Merkle roots of the sub trees could then be merged to produce the full Merkle tree.
+In addition, the construction of Merkle trees is trivially parallized. Our implementation of Merkle trees does not take advantage of this fact, and so building subtrees in multiple processes and merging them to form the final tree will likely provide a significant speed-up with a factor close to the number of cores.
 
 \begin{figure}
     \centering\footnotesize
