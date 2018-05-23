@@ -3,8 +3,13 @@
 This section is dedicated to discussing some the topics that have come up during our work.
 %MostGenericMetaText
 
-\mtjnote{Write here that our users must have no critical dependency on output because dos is possible}
-\mtjnote{You need to be flexible on e.g.\ input was not included in the output}
+\subsection{Output Dependency}
+We currently suggest a variety of use cases for our beacon, but we should include one important caveat --- users should not have a critical dependency on the output.
+
+This is because we can not guarantee that there will always be an output time due to the possibility of attacks on the availability.
+Instead, users should aim towards being flexible with when they need to use an output. An example could be to use the \textit{next} output that they see a timely commit containing their input to. Only then will they be certain that the output is not biased.
+
+While this does make the beacon more difficult to use, in the current design it is a necessary precaution to using it.
 
 \subsection{Alternative Delay Functions}
 We currently use a time-hard function to compute our randomness. This provides us some indication of the computational effort needed to correctly produce a random number, and thus makes it harder to cheat.
