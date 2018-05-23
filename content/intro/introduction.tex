@@ -2,30 +2,30 @@
 A \emph{randomness beacon}, i.e.\ a service emitting unpredictable random values at fixed intervals, is not a new concept.
 In 1983 Michael O.\ Rabin coined the term and utilized one to add probabilistic security in several protocols~\cite{rabin1983transaction}.
 In this definition, a randomness beacon was to be seen as an impartial third-party trusted to be unbiased towards any outcome.
-As such, Rabin's beacon was to be \emph{trusted}, i.e.\ you should trust the beacon operator (the entity running the beacon service) to not be biased since you could not verify that they were unbiased.
+As such, you should trust the beacon operator (the entity running the beacon service) to not be biased since you can not verify that they were unbiased.
 
-For quite a while, randomness beacons did not receive much attention, most likely because alternatives to Rabin's protocols not requiring a trusted beacon were used instead (such as~\cite{BGMR}).
+For quite a while, randomness beacons did not receive much attention, likely because alternatives to Rabin's protocols not requiring a trusted beacon were used instead (such as~\cite{BGMR}).
 In circa 2010, a renewed interest in beacons was seen as an increase in beacon-related literature; the trend in this new literature was to remedy the need to trust the beacon operator.
-We believe it came as a reaction to revelations like the \gls{nsa} whistle-blower leaks that diminished people's trust in authorities.
+We believe it was a reaction to revelations like the \gls{nsa} whistle-blower leaks that diminished people's trust in authorities.
 In other words, people had their eyes opened to the fact that \emph{trust} can be an issue in itself and that removing the need for trust in any one entity could be beneficial.
 As an example, cryptocurrencies have flourished in recent years alongside a sharp rise in the popularity of blockchains --- two technologies seeking to facilitate cooperation of mutually distrustful users.
 
-Conceptually, randomness beacons seem to fit this environment of minimizing the need to trust as a randomness beacon is acting as an impartial party.
+Conceptually, randomness beacons seem to fit this environment of minimizing the need to trust.
 However, the \enquote{old} way, requiring users to trust the operator, simply shifts the trust issue to the centralized entity, i.e.\ the beacon operator.
+In the \enquote{new} beacons described in the recent literature, the beacon is acting as an impartial party.
 
 The merit of a randomness beacon lies in contexts where a set of users needs to agree on some random outcome, but do not trust each other or an impartial third party to make the decision.
 Therefore, a randomness beacon is \emph{not} required in the case a user needs randomness for just themself. In this case, standard ways of generating randomness on a computer are far easier, and probably provides \enquote{better} randomness.
 Similarly, if users trust each other or a third party, the randomness generation is also trivial.
-A randomness beacon is not necessarily generating better randomness --- it merely allows users to agree on the same randomness without trusting anyone.
-\msmnote{\enquote{better} randomness --- what is this?}
+A randomness beacon is not necessarily generating \enquote{more random} numbers --- it merely allows users to agree on the same randomness without trusting anyone.
 
 Even though the literature theoretically argues for a particular solution, we have not seen many implementations of randomness beacons.
 We believe that bridging a theoretical design and practical implementation is uncharted territory.
-Moreover, the literature which somewhat explores this bridge either culminates in a highly specialized solution, often unfit for a public context; or disregards thorough security analyses and trust assessment.
+Moreover, the literature which somewhat explores this bridge either culminates in a highly specialized solution, often unfit for a public context or disregards thorough security analyses and trust assessment.
 Throughout this paper, we design, implement, and evaluate a randomness beacon, which borrows from existing research while introducing novel ideas; both in the system but also the operation of it.
 
 \subsection{Terminology}
-In this work, we use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably.
+In this work we use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably.
 As presented, we see two distinct groups of randomness beacons: the ones requiring users to blindly trust the beacon operator (à la Rabin's original beacon), which we refer to as \emph{trust-requiring} beacons; and the \enquote{new generation} randomness beacons of recent literature, which convincingly prove to all users of the beacon that nothing dubious happened during the creation of the random output --- these are referred to as \emph{trust-minimizing} beacons.
 
 \subsection{Security Goals}\label{sec:security_goals}
@@ -51,21 +51,22 @@ One such sampling process is lotteries, which need to randomly sample a pool of 
 The field of cryptography also contains use cases.
 Many cryptographic schemes require some constants in the design of algorithms, and it has been shown that some schemes have been intentionally built with specific constants in order to facilitate a backdoor~\cite{nist2014backdoor}.
 Selecting constants with a randomness beacon can prove to the users of such cryptographic schemes that the constants were not manipulated and thus are unlikely to contain backdoors~\cite{baigneres2015trap}.
-One could even imagine a \enquote{refreshing} algorithm, where constants are variables which change with new beacon outputs.
+One could even in some use cases imagine a \enquote{refreshing} algorithm where constants are variables which change with new beacon outputs.
 
-Staying with cryptography, \gls{zksnark} require a lengthy process of initial bootstrapping.
+Staying in the field of cryptography, \glspl{zksnark} require a lengthy process of initial bootstrapping.
 In systems such as \textit{zcash}\footnote{\url{https://z.cash}}, this bootstrapping has been performed by a \gls{mpc}~\cite{snarkparameters}.
 However, the \gls{mpc} scales poorly because of the many rounds of communication needed between parties alongside big amounts of data to ensure a fair output.
 \citet{mpcsnarks} suggest avoiding the heavy communication and computation of the \gls{mpc} and instead having users directly contribute a random number.
-To avoid the last user carefully choosing their input to manipulate the bootstrapping to their benefit, an output from a randomness beacon is applied as the last input.
+To avoid the last user carefully choosing their input to manipulate the bootstrapping to their benefit (a so-called \emph{last-draw attack}), an output from a randomness beacon is applied as the last input.
 Thus a lengthy \gls{mpc} is substituted with a quick round of user input and sealing the deal with a randomness beacon.
+\mtjnote{Sass, can we find any sources saying that tedious bootstrapping is a hindrance for the adoption of zksnarks?}
 
 \subsection{Beacon Concepts}
 
 A randomness beacon emits an unpredictable random value at a regular interval, e.g.\ every five minutes.
 \cref{fig:abstract_beacon} shows the workings of a simple, generic beacon.
-The beacon performs \emph{some} computation on an input source.
-The result of the computation is the output, which is sent to users.
+The beacon performs \emph{some} computation on an input source in order to generate an unpredictable number.
+The result of the computation, the random number, is the output, and is sent to users.
 This workflow is repeated indefinitely at the specified interval.
 \subimport{}{simple_beacon_fig.tex}
 
