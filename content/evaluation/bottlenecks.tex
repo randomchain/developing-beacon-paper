@@ -33,7 +33,10 @@ In addition, the construction of Merkle trees is trivially parallized. Our imple
             height=5cm,
             xlabel=number of leaves,
             ylabel=time (s),
-            legend pos=north west
+            legend pos=north west,
+            ymajorgrids=true,
+            xmajorgrids=true,
+            major tick length=0pt
             ]
             \addplot [only marks, mark=*, mark size=1, color=GoogleBlue] table [col sep=comma, x index=0, y index=1] {sloth_data/merkledata2.csv};
             \addplot [no markers, color=GoogleBlue] table [col sep=comma, x index=0, y={create col/linear regression={y=BUILD}}] {sloth_data/merkledata2.csv};
