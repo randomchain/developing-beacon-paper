@@ -20,7 +20,8 @@ In our implementation this means that the leaf nodes are user inputs, which are 
 For consistency, the hashing algorithm used to construct the tree is the same as the one applied to sanitize each input (SHA512).
 
 Merkle trees as commitment data allows third-party applications to provide verification, since the inclusion of a given leaf node in a Merkle tree can be verified by providing all siblings to the nodes on the path up to the root.
-This greatly limits the amount of data which the user needs to fetch and process to $\log{(n)}+1$ where $n$ is the number of leaf nodes\footnote{There are $\log{n}$ sibling nodes of the path to the root, and for comparing you need the root node as well (the $+1$). You already know your own input. The rest (i.e.\ the nodes on the path to the root) is easily calculable.}.
+This greatly limits the amount of data which the user needs to fetch and process to $\log{(n)}+1$ where $n$ is the number of leaf nodes in a Merkle tree where all levels are filled, i.e.\ there is a power of two number of leaves.
+The data consists of are $\log{n}$ sibling nodes in the path to the root, and for comparison the root node as well (the $+1$).
 The commitment data consist of only the leaf nodes.
 This is possible if they retain their ordering, and the algorithm to construct the tree is openly available.
 
