@@ -1,6 +1,10 @@
 \subsection{Bottlenecks}%
 \label{sub:bottlenecks}
 
+We examine two potential bottlenecks in our beacon.
+These are components which require the most effort to scale horizontally, and as such for simplicity we want to discover the current limits before scaling.
+Furthermore, it is important to determine if these are actual bottlenecks before attempting to scale, as we want to avoid premature optimizations.
+
 \subsubsection{Proxies}%
 \label{ssub:proxies}
 Proxy performance test here.
@@ -23,7 +27,8 @@ $$
 
 Admittedly, the build time could be a problem if significantly many inputs are used.
 However, in this case one might reimplement the input processor in a more performant language than Python, e.g.\ C.
-In addition, the construction of Merkle trees is trivially parallized. Our implementation of Merkle trees does not take advantage of this fact, and so building subtrees in multiple processes and merging them to form the final tree will likely provide a significant speed-up with a factor close to the number of cores.
+In addition, the construction of Merkle trees is trivially parallelized.
+Our implementation of Merkle trees does not take advantage of this fact, and so building subtrees in multiple processes and merging them to form the final tree will likely provide a significant speed-up with a factor close to the number of available CPU cores.
 
 \begin{figure}
     \centering\footnotesize
@@ -45,6 +50,6 @@ In addition, the construction of Merkle trees is trivially parallized. Our imple
         \pgfmathprintnumber[print sign]{\pgfplotstableregressionb}$}
         \end{axis}
     \end{tikzpicture}
-    \caption{Correlation between number of leaves and the time it takes to build that Merkle tree}%
+    \caption{Correlation between number of leaves and the time it takes to build a Merkle tree, with those leaves.}%
     \label{fig:merkle_build}
 \end{figure}
