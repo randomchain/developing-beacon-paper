@@ -2,6 +2,7 @@
 \label{sub:components_of_a_beacon}
 
 An instance of a randomness beacon designed in the \gls{soa} pattern will consist of a number of services.
+To fulfill our requirement of modular input and output methods, we will allow multiple different input collectors and output publishers to exist in the system. \citet{randomzoo} mentions having several input sources, but to our knowledge we are the first to generalize it in the design to allow virtually any source.
 
 A number of \textsc{input collector} services collect input from a myriad of different sources. These sources could for example be email, irc, a bot for your favorite instant messaging service, tweets with a specific hashtag, raw TCP or HTTP connections, a pretty website, SMS, Morse telegraph, or carrier pigeon\footnote{For carrier pigeon we recommend the \emph{IP over Avian Carriers} proposal: \url{https://en.wikipedia.org/wiki/IP_over_Avian_Carriers}}.
 An \textsc{input processor} service acts as an aggregator of the input from all collectors and hands it over to the \textsc{computation} service, which commits to the aggregated input and runs the computation to generate a pseudorandom output.

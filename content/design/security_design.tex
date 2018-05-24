@@ -16,9 +16,9 @@ It means that each published output is paired with a commitment which can be use
 The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output.
 Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desirable output.
 
-Contrary to other approaches of transparent authorities, we have decided to an even more transparent approach: The commitment contains all data required for the computation.
-This allows any party to compute the randomness alongside the beacon operator.
-It ensures that the operator can not cause much damage by withholding output. In essence, it reduces the \enquote{market value} of the output, making it less attractive to sell early access to it because everyone can just compute it. While it does not prevent the operator of performing a withholding attack, it minimizes the effects of it, as others can compute the output from the commitment.
+Contrary to other approaches of transparent authorities, we have decided on an even more transparent approach: The commitment contains all data in \enquote{cleartext} (e.g.\ not hashed) required for the computation. To our knowledge, we are the first to take transparency to this extreme.
+The transparency allows any party to compute the randomness alongside the beacon operator.
+It ensures that the operator can not cause much damage by withholding output or by deciding not to open a traditional (e.g.\ hashed) commitment. In essence, it reduces the \enquote{market value} of the output, making it less attractive to leak output (i.e.\ sell early access to the output) because everyone can just compute it. While it does not prevent the operator of performing a withholding attack, it minimizes the effects of it, as others can compute the output from the commitment and still obtain an equally valid output.
 
 \subsubsection{Delay Functions}
 To decrease the possibilities of the operator trying different commits before releasing them, we utilize a \emph{delay function}.
@@ -29,7 +29,7 @@ When deploying delay functions in randomness beacons it is important to keep ver
 A user should be able to run the delay function in reverse to confirm that an output matches the commitment.
 To avoid having to require each user to execute the full delay function, we use a flavor of delay functions which is \emph{asymmetrically hard}, i.e.\ hard to compute but easy to verify.
 In the normal case only the operator runs the full delay function, resulting in much CPU time saved globally and thus electricity, too.
-In the case that the operator is (maliciously or not) performing an output withholding attack, users still have all the information needed to run the delay function themselves.
+In the case that the operator is (maliciously or not) performing an output withholding attack, users still, because of the \gls{cco} workflow, have all the information needed to run the delay function themselves.
 It might even be imagined that a few volunteers will run their own \enquote{mirror beacon}, each mirroring the computation of the main beacon operator. This adds redundancy in the computation.
 
 The delay function also protects against last-draw attacks by adversaries.
