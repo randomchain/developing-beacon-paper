@@ -20,7 +20,7 @@ This relation between the time taken to compute the delay function and the time 
 
 As previously mentioned, this ratio is also described by \citet{randomzoo}, where they advise a ratio of no more than $\frac{1}{5}$ of the computation time spent collecting inputs.
 In their paper, \citeauthor{randomzoo} furthermore state that smart participants always will try to minimize the time between their input and the commitment.
-We see this as a potential issue, since such behaviour can create congestion in the system, which might result in some inputs not being used in the intended output computation.
+We see this as a potential issue, since such behavior can create congestion in the system, which might result in some inputs not being used in the intended output computation.
 This means that users whose inputs were not included cannot trust the output of the given beacon iteration.
 
 Taking all this into consideration we present a beacon operation protocol which can be adjusted to increase or decrease the ratio and thereby the limit for probabilistic trust.
@@ -77,4 +77,3 @@ However, the goal of our approach is not to eliminate this user strategy, but to
 
 In our beacon we do not expect to give guarantees about deadlines, such as commitment and output publishing, since such guarantees only would serve as false reassurance to the user.
 Instead, our beacon is adjustable, such that a ratio of input collection and computation time, which most users finds reasonable, can be deployed.
-
