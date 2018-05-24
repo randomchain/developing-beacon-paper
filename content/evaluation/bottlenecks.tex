@@ -38,8 +38,8 @@ In addition, the construction of Merkle trees is trivially parallized. Our imple
             xmajorgrids=true,
             major tick length=0pt
             ]
-            \addplot [only marks, mark=*, mark size=1, color=GoogleBlue] table [col sep=comma, x index=0, y index=1] {sloth_data/merkledata2.csv};
-            \addplot [no markers, color=GoogleBlue] table [col sep=comma, x index=0, y={create col/linear regression={y=BUILD}}] {sloth_data/merkledata2.csv};
+            \addplot [only marks, mark=*, mark size=1, color=GoogleBlue] table [col sep=comma, x index=0, y index=1] {plotdata/merkledata2.csv};
+            \addplot [no markers, color=GoogleBlue] table [col sep=comma, x index=0, y={create col/linear regression={y=BUILD}}] {plotdata/merkledata2.csv};
             \addlegendentry{%
         $\pgfmathprintnumber{\pgfplotstableregressiona} \cdot x
         \pgfmathprintnumber[print sign]{\pgfplotstableregressionb}$}
