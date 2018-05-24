@@ -16,8 +16,8 @@ It means that each published output is paired with a commitment which can be use
 The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output.
 Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desirable output.
 
-The commitment consists of all data required for the computation.
-This allows any other party to compute the randomness alongside the beacon operator.
+Contrary to other approaches of transparent authorities, we have decided to an even more transparent approach: The commitment contains all data required for the computation.
+This allows any party to compute the randomness alongside the beacon operator.
 It ensures that the operator can not cause much damage by withholding output. In essence, it reduces the \enquote{market value} of the output, making it less attractive to sell early access to it because everyone can just compute it. While it does not prevent the operator of performing a withholding attack, it minimizes the effects of it, as others can compute the output from the commitment.
 
 \subsubsection{Delay Functions}
