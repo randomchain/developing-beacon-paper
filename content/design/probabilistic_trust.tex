@@ -18,8 +18,8 @@ In fact, it must be smaller than the shortest time the user thinks the operator 
 An example could be a that user that can compute the delay function in 10 minutes believes that the world's fastest computer can do so 5 times faster, i.e.\ in 2 minutes. In this case the user can trust the output if he sees a commit to a set of inputs containing his input within 2 minutes of his input.
 This relation between the time taken to compute the delay function and the time before a commit is seen allows users to flexibly adjust their willingness to trust the outcome has not been biased against them.
 
-As previously mentioned, this ratio is also described by \citet{randomzoo}, where they advise a ratio of no more than $\frac{1}{5}$ of the computaion time spent collecting inputs.
-In their paper, Lenstra and Wesolowski furthermore states that smart participants always will try to minimize the time between their input and the commitment.
+As previously mentioned, this ratio is also described by \citet{randomzoo}, where they advise a ratio of no more than $\frac{1}{5}$ of the computation time spent collecting inputs.
+In their paper, \citeauthor{randomzoo} furthermore state that smart participants always will try to minimize the time between their input and the commitment.
 We see this as a potential issue, since such behaviour can create congestion in the system, which might result in some inputs not being used in the intended output computation.
 This means that users whose inputs were not included cannot trust the output of the given beacon iteration.
 
@@ -71,8 +71,8 @@ If, for example, the delay function is expected to always finish at most 2 minut
 
 The beacon operator should find a sensible number of nodes that on one hand maximizes the chances of a ready computation node given expected delays, and on the other hand minimizes the idle time of the nodes.
 
-\subsubsection{Expected User Behaviour}
-Taking into consideration what \citet{randomzoo} write about smart users always trying to input as close to the commitment as possible, we admit that our solution of parallel offset computations will not prevent such behaviour.
+\subsubsection{Expected User Behavior}
+Taking into consideration what \citet{randomzoo} write about smart users always trying to input as close to the commitment as possible, we admit that our solution of parallel offset computations will not prevent such behavior.
 However, the goal of our approach is not to eliminate this user strategy, but to minimize the need for it.
 
 In our beacon we do not expect to give guarantees about deadlines, such as commitment and output publishing, since such guarantees only would serve as false reassurance to the user.
