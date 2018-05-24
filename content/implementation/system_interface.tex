@@ -3,13 +3,14 @@
 As previously mentioned, the system boundaries, i.e.\ where users and the outside world interacts with the beacon, are handled by input collectors and publishers.
 We implement these and the surrounding infrastructure, as well as vertical scaling if the load becomes too high on a single component.
 
-To limit the space of potential messages and message sizes passed around inside of our system, we sanitize the user inputs by hashing them at the entry point. \mtjnote{Make it more obvious, that hashing is a conscious choice and that it helps on cheese pizza}
-Given a substantial amount of users, receiving and hashing inputs quickly becomes a costly affair performance-wise.
-Fortunately, the state of an input collector is only relevant to a single input request, meaning that scaling and even distributing across many machines is a trivial task.
+To limit the space of potential messages and message sizes passed around inside of our system, we sanitize the user inputs by hashing them at the entry point. Realistically, allowing \emph{any} input could be seen as an invitation by some users to post messages or even files, e.g.\ illegal or inappropriate content. Our choice of hashing at entry point will mitigate this.
 
-When we hash the users' inputs we must inform them of the operation, such that they still will be able to confirm that their input was used in the output of the beacon.
-This means that the users must know which hashing algorithm is used (also for the sake of them verifying correct hashing), and for convenience we return the hash in the response of the input collectors.
-Currently we use the SHA512 hashing algorithm since its digest size is 64 bytes, which gives us reasonably sized messages flowing through the system, while still having $2^{512}$ possible different values. It could be argued that the 32 bytes of SHA256 are more than enough for any use case. However, SHA512 is actually roughly 1.5 times faster on a 64-bit CPU than SHA256~\cite{sha512faster}. Therefore we see no reason to limit the possibilities to $2^{256}$. Furthermore, truncating a SHA512 to any desired length is safe~\cite{sha512faster}.
+Given a substantial amount of users, receiving and hashing inputs may become a costly affair performance-wise.
+Fortunately, the state of an input collector is only relevant to a single input request, meaning that scaling and even distributing across many machines is a trivial task.
+When we hash an input, as a convenience we return the hashed input as a response. As such, they will later be able to confirm that their hashed input was used in the output of the beacon.
+To allow users to verify correct hashing, the hashing algorithm should be made publicly known.
+
+Currently we use the SHA512 hashing algorithm since its digest size is 64 bytes, which gives us reasonably sized messages flowing through the system, while still having $2^{512}$ possible different values. It could be argued that the 32 bytes of SHA256 are more than enough for any use case. However, SHA512 is actually roughly 1.5 times faster than SHA256 on a 64-bit CPU~\cite{sha512faster}. Therefore we see no reason to limit the possibilities to $2^{256}$, since we do not expect 512 bits per input to be too much data. Furthermore, truncating a SHA512 to any desired length is safe~\cite{sha512faster}.
 It is important that the same hashing function is used throughout the system, since differences in output space will bias the outcome if the inputs are hashed multiple times --- which is the case.
 However, we implement the system such that the chosen hashing algorithm can be configured at beacon start.
 
