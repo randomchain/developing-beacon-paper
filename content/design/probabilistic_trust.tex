@@ -77,3 +77,5 @@ However, the goal of our approach is not to eliminate this user strategy, but to
 
 In our beacon we do not expect to give guarantees about deadlines, such as commitment and output publishing, since such guarantees only would serve as false reassurance to the user.
 Instead, our beacon is adjustable, such that a ratio of input collection and computation time, which most users finds reasonable, can be deployed.
+
+Users are still welcome to contribute input as close to a deadline as possible in order to gain a better probabilistic guarantee. This may, however, be tricky as the beacon will not announce deadlines as to not encourage users to input at the same time. Instead, we propose another strategy for the smart user: Instead of supplying one input, multiple unique inputs should be supplied spaced apart in time. For example, a user supplying an input every 10 seconds will have a better chance of coming close to the deadline.
