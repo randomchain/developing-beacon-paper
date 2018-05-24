@@ -1,0 +1,69 @@
+\begin{figure*}
+    \centering
+        \footnotesize
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \begin{axis}[%
+            width=0.95\textwidth,
+            xlabel=iterations,
+            ylabel=bits,
+            ytick={1024,2048,3072,4096},
+            zlabel=time (s),
+            zlabel shift=-12pt,
+            grid=major,
+            x dir=reverse]
+        \addplot3+[
+            surf,
+            mesh/rows=33,
+            mesh/ordering=colwise,
+            opacity=.7,
+            scatter,
+            shader=faceted
+        ] table [
+            y={BITS},
+            x={ITERATIONS},
+            z={COMPUTATION},
+            col sep=comma
+        ] {plotdata/lessdata2.csv};
+    \end{axis}
+\end{tikzpicture}
+\caption{Correlation between bits and iterations in relation to time of computation.}%
+\label{fig:sloth_comptime}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \begin{axis}[%
+        width=0.95\textwidth,
+        xlabel=iterations,
+        ylabel=bits,
+        ytick={1024,2048,3072,4096},
+        zlabel=computation factor,
+        zlabel shift=-4pt,
+        zmode=log,
+        log basis z={10},
+        x dir=reverse,
+        grid=major]
+        \addplot3+[
+            surf,
+            mesh/rows=33,
+            mesh/ordering=colwise,
+            opacity=.7,
+            scatter,
+            shader=faceted
+        ] table [
+            y={BITS},
+            x={ITERATIONS},
+            z={FACTOR},
+            col sep=comma
+        ] {plotdata/lessdata2.csv};
+    \end{axis}
+\end{tikzpicture}
+\caption{Computation time as a factor of verification time. Note the logarithmic $z$-axis.}%
+\label{fig:sloth_compfactor}
+    \end{subfigure}%
+    \caption{Execution time of \textit{sloth} computation and verification with different parameters. The computation time grows exponentially as the number of bits is increased, and linearly as more iterations are performed. Verification time grows far less.}%
+    \label{fig:sloth_configs}
+\end{figure*}

@@ -21,7 +21,7 @@ The data points in the plot are highly regular as expected and it only depends o
 While computation time is important for the delay function, another significant metric is verification time --- especially in relation to the computation time.
 \vref{fig:sloth_compfactor} illustrates this relationship, where the $z$-axis shows how many more times it takes to compute the output relative to how long it takes to verify.
 Although the data is more scattered than in the previous figure, we see a trend where the growth of this factor levels out just above $10^2$.
-This means that in configurations with more than roughly 3000 iterations, the computation time is always more than two orders of magnitude larger than the verification time.
+This means that in configurations with more than roughly 3,000 iterations, the computation time is always more than two orders of magnitude larger than the verification time.
 
 We also see that the number of bits does not affect the factor except for some irregularities in the data.
 These irregularities are believed to partly be caused by the extra time it potentially can take to initially find the prime number; an operation which can vary in time depending on how close the numeric representation of the hashed input string is to a prime.
