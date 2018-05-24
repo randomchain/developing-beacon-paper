@@ -3,7 +3,7 @@
 As previously mentioned, the system boundaries, i.e.\ where users and the outside world interacts with the beacon, are handled by input collectors and publishers.
 We implement these and the surrounding infrastructure, as well as vertical scaling if the load becomes too high on a single component.
 
-To limit the space of potential messages and message sizes passed around inside of our system, we sanitize the user inputs by hashing them at the entry point.
+To limit the space of potential messages and message sizes passed around inside of our system, we sanitize the user inputs by hashing them at the entry point. \mtjnote{Make it more obvious, that hashing is a conscious choice and that it helps on cheese pizza}
 Given a substantial amount of users, receiving and hashing inputs quickly becomes a costly affair performance-wise.
 Fortunately, the state of an input collector is only relevant to a single input request, meaning that scaling and even distributing across many machines is a trivial task.
 
