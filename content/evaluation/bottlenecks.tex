@@ -7,9 +7,47 @@ Furthermore, it is important to determine if these are actual bottlenecks before
 
 \subsubsection{Proxies}%
 \label{ssub:proxies}
-Proxy performance test here.
-Probably reasonable results.
+\msmnote{Write this to actual text.}
+We only test proxy between input collectors and processor, since the other never will be a bottleneck.
+This is a streaming proxy, which facilitates fan-in and fan-out.
+Fair message distribution both from pushers and to pullers, i.e.\ no starvation.
 
+We see round-robin overhead, however, not significant when scaling pushers, i.e.\ fan-in.
+Even with 16 pullers, one pusher we get almost 200,000 messages per second.
+
+\begin{figure}
+    \centering
+    \footnotesize
+    \begin{tikzpicture}
+        \begin{axis} [%
+            width=0.95\columnwidth,
+            xlabel=pullers,
+            xtick={1,4,8,12,16},
+            ylabel=pushers,
+            ytick={1,4,8,12,16},
+            zlabel=throughput (messages/s),
+            zlabel shift=-6pt,
+            grid=major]
+            \addplot3+ [
+                surf,
+                mesh/rows=5,
+                mesh/ordering=colwise,
+                opacity=.7,
+                scatter,
+                shader=faceted,
+                ] table [
+                y={PUSHERS},
+                x={PULLERS},
+                z={THROUGHPUT},
+                col sep=comma
+                ] {plotdata/proxydata.csv};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{%
+64 bytes message throughput per second of stream proxy, with different numbers of pullers and pushers.
+Overhead of round-robin message distribution can be seen effecting throughput.}%
+    \label{fig:proxy_throughput}
+\end{figure}
 
 \subsubsection{Input Processor --- Building Merkle Trees}%
 \label{ssub:input_processor_building_merkle_trees}
