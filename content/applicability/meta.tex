@@ -2,6 +2,8 @@
 To demonstrate the usefulness of a randomness beacon we present a series of use cases related to our beacon.
 The fundamental use case of a beacon is to generate randomness that multiple parties can agree is not biased to anyone's advantage or disadvantage.
 
-The beacon can be thought of as a cryptographic primitive that can be used to obtain secure randomness. Users can then structure their use of the beacon in a way to fit their specific application of randomness. Conducting these ceremonies is critical to properly applying the randomness produced by our beacon.
+The beacon can be thought of as a \emph{cryptographic primitive} that can be used to obtain randomness. Users can then use the beacon in a way that fits their specific application of randomness. Conducting these \emph{ceremonies} around the usage of a beacon output is critical to properly apply the randomness produced by our beacon. In essence, the spirit of our security goals for the beacon itself must be carried on to the use cases.
 
-Thus we present not just the use cases, but how the beacon can be used to provide secure randomness for a given use case.
+Thus we present not just the use cases, but how the beacon can be used to provide randomness in a secure way for a given use case.
+
+In all use cases, a mapping from the beacon output space (in our case a 512 bit string) to the desired application space, must be known before the output is announced.
