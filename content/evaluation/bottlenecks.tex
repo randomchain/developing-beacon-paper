@@ -7,13 +7,27 @@ Furthermore, it is important to determine if these are actual bottlenecks before
 
 \subsubsection{Proxies}%
 \label{ssub:proxies}
-\msmnote{Write this to actual text.}
-We only test proxy between input collectors and processor, since the other never will be a bottleneck.
-This is a streaming proxy, which facilitates fan-in and fan-out.
-Fair message distribution both from pushers and to pullers, i.e.\ no starvation.
+As presented in \vref{sub:infrastructure}, our beacon contains two proxies.
+We firmly believe that the \textit{forward} proxy between computation and publishers never will be a bottleneck in a real world randomness beacon deployment.
+However the \textit{stream} proxy situated between input collectors and input processors, must be equipped to handle a constant stream of messages, as inputs are submitted to the beacon.
 
-We see round-robin overhead, however, not significant when scaling pushers, i.e.\ fan-in.
-Even with 16 pullers, one pusher we get almost 200,000 messages per second.
+As previously mentioned this proxy facilitates fan-in and fan-out pipelining with fair message distribution using a round-robin strategy.
+Hence we test the throughput of the proxy in different configurations of input collectors and input processors.
+For simplicity and benchmark consistency, we utilize \enquote{dummy} components for this.
+The input collectors are referred to as \textit{pushers} and fan-in at the proxy, while the input processors are called \textit{pullers} and fan-out.
+In the tests we transmit messages which resembles those of an actual beacon in size, i.e.\ 64 bytes of application data plus any \textit{ZeroMQ} packaging \msmnote{find out how much ømq actually adds}.
+
+In \vref{fig:proxy_throughput} we see how the aforementioned different configurations affect the throughput of messages in the proxy.
+Firstly, no configuration results on a throughput below circa 200,000 messages per second.
+We suspect this to be significantly higher than the number of inputs a real world beacon would ever be constantly subjected to --- as this also would cause significant problems further down the pipeline.
+
+It is the scenario of one \textit{pusher} to sixteen \textit{pullers}, which results in the lowest throughput, which can be caused by the overhead of the fair message distribution enforcement.
+However, as we add \textit{pushers} at sixteen \textit{pullers}, a slight increase in throughput can be seen, suggesting that designation of certain \textit{pushers} to \textit{pullers} can alleviate some internal computations.
+
+Another observation we can make from \cref{fig:proxy_throughput}, is that increasing the number of \textit{pushers} does not affect the throughput as adding \textit{pullers} does.
+This evinces that fan-out, is a considerably more expensive task than fan-in --- a fortunate fact, since a deployment of our beacon most likely will consist of remarkably more \textit{pushers} than \textit{pullers}.
+
+We can conclude that the proxies in our system are extremely unlikely to be bottlenecks, and we should rather look further down the pipeline for issue; hence we examine the input processor.
 
 \begin{figure}
     \centering
@@ -44,7 +58,7 @@ Even with 16 pullers, one pusher we get almost 200,000 messages per second.
         \end{axis}
     \end{tikzpicture}
     \caption{%
-64 bytes message throughput per second of stream proxy, with different numbers of pullers and pushers.
+        64 bytes message throughput per second of \textit{stream} proxy, with different numbers of pullers and pushers.
 Overhead of round-robin message distribution can be seen effecting throughput.}%
     \label{fig:proxy_throughput}
 \end{figure}
