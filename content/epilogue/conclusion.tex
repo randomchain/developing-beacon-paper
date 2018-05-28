@@ -1,7 +1,32 @@
 \section{Conclusion}%
 \label{sec:conclusion}
-We have identified and worked to bridge a gap in the literature of random beacons - the implementation of a working verifiable randomness beacon. In addition, we have performed a security analysis of the randomness beacon to identify threats towards them, and incorporated counters for them in the design.
 
-Based around paralellized delay functions in a service oriented architecture, we have implemented a functioning verifiable randomness beacon. The beacon design was influenced by examples from the literature as well as our threat analysis.
+% Rehash the problem
+% But under no circumstance just copy something from the introduction or abstract. Now it is usually possible to use concrete numbers and terminology.
+This work has been based partly on an interest in randomness beacons, and partly on us wondering why these constructions are not implemented for real world usage.
 
-We have also explored the applications of our randomness beacon as a cryptographic primitive in a variety of use cases. As such we have made great strides towards bridging the existing gap in the literature towards a practical beacon implementation.
+We have shown the possibility of instantiating a randomness beacon with sensible guarantees for any single user. In particular, given their random input to the beacon, they can easily and rapidly verify the computation, and decide if they they deem it trustworthy.
+
+% Rehash our contributions --- what is significant?
+We have performed a security analysis of the randomness beacon to identify threats towards them, and incorporated counters for them in the design \mtjnote{elaborate}.
+
+We have refined and extended the work of \citet{randomzoo}.
+In particular, they propose delay functions and provide a short discussion on the repercussions of the users' trust assumptions by using such delay function.
+We refine the usage of delay functions to allow all users to run the delay function in parallel with the beacon operator, or to run it if the beacon operator (maliciously or not) performs an output withholding attack.
+We extend the discussion of users' trust assumptions by providing a succinct formula, which only depends on two timestamps and what the user believes is the fastest possible computation.
+
+Further, we have \mtjnote{something about parallelization.}
+
+\mtjnote{Dive into use cases and describe how to use the beacon (novel!)}
+We have also explored the applications of our randomness beacon as a cryptographic primitive in a variety of use cases. As such, we have not only investigated the gap in literature towards a practical beacon implementation, but also discussed the practicality of the beacon in context.
+
+\mtjnote{Multiple input output channels?}
+
+% Assess the significance of contribution
+
+There is need for more work, especially in regards to further increasing the guarantees for the users.
+
+% Call to arms: USE THE BEACONS.
+% % What are the limiting factors? People don't care?
+
+% Warnings? E.g.\ do not use for key generation, etc?
