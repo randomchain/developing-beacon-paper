@@ -15,14 +15,16 @@ However, the \enquote{old} way, requiring users to trust the operator, simply sh
 In the \enquote{new} beacons described in the recent literature, the beacon is acting as an impartial party.
 
 The merit of a randomness beacon lies in contexts where a set of users needs to agree on some random outcome, but do not trust each other or an impartial third party to make the decision.
-Therefore, a randomness beacon is \emph{not} required in the case a user needs randomness for just themself. In this case, standard ways of generating randomness on a computer are far easier, and probably provides \enquote{better} randomness.
+Therefore, a randomness beacon is \emph{not} required in the case a user needs randomness for just themself. In this case, standard ways of generating randomness on a computer are far easier.
 Similarly, if users trust each other or a third party, the randomness generation is also trivial.
 A randomness beacon is not necessarily generating \enquote{more random} numbers --- it merely allows users to agree on the same randomness without trusting anyone.
 
-Even though the literature theoretically argues for a particular solution, we have not seen many implementations of randomness beacons.
+Even though the literature theoretically argues for a variety of solution, we have not seen many implementations of randomness beacons.
 We believe that bridging a theoretical design and practical implementation is uncharted territory.
-Moreover, the literature which somewhat explores this bridge either culminates in a highly specialized solution, often unfit for a public context or disregards thorough security analyses and trust assessment.
-Throughout this paper, we design, implement, and evaluate a randomness beacon, which borrows from existing research while introducing novel ideas; both in the system but also the operation of it.
+Moreover, the literature which somewhat explore this bridge either culminate in a highly specialized solution often unfit for a public context \mtjnote{Cite examples}, or disregards a thorough security analysis and trust assessment \mtjnote{Cite examples}.
+Throughout this paper we design, implement, and evaluate a randomness beacon, which borrows from existing research while introducing novel ideas; both in the system but also the operation of it.
+
+In any case, randomness beacons are interesting as a concept, and we feel this concept needs further exploration in order to be properly utilized in real world applications. This paper will be a step in that direction.
 
 \subsection{Terminology}
 In this work we use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably.
@@ -32,13 +34,13 @@ As presented, we see two distinct groups of randomness beacons: the ones requiri
 A trust-requiring beacon simply shifts the issue of trust.
 Therefore, we strive to design and implement a trust-minimizing beacon that works on the most pessimistic assumption possible:
 \enquote{%
-Everybody, including the beacon operator, is secretly colluding against you and is willing to put an unlimited amount of money and resources towards manipulating or biasing the randomness.
+Everybody, including any beacon operator if present, is secretly colluding against you and is willing to put an unlimited amount of money and resources towards manipulating or biasing the randomness.
 As such, you can only trust yourself.}
 
-We realize it might not be possible to provide a bulletproof solution under these assumptions.
-However, these assumptions describe the mindset we take on while designing and implementing the beacon.
-For the actual solution, we relax the trust to \emph{probabilistic trust} where each user individually decides how much they desire to trust.
-In essence, a user can know with some probability that the randomness has not been manipulated.
+These assumptions describe the mindset we take on while designing and implementing the beacon.
+As we also need to account for the feasibility of the system in real world applications, we will consider the above assumption as non-binary.
+A completely trustless system may not be practically feasible today, and instead we seek to minimize the trust required and ultimately let each user decide how much they \emph{want} to trust.
+In essence, a user will know that under self-chosen trust assumptions, the randomness has not been manipulated.
 
 \subsection{Beacon Context}
 As stated, beacons are relevant in contexts where several users want to agree on some random outcome, but do not trust anyone to solely decide that outcome --- a pattern which fits a number of use cases.
@@ -79,9 +81,9 @@ These models are based on our earlier work \fxnote{Insert reference to own work 
 \mtjnote{Cite ourselves} describe three sources of input:
 
 \paragraph{Private Input Sources}
-A beacon can use some private source of data to to produce randomness.
-This allows them to obtain produce randomness of high quality at a high rate, but requires users of the beacon to trust the beacon and its randomness.
-True randomness as input cannot be trusted in our setting, since it cannot reliably be distinguished from carefully crafted values that appear to be random.
+A beacon can use some private source of data to produce randomness.
+This allows them to produce randomness of high quality at a high rate, but requires users of the beacon to trust the beacon and its randomness.
+A single entity producing their own randomness as input cannot be trusted in our setting, since it cannot reliably be distinguished from carefully crafted values that appear to be random.
 An example of this is the \gls{nist} randomness beacon~\cite{nistbeacon} that observes quantum mechanical effects to produce what they claim is high-quality randomness.
 Ultimately, it requires trust, since the observations cannot be repeated, and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effects.
 As such, the users need to blindly trust the beacon operator, which in the case of \gls{nist} can be hard given their history~\cite{nytimes-nsabackdoors, nytimes-nsaconstants, nist2014backdoor}.
@@ -117,7 +119,7 @@ As such, the computation is a black box with no possibility for proof of honesty
 This type lies in the trust-requiring category of beacons, i.e.\ the old generation.
 
 \paragraph{Specialized \acrshort{mpc}}
-Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs.
+Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs. \mtjnote{Maybe write that this type is the closest we is to a completely trustless beacon.}
 Given an honest majority, this type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to large groups~\cite{cascudo2017scrape, syta2017scalable}.
 This type of beacon is therefore badly suited for public settings, but might fit in a controlled private context.
 
@@ -143,7 +145,7 @@ If sufficiently paranoid, the user will want to bias these publicly available so
 Therefore, user input is the simplest solution and provides the strongest guarantees for the user.
 
 \subsection{Contributions}
-We bridge the gap between theoretical solutions and the real world by designing and implementing a secure, trust-minimizing randomness beacon based on the transparent authority model with user input.
+We bridge the gap \stefan{you have not really established this gap yet: is there not quite a bit of theory on random beacons already? can you quickly review it and then say why it is "too theoretical"?} between theoretical solutions and the real world by designing and implementing a secure, trust-minimizing randomness beacon based on the transparent authority model with user input.
 The design is based on a structured analysis of threats to a randomness beacon.
 We design the beacon from the ground up based on tried and tested methods as well as novel ideas.
 Specifically, we differ from previous transparent authority approaches by the following:
@@ -155,3 +157,4 @@ Specifically, we differ from previous transparent authority approaches by the fo
 \end{itemize}
 Combined, our novel ideas significantly decreases the need for blind trust and limits the severity of a myriad of attacks.
 Lastly, we explore usage of our beacon in context. As such, we describe several use cases and how the beacon output is used as a cryptographic primitive in a way that aligns with and extends our security goals.
+\stefan{What about performance analysis?}
