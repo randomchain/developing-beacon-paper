@@ -92,3 +92,13 @@ isbn="978-3-540-39557-7"
   urldate={2018-03-05},
   year={2000}
   }
+
+@inproceedings{damgaard2006scalable,
+  title={Scalable secure multiparty computation},
+  author={Damg{\aa}rd, Ivan and Ishai, Yuval},
+  booktitle={Annual International Cryptology Conference},
+  pages={501--520},
+  year={2006},
+  organization={Springer}
+}
+

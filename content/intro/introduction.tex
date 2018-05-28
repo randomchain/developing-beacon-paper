@@ -131,9 +131,11 @@ This type also support a wide variety of implementations, and is potentially sca
 \label{sub:delimitations}
 We want to create a randomness beacon that is secure under the assumption that everyone may be colluding against a given user, as per our security goals in \cref{sec:security_goals}.
 As such, we can immediately see that the autocratic collector is not suitable for our security goal, because it requires users to trust its claimed honest operation.
-The \gls{mpc} model does not scale well enough for general use.
-Furthermore, this model assumes an honest majority, which is a weaker assumption than our security goals.
-Therefore, it is not be suitable for us. This leaves us with the transparent authority model, which we adopt.
+The \gls{mpc} model does not scale well enough for general use in public randomness beacons~\cite{syta2017scalable}.
+As described by \citet{damgaard2006scalable}, most \gls{mpc} protocols either assumes an honest majority, which is a weaker assumption than our security goals, or cannot guarantee fairness and output delivery, a likewise undesired behavior.
+Even as more scalable \gls{mpc} protocols has been developed~\cite{damgaard2006scalable}, they still need some assumption about the protocol participants, which we cannot guarantee in a public randomness beacon.
+Therefore, \gls{mpc} is not be suitable for us, although the model could fit in a more controlled or private environment.
+This leaves us with the transparent authority model, which we adopt.
 
 Regarding input source models, we can immediately discard private input sources as they are tied to the autocratic collector model, and as such do not work for the transparent authority.
 The guarantees by publicly available sources are weak compared to user input.
