@@ -16,27 +16,28 @@ Lastly, \textit{ZeroMQ} guarantees atomic delivery of messages, which means that
 In the interest of rapid iteration and ease of configuration, we deploy proxies at key points in the pipeline.
 This allows us to add and remove components easily from the network, since components then do not need to know of each other --- they only need to know of the proxies.
 An alternative would be to use some form of service discovery to allow components to discover and connect to each other directly.
-We insert two proxies in the network: one between input collectors and the input processor, and one between computation and publishers (as depicted in \vref{fig:impl_figure}).
+We insert two proxies in the network: one between input collectors and the input processor and one between computation and publishers, as depicted in \vref{fig:impl_figure}.
 Another benefit of using proxies is the ability to have a many-to-many connection, since the proxy binds both its frontend and backend socket, which components then connect to.
 
 These proxies are written in C for performance and since they utilize a \textit{ZeroMQ} primitive for the actual forwarding, their operation is quite stable.
-It should be noted that these proxies inherently introduces single points of failure in our beacon, which potentially could be bad for continuous and stable operations.
+It should be noted that these proxies inherently introduce single points of failure in our beacon, which potentially could be detrimental for continuous and stable operations. In then ext section (\vref{sec:proxy-avail}), we describe a way to mitigate this.
 
 While the two proxies serve the same purpose, i.e.\ pass along traffic between components, their workloads are vastly different.
 The proxy between computation and publishers is a \textit{forward} proxy, which transparently facilitates publish/subscribe pattern.
-In our beacon this proxy will never see a high frequency of messages, since the number of outputs, commits, and proofs, are limited by the beacon output frequency.
-However the proxy will be subjected to significantly larger messages, due to especially commits which must contain every input used in the output computation.
+In our beacon, this proxy will never see a high frequency of messages, since the number of outputs, commits, and proofs, are limited by the beacon output frequency.
+The proxy will, however, be subjected to significantly larger messages, due to especially commits which must contain every input used in the output computation. Even with the large message, the infrequency of them is far from saturating the capacity in this proxy.
+
 Between the input collectors and input processor, we have a \textit{stream} proxy, which ensures that the fan-in and fan-out patterns are executed fairly, i.e.\ no connected components are starved.
 This is facilitated through a round-robin message distribution.
 In contrast to the previous, this proxy is required to be able to handle a substantial amount of messages, since every input submitted to the beacon will pass through it.
 While the messages are remarkably smaller (64 bytes of application data), the amount of messages can become a problem, when the fair distribution and no starvation policy must be enforced.
 
-In the future \vref{sub:bottlenecks}, we evaluate the performance of our proxies.
+In the later \vref{sub:bottlenecks}, we evaluate the performance of our proxies.
 
-\subsubsection{High-Availability}
-One way to mitigate single points of failures, could be to implement a pattern called \enquote{binary star} by \textit{ZeroMQ}.
+\subsubsection{High-Availability}\label{sec:proxy-avail}
+One way to mitigate single points of failures could be to implement a pattern called \enquote{binary star} by \textit{ZeroMQ}.
 Here a component is configured with two instances, a primary and a backup.
-The backup can then take over and signal for a new backup to be started, if the primary disappears from the network.
+The backup can then take over and signal for a new backup to be started if the primary disappears from the network.
 This pattern can potentially be applied to all components exposed as a single point of failure and would be sufficient in most cases of crashes.
 
 Another measure to provide high-availability in the beacon is the delegation of user interaction to input collectors and publishers.

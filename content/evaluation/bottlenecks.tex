@@ -3,29 +3,29 @@
 
 We examine two potential bottlenecks in our beacon.
 These are components which require the most effort to scale horizontally, and as such for simplicity we want to discover the current limits before scaling.
-Furthermore, it is important to determine if these are actual bottlenecks before attempting to scale, as we want to avoid premature optimizations.
+Furthermore, it is important to determine if these are actual bottlenecks before attempting to scale, as we want to avoid premature optimization.
 
 \subsubsection{Proxies}%
 \label{ssub:proxies}
 As presented in \vref{sub:infrastructure}, our beacon contains two proxies.
 We firmly believe that the \textit{forward} proxy between computation and publishers never will be a bottleneck in a real world randomness beacon deployment.
-However the \textit{stream} proxy situated between input collectors and input processors, must be equipped to handle a constant stream of messages, as inputs are submitted to the beacon.
+However the \textit{stream} proxy situated between input collectors and input processors must be equipped to handle a constant stream of input messages.
 
 As previously mentioned this proxy facilitates fan-in and fan-out pipelining with fair message distribution using a round-robin strategy.
 Hence we test the throughput of the proxy in different configurations of input collectors and input processors.
 For simplicity and benchmark consistency, we utilize \enquote{dummy} components for this.
-The input collectors are referred to as \textit{pushers} and fan-in at the proxy, while the input processors are called \textit{pullers} and fan-out.
-In the tests we transmit messages which resembles those of an actual beacon in size, i.e.\ 64 bytes of application data plus any \textit{ZeroMQ} packaging \msmnote{find out how much ømq actually adds}.
+The input collectors are referred to as \textit{pushers} and fan in at the proxy, while the input processors are called \textit{pullers} and fan out.
+In the tests we transmit messages which resemble those of an actual beacon in size, i.e.\ 64 bytes of application data plus any \textit{ZeroMQ} packaging \msmnote{find out how much ømq actually adds}.
 
 In \vref{fig:proxy_throughput} we see how the aforementioned different configurations affect the throughput of messages in the proxy.
-Firstly, no configuration results on a throughput below circa 200,000 messages per second.
-We suspect this to be significantly higher than the number of inputs a real world beacon would ever be constantly subjected to --- as this also would cause significant problems further down the pipeline.
+Firstly, no configuration combination measured results in a throughput below circa 200,000 messages per second.
+We presume this is significantly higher than the number of inputs a real world beacon would ever be constantly subjected to --- as this also would cause significant problems further down the pipeline.
 
 It is the scenario of one \textit{pusher} to sixteen \textit{pullers}, which results in the lowest throughput, which can be caused by the overhead of the fair message distribution enforcement.
-However, as we add \textit{pushers} at sixteen \textit{pullers}, a slight increase in throughput can be seen, suggesting that designation of certain \textit{pushers} to \textit{pullers} can alleviate some internal computations.
+However, as we add \textit{pushers} at sixteen \textit{pullers}, a slight increase in throughput can be seen, suggesting that designation of certain \textit{pushers} to \textit{pullers} can alleviate some internal computations \mtjnote{sounds fishy, but sure}.
 
-Another observation we can make from \cref{fig:proxy_throughput}, is that increasing the number of \textit{pushers} does not affect the throughput as adding \textit{pullers} does.
-This evinces that fan-out, is a considerably more expensive task than fan-in --- a fortunate fact, since a deployment of our beacon most likely will consist of remarkably more \textit{pushers} than \textit{pullers}.
+Another observation we can make from \cref{fig:proxy_throughput} is that increasing the number of \textit{pushers} does not affect the throughput as adding \textit{pullers} does.
+This evinces that fan-out is a considerably more expensive task than fan-in --- a fortunate fact, since a deployment of our beacon most likely will consist of remarkably more \textit{pushers} than \textit{pullers}.
 
 We can conclude that the proxies in our system are extremely unlikely to be bottlenecks, and we should rather look further down the pipeline for issue; hence we examine the input processor.
 
@@ -65,7 +65,7 @@ Overhead of round-robin message distribution can be seen effecting throughput.}%
 
 \subsubsection{Input Processor --- Building Merkle Trees}%
 \label{ssub:input_processor_building_merkle_trees}
-The most expensive task performed in a bottleneck, is building the Merkle tree in our input processor.
+The most expensive task performed in a bottleneck is building the Merkle tree in our input processor.
 This task is done periodically when it is time to compute a new random output.
 It should not take a significant amount of time, since this would extend the time between the last seen input and publishing the commit.
 As such, we examine how the number of leaves, i.e.\ inputs, relates to the time it takes to build the Merkle tree.

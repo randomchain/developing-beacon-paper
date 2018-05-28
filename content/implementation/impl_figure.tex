@@ -24,7 +24,7 @@
         \draw[arrow] (dummyin3) -- (ic3);
 
         % Proxy
-        \node[implblock, text width=4em, right=2em of icframe] (proxy1) {Input\\Proxy};
+        \node[implblock, text width=4em, right=2em of icframe] (proxy1) {Stream\\Proxy};
 
         % Input processor
         \node[implblock, text width=5em, right=1.8em of proxy1] (ip) {Input Processor};
@@ -44,7 +44,7 @@
         \node[above=0cm of compframe] {Computation};
 
         % Proxy
-        \node[implblock, text width=4em, right=6.5em of compframe] (proxy2) {Output\\Proxy};
+        \node[implblock, text width=4em, right=6.5em of compframe] (proxy2) {Forward\\Proxy};
 
         % Publishers
         \node[right=1.8em of proxy2] (pubi) {
