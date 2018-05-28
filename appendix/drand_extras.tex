@@ -1,0 +1,16 @@
+\section{Details of Drand Phases}%
+\label{app:details_of_drand_phases}
+
+\paragraph{Setup Phase}
+During the setup phase each node to be included in the beacon, generates a public/private key-pair, to be used long-term.
+A file called the \textit{group file} is then created, consisting of all participants' public keys, and configuration metadata regarding the beacon operation.
+
+The \textit{group file} is then distributed amongst the nodes, whom then participate in a \gls{dkg} protocol.
+This protocol creates a collective public key, and a sharded private key, with each node in possession of a unique shard --- which in turn is used for the internal cryptographic operations of Drand.
+
+\paragraph{Randomness Generation Phase}
+Any node may function as a leader and initiate the randomness generation phase by broadcasting a message consisting of a time stamp to all nodes.
+This time stamp message is then signed by all participating nodes with a threshold version of the \gls{bls} signature scheme.
+The threshold version allows any node to construct the full signature, which is the random output, given that enough nodes has provided their shard signature.
+
+Output values can be verified by using the public key generated in the distributed key generation.
