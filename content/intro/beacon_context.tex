@@ -1,0 +1,22 @@
+\subsection{Beacon Context}
+As stated, beacons are relevant in contexts where several users want to agree on some random outcome, but do not trust anyone to solely decide that outcome --- a pattern which fits a number of use cases.
+
+Consider the generic use case of sampling.
+Essentially, sampling is about selecting representative data points, potentially with high stake consequences.
+It would not be far-fetched to imagine someone wanting to bias this sampling process in order to skew the results.
+One such sampling process is lotteries, which need to randomly sample a pool of participants to draw winners.
+
+The field of cryptography also contains use cases.
+Many cryptographic schemes require some constants in the design of algorithms, and it has been shown that some schemes have been intentionally built with specific constants in order to facilitate a backdoor~\cite{nist2014backdoor}.
+Selecting constants with a randomness beacon can prove to the users of such cryptographic schemes that the constants were not manipulated and thus are unlikely to contain backdoors~\cite{baigneres2015trap}.
+One could even in some use cases imagine a \enquote{refreshing} algorithm where constants are variables which change with new beacon outputs.
+
+Staying in the field of cryptography, \glspl{zksnark} require a lengthy process of initial bootstrapping.
+In systems such as \textit{zcash}\footnote{\url{https://z.cash}}, this bootstrapping has been performed by a \gls{mpc}~\cite{snarkparameters}.
+However, the \gls{mpc} scales poorly because of the many rounds of communication needed between parties alongside big amounts of data to ensure a fair output.
+\citet{mpcsnarks} suggest avoiding the heavy communication and computation of the \gls{mpc} and instead having users directly contribute a random number.
+To avoid the last user carefully choosing their input to manipulate the bootstrapping to their benefit (a so-called \emph{last-draw attack}), an output from a randomness beacon is applied as the last input.
+Thus a lengthy \gls{mpc} is substituted with a quick round of user input and sealing the deal with a randomness beacon.
+\mtjnote{Sass, can we find any sources saying that tedious bootstrapping is a hindrance for the adoption of zksnarks?}
+
+

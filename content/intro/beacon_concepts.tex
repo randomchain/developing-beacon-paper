@@ -1,0 +1,67 @@
+\subsection{Beacon Concepts}
+
+A randomness beacon emits an unpredictable random value at a regular interval, e.g.\ every five minutes.
+\cref{fig:abstract_beacon} shows the workings of a simple, generic beacon.
+The beacon performs \emph{some} computation on an input source in order to generate an unpredictable number.
+The result of the computation, the random number, is the output, and is sent to users.
+This workflow is repeated indefinitely at the specified interval.
+\subimport{}{simple_beacon_fig.tex}
+
+Examining existing beacons, a few common ways of composing the input sourcing and computation are discernible and can be described as specific models.
+Here, we distinguish between an input source model and operational model.
+The input source model describes the way the beacon sources its input, while the operational model describes the design of the protocol, i.e.\ how to perform the computation and publish the output.
+These models are based on our earlier work \fxnote{Insert reference to own work previous semester?}.
+
+\subsubsection{Input Source Models}
+\mtjnote{Cite ourselves} describe three sources of input:
+
+\paragraph{Private Input Sources}
+A beacon can use some private source of data to produce randomness.
+This allows them to produce randomness of high quality at a high rate, but requires users of the beacon to trust the beacon and its randomness.
+A single entity producing their own randomness as input cannot be trusted in our setting, since it cannot reliably be distinguished from carefully crafted values that appear to be random.
+An example of this is the \gls{nist} randomness beacon~\cite{nistbeacon} that observes quantum mechanical effects to produce what they claim is high-quality randomness.
+Ultimately, it requires trust, since the observations cannot be repeated, and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effects.
+As such, the users need to blindly trust the beacon operator, which in the case of \gls{nist} can be hard given their history~\cite{nytimes-nsabackdoors, nytimes-nsaconstants, nist2014backdoor}.
+
+\paragraph{Publicly Available Sources}
+Using a publicly available source that everyone can agree on the value of, such as bitcoin blocks, stock market data, or lottery winning numbers from several international lotteries.
+The user must trust the source, and this is reasonable since these sources are governed by some guarantees.
+In case of bitcoin, the blocks have a monetary value and are virtually impossible to forge.
+Users have to interact with the source to indirectly influence the beacon and prevent biased outputs.
+However, it may also be harder for adversaries to bias the beacon through the source unless they are in complete control of the given source.
+
+\paragraph{User Input}
+A user can be allowed to directly provide input to the beacon.
+The idea is that a user provides a value that they firmly believe is sufficiently random, such that nobody could have predetermined the given value.
+There exists no concept of ownership of specific values, which means that users should trust the input they give, and not the fact that it is their own.
+The beacon then performs an operation on a set of user-supplied inputs.
+The output of the beacon is structured in a way that
+\begin{eletterate*}
+    \item allows all users to verify the inclusion of their value and
+    \item allows all users to verify the validity of the computation.
+\end{eletterate*}
+
+If these are satisfied, the user knows that a value they trust to be random has been part of the random output generation.
+The computation performed by the beacon should ensure that users cannot knowingly bias the output to anyone's disadvantage.
+As such, the user knows that his input was not knowingly \enquote{counteracted} by another used.
+
+\subsubsection{Operational Models}
+\mtjnote{cite ourselves} identify three ways in which a beacon is typically operated:
+
+\paragraph{Autocratic Collector}
+A beacon is run by a party, which deems it irrelevant to prove honesty, thus requiring blind trust from the users.
+As such, the computation is a black box with no possibility for proof of honesty.
+This type lies in the trust-requiring category of beacons, i.e.\ the old generation.
+
+\paragraph{Specialized \acrshort{mpc}}
+Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs.
+Given an honest majority, this type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to large groups~\cite{cascudo2017scrape, syta2017scalable}.
+This type of beacon is therefore badly suited for public settings, but might fit in a controlled private context.
+
+\paragraph{Transparent Authority}
+A single entity collects input and publishes it with a focus on transparency.
+Users can, by observing the beacon, verify that it behaves according to protocol.
+This does not directly prevent byzantine behavior, but rather makes it difficult or nearly impossible to hide such behavior.
+This type also support a wide variety of implementations, and is potentially scalable to a public setting.
+
+
