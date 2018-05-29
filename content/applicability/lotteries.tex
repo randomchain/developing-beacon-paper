@@ -1,6 +1,6 @@
 \subsection{Lotteries}
 A lottery is an example of a sampling use case.
-Lotteries exist in many shapes and sizes, from traditional lotteries with a grand prize to military conscription lotteries, in which many of the picked men would later be sent to the Vietnam War \mtjnote{cite}. The example is also generalizable to other sampling use cases, such as sampling counties to perform election recounts. Lotteries have clear incentives, as they have direct notions of prizes, money, advantages, or disadvantages; and because they are also general and describes many use cases, lotteries make a good example of beacon application ceremonies.
+Lotteries exist in many shapes and sizes, from traditional lotteries with a grand prize to military conscription lotteries, in which many of the picked men would later be sent to the Vietnam War \cite{star1997nonrandom}. The example is also generalizable to other sampling use cases, such as sampling counties to perform election recounts \cite{bushgore}. Lotteries have clear incentives, as they have direct notions of prizes, money, advantages, or disadvantages; and because they are also general and describes many use cases, lotteries make a good example of beacon application ceremonies.
 
 We consider ceremonies for two types of lottery applications:
 \begin{eletterate*}
@@ -11,9 +11,11 @@ We illustrate the differences between the two and how to structure the use of th
 Finally we consider how to use the beacon for applications that require randomness at a higher frequency.
 
 \subsubsection{Small Lotteries}
-Consider a group of three friends which organize a small lottery among themselves.
+Consider a group of three friends that organize a small lottery among themselves.
 To prevent cheating (however tongue-in-cheek it might be) they decide to use our beacon to pick the winner.
 Recall that a user can only trust an output that they have inputted to --- so all three of them must be able to find their inputs in a single output to use it.
+
+We also do not guarantee any single output, so we advise users to repeatedly submit their inputs unless they see a commit with their input and a corresponding output.
 
 Practically, each friend announces a commit to a specific input before repeatedly inputting it to the beacon, until a commitment is released by the beacon which contains all three inputs.
 They should then use the output that corresponds to that commitment and use that to determine who wins by applying the mapping from the 512 bit output to a number between 1 and 3.
