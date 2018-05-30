@@ -15,7 +15,7 @@ As previously mentioned this proxy facilitates fan-in and fan-out pipelining wit
 Hence we test the throughput of the proxy in different configurations of input collectors and input processors.
 For simplicity and benchmark consistency, we utilize \enquote{dummy} components for this.
 The input collectors are referred to as \textit{pushers} and fan in at the proxy, while the input processors are called \textit{pullers} and fan out.
-In the tests we transmit messages which resemble those of an actual beacon in size, i.e.\ 64 bytes of application data plus any \textit{ZeroMQ} packaging \msmnote{find out how much ømq actually adds}.
+In the tests we transmit messages which resemble those of an actual beacon in size, i.e.\ 64 bytes of application data plus any \textit{ZeroMQ} packaging; in this case one byte which serves as a flags field, and one byte to denote the length of the message body.\footnote{As per the framing specification in \url{https://rfc.zeromq.org/spec:23/ZMTP}}
 
 In \vref{fig:proxy_throughput} we see how the aforementioned different configurations affect the throughput of messages in the proxy.
 Firstly, no configuration combination measured results in a throughput below circa 200,000 messages per second.
