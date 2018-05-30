@@ -5,6 +5,14 @@
 % But under no circumstance just copy something from the introduction or abstract. Now it is usually possible to use concrete numbers and terminology.
 This work has been based partly on an interest in randomness beacons, and partly on us wondering why these constructions are not implemented for real world usage.
 
+\mtjnote{This has been copy-pasta from elsewhere:}
+While we take inspiration from previous work and literature, designing a randomness beacon from ground up is no simple feat.
+We have designed a system which is based on simple principles.
+However, simple systems still have many details when considering the implementation.
+We have made conscious choices regarding communication framework, communication patterns, compromises between verbosity and base essentials in communication, and put much thought into the practicalities of running our beacon.
+In particular, we have parallelized the beacon operation to have a continuous input stream and regular output, and outline a formula for finding the number of computation nodes.
+Further, we scale input collecting by enabling horizontal scaling, and even improve usability of the system by allowing these input collectors to collect from a variety of sources with easy access for users.
+
 We have shown the possibility of instantiating a randomness beacon with sensible guarantees for any single user. In particular, given their random input to the beacon, they can easily and rapidly verify the computation, and decide if they they deem it trustworthy.
 
 % Rehash our contributions --- what is significant?
