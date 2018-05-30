@@ -8,6 +8,10 @@ The requirements presented here will serve as a foundation of our design.
 \subsection{Practical}
 \mtjnote{Something about a beacon that is usable in the real world --- not just theoretical mumbo jumbo. Here, scalability, easy and painless to deploy can be \enquote{subitems}.}
 
+
+\subsection{Open Protocol}
+Anyone should be able to easily contribute to the beacon protocol to influence the random generation. There should be no requirements imposed on users to limit their contribution.
+
 \subsection{Transparent Operation}
 Users should be able to oversee that the beacon operates according to protocol and thus catch any deviations from it.
 This in turn requires all aspects of the protocol to somehow publicly announce or display their work for users to verify.
@@ -21,8 +25,6 @@ If their input has not been used, they should not trust it.
 Secondly, they should be able to repeat the process on their own computers as a means of verification.
 This also requires the process to be deterministic which in turn removes the option for true randomness.
 However, the output should still be unpredictable, even to the beacon operator.
-
-\mtjnote{New requirement idea: \enquote{Open Protocol}: Anyone is able to take part in the generation process (and it is very easy)}
 
 \mtjnote{New requirement idea: \enquote{Secure}: Even if only one single participant is honest (and that can be you, thanks to Open Protocol.)}
 
