@@ -13,6 +13,7 @@ Our delay function based CCO workflow also prevents the operator from leaking ou
 
 With this we have covered some of the largest threats to the beacons integrity, making the beacon significantly more secure.
 
-\mtjnote{Also PARTLY solved (which is good enough): Withhold attack (by CCO, there's a distinction between withholding commitment and withholding output) + emit false output + maybe more?}
+\parathreat{Withholding Attack}\drea{2, 2, 2, 3, 9}
+The \acrshort{cco} workflow mitigates this type of attack. Delays functions and requiring the beacon to publish a commit to a set of inputs before computing, prevents malicious operators from pre-computing outputs, and withholding if they are not beneficial. The operator could still withhold the commit to prevent availability, but they can not know whether the output favors them or not.
 
-\mtjnote{Write that any unsolved requirements will be discussed later}
+There are still a number of unmitigated threats toward the beacon, but these will be discussed in .
