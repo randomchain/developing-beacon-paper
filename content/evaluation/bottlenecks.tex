@@ -22,7 +22,7 @@ Firstly, no configuration combination measured results in a throughput below cir
 We presume this is significantly higher than the number of inputs a real world beacon would ever be constantly subjected to --- as this also would cause significant problems further down the pipeline.
 
 It is the scenario of one \textit{pusher} to sixteen \textit{pullers}, which results in the lowest throughput, which can be caused by the overhead of the fair message distribution enforcement.
-However, as we add \textit{pushers} at sixteen \textit{pullers}, a slight increase in throughput can be seen, suggesting that designation of certain \textit{pushers} to \textit{pullers} can alleviate some internal computations \mtjnote{sounds fishy, but sure}.
+However, as we add \textit{pushers} at sixteen \textit{pullers}, a slight increase in throughput can be seen, suggesting that fair distribution is easier with more suppliers.
 
 Another observation we can make from \cref{fig:proxy_throughput} is that increasing the number of \textit{pushers} does not affect the throughput as adding \textit{pullers} does.
 This evinces that fan-out is a considerably more expensive task than fan-in --- a fortunate fact, since a deployment of our beacon most likely will consist of remarkably more \textit{pushers} than \textit{pullers}.
