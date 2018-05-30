@@ -1,9 +1,8 @@
-\section{DREAD 2: DREAD harder}\label{app:dread}
-\mtjnote{Title}
+\section{DREAD Re-examined}\label{app:dread}
 This section serves to further expand our use of the DREAD framework for threat evaluation. We further explain the different measures we use, and examine certain threats closer.
 
 \subsection{DREAD components}
-The first component of DREAD is damage, how damaging an attack is. We consider the most damaging attack to be one that successfully makes users use a biased input. This way users will be tricked into using an input that favors certain parties, which is the exact thing the beacon is supposed to prevent. This requires the attacker to bias the outcome without breaking the beacon protocol as it would otherwise be detectable, and so would not be used \mtjnote{could not parse this sentence}.
+The first component of DREAD is damage, how damaging an attack is. We consider the most damaging attack to be one that successfully makes users use a biased input. This way users will be tricked into using an input that favors certain parties, which is the exact thing the beacon is supposed to prevent. This requires the attacker to bias the outcome without breaking the beacon protocol, as the output would otherwise not be used by observant users.
 A slightly smaller threat is \acrshort{dos} attacks. While this does prevent users from using it, the damage it causes is still less than it would be from using a biased output.
 Finally, the damage caused by attacks that revealed through the beacons transparency measures cause negligible damage, as they are unlikely to be used by anyone but the most careless users.
 
@@ -15,7 +14,7 @@ The third component is exploitability, and quite simply describes how little wor
 The fourth and final component we use is affected users, which describes how many users are affected by a given attack. Here, we distinguish between an attack affecting all users, some users, or only a few to determine the score.
 
 \subsection{In-depth Threats}
-We have selected a few threats to describe in depth. \mtjnote{How have they been selected?}
+We have selected a few threats to describe in depth. The threats were selected based on their severity and their ability to exemplify their respective categories.
 
 \parathreat{Input Manipulation}\drea{3,3,2,3,11}
 The operator can manipulate the inputs received to produce a biased input, that still appears legitimate to verifiers. The damage of the attack is severe, as all users will use the biased output without suspicion. The attack is also completely reproducible, as long as the operator has the ability to execute it and is not somehow caught red-handed --- something that would be extremely difficult to do. Thus he will theoretically be able to bias every single output of the beacon to his own benefit while still appearing as an honest operator. The attacks does require being the operator, but otherwise evaluates identically to the input bias attack performed by outsiders. This is because an outsider with the power to execute such an attack would likewise be able to bias every single output.
@@ -25,7 +24,6 @@ As a contrast to the previous attack, here the operator forgoes the process of m
 
 \parathreat{Shutdown}\drea{2,2,2,3,9}
 The operator can at any time shut the beacon down to deny operation to all users. This is quite damaging, but ultimately not as bad as making them use a biased input. This attack is also easy to reproduce, but limited by the fact that users will lose faith in a beacon that shuts down often, which eventually drives them away. While the attack is trivial to execute for an operator, we consider becoming the operator of a beacon a minimum investment in and of itself, hence why the E is a 2.
-\mtjnote{Should we distinguish between shutting down the beacon before the commitment and shutting down the beacon before the output?}
 
 \parathreat{Input Flooding}\drea{2,3,2,3,10}
 When it comes to availability attacks, outsiders are ultimately the greater threats, as they do not have a vested interest in the beacon. Besides, the beacon operator has easier attacks in his arsenal with the same outcome from the perspective of the users. Hence we see that this attack is slightly more reproducible, as the users would eventually abandon the beacon, which would be a success for the outsider.
