@@ -26,15 +26,13 @@ While the approach of having everyone input works for small groups, we cannot re
 
 Instead, we consider a weekly lottery that is open for anyone to purchase tickets.
 Since we cannot wait for simultaneous inputs from all customers, we instead use the set of beacon outputs produced during the lottery lifetime, giving customers a larger time-frame to influence the outcome.
-Practically, a transparent way to signal the last beacon output to use is needed, so the lottery must announce a commit to a \textit{stop message} before the lottery begins.
-This stop message must be cryptographically secured by signing and encrypting it, such that no other party can send the message and thus stop the lottery prematurely.
-Furthermore the organization behind the lottery should not be able to withdraw from the lottery after inputting the message \mtjnote{what does this mean?}.
-\mtjnote{What happens if the lottery entity never inputs the stop message?}
+Practically, a transparent way to signal the last beacon output to use is needed, so the lottery must commit to a \textit{stop message}, by revealing the string.
+This stop message must be cryptographically secured by signing it, such that no other party can send the message and thus stop the lottery prematurely.
 
 The lottery then collects all beacon outputs published in the duration of the lottery, and combines them for use in the final decision, e.g.\ by use of a hashing function.
 This combining should be predetermined such that the output of said operation is as unpredictable as the beacon outputs themselves.
-Once it is time to draw the winners, the lottery sends the previously mentioned stop message as input to the beacon.
-When a commit from the beacon containing the stop message has been seen, the lottery then announces both the signed version of the message and its secret value \mtjnote{what secret value? Has not been described before}.
+Once it is time to draw the winners, the lottery sends a signed version of the previously mentioned stop message as input to the beacon.
+When a commit from the beacon containing the signed stop message has been seen the lottery entity, the lottery entity then announces the signed version of the message.
 The beacon output containing the stop message is then the final one used in the aforementioned output combining, which can now determine who wins.
 
 This scheme relies on the lottery being able to end their collection of input securely, and gives four guarantees to users.
