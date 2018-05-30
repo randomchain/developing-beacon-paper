@@ -10,10 +10,10 @@ This workflow is repeated indefinitely at the specified interval.
 Examining existing beacons, a few common ways of composing the input sourcing and computation are discernible and can be described as specific models.
 Here, we distinguish between an input source model and operational model.
 The input source model describes the way the beacon sources its input, while the operational model describes the design of the protocol, i.e.\ how to perform the computation and publish the output.
-These models are based on our earlier work \fxnote{Insert reference to own work previous semester?}.
+These models are based on our earlier work~\cite{worldsbestpaper}, a survey of different approaches to randomness beacons as presented in literature.
 
 \subsubsection{Input Source Models}
-\mtjnote{Cite ourselves} describe three sources of input:
+Based on a survey of randomness beacons, \citet{worldsbestpaper} describe three sources of input:
 
 \paragraph{Private Input Sources}
 A beacon can use some private source of data to to produce randomness.
@@ -22,8 +22,6 @@ Randomness produced by a private input cannot be trusted in our setting, since i
 An example of this is the \gls{nist} randomness beacon~\cite{nistbeacon} that observes quantum mechanical effects to produce what they claim is high-quality randomness.
 Ultimately, it requires trust, since the observations cannot be repeated, and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effects.
 As such, the users need to blindly trust the beacon operator, which in the case of \gls{nist} can be hard given their history~\cite{nytimes-nsabackdoors, nytimes-nsaconstants, nist2014backdoor}.
-
-\mtjnote{Der er også disse finesser: a) Private input requires the users to physically inspect or trust that the source is properly used. b) Otherwise it is difficult to verify that the value is fresh}
 
 \paragraph{Publicly Available Sources}
 Using a publicly available source that everyone can agree on the value of, such as bitcoin blocks, stock market data, or lottery winning numbers from several international lotteries.
@@ -48,7 +46,7 @@ The computation performed by the beacon should ensure that users cannot knowingl
 As such, the user knows that his input was not knowingly \enquote{counteracted} by another used.
 
 \subsubsection{Operational Models}
-\mtjnote{cite ourselves} identify three ways in which a beacon is typically operated:
+Alongside presenting input source models, \citet{worldsbestpaper} also identify three ways in which a beacon is typically operated:
 
 \paragraph{Autocratic Collector}
 A beacon is run by a party, which deems it irrelevant to prove honesty, thus requiring blind trust from the users.

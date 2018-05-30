@@ -4,11 +4,9 @@ While research and literature on the subject exists, there is still a gap concer
 Additionally, current research lacks a bridge from theoretical solutions to an implementation ready for real world deployment and usage.
 We design and implement a randomness beacon capable of supporting a broad range of use cases while focusing on describing this bridge of going from theoretical solution to an actual implementation.% As such, we carefully assess and choose appropriate architectures, algorithms, and tools, that we combine into a functioning and highly scalable beacon.
 
-\fxnote{Security Analysis ?}
-
 Our randomness beacon is based on a service oriented architecture with pipeline features.
 It collects input from a number of inlets and similarly emits its output to a number of outlets.
 The transformation from input to output is done using a delay function which computes modular square roots, a technique which produces a witness that provides a shortcut for verification of the result.
 Our beacon provides security properties that minimizes the amount of trust required from users, provided they successfully verify that their own input has been part of the output.
 
-\fxnote{Evaluation}
+\mtjnote{Rewrite from scratch}

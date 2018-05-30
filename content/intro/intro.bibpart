@@ -102,3 +102,8 @@ isbn="978-3-540-39557-7"
   organization={Springer}
 }
 
+@misc{worldsbestpaper,
+  title={A Survey of Randomness Beacons, or: How I Learned to Stop Worrying and Love the Blockchain},
+  author={Mathias S. Michno and Michael T. Jensen and Sebastian R. Kristensen},
+  year=2017,
+  url={https://github.com/randomchain/beacon-taxonomy-paper/releases/download/final/main.pdf}}
