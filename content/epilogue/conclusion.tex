@@ -8,7 +8,7 @@ This work has been based partly on an interest in randomness beacons, and partly
 We have shown the possibility of instantiating a randomness beacon with sensible guarantees for any single user. In particular, given their random input to the beacon, they can easily and rapidly verify the computation, and decide if they they deem it trustworthy.
 
 % Rehash our contributions --- what is significant?
-We have performed a security analysis of the randomness beacon to identify threats towards them, and incorporated counters for them in the design \mtjnote{elaborate}.
+We have performed a security analysis of randomness beacons to identify threats towards them, and incorporated counters for them in the design of our own beacon. We design the beacon to mitigate a variety of attacks.
 
 We have refined and extended the work of \citet{randomzoo}.
 In particular, they propose delay functions and provide a short discussion on the repercussions of the users' trust assumptions by using such delay function.
@@ -17,8 +17,9 @@ We extend the discussion of users' trust assumptions by providing a succinct for
 
 Further, we have \mtjnote{something about parallelization.}
 
-\mtjnote{Dive into use cases and describe how to use the beacon (novel!)}
-We have also explored the applications of our randomness beacon as a cryptographic primitive in a variety of use cases. As such, we have not only investigated the gap in literature towards a practical beacon implementation, but also discussed the practicality of the beacon in context.
+We have also explored the applications of our randomness beacon as a cryptographic primitive in a variety of use cases. We presented ceremonies for using our beacon to obtain public randomness in a secure way. The use-cases range from lotteries to crypto system bootstrapping, and each has a ceremony associated with it.
+
+As such, we have not only investigated the gap in literature towards a practical beacon implementation, but also discussed the practicality of the beacon in context.
 
 \mtjnote{Multiple input output channels?}
 
