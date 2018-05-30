@@ -1,19 +1,18 @@
 \subsubsection{A random zoo: sloth, unicorn, and trx}%
 \label{sub:random_zoo}
 \citet{randomzoo} implement a protocol reminiscent of a beacon as a way to generate random numbers and parameters for \gls{ecc}.
-They produce random numbers by collecting data from a variety of user sources before running it through a time-hard delay function --- called \textit{sloth}.
+They produce random numbers by collecting data from a variety of sources before running it through a time-hard delay function called \textit{sloth}.
 Sloth is a strictly sequential function which is orders of magnitude faster to inverse for verification.
 The time-hardness prevents last-draw attacks, as attackers have to dedicate large amounts of time to compute how to bias the output, during which new inputs can render their efforts pointless.
 
 The combination of input collection from multiple sources and then computing the output of a delay function, is presented as the \textit{unicorn} protocol.
-This protocol and the operation of it resembles that of the \emph{transparent authority} computation model, and is done by a single entity.
+This protocol resembles that of the \emph{transparent authority} beacon computation model, and is done by a single entity.
 In the paper, \citeauthor{randomzoo} suggests feeding the sloth with an aggregation of user inputs, such as tweets, and private input sources such as a sampling of weather data.
-While they guarantee random unpredictable outputs even if all users are malicious, they do not dive into the scenario of a malicious operator, which may be colluding with other adversarial users.
-Furthermore, a concrete implementation and security analysis is yet to be seen of the unicorn protocol.
+While they guarantee random unpredictable outputs even if all users are malicious, they do not dive into the scenario of a malicious operator, who colludes with adversarial users.
+Furthermore, the unicorn protocol lacks a concrete implementation and security analysis.
 
 To generate the aforementioned \gls{ecc} parameters, a final protocol named \textit{trx}\footnote{pronounced like the T.\ rex dinosaur} is presented, which utilizes the output of the unicorn --- thus completing the zoo analogy.
 
-This randomness beacon brings forth a number of great ideas and thought provoking insights, many of which our work in this paper is based upon.
+This protocol brings forth a number of great ideas and thought provoking insights, many of which our work in this paper is based upon.
 Lastly, the \emph{sloth} delay function will be a key part of our randomness beacon.
 We expand on this throughout the paper.
-

@@ -1,11 +1,10 @@
 \subsubsection{Drand --- A Distributed Randomness Beacon Daemon}%
 \label{sub:drand_a_distributed_randomness_beacon_daemon}
 The \gls{dedis} at EPFL in Switzerland, has developed an open source distributed randomness beacon called \textit{Drand}\footnote{\url{https://github.com/dedis/drand}}.
-The beacon is related to the \textit{Specialized MPC} computation model, and deploys a set of limitations and assumptions, which makes it well-suited for a private setting.
+The beacon uses the \textit{Specialized MPC} computation model, and deploys a set of limitations and assumptions, which makes it well-suited for a private setting.
 Drand links nodes together to periodically and collectively produce what they claim is \enquote{publicly verifiable, unbiasable, unpredictable} random values.
 
-At its core, Drand consists of two phases, a setup phase, which requires knowledge of all participating nodes; and the randomness generation phase, which must be initiated by a single leader.
-The setup phase and requirement for a leader to initiate the randomness generation, makes the operation of Drand static, i.e.\ new nodes cannot join an already running protocol.
+At its core, Drand consists of two phases, a setup phase, which requires knowledge of all participating nodes; and a randomness generation phase, which must be initiated by a single leader.
+The setup phase and requirements for a leader to initiate the randomness generation, makes the operation of Drand static, i.e.\ new nodes cannot join an already running protocol.
 However, due to the mechanisms underlying the randomness generation, faulty or unavailable nodes may not hurt the availability of the beacon, provided a defined threshold of running nodes is achieved.
 The details of the two phases are described in \vref{app:details_of_drand_phases}.
-
