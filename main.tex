@@ -11,9 +11,17 @@
 \input{preamble/glossaries.tex}
 
 \begin{document}
-\setcounter{page}{1}
+% Hackish inclusion of summary
+\KOMAoptions{twocolumn=false, DIV=10}
+\thispagestyle{empty}
+\subimport{content/summary/}{index.tex}
+\clearpage
+\KOMAoptions{twocolumn=true, DIV=16}
+
 \input{frontmatter/titlepage.tex}
+\setcounter{page}{1}
 \pagenumbering{arabic}
+
 
 \date{}
 \maketitle
