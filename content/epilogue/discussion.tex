@@ -13,9 +13,9 @@ This means there is a real possibility that other operators can arise to replace
 Given that any single operator may be malicious, and thus should not be the sole operator, the alternative to this would be use a different model of computation. This could either be a \acrshort{mpc} protocol between users, or even a smart contract, which presents a new host of issues we explore separately.
 
 \subsection{Output Dependency}
-We currently suggest a variety of use cases for our beacon, but we should include one important caveat --- users should not have a critical dependency on the output.
+We suggest a variety of use cases for our beacon, but we must include one important caveat --- users should not have a critical dependency on the output.
 
-This is because we can not guarantee that there will always be an output time due to the possibility of attacks on the availability.
+This is because we can not always guarantee that there will be an output due to the possibility of attacks on the availability.
 Instead, users should aim towards being flexible with when they need to use an output. An example could be to use the \textit{next} output that they see a timely commit containing their input to. Only then will they be certain that the output is not biased.
 
 While this does make the beacon more difficult to use, in the current design it is a necessary precaution to using it.
@@ -34,18 +34,18 @@ Another way to mitigate this would be to use a delay function that was also memo
 One thing we considered in the design of the beacon was having the operator add a salt to the inputs.
 This would make the operator the only party capable of computing the output, which would prevent outsiders from pre-imaging and performing last-draw attacks without help from the operator.
 
-On the other hand, this would give the operator even more power. Specifically, he could easily perform withholding attacks, as he was the only party capable of producing the \textit{genuine} beacon output. However, this could be mitigated by having the operator published a timed commitment to the salt alongside the inputs --- this second commit could then be revealed by outsiders given enough time, which would prevent the operator from withholding once both commits were published.
+On the other hand, this would give the operator even more power. Specifically, he could easily perform withholding attacks, as he would be the only party capable of producing the \textit{genuine} beacon output. This could be mitigated by having the operator published a timed commitment to the salt alongside the inputs --- this second commit could then be revealed by outsiders given enough time, which would prevent the operator from withholding once both commits were published.
 
 \subsection{Smart Contracts}
 Distrustful environments are an obvious settings for a randomness beacon, and one of the most obvious types of these are blockchains. As such it is interesting to consider implementing our beacon in a smart contract on a blockchain.
 
 There would be some definite benefits to this, namely that it would remove the need for a single operator, which removes some threats towards the beacon. In addition, it would be much harder to \acrshort{dos} attack the beacon, as it would be run by the entire network.
 
-However, a central aspect of our beacon is practically incompatible with the nature of smart contracts. The delay functions we use are computationally intense. Smart contracts need to pay for each computation they make, which would make the beacon very costly to run.
+However, a central aspect of our beacon is practically incompatible with the nature of smart contracts, as delay functions are computationally intense. Smart contracts need to pay for each computation they make, which would make the beacon very costly to run.
 
-This ties the beacon into the monetary incentive structures that dictate smart contract behavior. Running a smart contract equivalent of our randomness beacon would be extremely expensive. However some parts, like the verification process, are nowhere nears as heavy, and could possibly be implemented.
+This would tie the beacon into the monetary incentive structures that dictate smart contract behavior. Running a smart contract equivalent of our randomness beacon would be extremely expensive due to the use of delay functions. However some parts, like the verification process, are nowhere nears as intensive, and could potentially be implemented in a smart contract.
 
-This has also been examined in the literature, where \citet{bunz2017proofsof} implements an Ethereum smart contract to publish and challenge the output of the beacon. The beacon requires money to publish outputs on the blockchain, and users must pay to challenge a given output. \citet{bunz2017proofsof} provide a detailed structure of incentives the beacon should provide to ensure correct behavior. This illustrates the difference in structure that follows implementing part of a beacon in a smart contract.
+This has also been examined in the literature, where \citet{bunz2017proofsof} implement an Ethereum smart contract to publish and challenge the output of their beacon. The beacon requires money to publish outputs on the blockchain, and users must pay to challenge a given output. They also provide a detailed analysis of the incentives the beacon should provide to ensure correct behavior. This illustrates the difference in priorities that follows implementing even part of a beacon in a smart contract.
 
 In addition, since parts of the beacon would still be off-chain, those parts would still be dependant on an operator and vulnerable to \acrshort{dos} attacks.
 
@@ -53,6 +53,6 @@ In addition, since parts of the beacon would still be off-chain, those parts wou
 
 %Smart contracts pay a small fee for using the output of the RanDAO, the profits of which go to the contributing users. Again we see a strong tendency towards having financial incentives drive the correct behavior of users, which ultimately requires the beacon to demand payment.
 
-Another thing to consider is that everything that occurs on a blockchain occurs because someone put it into a block. This is typically the job of miners, who have different interests than other users, as they want to include the transactions that give them the greatest rewards for the block. Thus a user would have to pay a competitive fee to interact with a beacon on a blockchain.
+Another thing to consider is that everything that occurs on a blockchain occurs because someone put it into a block. This is typically the job of miners, who have different interests than other users. They are incentivized to include the transactions that give the greatest rewards for the block. Thus a user would have to pay a competitive fee to interact with a beacon on a blockchain.
 
 If we also consider the trust assumption of everyone being against the user, they would have to mine the block themselves to guarantee their interaction, which is a very steep requirement.
