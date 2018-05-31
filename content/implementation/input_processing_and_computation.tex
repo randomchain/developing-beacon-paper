@@ -42,10 +42,40 @@ Does no computation service announce itself within a given threshold, the input 
 This scenario should be unlikely since the beacon operator should configure the system to always have available computation components waiting for work.
 
 The worker announcements and subsequent work assignments are facilitated with \textit{ZeroMQ}'s \enquote{router/dealer} socket pair which allows asynchronous addressed messaging.
-When a computational node connects to the input processor it sends a \code{READY} message, receives an \code{OK}, and proceeds to wait for incoming work.
+When a computational node connects to the input processor it sends a \code{READY} message, receives an \code{OK}, and proceeds to wait for incoming work; this process, accompanied by what follows inside the computational node, can be seen in \cref{lst:comp_node}.
 The input processor then keeps track of each announced worker, and when the time comes, sends condensed processing output and commitment data.
 If the worker does not acknowledge the work with an \code{OK} response, the inputs are reprocessed, and the next free worker is assigned.
 This cycle continuous until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
+
+\begin{algorithm}[tb]
+\caption{Specification of computational node}
+\label{lst:comp_node}
+\begin{algorithmic}[1]
+\Procedure {Initialization}{ }
+    \State \Call{connectTo}{input processor, publishing proxy}
+\EndProcedure
+\Procedure {MainLoop}{ }
+    \Repeat
+        \State \Call{sendToInputProcessor}{ \code{READY} }
+        \If { \code{OK} received before timeout}
+            \State $W \gets $ \Call{receiveWork}{ } \Comment{blocking call}
+            \If {$W$ is valid}
+                \State \Call{sendToInputProcessor}{ \code{OK} }
+                \State \Call{startComputation}{$W_{\text{INPUT}}$}
+                \State \Call{sendToPublish}{$W_{\text{COMMIT}}$}
+                \State \textbf{wait for} computation to finish
+                \State $C \gets $ \Call{collectComputationResult}{ }
+                \State \Call{sendToPublish}{$C_{\text{OUTPUT}}, C_{\text{PROOF}}$}
+            \Else
+                \State \Call{sendMessage}{ \code{ERROR} }
+            \EndIf
+        \Else
+            \State \textbf{continue}
+        \EndIf
+    \Until {the end of time}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 \subsubsection{Delay Function}%
 \label{ssub:delay_function}

@@ -194,6 +194,18 @@ Butt Cap[]. Square[length=0pt 1] Square[length=0pt 1, sep=0pt]}}
 \usepackage{mdframed}
 \mdfsetup{topline=false, rightline=false, leftline=false, bottomline=false}
 
+% Pseudocode
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\floatname{algorithm}{Pseudocode}
+\algrenewcommand\algorithmicindent{1em}%
+\captionsetup[algorithm]{font=footnotesize}
+\makeatletter
+\renewcommand{\ALG@beginalgorithmic}{\small}
+\makeatother
+\algrenewcommand{\alglinenumber}[1]{\color{black!50!}\scriptsize#1}
+\algrenewcommand{\algorithmiccomment}[1]{\hfill$\triangleright$ #1\hspace{0.3em}~}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FixMe
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -271,6 +283,8 @@ Butt Cap[]. Square[length=0pt 1] Square[length=0pt 1, sep=0pt]}}
 \usepackage[english, capitalise, noabbrev, nameinlink]{cleveref} % Load late
 \crefname{appchap}{appendix}{appendices}
 \Crefname{appchap}{Appendix}{Appendices}
+\crefname{algorithm}{Pseudocode}{Pseudocodes}
+\Crefname{algorithm}{Pseudocode}{Pseudocodes}
 
 % For refs to description itmes
 \makeatletter
