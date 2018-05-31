@@ -20,7 +20,7 @@ We insert two proxies in the network: one between input collectors and the input
 Another benefit of using proxies is the ability to have a many-to-many connection, since the proxy binds both its frontend and backend socket, which components then connect to.
 
 These proxies are written in C for performance and since they utilize a \textit{ZeroMQ} primitive for the actual forwarding, their operation is quite stable.
-It should be noted that these proxies inherently introduce single points of failure in our beacon, which potentially could be detrimental for continuous and stable operations. In then ext section (\vref{sec:proxy-avail}), we describe a way to mitigate this.
+It should be noted that these proxies inherently introduce single points of failure in our beacon, which potentially could be detrimental for continuous and stable operations. In then next section (\vref{sec:proxy-avail}), we describe a way to mitigate this.
 
 While the two proxies serve the same purpose, i.e.\ pass along traffic between components, their workloads are vastly different.
 The proxy between computation and publishers is a \textit{forward} proxy, which transparently facilitates publish/subscribe pattern.
