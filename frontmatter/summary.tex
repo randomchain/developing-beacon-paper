@@ -2,30 +2,37 @@
 We examine the topic of randomness beacons, services that provide public randomness, and identify a gap in the current literature.
 The gap consists of the practical implementation and security analysis of a randomness beacons.
 We seek to design and implement a secure beacon that can be used in real life.
-
 We explore a set of use cases to motivate the use of randomness beacon, but also why they should be secure.
 
 In conjunction with the work we did in the previous semester, analyse the structure of beacons, and how they are commonly structured and used.
 This culminates in three operational models for beacons, the \emph{Autocratic Collector}, \emph{Specialized \acrshort{mpc}} and \emph{Transparent Authority}, and three input sourcing models, \emph{private input sources}, \emph{publicly available sources}, and \emph{user input}.
 These models are referenced throughout the paper, as a mean of describing key approaches to analysis, design, and implementation.
 
+\bigskip\noindent
 To better understand how to design a secure beacon, we analyze the threats the towards a randomness beacon.
 We identify threats both from outsiders, i.e.\ the users of the beacon, and insiders, also called the beacon operator, and estimate the different severities of each threat.
 The estimation of the threats is driven by the \emph{DREAD} method, which we slightly alter to fit the analysis of randomness beacons.
 
 Based on the threats discovered to beacons, as well as the operational and input models previously examined, we construct a set of requirements for our own beacon.
-These requirements form the base of our design, which encompasses both the architecture and security properties of the beacon.
+These requirements addresses the criteria for a randomness beacon, given our world view --- nobody can trust anyone but themself.
+The requirements form the base of our design, which encompasses both the architecture and security properties of the beacon.
 
-\msmnote{I got to here.}
-We consider how users should trust the beacon, and design our major contribution, a beacon protocol that uses an offset series of delay functions to provide constant and secure randomness.
-We show it enables users to have a probabilistic level of trust in the beacon, while still being scalable.
+\bigskip\noindent
+We scrutinize which factors define how users should trust the beacon, and design our major contribution; a beacon protocol that uses an offset series of delay functions to provide constant and secure randomness.
+We show it enables users to have a probabilistic level of trust in the beacon, meaning that each user will use their own assumptions about the world we live in, to assign a certainty to the trustworthiness of the randomness beacon.
+All this is done, while ensuring a scalable, and easily deployable beacon.
 
 We also go in depth with the implementation of the beacon, and detail with choices have been made in the process.
-The tools and frameworks used in the construction is examined, and we also consider their effects on the security of the beacon.
-We also break down the beacon and explain how each component works, and how they live up to the requirements and design.
+This includes the tools and frameworks used in the construction, and we also consider their effects on the security of the beacon.
+We break down the beacon and explain how each component works, and how they live up to the previously established requirements and design.
 
-To evaluate the design we ... (bullshit benchmarks etc.)
+\bigskip\noindent
+To evaluate the performance of our beacon, we select key areas to examine, such that reasonable statements can be made about the randomness beacon as a whole.
+This performance evaluation includes benchmarks of our expected bottlenecks, and an assessment of the intricate computations of the beacon.
+We find that our beacon fulfills our expectations when it comes to performance, and will be able to handle virtually any real world usage.
 
 To contextualize the beacon we designed and implemented, we present a series of applications of our beacon, detailing how the beacon should be used to guarantee security.
+This involves perceiving the randomness beacon as a cryptographic primitive, used to build secure ceremonies.
+We discuss some of the topics that have come up during the process of developing our beacon, as well as any future work relevant to our beacon and randomness beacons in general.
+Lastly, we conclude on how our design and implementation fulfills the requirements, and how the beacon mitigates the threats found in the security analysis.
 
-Finally, we discuss some of the topics that have come up during the process, and conclude on the project. (conclusion etc)
