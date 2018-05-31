@@ -18,13 +18,9 @@ Should any party possess the complete data from which the string was generated t
 The process requires users to trust at least one of the participants of the bootstrapping ceremony. Because of the complexity it is difficult to scale to more than a handful of participants.
 Using a randomness beacon allows the process to scale far beyond the norm, as demonstrated by~\citet{mpcsnarks}.
 They present a \acrshort{mpc} protocol for \acrshort{zksnark} bootstrapping.
-The protocol operates across a number of rounds and each round includes an input from a beacon \mtjnote{please check}.
+The protocol operates across a pair of rounds and each round includes an input from a beacon. %Checked and correct
 
 Practically, each round could be organized around a number of beacon outputs containing specific \textit{round number} messages.
-These messages would be signed and committed similarly to previously mentioned stop messages, only with several rounds.
+These messages would be signed and committed similarly to previously mentioned stop messages, only with two rounds.
 
 This makes it possible for each participant to contribute to the beacon each round, while giving the same guarantees as the original protocol.
-\mtjnote{I think the following text is a bit vague or irrelevant.}
-However, it would tie the \acrshort{mpc} protocols progression to the beacon, which could significantly reduce its speed.
-An adversary could even \acrshort{dos} attack the beacon to completely halt the initialization of the protocol.
-The speed issue could be mitigated by using a beacon with shorter collection and computation phases.
