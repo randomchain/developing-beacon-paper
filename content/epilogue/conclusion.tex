@@ -3,14 +3,14 @@
 
 % Rehash the problem
 % But under no circumstance just copy something from the introduction or abstract. Now it is usually possible to use concrete numbers and terminology.
-This work was based partly on an interest in randomness beacons, and partly on us wondering why these constructions are not implemented for real world usage.
+This work was based partly on interest in randomness beacons, and partly on wondering why these services are not implemented for real world usage.
 
 While we took inspiration from previous work and literature, designing a randomness beacon from scratch was no simple feat.
 We designed a system which is based on simple and succinct principles.
-However, simple systems still have many details when considering the implementation.
-We made conscious choices regarding communication framework, communication patterns, compromises between verbosity and bare essentials in communication, and put much thought into the practicalities of deploying and operating our beacon.
+However, simple systems still have many details in their implementation.
+We made conscious choices regarding communication framework, communication patterns, compromises between verbosity and bare essentials in communication, and put a lot of thought into the practicalities of deploying and operating our beacon.
 In particular, we parallelized the beacon operation to have a continuous input stream and regular output, and outlined a formula for finding the number of computation nodes.
-We also scaled input collecting by enabling horizontal scaling, and even improved usability of the system by allowing these input collectors to collect from a variety of sources with easy access for users.
+We also scaled input collection by enabling horizontal scaling, and improved usability of the system by allowing these input collectors to collect from a variety of sources with easy access for users.
 
 We showed the possibility of instantiating a randomness beacon with sensible guarantees for any single user; i.e.\ given their random input to the beacon, they can easily and rapidly verify the computation, and decide if they deem it trustworthy.
 
@@ -18,7 +18,7 @@ We showed the possibility of instantiating a randomness beacon with sensible gua
 We performed a security analysis of randomness beacons to identify threats towards them, and incorporated counter measures for them in the design of our own beacon.
 Some threats were impossible to counter, and these were discussed, alongside potential mitigations.
 
-We refined and extended the work of \citet{randomzoo}, whom propose a delay function and provide a short discussion on the repercussions of the users' trust assumptions by using said delay function.
+We refined and extended the work of \citet{randomzoo}, who propose a delay function and provide a short discussion on the repercussions of the users' trust assumptions by using a delay function.
 Our refinement in the usage of delay functions allows all users to run the delay function in parallel with the beacon operator, or to run it if the beacon operator (maliciously or not) performs an output withholding attack.
 We extended the discussion of users' trust assumptions by providing a succinct formula, which only depends on two timestamps and what the user believes is the fastest possible computation of a given delay function.
 
