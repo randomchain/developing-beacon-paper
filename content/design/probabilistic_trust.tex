@@ -51,7 +51,7 @@ These observations are depicted in \cref{fig:beacon_parallel_timeline_real}, whe
 \subsubsection{Number of Computation Nodes}
 The number of computation nodes required in this fashion is the duration of the delay function divided by the duration of input collection:
 \begin{equation*}
-    \#\text{Nodes} = \left\lceil\frac{T_\text{DELAY FUNCTION}}{T_\text{INPUT COLLECTION}}\right\rceil
+    \text{Number of Nodes} = \left\lceil\frac{T_\text{DELAY FUNCTION}}{T_\text{INPUT COLLECTION}}\right\rceil
 \end{equation*}
 
 As an example, an input collection time of 2 minutes and a delay function of 10 minutes will require 5 computation nodes to always begin a computation every 2 minutes.
@@ -61,9 +61,8 @@ As such the delay function can be expected to from time to time finish a bit lat
 
 To remedy this, a number of additional nodes should be kept at hand.
 Therefore, we update the prior equation to take this extra time for each delay function into account. Let $\delta$ be this extra time additional to the delay function.
-
 \begin{equation*}
-    \#\text{Nodes} = \left\lceil\frac{T_\text{DELAY FUNCTION}+\delta}{T_\text{INPUT COLLECTION}}\right\rceil
+    \text{Number of Nodes} = \left\lceil\frac{T_\text{DELAY FUNCTION}+\delta}{T_\text{INPUT COLLECTION}}\right\rceil
 \end{equation*}
 
 If, for example, the delay function is expected to always finish at most 2 minutes later than the expected time of 10 minutes (i.e.\ a worst-case time of 12 minutes) and the input collection is 2 minutes, 6 nodes in total are necessary to guarantee that a node is always ready every 2 minutes, given a maximum of 2 minutes expected delay.
