@@ -24,20 +24,15 @@ We extended the discussion of users' trust assumptions by providing a succinct f
 
 Further, we have proposed a parallelization technique for the beacon pipeline, such that input collection is a continuous stream.
 This allows the output frequency to be considerably increased, and enables adjustments to the ratio between input collection time and computation time.
-Simultaneously, we noted that computation components can be reused for subsequent computations instead of instantiating new services, thereby removing startup time.
+Simultaneously, we noted that computation components can be reused for subsequent computations instead of instantiating new services, thereby removing startup time. For redundancy, reducing bottlenecks, and usability we allow multiple input and output channels.
 
 We also explored the applications of our randomness beacon as a cryptographic primitive in a variety of use cases.
 We presented ceremonies for using our beacon to obtain public randomness in a secure way.
 The use cases range from lotteries to crypto system bootstrapping, and each has a ceremony associated with it.
 As such, we not only investigated the gap in literature towards a practical beacon implementation, but also discussed the practicality of the beacon in context.
 
-\mtjnote{Multiple input output channels?}
-
 % Assess the significance of contribution
+We believe our contributions fills a hole in current literature, and as such can be seen as a step forward. It is, however, clear that there is need for more work that is not necessarily technical in nature. No matter how much we believe in randomness beacons as a concept, it might prove hard to convince users to use a beacon. While we argued that the beacon is not necessarily expensive to run for the beacon operator, incentives to run a beacon still needs further thought. And finally, usability of the beacon needs to be improved if we expect normal users to use it.
 
-There is need for more work, especially in regards to further increasing the guarantees for the users.
-
-% Call to arms: USE THE BEACONS.
-% % What are the limiting factors? People don't care? ikke nok use cases hvor der allerede er trust involveret
-
-% Warnings? E.g.\ do not use for key generation, etc?
+% Societal perspective! Trust in the future is increasingly important
+In the future, trusting any entity with decisions will, in our opinion, be more far-reaching than it is today. We see more and more corporate giants virtually controlling whole industries. Before empowering a few world-wide corporations to make decisions that affects us, we, as normal users in society, need ways to ensure fairness. Randomness beacons might be one such way.
