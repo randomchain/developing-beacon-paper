@@ -1,5 +1,0 @@
-\section{Misconceived Use Cases}
-
-\subsection{Challenge-Response Protocols}
-It has also previously been suggested to use randomness beacons to improve challenge-response protocols, that could be reduced to single-message protocols if both parties could access the beacon.
-\citet{fischer2011publicrandomnessservice} suggest using a randomness beacon to improve a smart card challenge response protocol, which could be reduced to a single message and would be immune to chosen ciphertext attacks. However, this would necessitate that either the card could access the internet by itself, or that it was capable of verifying that a random number came from the beacon. This in turn would likely require some form of signature from the beacon the card would verify, in which case it might as well just use that algorithm for the challenge-response protocol. %This part seems weak and/or negative, consider removing ?
