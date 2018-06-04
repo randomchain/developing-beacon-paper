@@ -14,9 +14,8 @@ We also want to prevent the operator from being able to initiate multiple beacon
 Our solution for this problem is to enforce what we will call a \gls{cco} workflow in the beacon protocol. We have designed this workflow to govern the security of the beacon, and is one of our contributions.
 It means that each published output is paired with a commitment which can be used in the verification of the beacon.
 The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output.
-Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desirable output.\stefan{Why do you need an operator in the first place ? If you need it introduce it properly in the beginning of the report}
-
-Contrary to other approaches of transparent authorities, we have decided on an even more transparent approach: The commitment contains all data in \enquote{cleartext} (e.g.\ not hashed) \rene{This essentially reduce a beacon to a place for publishing input?} required for the computation. To our knowledge, we are the first to take transparency to this extreme.
+Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desirable output.
+Contrary to other approaches of transparent authorities, we have decided on an even more transparent approach: The commitment contains all data required for the computation, consisting of all hashes we have received from the input collectors. To our knowledge, we are the first to take transparency to this extreme.
 The transparency allows any party to compute the randomness alongside the beacon operator.
 It ensures that the operator can not cause much damage by withholding output or by deciding not to open a traditional (e.g.\ hashed) commitment. In essence, it reduces the \enquote{market value} of the output, making it less attractive to leak output (i.e.\ sell early access to the output) because everyone can just compute it. While it does not prevent the operator of performing a withholding attack, it minimizes the effects of it, as others can compute the output from the commitment and still obtain an equally valid output.
 
