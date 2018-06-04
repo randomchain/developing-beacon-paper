@@ -36,9 +36,11 @@ As such, we value requirements that other purely theoretical approaches may not 
 Scalability of all components is important as we envision a general beacon suitable for many use cases.
 Therefore, it should scale to at least several thousand users contributing with user input in every output.
 Here, other approaches usually only focuses on scalability of the core theory, but we will consider all parts.
-Furthermore, we value easy deployment and installation of the beacon, in order for it to not be a hindrance for deciding to run a beacon.
 
-Likewise, it would be beneficial to allow different channels for input and output, both to make the beacon easier to access for users, but also to make it resilient to having any single channel attacked.
+If users lose confidence in an operator, a new operator can arise to replace him. As the beacon is run as a greater good, users should not need to make any large investment to become operator. Making the transition to operator as easy as possible facilitates our desired user behavior. Since this is vital to the availability of a beacon, we consider ease of deployment for new operators to be important to our beacon.
+Furthermore, we value easy deployment and installation of the beacon, in order for it to not be a hindrance for deciding to run a beacon. \mtjnote{Is this section okay here? Is it too much to assume already that the operator needs replacement?}
+
+It will be beneficial to allow different channels for input and output, both to make the beacon easier to access for users, but also to make it resilient to having any single channel attacked.
 Should a single channel be attacked, input could still be submitted to another.
 This requirement further increases usability since different users may prefer different input and output channels.
 We also consider fault tolerance a valuable property to have, and having multiple channels still allows users to input if one fails.
