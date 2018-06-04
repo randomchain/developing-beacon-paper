@@ -38,7 +38,14 @@ In the later \vref{sub:bottlenecks}, we evaluate the performance of our proxies.
 One way to mitigate single points of failures could be to implement a pattern called \enquote{binary star} by \textit{ZeroMQ}.
 Here a component is configured with two instances, a primary and a backup.
 The backup can then take over and signal for a new backup to be started if the primary disappears from the network.
-This pattern can potentially be applied to all components exposed as a single point of failure and would be sufficient in most cases of crashes. \rene{most cases ? How did you determine that, do you have in fault model in mind ? }
+This pattern can potentially be applied to all components exposed as a single point of failure and would be sufficient in most cases of crashes.
+
+Some scenarios where this pattern can improve availability are, if the hardware running the component fails, the network link of the component becomes unstable and disappears, or the component application code crashes, and does not restart fast enough.
+The success of such a \enquote{binary star} pattern also depends on the assumption that both the primary and backup will not fail at the same time, which might prove difficult to guarantee if our system is under attack.
+However, as we deploy a pipeline architecture, the randomness beacon will run under the notion of being \enquote{grinding gears of time}, meaning that we generally only move forward and missing inputs or computations is considered an affordable loss.
+
+Avoiding availability issues when encountering byzantine components is often more troublesome than mitigating crashes, since adversarial components will try to display correct operation.
+We deem this as outside the scope of our randomness beacon, where we instead opt to make suspicious activity such as manipulated packages detectable.
 
 Another measure to provide high-availability in the beacon is the delegation of user interaction to input collectors and publishers.
 In the system, user interaction is the most demanding task regarding availability, and the statelessness of the components means that adding new instances is as easy as executing a shell command.
