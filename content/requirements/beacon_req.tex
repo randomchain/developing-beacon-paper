@@ -5,7 +5,7 @@ We decided on using the \emph{transparent authority} type of beacon in \cref{sub
 
 The requirements presented here will serve as a foundation of our design.
 
-\subsection{Transparent Operation}
+\subsection{Transparent Operation}\label{sec:transparent_operation}
 Users should be able to oversee that the beacon operates according to protocol and thus catch any deviations from it.
 This in turn requires all aspects of the protocol to somehow publicly announce or display their work for users to verify.
 Fundamentally, users should be able to see which inputs have been used to produce randomness and verify that they do produce the published output.
@@ -19,10 +19,10 @@ Secondly, they should be able to repeat the process on their own computers as a 
 This also requires the process to be deterministic which in turn removes the option for true randomness.
 However, the output should still be unpredictable, even to the beacon operator.
 
-\subsection{Open and Secure Protocol}
+\subsection{Open and Secure Protocol}\label{sec:open_and_secure_protocol}
 Anyone should be able to easily contribute to the beacon protocol to influence the random generation. There should be no requirements imposed on users to limit their contribution rate besides \gls{dos} protection. The protocol should be secure meaning that even if only a single participant is honest, the output is still unpredictable. This single participant will in the worst case be you.
 
-\subsection{Timely Publishing}
+\subsection{Timely Publishing}\label{sec:timely_publishing}
 The input, output, and any data needed for verification of an output should be enforced to be published as soon as possible to make the beacon more transparent.
 By having a requirement of timeliness at the protocol level, we restrict the time a malicious operator has available to diverge from protocol before users will suspect them.
 
@@ -30,7 +30,7 @@ Giving users all the tools to replicate and oversee the process makes it difficu
 This in turn mitigates one of the greatest threats from the operator, input manipulation.
 A beacon that does not reveal which inputs were used before publishing the output will essentially be admitting that they picked the inputs to bias the output.
 
-\subsection{Practical}
+\subsection{Practical}\label{sec:practical}
 A part of the goal is to create a beacon that is practical and implementable in the real world.
 As such, we value requirements that other purely theoretical approaches may not consider.
 Scalability of all components is important as we envision a general beacon suitable for many use cases.
