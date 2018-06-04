@@ -8,8 +8,8 @@ Even as more scalable \gls{mpc} protocols has been developed, they still need so
 An example of this is the \gls{mpc} protocol designed by \citet{damgaard2006scalable}, which they claim is the first scalable general \gls{mpc} protocol.
 This protocol still only allows for corruption of some constant fraction of the participants, and furthermore assumes the existence of a computationally simple pseudorandom generator to maintain a constant number of rounds needed to complete the protocol.
 
-Since out world view of \enquote{everybody is colluding against you} if far more pessimistic than the guarantees provided by the aforementioned protocols, \gls{mpc} is not suitable for us, although the model could fit in a more controlled or private environment.
-This leaves us with the transparent authority model, which we adopt.
+Since our world view of \enquote{everybody is colluding against you} is far more pessimistic than the guarantees provided by the aforementioned protocols, \gls{mpc} is not suitable for us, although the model could fit in a more controlled or private environment.
+This leaves us with the transparent authority model which we adopt.
 This choice adds a role to our environment: the beacon operator. Our security goal of everybody colluding against a user must therefore be expanded such that \emph{everybody} includes the beacon operator.
 
 Regarding input source models, we can immediately discard private input sources as they are tied to the autocratic collector model, and as such do not work for the transparent authority.
