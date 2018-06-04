@@ -1,5 +1,4 @@
-\stefan{Title length }Randomness beacons are services that emit a random number at a regular interval.
-\stefan{Order names by lastname}
+Randomness beacons are services that emit a random number at a regular interval.
 A recent trend in these beacons is making them transparent or secure such that no party can covertly influence the output without detection.
 Existing literature on the subject lacks a bridge from their respective theoretical solution to a practical implementation suitable for deployment and usage. Much of the existing literature also lacks a structured security analysis.
 
@@ -7,7 +6,7 @@ We close these gaps by designing and implementing a randomness beacon supporting
 
 Our randomness beacon is based on a service oriented architecture, and supports a multitude of input and output channels.
 The transformation from input to output utilizes a \gls{cco} workflow combined with a delay function. Together, these provide good guarantees of security even under the assumption that everybody else is colluding against you.
-Our beacon greatly minimizes the amount of trust needed in such a way that each user can decide how much they want to trust. As such, even fastidious users can be serviced by out randomness beacon. \stefan{give some concrete numbers from experiments}
+Our beacon greatly minimizes the amount of trust needed in such a way that each user can decide how much they want to trust. As such, even fastidious users can be serviced by out randomness beacon. TODO: give some concrete numbers from experiments
 
 Lastly, we explore a variety of applications for our randomness beacon as a cryptographic primitive, and discuss how to properly use it in a secure way.
 
