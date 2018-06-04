@@ -54,6 +54,7 @@ The number of computation nodes required in this fashion is the duration of the 
     \text{Number of Nodes} = \left\lceil\frac{T_\text{DELAY FUNCTION}}{T_\text{INPUT COLLECTION}}\right\rceil
 \end{equation*}
 
+\noindent
 As an example, an input collection time of 2 minutes and a delay function of 10 minutes will require 5 computation nodes to always begin a computation every 2 minutes.
 
 However, the delay function is not guaranteed to precisely take e.g.\ 10 minutes --- the computation nodes are expected to be running other processes such as an operating system which also require some CPU time.
@@ -65,6 +66,7 @@ Therefore, we update the prior equation to take this extra time for each delay f
     \text{Number of Nodes} = \left\lceil\frac{T_\text{DELAY FUNCTION}+\delta}{T_\text{INPUT COLLECTION}}\right\rceil
 \end{equation*}
 
+\noindent
 If, for example, the delay function is expected to always finish at most 2 minutes later than the expected time of 10 minutes (i.e.\ a worst-case time of 12 minutes) and the input collection is 2 minutes, 6 nodes in total are necessary to guarantee that a node is always ready every 2 minutes, given a maximum of 2 minutes expected delay.
 
 The beacon operator should find a sensible number of nodes that on one hand maximizes the chances of a ready computation node given expected delays, and on the other hand minimizes the idle time of the nodes.
