@@ -38,7 +38,7 @@ In the later \vref{sub:bottlenecks}, we evaluate the performance of our proxies.
 One way to mitigate single points of failures could be to implement a pattern called \enquote{binary star} by \textit{ZeroMQ}.
 Here a component is configured with two instances, a primary and a backup.
 The backup can then take over and signal for a new backup to be started if the primary disappears from the network.
-This pattern can potentially be applied to all components exposed as a single point of failure and would be sufficient in most cases of crashes.
+This pattern can potentially be applied to all components exposed as a single point of failure and would be sufficient in most cases of crashes. \rene{most cases ? How did you determine that, do you have in fault model in mind ? }
 
 Another measure to provide high-availability in the beacon is the delegation of user interaction to input collectors and publishers.
 In the system, user interaction is the most demanding task regarding availability, and the statelessness of the components means that adding new instances is as easy as executing a shell command.
