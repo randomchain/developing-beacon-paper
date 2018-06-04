@@ -49,3 +49,6 @@ We deem this as outside the scope of our randomness beacon, where we instead opt
 
 Another measure to provide high-availability in the beacon is the delegation of user interaction to input collectors and publishers.
 In the system, user interaction is the most demanding task regarding availability, and the statelessness of the components means that adding new instances is as easy as executing a shell command.
+
+Summarizing, the reliability of the beacon could be greatly improved by eliminating single points of failure, such as the proxies and input processor.
+However, changes as these are fairly trivial to implement, and we deem them unnecessary for a \gls{poc} random beacon.
