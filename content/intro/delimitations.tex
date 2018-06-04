@@ -3,8 +3,8 @@
 We want to create a randomness beacon that is secure under the assumption that everyone may be colluding against a given user, as per our security goals in \cref{sec:security_goals}.
 As such, we can immediately see that the autocratic collector is not suitable for our security goal, because it requires users to trust its claimed honest operation.
 The \gls{mpc} model does not scale well enough for general use in public randomness beacons~\cite{syta2017scalable}.
-As described by \citet{damgaard2006scalable}, most \gls{mpc} protocols either assumes an honest majority, which is a weaker assumption than our security goals, or cannot guarantee fairness and output delivery, a likewise undesired behavior.
-Even as more scalable \gls{mpc} protocols has been developed~\cite{damgaard2006scalable}, they still need some assumption about the protocol participants, which we cannot guarantee in a public randomness beacon.
+As described by \citet{damgaard2006scalable}, \stefan{Most ? please state exceptions} most \gls{mpc} protocols either assumes an honest majority, which is a weaker assumption than our security goals, or cannot guarantee fairness and output delivery, a likewise undesired behavior.
+Even as more scalable \gls{mpc} protocols has been developed~\cite{damgaard2006scalable}, \stefan{complexity} they still need some assumption \stefan{Assumptions?} about the protocol participants, which we cannot guarantee in a public randomness beacon.
 Therefore, \gls{mpc} is not be suitable for us, although the model could fit in a more controlled or private environment.
 This leaves us with the transparent authority model, which we adopt.
 
@@ -12,5 +12,3 @@ Regarding input source models, we can immediately discard private input sources 
 The guarantees by publicly available sources are weak compared to user input.
 If sufficiently paranoid, the user will want to bias these publicly available sources to make sure all other users are not colluding.
 Therefore, user input is the simplest solution and provides the strongest guarantees for the user.
-
-

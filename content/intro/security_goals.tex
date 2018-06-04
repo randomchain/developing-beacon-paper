@@ -2,7 +2,8 @@
 A trust-requiring beacon simply shifts the issue of trust.
 Therefore, we strive to design and implement a trust-minimizing beacon that works on the most pessimistic assumption possible:
 \enquote{%
-Everybody, including any beacon operator if present, is secretly colluding against you and is willing to put an unlimited amount of money and resources towards manipulating or biasing the randomness.
+Everybody,
+\stefan{Why do we assume operator already} including any beacon operator if present, is secretly colluding against you and is willing to put an unlimited amount of money and resources towards manipulating or biasing the randomness.
 As such, you can only trust yourself.}
 
 These assumptions describe the mindset we take on while designing and implementing the beacon.
@@ -10,5 +11,3 @@ We have not seen any work on beacons that can guarantee a completely trustless b
 As we also need to account for the feasibility of the system in real world applications, we will consider the above assumption as non-binary, i.e.\ we perceive it as a system with variables.
 We seek to minimize the trust required and ultimately let each user decide how much they \emph{want} to trust.
 In essence, a user will know that under self-chosen trust assumptions, the randomness has not been manipulated.
-
-
