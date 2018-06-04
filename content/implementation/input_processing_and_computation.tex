@@ -47,6 +47,7 @@ When a computational node connects to the input processor it sends a \code{READY
 The input processor then keeps track of each announced worker, and when the time comes, sends condensed processing output and commitment data.
 If the worker does not acknowledge the work with an \code{OK} response, the inputs are reprocessed, and the next free worker is assigned.
 This cycle continuous until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
+Having duplex communication between the input processor and the computation nodes is a practical compromise between a strict pipeline pattern and a monolithic input processor/computation node.
 
 \begin{algorithm}[tb]
 \caption{Specification of computational node}
@@ -95,9 +96,9 @@ In the C-extension we utilize the GNU MP library\footnote{\url{https://gmplib.or
 In \vref{sub:sloth_parameters} we evaluate using \textit{sloth} as our delay function, and how execution time of the delay function can be adjusted.
 
 \subsection{Summary}
-\mtjnote{this is not a summary:}
-Together, these components form a working \acrshort{poc} implementation of a randomness beacon.
-The beacon approximates the design outlined in \cref{sec:design}, while making some practical compromises, such as having duplex communication between the input processor and the computation nodes. \stefan{What are the hard gurantees you give with your beacon? Promised probabilistic guarantees in the beginning, what did you mean by that? Get back to it on this occasion}
+The beacon approximates the design outlined in \cref{sec:design},
 
 The reliability of the beacon could be greatly improved by eliminating single points of failure, such as the proxies and input processor.
 However, changes as these are fairly trivial to implement, and we deem them unnecessary for a \gls{poc} random beacon.
+
+\mtjnote{I think this section is a bit short and vague.}
