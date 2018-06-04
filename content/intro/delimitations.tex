@@ -7,6 +7,7 @@ As described by \citet{damgaard2006scalable}, \stefan{Most ? please state except
 Even as more scalable \gls{mpc} protocols has been developed~\cite{damgaard2006scalable}, \stefan{complexity} they still need some assumption \stefan{Assumptions?} about the protocol participants, which we cannot guarantee in a public randomness beacon.
 Therefore, \gls{mpc} is not be suitable for us, although the model could fit in a more controlled or private environment.
 This leaves us with the transparent authority model, which we adopt.
+This choice adds a role to our environment: the beacon operator. Our security goal of everybody colluding against a user must therefore be expanded such that \emph{everybody} includes the beacon operator.
 
 Regarding input source models, we can immediately discard private input sources as they are tied to the autocratic collector model, and as such do not work for the transparent authority.
 The guarantees by publicly available sources are weak compared to user input.
