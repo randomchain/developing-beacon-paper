@@ -1,15 +1,6 @@
 \section{Discussion}%
 \label{sec:discussion}
 This section is dedicated to discussing some the topics that have come up during our work.
-%MostGenericMetaText
-\subsection{Operation}
-\mtjnote{Needs read through + maybe more descriptive title}
-
-\mtjnote{I moved this section to requirements under practical.}
-
-One could also question what the motivation to run the beacon is, other than offering a public good. We have not implemented any monetary incentives to run the beacon, meaning it will operate at a deficit to the operator. One incentive could be to obtain secure public randomness for their own use \mtjnote{I do not agree --- we argued in the intro, that for own use, they should just use urandom} \srknote{For their own use = to agree on randomness with others}.
-
-Given that any single operator may be malicious, and thus should not remain the sole operator, the alternative to this would be use a different model of computation. This could either be a \acrshort{mpc} protocol between users, or even a smart contract, which presents a new host of issues we explore separately.
 
 \subsection{Output Dependency}
 We suggest a variety of use cases for our beacon, but we must include one important caveat --- users should not have a critical dependency on the output.
