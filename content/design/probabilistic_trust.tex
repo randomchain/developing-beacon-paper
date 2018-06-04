@@ -14,7 +14,7 @@ given that $t_\text{INPUT}$ is the time when the user sent the input, $t_\text{C
 This means that for users to be more likely to trust a beacon, the time between sending the input and receiving the commitment must be significantly smaller than the time between the commitment and the output.
 In fact, it must be smaller than the shortest time the user thinks the operator could compute the delay function.
 
-An example could be a that user that can compute the delay function in 10 minutes believes that the world's fastest computer can do so 5 times faster, i.e.\ in 2 minutes. In this case the user can trust the output if he sees a commit to a set of inputs containing his input within 2 minutes of his input, because then he knows that nobody could have had time to run the computation on his input before choosing to release a commitment or not.
+An example could be that a user that can compute the delay function in 10 minutes believes that the world's fastest computer can do so 5 times faster, i.e.\ in 2 minutes. In this case the user can trust the output if he sees a commit to a set of inputs containing his input within 2 minutes of his input, because then he knows that nobody could have had time to run the computation on his input before choosing to release a commitment or not.
 This relation between the time taken to compute the delay function and the time before a commit is seen allows users to flexibly adjust their willingness to trust the outcome has not been biased against them.
 
 As previously mentioned, this ratio is also described by \citet{randomzoo}, where they advise a ratio of no more than $\frac{1}{5}$ of the computation time spent collecting inputs.
