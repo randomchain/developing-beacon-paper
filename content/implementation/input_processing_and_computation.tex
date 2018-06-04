@@ -96,7 +96,7 @@ In \vref{sub:sloth_parameters} we evaluate using \textit{sloth} as our delay fun
 
 \subsection{Summary}
 Together, these components form a working \acrshort{poc} implementation of a randomness beacon.
-The beacon approximates the design outlined in \cref{sec:design}, while making some practical compromises, such as having duplex communication between the input processor and the computation nodes.
+The beacon approximates the design outlined in \cref{sec:design}, while making some practical compromises, such as having duplex communication between the input processor and the computation nodes. \stefan{What are the hard gurantees you give with your beacon? Promised probabilistic guarantees in the beginning, what did you mean by that? Get back to it on this occasion}
 
 The reliability of the beacon could be greatly improved by eliminating single points of failure, such as the proxies and input processor.
 However, changes as these are fairly trivial to implement, and we deem them unnecessary for a \gls{poc} random beacon.
