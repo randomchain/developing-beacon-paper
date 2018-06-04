@@ -55,8 +55,9 @@ This type lies in the trust-requiring category of beacons, i.e.\ the old generat
 
 \paragraph{Specialized \acrshort{mpc}}
 Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs.
-Given an honest majority, this type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to large groups~\cite{cascudo2017scrape, syta2017scalable}. \stefan{what is the complexity, what is the state of the art? Also explain how it works in a nutshell.}
-This type of beacon is therefore badly suited for public settings, but might fit in a controlled private context.
+Given an honest majority, this type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to large groups~\cite{cascudo2017scrape, syta2017scalable} since any addition or removal of a user requires a new setup phase.
+This type of beacon is therefore unsuited for public settings, but might fit in a controlled private context.
+In \vref{sub:drand_a_distributed_randomness_beacon_daemon} we describe the state of the art of specialized \gls{mpc} randomness beacons.
 
 \paragraph{Transparent Authority}
 A single entity collects input and publishes it with a focus on transparency.
