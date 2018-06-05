@@ -10,9 +10,11 @@ This protocol still only allows for corruption of some constant fraction of the 
 
 Since our world view of \enquote{everybody is colluding against you} is far more pessimistic than the guarantees provided by the aforementioned protocols, \gls{mpc} is not suitable for us, although the model could fit in a more controlled or private environment.
 This leaves us with the transparent authority model which we adopt.
-This choice adds a role to our environment: the beacon operator. Our security goal of everybody colluding against a user must therefore be expanded such that \emph{everybody} includes the beacon operator.
+This choice adds a role to our environment: the beacon operator.
+Our security goal of everybody colluding against a user must therefore be expanded such that \emph{everybody} includes the beacon operator.
 
 Regarding input source models, we can immediately discard private input sources as they are tied to the autocratic collector model, and as such do not work for the transparent authority.
 The guarantees by publicly available sources are weak compared to user input.
 If sufficiently paranoid, the user will want to bias these publicly available sources to make sure all other users are not colluding.
 Therefore, user input is the simplest solution and provides the strongest guarantees for the user.
+

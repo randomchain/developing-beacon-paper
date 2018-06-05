@@ -11,38 +11,36 @@ This means we need some mechanism to prevent the operator from performing last-d
 We also want to prevent the operator from being able to initiate multiple beacon computations, and then only publish the output which benefits the operator the most.
 
 \subsubsection{CCO Workflow}
-Our solution for this problem is to enforce what we will call a \gls{cco} workflow in the beacon protocol. We have designed this workflow to govern the security of the beacon, and is one of our contributions.
+Our solution for this problem is to enforce what we will call a \gls{cco} workflow in the beacon protocol.
+We have designed this workflow to govern the security of the beacon, and is one of our contributions.
 It means that each published output is paired with a commitment which can be used in the verification of the beacon.
 The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output.
 Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desirable output.
-Contrary to other approaches of transparent authorities, we have decided on an even more transparent approach: The commitment contains all data required for the computation, consisting of all hashes we have received from the input collectors. To our knowledge, we are the first to take transparency to this extreme.
+Contrary to other approaches of transparent authorities, we have decided on an even more transparent approach: The commitment contains all data required for the computation, consisting of all hashes we have received from the input collectors.
+To our knowledge, we are the first to take transparency to this extreme.
 The transparency allows any party to compute the randomness alongside the beacon operator.
-It ensures that the operator can not cause much damage by withholding output or by deciding not to open a traditional (e.g.\ hashed) commitment. In essence, it reduces the \enquote{market value} of the output, making it less attractive to leak output (i.e.\ sell early access to the output) because everyone can just compute it. While it does not prevent the operator of performing a withholding attack, it minimizes the effects of it, as others can compute the output from the commitment and still obtain an equally valid output.
+It ensures that the operator can not cause much damage by withholding output or by deciding not to open a traditional (e.g.\ hashed) commitment.
+In essence, it reduces the \enquote{market value} of the output, making it less attractive to leak output (i.e.\ sell early access to the output) because everyone can just compute it.
+While it does not prevent the operator of performing a withholding attack, it minimizes the effects of it, as others can compute the output from the commitment and still obtain an equally valid output.
 
 \subsubsection{Delay Functions}
 To decrease the possibilities of the operator trying different commits before releasing them, we utilize a \emph{delay function}.
 Delay functions can be seen as black box hash functions that require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
-It ensures that the output cannot be instantly computed, and ensures that the operator cannot try more than one commit before running out of time. As such, the operator is unable to perform the input manipulation attack in any meaningful way --- the operator is of course still able to exclude or change output, but not in a way that knowingly benefits anyone because the effect of the manipulation is hidden behind the delay function.
+It ensures that the output cannot be instantly computed, and ensures that the operator cannot try more than one commit before running out of time.
+As such, the operator is unable to perform the input manipulation attack in any meaningful way --- the operator is of course still able to exclude or change output, but not in a way that knowingly benefits anyone because the effect of the manipulation is hidden behind the delay function.
 
-When deploying delay functions in randomness beacons it is important to keep verification in mind.
+When deploying delay functions in randomness beacons, it is important to keep verification in mind.
 A user should be able to run the delay function in reverse to confirm that an output matches the commitment.
 To avoid having to require each user to execute the full delay function, we use a flavor of delay functions which is \emph{asymmetrically hard}, i.e.\ hard to compute but easy to verify.
 In the normal case only the operator runs the full delay function, resulting in much CPU time saved globally and thus electricity, too.
 In the case that the operator is (maliciously or not) performing an output withholding attack, users still, because of the \gls{cco} workflow, have all the information needed to run the delay function themselves.
-It might even be imagined that a few volunteers will run their own \enquote{mirror beacon}, each mirroring the computation of the main beacon operator. This adds redundancy in the computation.
+It might even be imagined that a few volunteers will run their own \enquote{mirror beacon}, each mirroring the computation of the main beacon operator.
+This adds redundancy in the computation.
 
 The delay function also protects against last-draw attacks by adversaries.
-A last-draw attack would attempt to bias the output by crafting an input so as to produce favorable randomness.
+A last-draw attack would attempt to bias the output by crafting an input to produce favorable randomness.
 The adversary needs to compute the result of adding a specific input as the last input.
 Delay functions make this significantly more difficult to attempt due to the time needed to compute the result.
 Given a delay function that takes five minutes to complete, an adversary must dedicate five minutes of processor time to any given input he attempts to use.
 This means he must dedicate large amounts of resources to perform any significant amount of attempts, and more importantly if a single input is added to the beacon within that five minute period, all of his work will be null, and he will be forced to restart.
 
-% The combination of a \gls{cco} protocol and a delay function effectively gives the following workflow for each cycle of the beacon: First, it collects inputs and processes them.
-% Then, it publishes a commitment containing all inputs, before beginning the computation.
-% When the computation is finished, it publishes the output.
-
-% \paragraph{Hash Functions} are used to produce random outputs from our input.
-% In the literature on beacons, hashing algorithms have been considered random oracles, that produce unpredictable pseudo-random outputs.
-% For our beacon, hashing algorithms help ensure the unpredictability of the output as they are can not feasibly be reversed.
-% An adversary can not feasibly know which inputs are needed to compute an output, without exploring the space of possibilities by themselves.

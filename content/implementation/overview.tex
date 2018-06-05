@@ -1,6 +1,7 @@
 \subsection{Overview}%
 \label{sub:overview}
-This chapter explains the choices leading to the specific implementation seen in \vref{fig:impl_figure}. As such, the figure can be used as a reference as we explain the various parts of the implementation.
+This chapter explains the choices leading to the specific implementation seen in \vref{fig:impl_figure}.
+As such, the figure can be used as a reference as we explain the various parts of the implementation.
 
 At a glance, the figure shows the services and how they interact.
 All services are controlled by the beacon operator.
@@ -18,18 +19,15 @@ This proxy forwards the output to each publisher.
 A publisher then sends the received output to a specific outlet.
 
 \subsection{Frameworks, Libraries, and Language Choice}
-% SOA is achieved with concurrent and async message passing
-To achieve the \acrfull{soa} and pipelining presented in~\cref{sec:design}, we utilize a framework for asynchronous message passing and concurrency.
+To achieve the \acrfull{soa} and pipelining presented in \cref{sec:design}, we utilize a framework for asynchronous message passing and concurrency.
 This will allow us to develop the components separately and to gradually implement business logic by mocking not-yet-complete services, as long as the inter-component communications protocol and message passing method is agreed upon.
 We choose to use \textit{ZeroMQ}\footnote{\url{http://zeromq.org/}} as this framework for message passing and concurrency.
 
 \subsubsection{ZeroMQ}
-% ZeroMQ because language agnostic and fast. Ready for real world beacon
 \textit{ZeroMQ} does not get in the way of the implementation, meaning that it is language agnostic with bindings for virtually all programming languages, and that it is fast, flexible, and scalable.
 The name \textit{ZeroMQ} hints at its alternative approach to a messaging framework, in that no (or \textit{zero}) broker is needed between components.
 This means that our beacon implementation does not rely on any centralized broker for passing around messages --- no single point of failure in that aspect.
 
-% Fan-in, fan-out pipeline. Good patterns from ØMQ
 The pipelining fan-in and fan-out patterns are implemented using the primitives of \textit{ZeroMQ}.
 These primitives provide useful patterns for communication, e.g.\ pipeline and publish/subscribe patterns.
 Using something like \textit{ZeroMQ} and not developing our own ad-hoc solution, allows us to leverage well-tested technologies, and focus on the beacon itself instead.
@@ -43,7 +41,7 @@ Previously, some security vulnerabilities have been found in \textit{ZeroMQ} reg
 
 
 \subsubsection{Python}
-% Python for components for fast prototyping. Other languages where performance is important
 The components of our beacon are mainly implemented using Python 3, both for fast prototype turnaround, but also because of a state of the art \textit{ZeroMQ} library.
 However, in some cases the performance overhead in Python is unsuitable for the task at hand.
 Fortunately, Python programs can easily be extended with C code, and entire components can be implemented in this fashion if deemed necessary.
+

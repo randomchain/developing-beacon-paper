@@ -29,7 +29,7 @@ DREAD consists of five metrics~\cite{dread}, that we score on a scale of 1 to 3 
 Discoverability can, however, be considered to reward security through obscurity.
 As such we will not consider it, as an adversary with unlimited resources is expected to have knowledge of all possible exploits.
 
-In the following section, all threats are accompanied with a DREAD scoring which is portrayed as follows:
+In the following section, all threats are accompanied by a DREAD scoring which is portrayed as follows:
 \vspace{\dimexpr-1\parsep-1\parskip\relax}% Fixing centering spacing
 \begin{center}
 \begin{tikzpicture}[xscale=0.25, yscale=0.25, baseline=-.5ex]
@@ -55,13 +55,18 @@ The list is split into two parts; first attacks that threaten the availability o
 A summary of the threats can be seen in \vref{tab:threat-categorization}.
 
 \subsubsection{Threats to Availability}
-Generally, availability attacks are not highly damaging. If the beacon is not available, users will potentially not have a stake in the output in the first place. The special case is an output withholding attack and eclipsing the beacon before output, both making users believe there is going to be an output, but it never comes. In these cases, users will have placed their stake in the beacon output, but the protocol fails. Another thing to consider is that users faith in the beacon will be eroded for each time it fails to output. This in turns makes it less attractive for operators to attack the availability, as they will slowly drive their userbase away.
+Generally, availability attacks are not highly damaging.
+If the beacon is not available, users will potentially not have a stake in the output in the first place.
+The special case is an output withholding attack and eclipsing the beacon before output, both making users believe there is going to be an output, but it never comes.
+In these cases, users will have placed their stake in the beacon output, but the protocol fails.
+Another thing to consider is that users' faith in the beacon will be eroded for each time it fails to output.
+This in turns makes it less attractive for operators to attack the availability, as they will slowly drive their userbase away.
 
 \newcommand{\parathreat}[1]{\paragraph{#1}\hspace{-1ex}}
 
 \parathreat{Input Flooding}\drea{2,3,2,3,10}
 Outsiders can overwhelm the beacon with inputs to prevent other users from contributing their own input, thus denying service.
-Another approach could be perform a \gls{dos} attack on the central server of the beacon to prevent operation.
+Another approach could be to perform a \gls{dos} attack on the central server of the beacon to prevent operation.
 This is quite a big threat as users can temporarily be denied service, and the attack is quite easy to execute --- any determined adversary could rent a botnet to flood input collectors.
 %D 2 - the beacon will be back, R 3 - anyone can borrow a bAll threats are accompanied with a DREAD scoring which looks like this: \drea{2,3,2,3,10}. The first four numbers are each for the first four DREAD metrics. The fifth, discoverability, is omitted. The last number, $\Sigma$ is the sum of the prior numbers, and used as a severity indicator.otnet for dos attacks, and operator can pull the plug, E 2 - they need to use a dos tool,  A 3 - noone can use the beacon, but eclipse would only hit 1 user.
 
@@ -112,13 +117,13 @@ It is also easy for any operator capable of pre-computing the output, and affect
 
 \parathreat{Man in the Middle}\drea{3,1,1,3,8}
 Adversaries can intercept and change data sent between user and beacon.
-This threat is could be significantly damaging but also extremely hard to execute for adversaries.
+This threat could be significantly damaging but also extremely hard to execute for adversaries.
 Due to the nature of beacons we recommend using them when you need to agree on some random number --- thus, to intercept and manipulate inputs and outputs, the adversary would have to distribute the manipulated number to all users, as they would otherwise disagree on the numbers, leading to the manipulation being discovered.
 %D 3 - ruins beacons output, R 1 - needs to send to all users , E 1 - must be done to all users, A 3 - affects all users.
 
 \parathreat{Emitting False Output}\drea{2,1,2,3,8}
 A malicious operator can output false results of the computation that benefit him.
-While this is technically a threat to the beacons integrity, the effects should be similar to those of a withholding attack.
+While this is technically a threat to the integrity of the beacon, the effects should be similar to those of a withholding attack.
 This is due to the fact that simply publishing false output would rapidly be discovered in a transparent authority beacon, making the output unusable, but also removing any faith in the operator.
 %Equivalent to withholding attack, as users can verify that the output is false.
 
@@ -126,7 +131,7 @@ This is due to the fact that simply publishing false output would rapidly be dis
 The operator can give access to the output earlier to some parties than others --- potentially selling early access.
 This threat can also be quite large, as we know nothing of how early access can be granted compared to when the randomness is used.
 It also violates the unpredictability property of the beacon, and is easily executable for any malicious operator of the beacon.
-In worst case it would affect all users.
+In the worst case it would affect all users.
 %D 3 - beacon can precompute simple outputs, R 3 - easy to repeat, E 2, A 3 - worst case everyone is affected
 
 \parathreat{Cryptography Exploit}\drea{3,3,1,3,10}
@@ -141,3 +146,4 @@ In this case one might also consider the effect quantum computers would have on 
 To reiterate, an insider can perform outsider attacks, and outsiders can perform insider attacks if they obtain sufficient privileges.
 
 \subimport{}{threat_table.tex}
+

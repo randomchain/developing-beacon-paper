@@ -1,6 +1,6 @@
 \section{Future Works}%
 \label{sec:future_works}
-This section outlines next steps to explore in regards to our randomness beacon.
+This section outlines next steps to explore regarding our randomness beacon.
 
 \mtjnote{More future work?}
 
@@ -9,19 +9,21 @@ This section outlines next steps to explore in regards to our randomness beacon.
 To ease users interaction with the beacon and the process of verification, some usability applications could be implemented.
 
 This could be in the form of a \enquote{client} application, which facilitates input submitting and output verification.
-Interacting with such an application could from the users perspective be as simple as running it in the background, while the application then constantly inputs to the beacon, and verifies both inclusion of said input and correct computation of the output.
+Interacting with such an application could from the users' perspective be as simple as running it in the background, while the application then constantly inputs to the beacon, and verifies both inclusion of said input and correct computation of the output.
 The user could then at any time poll the application for a \emph{verified} beacon output.
 In this scenario, the user would inherently need to trust the application to not be acting malicious.
 
 Another usability application, taking a far simpler approach, could be a simple verification service.
 It would allow users to painlessly check if their input was used in a beacon output.
 Since our beacon uses a Merkle tree for storing the inputs, the verification service could provide users with proofs of inclusion, without them needing to fetch the entire set of used inputs.
-In fact, user would at most need to download $\log n + 1$ nodes in the Merkle tree, to validate the proof; this is further explained in~\vref{ssub:combining_inputs}.
+In fact, user would at most need to download $\log{n} + 1$ nodes in the Merkle tree, to validate the proof; this is further explained in \vref{ssub:combining_inputs}.
 Users could then correlate the valid proof with the output of the beacon for complete verification.
 
 \subsection{Incentives}
-\mtjnote{We have assumed the beacon will be run for a greater good, however we do not really know if this is viable. Write about that incentives need to be sorted out before anyone will run the beacon.}
+\mtjnote{We have assumed the beacon will be run for a greater good, however we do not really know if this is viable.
+Write about that incentives need to be sorted out before anyone will run the beacon.}
 
 \subsection{Zero Knowledge Verification Proofs}%
 \label{sub:zero_knowledge_verification_proofs}
 \fxnote{Using zero knowledge to verify beacon outputs.}
+

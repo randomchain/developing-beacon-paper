@@ -3,7 +3,7 @@ As stated, beacons are relevant in contexts where several users want to agree on
 
 Consider the generic use case of sampling.
 Essentially, sampling is about selecting representative data points, potentially with high stake consequences.
-It would not be far-fetched to imagine someone wanting to bias this sampling process in order to skew the results.
+It would not be far-fetched to imagine someone wants to bias this sampling process in order to skew the results.
 One such sampling process is lotteries, which need to randomly sample a pool of participants to draw winners.
 
 The field of cryptography also contains use cases.
@@ -17,4 +17,5 @@ However, the \gls{mpc} scales poorly because of the many rounds of communication
 \citet{mpcsnarks} suggest avoiding the heavy communication and computation, and instead propose a simpler \gls{mpc} where users directly contribute a random number.
 To avoid the last user carefully choosing their input to manipulate the bootstrapping to their benefit (a so-called \emph{last-draw attack}), an output from a randomness beacon is applied as the last input.
 As such, they decrease the number of rounds in the \gls{mpc} protocol from four (plus several subprotocol rounds) to just two, decrease the amount of communication between users, and decrease the complexity of the computation.
-Thus a lengthy \gls{mpc} is substituted with a quick round of user input and sealing the deal with a randomness beacon.
+Thus, a lengthy \gls{mpc} is substituted with a quick round of user input and sealing the deal with a randomness beacon.
+

@@ -10,7 +10,8 @@ Only one component can bind to a given socket while many can connect to that sam
 
 In the \enquote{publish/subscribe} pattern \textit{ZeroMQ} handles the message routing based on subscription prefixes, which means less traffic on our network.
 Furthermore, the fan-in pipelining is implemented with a \enquote{push/pull} socket pair which ensure fair operation, thereby avoiding starvation of components.
-Lastly, \textit{ZeroMQ} guarantees atomic delivery of messages, which means that we can assume all parts of a message or none at all. This is the most desirable scenario for us since lost messages should be relatively insignificant, while malformed messages usually means strenuous error and edge case handling.
+Lastly, \textit{ZeroMQ} guarantees atomic delivery of messages, which means that we can assume all parts of a message or none at all.
+This is the most desirable scenario for us since lost messages should be relatively insignificant, while malformed messages usually means strenuous error and edge case handling.
 
 \subsubsection{Proxies}
 In the interest of rapid iteration and ease of configuration, we deploy proxies at key points in the pipeline.
@@ -20,12 +21,14 @@ We insert two proxies in the network: one between input collectors and the input
 Another benefit of using proxies is the ability to have a many-to-many connection, since the proxy binds both its frontend and backend socket, which components then connect to.
 
 These proxies are written in C for performance and since they utilize a \textit{ZeroMQ} primitive for the actual forwarding, their operation is quite stable.
-It should be noted that these proxies inherently introduce single points of failure in our beacon, which potentially could be detrimental for continuous and stable operations. In then next section (\vref{sec:proxy-avail}), we describe a way to mitigate this.
+It should be noted that these proxies inherently introduce single points of failure in our beacon, which potentially could be detrimental for continuous and stable operations.
+In \vref{sec:proxy-avail}, we describe a way to mitigate this.
 
 While the two proxies serve the same purpose, i.e.\ pass along traffic between components, their workloads are vastly different.
 The proxy between computation and publishers is a \textit{forward} proxy, which transparently facilitates publish/subscribe pattern.
 In our beacon, this proxy will never see a high frequency of messages, since the number of outputs, commits, and proofs, are limited by the beacon output frequency.
-The proxy will, however, be subjected to significantly larger messages, due to especially commits which must contain every input used in the output computation. Even with the large message, the infrequency of them is far from saturating the capacity in this proxy.
+The proxy will, however, be subjected to significantly larger messages, due to especially commits which must contain every input used in the output computation.
+Even with the large message, the infrequency of them is far from saturating the capacity in this proxy.
 
 Between the input collectors and input processor, we have a \textit{stream} proxy, which ensures that the fan-in and fan-out patterns are executed fairly, i.e.\ no connected components are starved.
 This is facilitated through a round-robin message distribution.
@@ -52,3 +55,4 @@ In the system, user interaction is the most demanding task regarding availabilit
 
 Summarizing, the reliability of the beacon could be greatly improved by eliminating single points of failure, such as the proxies and input processor.
 However, changes as these are fairly trivial to implement, and we deem them unnecessary for a \gls{poc} random beacon.
+

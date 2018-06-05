@@ -16,7 +16,8 @@ This is done to mitigate testing inputs, which are significantly faster to find 
 
 In \vref{fig:sloth_comptime} we illustrate the correlation between these two parameters, and the time it subsequently takes to do a computation with a given combination of bits and iterations.
 We see that an increase in number of bits used for the prime number results in an exponential growth of the computation time, while an increase in number of iterations cause a linear growth.
-The data points in the plot are highly regular as expected and it only depends on single-core performance. It shows that the computation time is reliable and grows as expected without significant deviations.
+The data points in the plot are highly regular as expected and it only depends on single-core performance.
+It shows that the computation time is reliable and grows as expected without significant deviations.
 
 While computation time is important for the delay function, another significant metric is verification time --- especially in relation to the computation time.
 \vref{fig:sloth_compfactor} illustrates this relationship, where the $z$-axis shows how many more times it takes to compute the output relative to how long it takes to verify.
@@ -26,3 +27,4 @@ This means that in configurations with more than roughly 3,000 iterations, the c
 We also see that the number of bits does not affect the factor except for some irregularities in the data.
 These irregularities are believed to partly be caused by the extra time it potentially can take to initially find the prime number; an operation which can vary in time depending on how close the numeric representation of the hashed input string is to a prime.
 Since larger primes (given by number of bits) can be more difficult to find, the data fluctuates more at larger number of bits.
+

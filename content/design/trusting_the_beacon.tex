@@ -8,7 +8,8 @@ The only assumption about these adversaries, is that they can interact with the 
 However, in the second scenario an adversary has total control of the beacon.
 
 Because network latency is dependent on many variables in a system and virtually impossible to verify, Alice should not trust any claim from the beacon operator regarding latency.
-To protect herself, Alice should assume that any inputs she sends is received immediately by the beacon, and vice versa --- any message from the beacon is received instantly by her. This can be considered a \enquote{worst-case} time.
+To protect herself, Alice should assume that any inputs she sends is received immediately by the beacon, and vice versa --- any message from the beacon is received instantly by her.
+This can be considered a \enquote{worst-case} time.
 This means that the beacon will not be able to claim different timings than what Alice observes --- and as this observation is all she can trust, she should base her decisions on that.
 
 \paragraph{Scenario \#1: An Honest Operator}
@@ -52,3 +53,4 @@ However, if the malicious operator cannot compute an outcome they deem beneficia
 This will leave Alice without any output, a withholding attack, and she will not know if the operator was malicious or disrupted by a third party adversary.
 
 \subimport{}{sequence_diagram_malicious_operator.tex}
+

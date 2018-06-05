@@ -3,5 +3,9 @@ One way of evaluating our beacon is to examine the performance of the key parts.
 In this section we explore the performance of potential system bottlenecks to gauge reasonable throughput.
 We also investigate our chosen delay function \textit{sloth} and different configurations of it.
 
-All tests are executed on a server with an \textit{Intel Core i7-2600}~CPU, which runs at $3.40$~GHz and has 4 cores. As such, it can run 4 simultaneous sloth computations. Further, it supports simultaneous multithreading, \enquote{hyper-threading}, but irrelevant to our system. While it might improve total throughput of multiple computations, it also does not speed up individual runs of sloth.
+All tests are executed on a server with an \textit{Intel Core i7-2600}~CPU, which runs at $3.40$~GHz and has 4 cores.
+As such, it can run 4 simultaneous sloth computations.
+Further, it supports simultaneous multithreading, \enquote{hyper-threading}, but irrelevant to our system.
+While it might improve total throughput of multiple computations, it also does not speed up individual runs of sloth.
 We use \textit{SHA512} as the underlying hashing algorithm in both the Merkle tree and in the \textit{sloth} delay function.
+

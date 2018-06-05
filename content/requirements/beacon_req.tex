@@ -20,7 +20,10 @@ This also requires the process to be deterministic which in turn removes the opt
 However, the output should still be unpredictable, even to the beacon operator.
 
 \subsection{Open and Secure Protocol}\label{sec:open_and_secure_protocol}
-Anyone should be able to easily contribute to the beacon protocol to influence the random generation. There should be no requirements imposed on users to limit their contribution rate besides \gls{dos} protection. The protocol should be secure meaning that even if only a single participant is honest, the output is still unpredictable. This single participant will in the worst case be you.
+Anyone should be able to easily contribute to the beacon protocol to influence the random generation.
+There should be no requirements imposed on users to limit their contribution rate besides \gls{dos} protection.
+The protocol should be secure meaning that even if only a single participant is honest, the output is still unpredictable.
+This single participant will in the worst case be you.
 
 \subsection{Timely Publishing}\label{sec:timely_publishing}
 The input, output, and any data needed for verification of an output should be enforced to be published as soon as possible to make the beacon more transparent.
@@ -46,8 +49,3 @@ Should a single channel be attacked, input could still be submitted to another.
 This requirement further increases usability since different users may prefer different input and output channels.
 We also consider fault tolerance a valuable property to have, and having multiple channels still allows users to input if one fails.
 
-% To summarize, we have the following requirements for our beacon:
-% \paragraph{Transparent Operation} Users are able to oversee the protocol and see any deviation. This means that users are able to verify that the input is valid, i.e.\ their own input is included, and able to verify the output is valid, i.e.\ that the output is computed correctly from the input. Furthermore, the output is deterministic and unpredictable, which means that randomness is introduced because users are not able to reproduce or verify the randomness, but still, the output is unpredictable.
-% \paragraph{Modular Input and Output Methods} Ability to include multiple input channels and multiple output channels provides redundancy in these areas.
-% \paragraph{Timely Publication} The beacon is not able to significantly keep or delay output without users noticing.
-% \paragraph{Fault Tolerance} The beacon is designed and implemented in such a way that a high fault tolerance is present.
