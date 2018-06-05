@@ -149,7 +149,7 @@
 \usepgfplotslibrary{external, fillbetween, patchplots, groupplots}
 \pgfplotsset{compat=newest}
 \usetikzlibrary{%
-    calc, positioning, fit, arrows.meta, backgrounds, math, external
+    calc, positioning, fit, arrows.meta, backgrounds, math, external, trees
 }
 \usetikzlibrary{decorations.text}
 % \tikzexternalize[prefix=figures/]
@@ -187,7 +187,7 @@ Butt Cap[]. Square[length=0pt 1] Square[length=0pt 1, sep=0pt]}}
 \usepackage{listings}
 
 %Minted makes nice looking code listings, but requires listings
-\usepackage{minted}
+\usepackage[outputdir=cache]{minted}
 \newminted[python]{python}{frame=leftline, framesep=2mm, linenos, fontsize=\footnotesize, baselinestretch=1.1, autogobble}
 \usepackage{tcolorbox}
 
