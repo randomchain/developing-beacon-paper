@@ -34,10 +34,12 @@ However, it may also be harder for adversaries to bias the beacon through the so
 A user can be allowed to directly provide input to the beacon.
 The idea is that a user provides a value that they firmly believe is sufficiently random, such that nobody could have predicted the value. In other words, users know their own value is fresh, and no other party could have realistically have used this value before.
 There exists no concept of ownership of specific values, which means that users should trust the input they give, and not the fact that it is their own.
-The beacon then performs an operation on a set of user-supplied inputs.
+However, for simplicity sake we, throughout this paper, refer to an input trusted by a given user to be said user's input.
+
+The beacon performs an operation on a set of user-supplied inputs.
 The output of the beacon is structured in a way that
 \begin{eletterate*}
-    \item allows all users to verify the inclusion of their value and
+    \item allows all users to verify the inclusion of their input and
     \item allows all users to verify the validity of the computation.
 \end{eletterate*}
 
