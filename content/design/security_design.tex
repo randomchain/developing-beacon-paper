@@ -1,7 +1,6 @@
 \subsection{Security Design}%
 \label{sub:security_design}
-
-From a security perspective, new attack surfaces are introduced by splitting up the system from a monolithic self-contained architecture to a service-oriented kind.
+From a security perspective, new attack surfaces may be introduced by splitting up the system from a monolithic self-contained architecture to a service-oriented kind.
 When designing a composable system such as our randomness beacon it is important to take the inter-component communication into account.
 For example, the architecture can potentially make it possible for adversaries to block out parts of the system, by means of \gls{dos} attacks.
 The protocol used to communicate from service to service must be secure in a way that prevents adversaries from being able to covertly manipulate the messages.
@@ -16,8 +15,10 @@ We have designed this workflow to govern the security of the beacon, and is one 
 It means that each published output is paired with a commitment which can be used in the verification of the beacon.
 The operator must publish the commitment a significant amount of time before the output is published --- otherwise, the beacon operator could just publish a commitment to any desired output.
 Furthermore, the operator is limited to a single commitment --- otherwise the operator could publish several commitments and only publish the most desirable output.
-Contrary to other approaches of transparent authorities, we have decided on an even more transparent approach: The commitment contains all data required for the computation, consisting of all hashes we have received from the input collectors.
+
+Contrary to other approaches of transparent authorities, we have decided on an even more transparent approach: The commitment contains all data required for the computation and all inputs.
 To our knowledge, we are the first to take transparency to this extreme.
+
 The transparency allows any party to compute the randomness alongside the beacon operator.
 It ensures that the operator can not cause much damage by withholding output or by deciding not to open a traditional (e.g.\ hashed) commitment.
 In essence, it reduces the \enquote{market value} of the output, making it less attractive to leak output (i.e.\ sell early access to the output) because everyone can just compute it.

@@ -12,35 +12,37 @@ Fundamentally, users should be able to see which inputs have been used to produc
 This benefits the integrity of the beacon as some previously mentioned attacks would be detected in this setting.
 It is also a necessity for our chosen type of input model, \emph{user input}, which requires users' ability to verify that their own input is used to produce outputs.
 
-The first part of this is the input --- users should be able to see which inputs are used to produce an output of randomness.
+Firstly, users should be able to see which inputs are used to produce an output.
 Being able to verify whether their own input has been used allows users to determine whether they should trust the output.
 If their input has not been used, they should not trust it.
 Secondly, they should be able to repeat the process on their own computers as a means of verification.
-This also requires the process to be deterministic which in turn removes the option for true randomness.
+This also requires the process to be deterministic.
 However, the output should still be unpredictable, even to the beacon operator.
 
 \subsection{Open and Secure Protocol}\label{sec:open_and_secure_protocol}
 Anyone should be able to easily contribute to the beacon protocol to influence the random generation.
 There should be no requirements imposed on users to limit their contribution rate besides \gls{dos} protection.
-The protocol should be secure meaning that even if only a single participant is honest, the output is still unpredictable.
-This single participant will in the worst case be you.
+The protocol should be secure meaning that even if only a single user is honest, the output is still unpredictable.
+This single user will in the worst case be you.
 
 \subsection{Timely Publishing}\label{sec:timely_publishing}
-The input, output, and any data needed for verification of an output should be enforced to be published as soon as possible to make the beacon more transparent.
+The protocol should enforce that input, output, and any data needed for verification of an output is published as soon as possible to make the beacon more transparent.
 By having a requirement of timeliness at the protocol level, we restrict the time a malicious operator has available to diverge from protocol before users will suspect them.
 
 Giving users all the tools to replicate and oversee the process makes it difficult for adversaries to covertly manipulate the beacon to their benefit, and allows users to complete output computation themselves if the beacon stalls.
 This in turn mitigates one of the greatest threats from the operator, input manipulation.
 A beacon that does not reveal which inputs were used before publishing the output will essentially be admitting that they picked the inputs to bias the output.
 
-\subsection{Practical}\label{sec:practical}
+\mtjnote{Regular vs. fixed outputting}
+
+\subsection{Practicalities}\label{sec:practical}
 A part of the goal is to create a beacon that is practical and implementable in the real world.
 As such, we value requirements that other purely theoretical approaches may not consider.
 Scalability of all components is important as we envision a general beacon suitable for many use cases.
 Therefore, it should scale to at least several thousand users contributing with user input in every output.
 Here, other approaches usually only focuses on scalability of the core theory, but we will consider all parts.
 
-If users lose confidence in an operator, a new operator and thus new beacon, can be chosen instead.
+If users lose confidence in an operator, a new operator and thus new beacon can be used instead.
 As the beacon is expected to be run as a greater good, nobody should need to make any large investment to deploy a beacon instance and become operator of it.
 As such, we value easy deployment and installation of the beacon, in order for it to not be a hindrance for deciding to run a beacon.
 

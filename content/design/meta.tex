@@ -1,17 +1,12 @@
 \section{Design}\label{sec:design}
-\mtjnote{This Design section should refer back to ALL requirements. Please check!}
-
-This section describes our beacon design the majority of which is concerned with security as it is the most important aspect of any randomness beacon.
-Since we emphasize examining the bridge between theory and a functioning beacon we naturally also consider practicalities such as scalability.
-
+This section describes our beacon design, the majority of which is concerned with mitigating threats as security is an important aspect of any randomness beacon.
 The design choices are based on fulfilling the requirements and incorporating mechanisms to prevent as many of the threats identified in the threat analysis.
 
 \subsection{Architecture}\label{sec:design_architecture}
 To meet the requirements of modular input and output and fault tolerance, we use a \gls{soa} in the beacon design.
 This architecture splits systems into application components, also called services.
 These services serve a single purpose, i.e.\ they each logically represent part of the activity needed for the entire system and have a specified outcome.
-Communication between services is done according to a well-defined protocol, such that no one service is reliant on the inner workings of another;
-a component, or service, should be seen as a self-contained black box.
+Communication between services is done according to a well-defined protocol.
 
 This architecture provides loose coupling in the system and also allows for easier fault tolerance since services, being black boxes, are easily replaceable on failure.
 Furthermore, each service can be scaled as needed.
