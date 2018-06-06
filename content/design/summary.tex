@@ -1,4 +1,4 @@
-\subsection{Summary}
+\subsection{Mitigated Threats}
 In the process of designing our beacon, we have considered the threats to a beacon and designed measures to mitigate them.
 We present the threats we consider to be successfully mitigated with our design.
 
@@ -8,21 +8,25 @@ Because of the amount of inputs, the input space will likely be larger than the 
 Utilizing a hashing algorithm with diffusion and confusion properties, any input, no matter the quality, will unpredictably affect the output.
 It is not possible to statistically reason about the output of the beacon related to the input, besides being well-distributed.
 
-\parathreat{Input Manipulation and Biasing}\drea{3,3,2,3,11}
-We have designed the beacon around delay functions specifically to prevent these kinds of attacks.
-As previously mentioned, they require an adversary, insider or not, to spend a significant amount of time to compute a single pre-image, which is essential to this type of attack.
+\parathreat{Input Manipulation}\drea{3,3,2,3,11}
+We have designed the beacon around delay functions specifically to prevent this attack.
+As previously mentioned, it requires an adversary, to spend significant resources to compute a single pre-image before releasing a commitment, which is essential to this type of attack.
 This also makes any attempt at this attack from the operator equivalent to a withholding attack, as users should not use an output they did not see a timely commit for.
 
+\parathreat{Input Biasing}\drea{3,3,2,3,11}
+This threat is mitigated by the same means as the previously addressed threat mitigation --- input manipulation.
+
 \parathreat{Leaking Output}\drea{3,3,2,3,11}
-Our delay function based CCO workflow also prevents the operator from leaking outputs that give any significant advantage.
+Our delay function based \gls{cco} workflow also mitigates the operator leaking outputs that give any significant advantage.
 An output will never be used unless a commit for it is seen, and the commit contains all the data required to compute the output alongside the operator --- thus the operator can only leak outputs that are already pre-determined, removing their \enquote{market value}.
 
-With this we have covered some of the largest threats to the integrity of the beacon, making the beacon significantly more secure.
-
-\parathreat{Withholding Attack}\drea{2, 2, 2, 3, 9}
-The \acrshort{cco} workflow mitigates this type of attack.
+\parathreat{Withholding Attack}\drea{2,2,2,3,9}
+The \gls{cco} workflow accompanied by a delay function mitigates this type of attack.
 Using delay functions and requiring the beacon to publish a commit to a set of inputs before computing, prevents malicious operators from pre-computing outputs, and withholding if they are not beneficial.
 The operator could still withhold the commit to prevent availability, but they can not know whether the output favors them or not.
 
+\bigskip
+With this we have covered some of the largest threats to the integrity of the beacon, making the beacon significantly more secure.
 There are still a number of unmitigated threats toward the beacon, but these will be discussed in \vref{sec:discussion}.
+\mtjnote{reeeeeeeeeeeeeee. Maybe move that discussion to here}
 

@@ -10,30 +10,31 @@ We consider ceremonies for two types of lottery applications:
 \item with a weekly lottery service (\enquote{large lotteries}).
 \end{eletterate*}
 We illustrate the differences between the two and how to structure the use of the beacon to obtain randomness in line with our security goals.
-Finally, we consider how to use the beacon for applications that require randomness at a higher frequency.
 
 \subsubsection{Small Lotteries}
 Consider a group of three friends that organize a small lottery among themselves.
-To prevent cheating (however tongue-in-cheek it might be) they decide to use our beacon to pick the winner.
-Recall that a user can only trust an output that they have inputted to --- so all three of them must be able to find their inputs in a single output to use it.
+To prevent cheating they decide to use our beacon to pick the winner.
+Recall that a user can only trust an output that they have inputted to --- so all three of them must be able to find their inputs in a single output in order to use it.
 
-We also do not guarantee any single output, so we advise users to repeatedly submit their inputs unless they see a commit with their input and a corresponding output.
+We also do not guarantee any single output to contain the inputs of all three friends, so we advise users to repeatedly submit their inputs unless they see a commit with their input and a corresponding output.
 
-Practically, each friend announces a commit to a specific input before repeatedly inputting it to the beacon, until a commitment is released by the beacon which contains all three inputs.
-They should then use the output that corresponds to that commitment and use that to determine who wins by applying the mapping from the 512-bit output to a number between 1 and 3.
+Each friend commits to a specific input before repeatedly inputting it to the beacon, until a commitment containing all three inputs is released by the beacon.
+They should then use the output that corresponds to that commitment and use that to determine who wins.
+How the three friends maps the output space of the beacon to their three outcomes, should be agreed upon before engaging in the lottery.
 
 \subsubsection{Large Lotteries}%
 \label{ssub:large_lotteries}
 While the approach of having everyone input works for small groups, we cannot reasonably expect every participant in large groups to repeatedly input to the beacon until a common commitment containing all inputs is found.
 
-Instead, we consider a weekly lottery that is open for anyone to purchase tickets.
+We consider a weekly lottery that is open for anyone to purchase tickets.
 Since we cannot wait for simultaneous inputs from all customers, we instead use the set of beacon outputs produced during the lottery lifetime, giving customers a larger time-frame to influence the outcome.
-Practically, a transparent way to signal the last beacon output to use is needed, so the lottery must commit to a \textit{stop message}, by revealing the string.
-This stop message must be cryptographically secured by signing it, such that no other party can send the message and thus stop the lottery prematurely.
+To determine the lottery lifetime, and more specifically when to stop collecting beacon outputs, a transparent way to signal the last beacon output to use is needed.
+Practically, the lottery must commit to a \textit{stop message}.
 
 The lottery then collects all beacon outputs published in the duration of the lottery, and combines them for use in the final decision, e.g.\ by use of a hashing function.
 This combining should be predetermined such that the output of said operation is as unpredictable as the beacon outputs themselves.
 Once it is time to draw the winners, the lottery sends a signed version of the previously mentioned stop message as input to the beacon.
+The stop message must be cryptographically secured by signing it, such that no other party can send the message and thus stop the lottery prematurely.
 When a commit from the beacon containing the signed stop message has been seen the lottery entity, the lottery entity then announces the signed version of the message.
 The beacon output containing the stop message is then the final one used in the aforementioned output combining, which can now determine who wins.
 
@@ -42,11 +43,9 @@ This scheme relies on the lottery being able to end their collection of input se
 \item users can verify the presence of the signed stop message in the output by checking the beacon commitment;
 \item users can verify that the stop message was sent by the lottery, as they can verify the signature;
 \item users can be certain that the lottery did not craft the stop message to bias the input in a last-draw attack, as it was committed to at the beginning of the lottery; and finally
-\item users can be sure that adversaries did not craft a last-draw attack around the stop message, as they did not know the secret message beforehand.
+\item users can be sure that adversaries did not craft a last-draw attack around the stop message, as they did not know the signature of the message beforehand.
 \end{enumberate*}
 
 Users will also have a large opportunity to input to the beacon to influence the final draw.
 This ceremony extends the \enquote{three friends' lottery} to accept inputs from a large group over an extended period.
-
-One could also consider using the customers ticket purchases as input to the beacon, ensuring all customers have influenced the output.
 

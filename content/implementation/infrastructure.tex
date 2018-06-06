@@ -1,5 +1,6 @@
 \subsection{Infrastructure}%
 \label{sub:infrastructure}
+\mtjnote{add returning hashes to users on figggggg.}
 Establishing a solid and scalable infrastructure is a significant part of implementing our beacon.
 We choose not to rely on running all components of the beacon on the same machine.
 
@@ -8,7 +9,7 @@ This means that operations such as reading bytes from the sockets and reconnecti
 Sockets in \textit{ZeroMQ} require one end to bind and the other to connect, and usually it is recommended that the most stable or consistent component binds, while dynamic or unstable components connect.
 Only one component can bind to a given socket while many can connect to that same socket.
 
-In the \enquote{publish/subscribe} pattern \textit{ZeroMQ} handles the message routing based on subscription prefixes, which means less traffic on our network.
+Between computation nodes and publisher, the \enquote{publish/subscribe} pattern provided by \textit{ZeroMQ} handles the message routing based on subscription prefixes, which means less traffic on our network.
 Furthermore, the fan-in pipelining is implemented with a \enquote{push/pull} socket pair which ensure fair operation, thereby avoiding starvation of components.
 Lastly, \textit{ZeroMQ} guarantees atomic delivery of messages, which means that we can assume all parts of a message or none at all.
 This is the most desirable scenario for us since lost messages should be relatively insignificant, while malformed messages usually means strenuous error and edge case handling.
@@ -17,6 +18,7 @@ This is the most desirable scenario for us since lost messages should be relativ
 In the interest of rapid iteration and ease of configuration, we deploy proxies at key points in the pipeline.
 This allows us to add and remove components easily from the network, since components then do not need to know of each other --- they only need to know of the proxies.
 An alternative would be to use some form of service discovery to allow components to discover and connect to each other directly.
+
 We insert two proxies in the network: one between input collectors and the input processor and one between computation and publishers, as depicted in \vref{fig:impl_figure}.
 Another benefit of using proxies is the ability to have a many-to-many connection, since the proxy binds both its frontend and backend socket, which components then connect to.
 
@@ -26,7 +28,7 @@ In \vref{sec:proxy-avail}, we describe a way to mitigate this.
 
 While the two proxies serve the same purpose, i.e.\ pass along traffic between components, their workloads are vastly different.
 The proxy between computation and publishers is a \textit{forward} proxy, which transparently facilitates publish/subscribe pattern.
-In our beacon, this proxy will never see a high frequency of messages, since the number of outputs, commits, and proofs, are limited by the beacon output frequency.
+In our beacon, this proxy will never see a high frequency of messages, since the number of outputs, commits, and proofs are limited by the beacon output frequency.
 The proxy will, however, be subjected to significantly larger messages, due to especially commits which must contain every input used in the output computation.
 Even with the large message, the infrequency of them is far from saturating the capacity in this proxy.
 
@@ -37,21 +39,21 @@ While the messages are remarkably smaller (64 bytes of application data), the am
 
 In the later \vref{sub:bottlenecks}, we evaluate the performance of our proxies.
 
-\subsubsection{High-Availability}\label{sec:proxy-avail}
+\subsubsection{High Availability}\label{sec:proxy-avail}
 One way to mitigate single points of failures could be to implement a pattern called \enquote{binary star} by \textit{ZeroMQ}.
 Here a component is configured with two instances, a primary and a backup.
 The backup can then take over and signal for a new backup to be started if the primary disappears from the network.
 This pattern can potentially be applied to all components exposed as a single point of failure and would be sufficient in most cases of crashes.
-
 Some scenarios where this pattern can improve availability are hardware failure, instability or disappearance of the network link, or the component code crashing.
+
 The success of such a \enquote{binary star} pattern also depends on the assumption that both the primary and backup will not fail at the same time, which might prove difficult to guarantee if our system is under attack.
-However, as we deploy a pipeline architecture, the randomness beacon will run under the notion of being \enquote{grinding gears of time}, meaning that we generally only move forward and missing inputs or computations is considered an affordable loss.
+However, as we deploy a pipeline architecture, the randomness beacon will generally only move forward; missing inputs or computations is considered an affordable loss.
 
 Avoiding availability issues when encountering byzantine components is often more troublesome than mitigating crashes, since adversarial components will try to display correct operation.
 We deem this as outside the scope of our randomness beacon, where we instead opt to make suspicious activity such as manipulated packages detectable.
 
-Another measure to provide high-availability in the beacon is the delegation of user interaction to input collectors and publishers.
-In the system, user interaction is the most demanding task regarding availability, and the statelessness of the components means that adding new instances is as easy as executing a shell command.
+Another measure to provide high availability in the beacon is our delegation of user interaction to input collectors and publishers.
+In the system, user interaction is the most demanding task regarding availability, and the statelessness of the components means that adding new instances is as easy as executing a shell command as the operator.
 
 Summarizing, the reliability of the beacon could be greatly improved by eliminating single points of failure, such as the proxies and input processor.
 However, changes as these are fairly trivial to implement, and we deem them unnecessary for a \gls{poc} random beacon.

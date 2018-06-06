@@ -1,11 +1,10 @@
 \subsection{Exploring Trust Assumptions}%
 \label{sub:trusting_the_beacon}
-
 Given the precautions taken in the design, the amount of trust required to use the beacon should be minimal or non-existent.
 We propose two scenarios, which explore the users' trust assumptions towards the beacon.
 In both of these scenarios, we focus on a user named Alice, while all other users are regarded as potentially colluding adversaries with malicious intent.
-The only assumption about these adversaries, is that they can interact with the beacon in the same manner as Alice; i.e.\ send inputs to the beacon.
-However, in the second scenario an adversary has total control of the beacon.
+The only assumption about adversarial users, is that they can interact with the beacon in the same manner as Alice; i.e.\ send inputs to the beacon.
+In the second scenario the beacon operator is also an adversary and thus has total control of the beacon.
 
 Because network latency is dependent on many variables in a system and virtually impossible to verify, Alice should not trust any claim from the beacon operator regarding latency.
 To protect herself, Alice should assume that any inputs she sends is received immediately by the beacon, and vice versa --- any message from the beacon is received instantly by her.
@@ -18,10 +17,11 @@ The operation of the beacon is honest, which means that
 \begin{eletterate*}
 \item the beacon operator will accept all inputs, i.e.\ not exclude any;
 \item the commitment is published as soon as possible, i.e.\ right after a batch of inputs has been processed; and
-\item the output and proof is published immediately after the computation is done.
+\item the output and proof is published immediately after the computation, i.e.\ the delay function, is done.
 \end{eletterate*}
 This operation is also depicted in \cref{fig:beacon_honest_timeline}.
 
+Any adversarial users can try to manipulate the output by providing their own inputs, but Alice can disregard this, as long as she can verify the presence of her own input.
 With this honest beacon, Alice knows exactly how long the computation took, and can trust the output to not be manipulated in any predictable way.
 However, assuming that the beacon is honest is not advised, since it leaves Alice vulnerable by exploiting this trust.
 If Alice trusts the beacon operator to be honest, she will not suspect them to act according to scenario \#2.

@@ -17,9 +17,7 @@ Currently we use the SHA512 hashing algorithm since its digest size is 64 bytes,
 It could be argued that the 32 bytes of SHA256 are more than enough for any use case.
 However, SHA512 is actually roughly 1.5 times faster than SHA256 on a 64-bit CPU~\cite{sha512faster}.
 Therefore, we see no reason to limit the possibilities to $2^{256}$, since we do not expect 512 bits per input to be too much data.
-Furthermore, truncating a SHA512 to any desired length is safe~\cite{sha512faster}.
-It is important that the same hashing function is used throughout the system, since differences in output space will bias the outcome if the inputs are hashed multiple times --- which is the case.
-However, we implement the system such that the chosen hashing algorithm can be configured at beacon start.
+We implement the system such that the chosen hashing algorithm can be configured at beacon start.
 
 Notice that a beacon outputs twice per cycle.
 Before the delay function is applied, a commitment is released from the computation node and published through all publishers.

@@ -11,7 +11,7 @@ We develop these steps to be independent of each other, besides a well-defined c
 
 \subsubsection{Combining Inputs}%
 \label{ssub:combining_inputs}
-One way to combine and compile the inputs is the simple operation of concatenating them.
+One way to combine the inputs is the simple operation of concatenating them.
 This is then used as commitment data, while a hash of the commitment data can be used as the condensed output.
 This processing method requires the users to acquire the full commitment, if they want to confirm the inclusion of their input --- which can be suboptimal in cases of significantly many users.
 
@@ -19,18 +19,19 @@ Although our beacon implementation allows for virtually any input processing met
 A Merkle tree is a special binary tree where the value of each node is the hash of the concatenation of its two children.
 In our implementation this means that the leaf nodes are user inputs, which are already hashes, and the root node is the condensed output.
 For consistency, the hashing algorithm used to construct the tree is the same as the one applied to sanitize each input (SHA512).
+Truncating a SHA512 to any desired length is safe~\cite{sha512faster}.
 
 Merkle trees as commitment data allows third-party applications to provide verification, since the inclusion of a given leaf node in a Merkle tree can be verified by providing all siblings to the nodes on the path up to the root.
 This greatly limits the amount of data which the user needs to fetch and process to $\log{n} + 1$ where $n$ is the number of leaf nodes in a Merkle tree where all levels are filled, i.e.\ there is a power of two number of leaves.
-The data consists of are $\log{n}$ sibling nodes in the path to the root, and for comparison the root node as well (the $+1$).
+The data consists of $\log{n}$ sibling nodes in the path to the root, and for comparison the root node as well (the $+1$).
 The commitment data consist of only the leaf nodes.
 This is possible if they retain their ordering, and the algorithm to construct the tree is openly available.
 
-Another property of the Merkle tree is that, like hashing a concatenation of all collected inputs, each leaf node equally affects the root node.
+Another property of the Merkle tree is that, like hashing a concatenation of all collected inputs, each leaf node equally affects the root node, due to the diffusion property of the hashing algorithm.
 This means that any change to the set of inputs completely changes the root node in the Merkle tree.
 
 To the best of our knowledge Merkle trees has never been used in previous beacon implementations as a means of combining inputs.
-However, they are used in other cases where it is undesirable for users to fetch all data for verification, e.g.\ in \gls{btc} where a Merkle root of all transactions in a given block is stored in the block header.
+However, they are used in other cases where it is undesirable for users to fetch all data for verification, e.g.\ in bitcoin where a Merkle root of all transactions in a given block is stored in the block header.
 
 \subsubsection{Parallel Computation}%
 \label{ssub:parallel_computation}
@@ -42,11 +43,11 @@ It should be noted that if no such computational component is freely available, 
 Does no computation service announce itself within a given threshold, the input processor will give a warning to the system operator.
 This scenario should be unlikely since the beacon operator should configure the system to always have available computation components waiting for work.
 
-The worker announcements and subsequent work assignments are facilitated with \textit{ZeroMQ}'s \enquote{router/dealer} socket pair which allows asynchronous addressed messaging.
+The worker announcements and subsequent work assignments are facilitated with \textit{ZeroMQ}'s \enquote{router/\allowbreak{}dealer} socket pair which allows asynchronous addressed messaging.
 When a computational node connects to the input processor it sends a \code{READY} message, receives an \code{OK}, and proceeds to wait for incoming work; this process, accompanied by what follows inside the computational node, can be seen in \cref{lst:comp_node}.
-The input processor then keeps track of each announced worker, and when the time comes, sends condensed processing output and commitment data.
+The input processor then keeps track of each announced worker, and when the time comes, sends condensed processing output and commitment data to the next free worker.
 If the worker does not acknowledge the work with an \code{OK} response, the inputs are reprocessed, and the next free worker is assigned.
-This cycle continuous until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
+This cycle continues until a worker accepts the work, while new incoming inputs are included in each reprocessing of inputs.
 Having duplex communication between the input processor and the computation nodes is a practical compromise between a strict pipeline pattern and a monolithic input processor/computation node.
 
 \begin{algorithm}[tb]
@@ -87,11 +88,9 @@ The computation of \textit{sloth} iterates through modular square root permutati
 This is a significantly more expensive operation than its inverse, which is used in the verification process.
 Essentially, the verification just calculates squares of the output from the computation.
 
-Previous work has also used sequential hash chains for delay functions in randomness beacons~\cite{bunz2017proofsof}, with checkpoints for parallel verification.
-
 When implementing delay functions in systems that rely on their time guarantees, it is important to focus on performance, since an obvious yet undeployed optimization of execution time would compromise the \enquote{time hardness} of the algorithm.
 Because of this, and the fact that Python is not the best performing language, we implement \textit{sloth} as a Python module with a C-extension for the actual algorithm.
-In the C-extension we utilize the GNU MP library\footnote{\url{https://gmplib.org/}} to perform integer arithmetics with extremely large numbers.
+In the C-extension the GNU MP library\footnote{\url{https://gmplib.org/}} is used to perform integer arithmetics with extremely large numbers.
 
 In \vref{sub:sloth_parameters} we evaluate using \textit{sloth} as our delay function, and how execution time of the delay function can be adjusted.
 

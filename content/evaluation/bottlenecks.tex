@@ -7,26 +7,26 @@ Furthermore, it is important to determine if these are actual bottlenecks before
 \subsubsection{Proxies}%
 \label{ssub:proxies}
 As presented in \vref{sub:infrastructure}, our beacon contains two proxies.
-We firmly believe that the \textit{forward} proxy between computation and publishers never will be a bottleneck in a real world randomness beacon deployment.
+We believe that the \textit{forward} proxy between computation and publishers never will be a bottleneck in a real world randomness beacon deployment, as the data passing through it only consists of outputs, commitments, and proofs.
 However, the \textit{stream} proxy situated between input collectors and input processors must be equipped to handle a constant stream of input messages.
 
-As previously mentioned this proxy facilitates fan-in and fan-out pipelining with fair message distribution using a round-robin strategy.
+As previously mentioned, this proxy facilitates fan-in and fan-out pipelining with fair message distribution using a round-robin strategy.
 Hence, we test the throughput of the proxy in different configurations of input collectors and input processors.
 For simplicity and benchmark consistency, we utilize \enquote{dummy} components for this.
 The input collectors are referred to as \textit{pushers} and fan in at the proxy, while the input processors are called \textit{pullers} and fan out.
-In the tests we transmit messages which resemble those of an actual beacon in size, i.e.\ 64 bytes of application data plus any \textit{ZeroMQ} packaging; in this case one byte which serves as a flags field, and one byte to denote the length of the message body.\footnote{As per the framing specification in \url{https://rfc.zeromq.org/spec:23/ZMTP}}
+In the tests we transmit messages which resemble those of an actual beacon in size, i.e.\ 64 bytes of application data plus any \textit{ZeroMQ} packaging; in this case one byte which serves as a flags field, and one byte to denote the length of the message body\footnote{As per the framing specification in \url{https://rfc.zeromq.org/spec:23/ZMTP}}.
 
 In \vref{fig:proxy_throughput} we see how the aforementioned different configurations affect the throughput of messages in the proxy.
 Firstly, no configuration combination measured results in a throughput below circa 200,000 messages per second.
-We presume this is significantly higher than the number of inputs a real world beacon would ever be constantly subjected to --- as this also would cause significant problems further down the pipeline.
+We presume this is significantly higher than the number of inputs a real world beacon would ever be constantly subjected to --- as this also would cause significant problems further down the pipeline, e.g.\ the sheer amount of data contained in a commitment.
 
-It is the scenario of one \textit{pusher} to sixteen \textit{pullers}, which results in the lowest throughput, which can be caused by the overhead of the fair message distribution enforcement.
-However, as we add \textit{pushers} at sixteen \textit{pullers}, a slight increase in throughput can be seen, suggesting that fair distribution is easier with more suppliers.
+It is the scenario of one pusher to sixteen pullers that results in the lowest throughput, which can be caused by the overhead of the fair message distribution enforcement.
+However, as we add pushers at sixteen pullers, a slight increase in throughput can be seen, suggesting that fair distribution is easier with more suppliers.
 
-Another observation we can make from \cref{fig:proxy_throughput} is that increasing the number of \textit{pushers} does not affect the throughput as adding \textit{pullers} does.
-This evinces that fan-out is a considerably more expensive task than fan-in --- a fortunate fact, since a deployment of our beacon most likely will consist of remarkably more \textit{pushers} than \textit{pullers}.
+Another observation we can make from \cref{fig:proxy_throughput} is that increasing the number of pushers does not affect the throughput as much as adding pullers does.
+This evinces that fan-out is a considerably more expensive task than fan-in --- a fortunate fact, since a deployment of our beacon most likely will consist of remarkably more pushers than pullers.
 
-We can conclude that the proxies in our system are extremely unlikely to be bottlenecks, and we should rather look further down the pipeline for issue; hence we examine the input processor.
+We can conclude that the proxies in our system are extremely unlikely to be bottlenecks, and we should rather look further down the pipeline for issues; hence we examine the input processor.
 
 \begin{figure}
     \centering

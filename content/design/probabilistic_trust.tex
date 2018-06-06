@@ -1,8 +1,8 @@
-\subsection{Probabilistic Trust}%
+\subsection{Rational Trust Assumptions}%
 \label{sub:probabilistic_trust}
 In our approach to a randomness beacon we want to push beyond the need for honest operators and naïve users.
 To achieve this we extend the work of \citet{randomzoo} to quantify trusting the beacon and then determine thresholds for reasonable behavior when using delay functions.
-This will effectively provide a measure of probabilistic trust, where users decide for themselves if the probability of honest operation is adequate.
+This effectively provides a measure of rational trust, where users decide for themselves if what they have observed is adequate.
 
 We present a property which, if satisfied, means a user can trust that the beacon operator is not capable of fooling them.
 This property is true if the user determines that nobody is able to compute the delay function in the time between the users input and the user receiving the beacon's commitment.
@@ -14,13 +14,13 @@ given that $t_\text{INPUT}$ is the time when the user sent the input, $t_\text{C
 So for users to be more likely to trust a beacon, the time between sending the input and receiving the commitment must be significantly smaller than the time between the commitment and the output.
 In fact, it must be smaller than the shortest time the user thinks the operator could compute the delay function.
 
-An example could be that a user that can compute the delay function in 10 minutes believes that the world's fastest computer can do so 5 times faster, i.e.\ in 2 minutes.
+An example could be that a user believes that the world's fastest computer can compute the delay function in 2 minutes.
 In this case the user can trust the output if he sees a commit to a set of inputs containing his input within 2 minutes of his input, because then he knows that nobody could have had time to run the computation on his input before choosing to release a commitment or not.
 This relation between the time taken to compute the delay function and the time before a commit is seen allows users to flexibly adjust their willingness to trust the outcome has not been biased against them.
 
-As previously mentioned, this ratio is also described by \citet{randomzoo}, where they advise a ratio of no more than $\frac{1}{5}$ of the computation time spent collecting inputs.
+This threshold is also described by \citet{randomzoo}, where they advise a ratio of no more than $\frac{1}{5}$ of the computation time spent collecting inputs.
 In their paper, \citeauthor{randomzoo} furthermore state that smart participants will always try to minimize the time between their input and the commitment.
-We see this as a potential issue, since such behavior can create congestion in the system, which might result in some inputs not being used in the intended output computation.
+We see this as potentially problematic, since such behavior can create congestion in the system, which might result in some inputs not being used in the intended output computation.
 This means that users whose inputs were not included cannot trust the output of the given beacon iteration.
 
 Taking all this into consideration we present a beacon operation protocol which can be adjusted to increase or decrease the ratio and thereby the limit for probabilistic trust.
@@ -28,7 +28,8 @@ The operation must be sequential which means that we must collect input before c
 However, because we want to spend more time computing than we are collecting input, a strictly sequential beacon will contain dead spots where no user is submitting input.
 This may be acceptable in some scenarios, but we want to design a beacon which always accepts inputs and will not be suspected of malicious operation.
 To achieve this we parallelize the beacon protocol, meaning that several delay functions run in parallel but offset in time and on different input.
-In~\cref{fig:beacon_parallel_timeline} this is illustrated, where these offset but parallel beacons are seen.
+In \cref{fig:beacon_parallel_timeline} this is illustrated, where these offset but parallel beacons are seen.
+
 \begin{figure}[htb]
     \centering
     \footnotesize
@@ -40,7 +41,8 @@ In~\cref{fig:beacon_parallel_timeline} this is illustrated, where these offset b
         \path (\x+1,-\x*0.7) -- (\x+4,-\x*0.7) node [midway, above] {Computation};
     }
     \end{tikzpicture}
-    \caption{Parallelized beacon protocol, with offset input collection and overlapping computation.}\label{fig:beacon_parallel_timeline}
+    \caption{Parallelized beacon protocol, with offset input collection and overlapping computation.
+After every computation the output is published.}\label{fig:beacon_parallel_timeline}
 \end{figure}
 
 We observe that no input collection is run in parallel nor overlapping, which resembles a constant stream of input collection.
@@ -84,5 +86,5 @@ Instead, our beacon is adjustable, such that a ratio of input collection and com
 Users are still welcome to contribute input as close to a deadline as possible in order to gain a better probabilistic guarantee.
 This may, however, be tricky as the beacon will not announce deadlines as to not encourage users to input at the same time.
 Instead, we propose another strategy for the smart user: Instead of supplying one input, multiple unique inputs should be supplied spaced apart in time.
-For example, a user supplying an input every 10 seconds will have a better chance of coming close to the deadline.
+For example, a user supplying an input every 10 seconds until receiving a commitment will have a better chance of coming close to the deadline.
 
