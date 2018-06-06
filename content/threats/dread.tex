@@ -4,7 +4,7 @@ This helps us discover and explore new threats from multiple sides.
 
 The important part of a beacon that must be protected is the output.
 Adversaries can harm the output in two ways:
-Either the threat targets the \emph{availability}, i.e.\ making the output unavailable, or it targets the \emph{integrity}, i.e.\ reducing the quality of the beacon output potentially to a state where the output should not be used at all.
+Either a threat targets the \emph{availability}, i.e.\ making the output unavailable, or it targets the \emph{integrity}, i.e.\ reducing the quality of the beacon output potentially to a state where the output should not be used at all.
 What the threat targets is as such one of the dimensions.
 
 The other dimension depicts who is able to exploit a given threat.
@@ -47,7 +47,7 @@ The first four numbers each corresponds to the first four DREAD metrics.
 The fifth, discoverability, is omitted.
 The last number, $\Sigma$, is the sum of the prior numbers, and used as a severity indicator.
 
-We go more in-depth with our use of the DREAD framework, the way we score threats, and explain our scoring of some specific threats in \cref{app:dread}.
+We go more in-depth with our use of the DREAD framework and explain our scoring of some specific threats in \cref{app:dread}.
 
 \subsection{Threats}
 This section lists the threats we are able to find alongside our best educated guess on a DREAD score.
@@ -55,12 +55,11 @@ The list is split into two parts; first attacks that threaten the availability o
 A summary of the threats can be seen in \vref{tab:threat-categorization}.
 
 \subsubsection{Threats to Availability}
-Generally, availability attacks are not highly damaging.
 If the beacon is not available, users will potentially not have a stake in the output in the first place.
 The special case is an output withholding attack and eclipsing the beacon before output, both making users believe there is going to be an output, but it never comes.
 In these cases, users will have placed their stake in the beacon output, but the protocol fails.
-Another thing to consider is that users' faith in the beacon will be eroded for each time it fails to output.
-This in turns makes it less attractive for operators to attack the availability, as they will slowly drive their userbase away.
+Another thing to consider is that users' faith in the beacon will erode each time it fails to output.
+This in turns makes it less attractive for operators to attack the availability, as they will slowly drive their user base away.
 
 \newcommand{\parathreat}[1]{\paragraph{#1}\hspace{-1ex}}
 
@@ -72,7 +71,7 @@ This is quite a big threat as users can temporarily be denied service, and the a
 
 \parathreat{Shutdown}\drea{2,2,2,3,9}
 A malicious beacon operator can shut the beacon down, completely denying availability.
-This threat is practically impossible to prevent for a beacon run by a single operator, as the operator can trivially always shut any part of the beacon down, but will only be able to get away with it a finite number of times.
+This threat is impossible to prevent for a beacon run by a single operator, as the operator can always shut any part of the beacon down, but will only be able to get away with it a finite number of times.
 %D 3 - complete shutdown, R 3 - easy to pull the plug, E 2, A 3 - affects all users. We cant prevent this attack,
 
 \parathreat{Withholding Output}\drea{2,2,2,3,9}
@@ -92,19 +91,21 @@ This is a quite small threat, as it is extremely hard to completely prevent a de
 %D 2 - no use for a single user, R 1 - extremely difficult to accomplish, E 1 - likewise, A 1 - only one user affected.
 
 \subsubsection{Threats to Integrity}
-These threats are far more damaging if not detected. Where availability is binary and users obviously cannot use a missing output, successful integrity attacks provide an output, that ideally appears legitimate, but is biased. We consider using a biased output the worst thing a user can do, which makes these threats very serious.
+These threats are far more damaging if not detected.
+Where availability is binary and users obviously cannot use a missing output, successful integrity attacks provide an output, that appears legitimate, but is biased.
+We consider using a biased output the worst thing for any user, which makes these threats critical.
 
 \parathreat{Input Biasing}\drea{3,3,2,3,11}
 An outsider can provide input that knowingly biases the output to their benefit or others' disadvantage.
-Either the outsider knows how to construct an input such that it affects the output in a known way despite other users may contribute input later.
+In this attack the outsider constructs an input such that it affects the output in a known way despite other users contributing input later.
 If the outsider has the capability of providing the last input, it is a last-draw attack.
 This is a severe threat to the beacon, as the adversary is able to freely manipulate the output with their input, and violates the unpredictability of the random number as the adversary now knows more than everybody else.
 The attack can be executed by anyone with access to the input collectors given that they have the ability to pre-compute outputs.
 %D3 - Ruins the output for everyone, and breaks unbiased / unpredictable, R 3 - everyone can do it with a web browser, E 2 - requires the ability to precompute results, A 3 - all users affected
 
 \parathreat{Output Degradation}\drea{2,3,3,2,10}
-As a variation of the previous attack, adversaries can supply \enquote{bad} input to reduce the quality of the output.
-This is also a large threat as it will affect the quality of randomness provided to all users, which may not even be usable.
+Adversaries can supply \enquote{bad} input to reduce the quality of the output.
+This is also a serious threat as it will affect the quality of randomness provided to all users, a randomness which may not even be usable.
 In addition, it is easy to do given access to the input collectors, and could even happen by accident.
 %D 3 - bad randomness, R 3 - easy to give bad input, E 3 - this could happen by accident, A 3
 
@@ -129,17 +130,17 @@ This is due to the fact that simply publishing false output would rapidly be dis
 
 \parathreat{Leaking Output}\drea{3,3,2,3,11}
 The operator can give access to the output earlier to some parties than others --- potentially selling early access.
-This threat can also be quite large, as we know nothing of how early access can be granted compared to when the randomness is used.
+This threat can be quite severe, as we do not know how early access can be granted compared to when the randomness is used.
 It also violates the unpredictability property of the beacon, and is easily executable for any malicious operator of the beacon.
 In the worst case it would affect all users.
 %D 3 - beacon can precompute simple outputs, R 3 - easy to repeat, E 2, A 3 - worst case everyone is affected
 
 \parathreat{Cryptography Exploit}\drea{3,3,1,3,10}
 Weaknesses or exploits may exist in the cryptographic techniques that protect the beacon.
-This could undermine the security of the beacon.
 While we estimate it will be hard to find such exploits, they would likely be quite easy to apply once found, and would affect all users.
 In this case one might also consider the effect quantum computers would have on the use of cryptography, which could also threaten the beacon.
 %D 3 - adversaries gain extreme power to manipulate beacon, R 3 - easy to reproduce once found, E 1 - very hard to find, A 3 - beacon is compromised. Also consider quantum computers. They are the root of all evil.
+
 \subsection{Summary}
 
 \cref{tab:threat-categorization} shows the above threats in the matrix.

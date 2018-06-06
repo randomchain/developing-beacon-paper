@@ -4,13 +4,13 @@ The design is based on a structured analysis of threats to a randomness beacon.
 We design the beacon from the ground up based on tried and tested methods as well as novel ideas.
 Specifically, we differ from previous transparent authority approaches by the following:
 \begin{itemize}
-    \item We describe a novel way of parallelizing the beacon protocol to provide a higher trust probability.
+    \item We describe a novel way of parallelizing the computation in the beacon protocol to minimize possibility of malicious operation while avoiding idle periods.
     \item Unlike all other approaches of transparent authorities we have seen, the beacon operator in our beacon design has no private information --- all inputs are hashed and are released to the public in batches.
     \item We choose to use Merkle trees as the data structure for inputs to allow reducing the computation proof size.
     \item We allow multiple input channels and output channels to be instantiated for reliability, distribution of workload, easy scaling, and convenience for the users.
 \end{itemize}
 Combined, our novel ideas significantly decreases the need for blind trust and limits the severity of a myriad of attacks.
-We evaluate our work both performance-wise and whether the design and implementation satisfy the requirements.
+We evaluate our work both performance-wise and whether the design and implementation satisfy the requirements.\msmnote{do this please}
 Lastly, we explore usage of our beacon in context.
 As such, we describe several use cases and how the beacon output is used as a cryptographic primitive in a way that aligns with and extends our security goals.
 

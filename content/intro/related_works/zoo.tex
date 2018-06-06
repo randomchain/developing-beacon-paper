@@ -7,8 +7,8 @@ The time-hardness prevents last-draw attacks, as attackers have to dedicate larg
 
 The combination of input collection from multiple sources and then computing the output of a delay function, is presented as the \textit{unicorn} protocol.
 This protocol resembles that of the \emph{transparent authority} beacon computation model, and is done by a single entity.
-In the paper, \citeauthor{randomzoo} suggest feeding the sloth with an aggregation of user inputs, such as tweets, and private input sources such as a sampling of weather data.
-While they guarantee random unpredictable outputs even if all users are malicious, they do not dive into the scenario of a malicious operator, who colludes with adversarial users.
+In the paper, \citeauthor{randomzoo} suggest feeding \textit{sloth} with an aggregation of user inputs, such as tweets, and private input sources such as a sampling of weather data.
+While they guarantee random unpredictable outputs even if all other users are malicious, they do not explore the scenario of a malicious operator, who colludes with adversarial users.
 Furthermore, the unicorn protocol lacks a concrete implementation and security analysis.
 
 To generate the aforementioned \gls{ecc} parameters, a final protocol named \textit{trx}\footnote{pronounced like the T.\ rex dinosaur} is presented, which utilizes the output of the unicorn --- thus completing the zoo analogy.

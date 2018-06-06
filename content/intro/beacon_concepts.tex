@@ -3,28 +3,28 @@
 A randomness beacon emits an unpredictable random value at a regular interval, e.g.\ every five minutes.
 \cref{fig:abstract_beacon} shows the workings of a simple, generic beacon.
 The beacon performs \emph{some} computation on an input source in order to generate an unpredictable number.
-The result of the computation, the random number, is the output, and is sent to users.
+The result of this computation is sent to users.
 This workflow is repeated indefinitely at the specified interval.
 \subimport{}{simple_beacon_fig.tex}
 
-Examining existing beacons, a few common ways of composing the input sourcing and computation are discernible and can be described as specific models.
+Examining existing beacons~\cite{nistbeacon,randomzoo,bentov2016bitcoin,fischer2011publicrandomnessservice,bonneau2015bitcoin,baigneres2015trap,clark2010use,randao,bunz2017proofsof,syta2017scalable,cascudo2017scrape}, a few common ways of composing the input sourcing and computation are discernible and can be described as specific models.
 Here, we distinguish between an input source model and operational model.
 The input source model describes the way the beacon sources its input, while the operational model describes the design of the protocol, i.e.\ how to perform the computation and publish the output.
 These models are based on our earlier work~\cite{worldsbestpaper}, a survey of different approaches to randomness beacons as presented in literature.
 
 \subsubsection{Input Source Models}
-Based on a survey of randomness beacons we made in previous work~\cite{worldsbestpaper}, we describe three sources of input:
+Based on a survey of randomness beacons we made in previous work~\cite{worldsbestpaper}, there are three sources of input:
 
 \paragraph{Private Input Sources}
-A beacon can use some private source of data to produce randomness.
-This allows them to obtain produce randomness of high quality at a high rate, but since users are seldom present to physically inspect this private source, it requires users of the beacon to trust the beacon and its randomness.
-Randomness produced by a private input cannot be trusted in our setting, since it cannot reliably be distinguished from carefully crafted values that appear to be random --- as such the value may not be \enquote{fresh}.
-An example of this is the \gls{nist} randomness beacon~\cite{nistbeacon} that observes quantum mechanical effects to produce what they claim is high-quality randomness.
-Ultimately, it requires trust, since the observations cannot be repeated, and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effects.
+A beacon can use a private source of data to produce randomness.
+This allows them to produce randomness of high quality at a high rate, but since users are seldom present to physically inspect this private source, it requires users of the beacon to trust the beacon and its randomness.
+This does not align well with our aforementioned security goals, since inputs cannot reliably be distinguished from carefully crafted values that appear to be random.
+An example of this input source model is the \gls{nist} randomness beacon~\cite{nistbeacon} which observes quantum mechanical effects to produce what they claim is high-quality randomness.
+Ultimately it requires trust, since the observations cannot be repeated, and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effects.
 As such, the users need to blindly trust the beacon operator, which in the case of \gls{nist} can be hard given their history~\cite{nist2014backdoor, nytimes-nsaconstants, nytimes-nsabackdoors}.
 
 \paragraph{Publicly Available Sources}
-Using a publicly available source that everyone can agree on the value of, such as bitcoin blocks, stock market data, or lottery winning numbers from several international lotteries.
+This input source model uses publicly available sources that everyone can agree on the value of, such as bitcoin blocks, stock market data, or lottery winning numbers from several international lotteries.
 The user must trust the source, and this is reasonable since these sources are governed by some guarantees, and often it is easy to see the freshness of these values.
 In case of bitcoin, the blocks have a monetary value and are virtually impossible to forge.
 Users have to interact with the source to indirectly influence the beacon and prevent biased outputs.
@@ -49,7 +49,7 @@ The computation performed by the beacon should ensure that users cannot knowingl
 As such, the user knows that his input was not knowingly \enquote{counteracted} by another used.
 
 \subsubsection{Operational Models}
-Alongside presenting input source models, our previous work~\cite{worldsbestpaper} also identifies three ways in which a beacon is typically operated:
+Alongside presenting input source models in our previous work~\cite{worldsbestpaper}, we also identify three ways in which a beacon is typically operated:
 
 \paragraph{Autocratic Collector}
 A beacon is run by a party, which deems it irrelevant to prove honesty, thus requiring blind trust from the users.
@@ -58,8 +58,9 @@ This type lies in the trust-requiring category of beacons, i.e.\ the old generat
 
 \paragraph{Specialized \acrshort{mpc}}
 Users utilize \acrfull{mpc} to collectively produce randomness, typically from their own inputs.
-Given an honest majority, this type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to large groups~\cite{cascudo2017scrape, syta2017scalable} since any addition or removal of a user requires a new setup phase.
+Given an honest majority, this type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to large groups since any addition or removal of a user requires a new setup phase~\cite{cascudo2017scrape, syta2017scalable}.
 This type of beacon is therefore unsuited for public settings, but might fit in a controlled private context.
+
 In \vref{sub:drand_a_distributed_randomness_beacon_daemon} we describe the state of the art of specialized \gls{mpc} randomness beacons.
 
 \paragraph{Transparent Authority}

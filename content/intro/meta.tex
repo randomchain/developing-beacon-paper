@@ -1,7 +1,7 @@
 \section{Introduction}
 A \emph{randomness beacon}, i.e.\ a service emitting unpredictable random values at fixed intervals, is not a new concept.
 In 1983 Michael O.\ Rabin coined the term and utilized one to add probabilistic security in several protocols~\cite{rabin1983transaction}.
-In this definition, a randomness beacon was to be seen as an impartial third-party trusted to be unbiased towards any outcome.
+In this definition, a randomness beacon was to be seen as a third-party trusted to be unbiased towards any outcome.
 As such, you should trust the beacon operator (the entity running the beacon service) to not be biased since you can not verify that they were unbiased.
 
 For quite a while, randomness beacons did not receive much attention, likely because alternatives to Rabin's protocols not requiring a trusted beacon were used instead (such as~\cite{BGMR}).
@@ -11,20 +11,22 @@ In other words, people had their eyes opened to the fact that \emph{trust} can b
 As an example, cryptocurrencies have flourished in recent years alongside a sharp rise in the popularity of blockchains --- two technologies seeking to facilitate cooperation of mutually distrustful users.
 
 Conceptually, randomness beacons seem to fit this environment of minimizing the need to trust.
-However, the \enquote{old} way, requiring users to trust the operator, simply shifts the trust issue to the centralized entity, i.e.\ the beacon operator.
-In the \enquote{new} beacons described in the recent literature, the beacon is acting as an impartial party.
+However, the \emph{old generation}, requiring users to trust the operator, simply shifts the trust issue to the centralized entity, i.e.\ the beacon operator.
+In \emph{new generation} beacons described in the recent literature, the beacon is acting as an impartial party.
 
-The merit of a randomness beacon lies in contexts where a set of users needs to agree on some random outcome, but do not trust each other or an impartial third party to make the decision.
+The merit of a randomness beacon lies in contexts where a set of users needs to agree on some random outcome, but do not trust each other or a third party to make the decision.
 Therefore, a randomness beacon is \emph{not} required in the case a user needs randomness for just themself.
-In this case, standard ways of generating randomness on a computer are far easier.
-Similarly, if users trust each other or a third party, the randomness generation is also trivial.
+In this case, standard ways, e.g.\ using \texttt{/dev/urandom}, of generating randomness on a computer are far easier.
+Similarly, if users trust each other or a third party randomness generation is also trivial.
 A randomness beacon is not necessarily generating \enquote{more random} numbers --- it merely allows users to agree on the same randomness without trusting anyone.
 
 Even though the literature theoretically argues for a variety of solutions, we have not seen many implementations of randomness beacons.
 We believe that bridging a theoretical design and practical implementation is uncharted territory.
 Additionally, the literature which somewhat explore this bridge either culminate in a highly specialized solution unfit for a public context~\cite{cascudo2017scrape, syta2017scalable}, or disregards a thorough, structured security analysis~\cite{bunz2017proofsof}.
-Throughout this paper we design, implement, and evaluate a randomness beacon, which borrows from existing research while introducing novel ideas; both in the system but also the operation of it.
+Throughout this paper we design, implement, and evaluate a randomness beacon, borrowing from existing research while introducing novel ideas; both in the system but also the operation of it.
 
-In any case, randomness beacons are interesting as a concept, and we feel this concept needs further exploration in order to be properly utilized in real world applications.
+In any case, randomness beacons are interesting as a concept, and we feel it needs further exploration to find real world applications.
 This paper will be a step in that direction.
+
+Regarding terminology, we use the terms \enquote{randomness beacon} and \enquote{beacon} interchangeably in this work.
 
