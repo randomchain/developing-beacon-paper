@@ -1,0 +1,239 @@
+@INPROCEEDINGS{soa_redundancy,
+    author={N. R. May and H. W. Schmidt and I. E. Thomas},
+    booktitle={2009 35th Euromicro Conference on Software Engineering and Advanced Applications},
+    title={Service Redundancy Strategies in Service-Oriented Architectures},
+    year={2009},
+    volume={},
+    number={},
+    pages={383-387},
+    doi={10.1109/SEAA.2009.59},
+    ISSN={1089-6503},
+    month={8}
+}
+
+@article{rabin1983transaction,
+    title={Transaction protection by beacons},
+    author={Rabin, Michael O.},
+    journaltitle={Journal of Computer and System Sciences},
+    volume={27},
+    number={2},
+    pages={256--267},
+    year={1983},
+    publisher={Elsevier}
+}
+
+
+@inproceedings{fischer2011publicrandomnessservice,
+    author={M. J. Fischer and M. Iorga and R. Peralta},
+    booktitle={Proceedings of the International Conference on Security and Cryptography},
+    title={A public randomness service},
+    year={2011},
+    month={07},
+    pages={434--438},
+    keywords={Cryptography;Noise;Electronic commerce;Electronic voting;Randomness server},
+}
+
+@inproceedings{bernstein2015manipulate,
+    title={How to Manipulate Curve Standards: A White Paper for the Black Hat},
+    author={Bernstein, Daniel J and Chou, Tung and Chuengsatiansup, Chitchanok and H{\"u}lsing, Andreas and Lambooij, Eran and Lange, Tanja and Niederhagen, Ruben and van Vredendaal, Christine},
+    booktitle={International Conference on Research in Security Standardisation},
+    pages={109--139},
+    year={2015},
+    organization={Springer}
+}
+
+@online{nytimes-nsabackdoors,
+    title={N.S.A. Able to Foil Basic Safeguards of Privacy on Web},
+    author={Nicole Perlroth and Jeff Larson and Scott Shane},
+    url={http://www.nytimes.com/2013/09/06/us/nsa-foils-much-internet-encryption.html},
+    year={2013},
+    urldate={2018-06-06}
+}
+
+@article{cascudo2017scrape,
+    title={SCRAPE: Scalable Randomness Attested by Public Entities},
+    author={Cascudo, Ignacio and David, Bernardo},
+    journaltitle={IACR Cryptology ePrint Archive},
+    volume={2017},
+    pages={216},
+    year={2017}
+}
+
+@inproceedings{syta2017scalable,
+    title={Scalable bias-resistant distributed randomness},
+    author={Syta, Ewa and Jovanovic, Philipp and Kogias, Eleftherios Kokoris and Gailly, Nicolas and Gasser, Linus and Khoffi, Ismail and Fischer, Michael J and Ford, Bryan},
+    booktitle={Security and Privacy (SP), 2017 IEEE Symposium on},
+    pages={444--460},
+    year={2017},
+    organization={IEEE}
+}
+
+@article{bentov2016bitcoin,
+    author    = {Iddo Bentov and
+        Ariel Gabizon and
+            David Zuckerman},
+    title     = {Bitcoin Beacon},
+    journaltitle={CoRR},
+    volume    = {abs/1605.04559},
+    year      = {2016},
+    timestamp = {Wed, 07 Jun 2017 14:40:08 +0200},
+}
+
+@article{bonneau2015bitcoin,
+    title={On Bitcoin as a public randomness source},
+    author={Bonneau, Joseph and Clark, Jeremy and Goldfeder, Steven},
+    journaltitle={IACR Cryptology ePrint Archive},
+    volume={2015},
+    pages={1015},
+    year={2015}
+}
+
+
+@article{clark2010use,
+    title={On the Use of Financial Data as a Random Beacon},
+    author={Clark, Jeremy and Hengartner, Urs},
+    journaltitle={EVT/WOTE},
+    volume={89},
+    year={2010}
+}
+
+@article{baigneres2015trap,
+    title={Trap Me If You Can --- Million Dollar Curve},
+    author={Baign{\`e}res, Thomas and Delerabl{\'e}e, C{\'e}cile and Finiasz, Matthieu and Goubin, Louis and Lepoint, Tancr{\`e}de and Rivain, Matthieu},
+    journaltitle={IACR Cryptology ePrint Archive},
+    volume={2015},
+    pages={1249},
+    year={2015}
+}
+
+@article{bunz2017proofsof,
+    title={Proofs-of-delay and randomness beacons in Ethereum},
+    author={B{\"u}nz, Benedikt and Goldfeder, Steven and Bonneau, Joseph},
+    journaltitle={IEEE Security and Privacy on the blockchain (IEEE S\&B)},
+    year={2017}
+}
+
+
+@misc{randao,
+    title={RANDAO: A DAO working as RNG of Ethereum},
+    author={randao},
+    date={2016-11-02},
+    url={https://github.com/randao/randao},
+    urldate={2017-12-11}
+}
+
+@InProceedings{BGMR,
+    author="Ben-Or, Michael
+        and Goldreich, Oded
+        and Micali, Silvio
+        and Rivest, Ronald L.",
+    editor="Brauer, Wilfried",
+    title="A fair protocol for signing contracts",
+    booktitle="Automata, Languages and Programming",
+    year="1985",
+    publisher="Springer Berlin Heidelberg",
+    address="Berlin, Heidelberg",
+    pages="43--52",
+    isbn="978-3-540-39557-7"
+}
+
+@Online{bushgore,
+    title={Bush v. Gore, 531 U.S. 98 (2000)},
+    author={Skelton, Chris},
+    url={https://supreme.justia.com/cases/federal/us/531/98/},
+    urldate={2018-03-05},
+    year={2000}
+}
+
+@inproceedings{damgaard2006scalable,
+    title={Scalable secure multiparty computation},
+    author={Damg{\aa}rd, Ivan and Ishai, Yuval},
+    booktitle={Annual International Cryptology Conference},
+    pages={501--520},
+    year={2006},
+    organization={Springer}
+}
+
+@misc{worldsbestpaper,
+    title={A Survey of Randomness Beacons, or: How I Learned to Stop Worrying and Love the Blockchain},
+    author={Mathias S. Michno and Michael T. Jensen and Sebastian R. Kristensen},
+    year=2017,
+    url={https://github.com/randomchain/beacon-taxonomy-paper/releases/download/final/main.pdf}}@misc{randomzoo,
+    author = {Arjen K. Lenstra and Benjamin Wesolowski},
+    title = {A random zoo: sloth, unicorn, and trx},
+    howpublished = {Cryptology ePrint Archive, Report 2015/366},
+    year = {2015},
+    }
+
+@misc{mpcsnarks,
+    author = {Sean Bowe and Ariel Gabizon and Ian Miers},
+    title = {Scalable Multi-party Computation for zk-SNARK Parameters in the Random Beacon Model},
+    howpublished = {Cryptology ePrint Archive, Report 2017/1050},
+    year = {2017},
+}
+
+@misc{snarkparameters,
+    author = {Sean Bowe and Ariel Gabizon and Matthew D. Green},
+    title = {A multi-party protocol for constructing the public parameters of the Pinocchio zk-SNARK},
+    howpublished = {Cryptology ePrint Archive, Report 2017/602},
+    year = {2017},
+}
+
+@Online{dread,
+    title={Improving Web Application Security: Threats and Countermeasures},
+    author={Meier, J. D. and Mackman, Alex and Dunner, Michael and Vasireddy, Srinath and Escamilla, Ray and Murukan, Anandha},
+    year={2003},
+    url={https://msdn.microsoft.com/en-us/library/ff649874.aspx},
+    urldate={2018-04-19},
+}
+
+@article{starr1997nonrandom,
+    title={Nonrandom risk: The 1970 draft lottery},
+    author={Starr, Norton},
+    journaltitle={Journal of Statistics Education},
+    volume={5},
+    number={2},
+    year={1997}
+}
+
+@Online{nistbeacon,
+    title={NIST Randomness Beacon},
+    author={{National Institute of Standard and Technology}},
+    date={2017-12-06},
+    urldate={2018-06-06},
+    url={https://www.nist.gov/programs-projects/nist-randomness-beacon}
+}
+
+@Online{nist2014backdoor,
+    title={NIST Removes Cryptography Algorithm from Random Number Generator Recommendations},
+    author={Jennifer Huergo},
+    url={https://www.nist.gov/news-events/news/2014/04/nist-removes-cryptography-algorithm-random-number-generator-recommendations},
+    urldate={2018-06-06},
+    year={2014},
+    howpublished={NIST News announcement}
+}
+
+@online{nytimes-nsaconstants,
+    title={Government Announces Steps to Restore Confidence on Encryption Standards},
+    author={Nicole Perlroth},
+    url={https://bits.blogs.nytimes.com/2013/09/10/government-announces-steps-to-restore-confidence-on-encryption-standards/},
+    urldate={2018-06-06},
+    year={2013}
+}
+
+@article{sha512faster,
+    title={SHA-512/256},
+    author={Gueron, Shay and Johnson, Simon and Walker, Jesse},
+    journaltitle={Information Technology: New Generations --- ITNG 2011},
+    pages={354--358},
+    year={2011},
+    publisher={IEEE Computer Society}
+}
+
+@book{swebok,
+    title={Guide to the Software Engineering Body of Knowledge (Swebok): Version 3.0},
+    author="{IEEE Computer Society}",
+    isbn={978-0-7695-5166-1},
+    year={2014},
+    publisher={IEEE Computer Society Press}
+}

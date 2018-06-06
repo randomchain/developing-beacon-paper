@@ -1,8 +1,0 @@
-@article{sha512faster,
-  title={SHA-512/256},
-  author={Gueron, Shay and Johnson, Simon and Walker, Jesse},
-  journaltitle={Information Technology: New Generations --- ITNG 2011},
-  pages={354--358},
-  year={2011},
-  publisher={IEEE Computer Society}
-}

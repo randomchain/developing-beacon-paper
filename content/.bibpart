@@ -1,7 +1,0 @@
-@book{swebok,
-  title={Guide to the Software Engineering Body of Knowledge (Swebok): Version 3.0},
-  author="{IEEE Computer Society}",
-  isbn={978-0-7695-5166-1},
-  year={2014},
-  publisher={IEEE Computer Society Press}
-}
