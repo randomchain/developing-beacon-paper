@@ -2,7 +2,7 @@
 \label{app:details_of_drand_phases}
 
 \paragraph{Setup Phase}
-During the setup phase each node to be included in the beacon, generates a public/private key-pair, to be used long-term.
+During the setup phase each node to be included in the beacon generates a public/private key-pair, to be used long-term.
 A file called the \textit{group file} is then created, consisting of all participants' public keys, and configuration metadata regarding the beacon operation.
 
 The \textit{group file} is then distributed amongst the nodes, whom then participate in a \gls{dkg} protocol.
@@ -14,3 +14,4 @@ This time stamp message is then signed by all participating nodes with a thresho
 The threshold version allows any node to construct the full signature, which is the random output, given that enough nodes has provided their shard signature.
 
 Output values can be verified by using the public key generated in the distributed key generation.
+
