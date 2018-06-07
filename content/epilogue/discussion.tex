@@ -11,23 +11,6 @@ Instead, users should aim towards being flexible with when they need to use an o
 An example could be to use the \textit{next} output that they see a timely commit containing their input to.
 Only then will they be certain that the output is not biased.
 
-\subsection{Unmitigated Threats}
-We have mitigated a variety of threats to our beacon in its design, but there are still some left.
-In particular, we have not focused on mitigating the threats to the availability.
-This is because a variety of existing solutions for mitigating \gls{dos} attacks already exist, and that these problems are not particular to randomness beacons.
-
-However, there are still threats to the integrity that have not been mitigated.
-Man-in-the-middle attacks is one of those threats.
-This is a highly damaging threat that consists of intercepting and manipulating messages between the beacon and users.
-The goal is to make users use biased randomness that favors the adversary, but this requires all users to receive the manipulated randomness, which makes the attack difficult to execute.
-In practice, it could likely also be mitigated by signing messages sent by the beacon to prevent them from being manipulated.
-However, this brings forth a new issue of managing and more importantly trusting certificates.
-
-Cryptography exploits is another threat we have not, and quite possibly cannot mitigate.
-Our beacon uses a variety of cryptographic components like hash functions and delay functions.
-If exploits were found in any of these, it would completely change the assumptions on the beacon.
-If a shortcut to computing the delay function was found, it would allow adversaries to perform input manipulation attacks.
-
 \subsection{Alternative Delay Functions}
 We currently use a time-hard function to compute our randomness.
 This provides us some indication of the computational effort needed to correctly produce a random number, and thus makes it harder to cheat.
@@ -81,4 +64,3 @@ Thus, a user would have to pay a competitive fee to interact with a beacon on a 
 
 If we also consider the trust assumption of everyone being against the user, they would have to mine the block themselves to guarantee their interaction, which is a steep requirement.
 \mtjnote{I thunk abot it}
-

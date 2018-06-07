@@ -1,3 +1,45 @@
+\subsection{Acceptance}
+We established a set of requirements for our beacon, and we evaluate the degree to which they have been fulfilled by our design.
+%Requirements
+%Transparent Operation
+%Catch deviations
+%Public announcements for verification
+%Which outputs used for an output
+%Process should be repeateable for users
+
+%Open and secure protocol
+%No requirements, andyone can contribute.
+%Secure - if one honest contributes
+
+%Timely publishing
+%Input output and verification data is published as soon as possible
+%Regular outputs
+
+%Practicalities
+%Scalabily
+%Easy deployment and installation, implementation detail
+%Multiple channels of input / output
+
+%Design choices
+%Service Oriented architecture
+%Services
+%Pipeline
+
+
+%CCO workflow
+%Delay functions
+%Rational trust assumptions - timeliness
+We designed the beacon in a service oriented architecture. The architecture facilitates the scalability of our beacon, and having multiple interchangeable components makes it easy to have multiple channels of both input and output. Additionally, it has no requirements on users, which makes it easy for anyone to contribute.
+
+The beacon operation is structured around a \acrshort{cco} workflow, which makes it transparent by posting commits that contain enough info for users to compute the output alongside the beacon. It also allows them to verify whether a given output matches it's commit.
+
+Using delay functions makes the beacon more secure, as the output is harder to pre-image due to the time it takes to compute. The \emph{sloth} function also makes it faster to verify the result. It also provides some measure of timeliness to the output, as it will always take some regular wall-clock time to compute for the beacon. Timely commits also form the basis of our rational trust assumptions, that dictate whether users should use a specific randomness output.
+
+Although it is mentioned as a requirement, we leave the ease of deployment and installation as an implementation concern, as it is tightly coupled to which tools we use.
+
+
+\srknote{REEEEEEEEEEEEEE-ad this please}
+
 \subsection{Mitigated Threats}
 In the process of designing our beacon, we have considered the threats to a beacon and designed measures to mitigate them.
 We present the threats we consider to be successfully mitigated with our design.
@@ -28,5 +70,24 @@ The operator could still withhold the commit to prevent availability, but they c
 \bigskip
 With this we have covered some of the largest threats to the integrity of the beacon, making the beacon significantly more secure.
 There are still a number of unmitigated threats toward the beacon, but these will be discussed in \vref{sec:discussion}.
-\mtjnote{reeeeeeeeeeeeeee. Maybe move that discussion to here}
 
+
+\srknote{REEEEEEEEEEEEEE. Format the discussion, \LaTeX gurus}
+
+
+\subsection{Unmitigated Threats}
+We have mitigated a variety of threats to our beacon in its design, but there are still some left.
+In particular, we have not focused on mitigating the threats to the availability.
+This is because a variety of existing solutions for mitigating \gls{dos} attacks already exist, and that these problems are not particular to randomness beacons.
+
+However, there are still threats to the integrity that have not been mitigated.
+Man-in-the-middle attacks is one of those threats.
+This is a highly damaging threat that consists of intercepting and manipulating messages between the beacon and users.
+The goal is to make users use biased randomness that favors the adversary, but this requires all users to receive the manipulated randomness, which makes the attack difficult to execute.
+In practice, it could likely also be mitigated by signing messages sent by the beacon to prevent them from being manipulated.
+However, this brings forth a new issue of managing and more importantly trusting certificates.
+
+Cryptography exploits is another threat we have not, and quite possibly cannot mitigate.
+Our beacon uses a variety of cryptographic components like hash functions and delay functions.
+If exploits were found in any of these, it would completely change the assumptions on the beacon.
+If a shortcut to computing the delay function was found, it would allow adversaries to perform input manipulation attacks.
