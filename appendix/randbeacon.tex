@@ -1,17 +1,17 @@
-\section{Code Structure of our Randomness Beacon}%
+\section{Implementation Structure}%
 \label{app:beacon_code}
 
 Code for the beacon can be found at our GitHub repository\footnote{\url{https://github.com/randomchain/randbeacon}}, and latest commit as of writing this is \code{47beb4ec03031c22b34d06db85d6fcc9c7bb1fd4}.
 
 \bigskip\noindent
-The concrete implementation of our \gls{poc} randomness beacon, is structured as a python package named \textit{randbeacon} --- see \cref{fig:randbeacon_files} for a visual representation.
+The concrete implementation of our \gls{poc} randomness beacon is structured as a Python package named \textit{randbeacon}. See \cref{fig:randbeacon_files} for a visual representation.
 In this package, each group of components, i.e.\ input collecting, input processing, computation, and publishing, is its own module.
-Even though no single component relies on any other, with the exception of the \texttt{utils} module for code reuse, this module structure makes it far more convenient to deploy a beacon instance during the development phase.
+Even though no single component relies on any other, with the exception of the \texttt{utils} module for code reuse, this module structure makes it convenient to deploy a beacon instance during the development phase.
 
-To orchestrate said deployment, we use the terminal multiplexer \textit{tmux}\footnote{\url{https://github.com/tmux/tmux}} and a python program called \textit{tmuxp}\footnote{\url{https://tmuxp.git-pull.com/}}, which allows us to easily specify a beacon configuration in a yaml file.
+To orchestrate said deployment, we use the terminal multiplexer \textit{tmux}\footnote{\url{https://github.com/tmux/tmux}} and a Python program called \textit{tmuxp}\footnote{\url{https://tmuxp.git-pull.com/}}, which allows us to easily specify a beacon configuration in a yaml file.
 This way of deploying through \textit{tmux} is intended as a means of debugging and demoing the beacon.
 
-Dependencies are managed with \textit{pipenv}\footnote{\url{https://docs.pipenv.org/}} and a Pipfile, thus encouraging the use of virtual python environments.
+Dependencies are managed with \textit{pipenv}\footnote{\url{https://docs.pipenv.org/}} and a Pipfile, thus encouraging the use of virtual Python environments.
 Besides the \textit{randbeacon} package, the beacon relies on a proxy written in C, which can be found in the \texttt{proxy} directory.
 Outside the repository for the randomness beacon, we use our implementation of the \textit{sloth} delay function\footnote{\url{https://github.com/randomchain/pysloth/}} and our own fork of \textit{pymerkletools}\footnote{\url{https://github.com/randomchain/pymerkletools/}}.
 External dependencies are fetched from the official Python package repository\footnote{\url{https://pypi.org/}}.
@@ -21,9 +21,11 @@ External dependencies are fetched from the official Python package repository\fo
     \tikzstyle{every node}=[font=\ttfamily, draw=black,thick,anchor=west]
 \tikzstyle{selected}=[draw=GoogleIndigo,fill=GoogleBlue]
 \footnotesize
-\begin{figure}
+\begin{figure}[htb]
 \centering
+\footnotesize
 \begin{tikzpicture}[%
+  scale=0.9,
   grow via three points={one child at (0.3,-0.7) and
   two children at (0.3,-0.7) and (0.3,-1.4)},
   edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
@@ -58,6 +60,6 @@ External dependencies are fetched from the official Python package repository\fo
     child [missing] {} child [missing] {} child [missing] {}
     child { node {utils.py}};
 \end{tikzpicture}
-\caption{Structure of core beacon components. Placed under one python package, with modules for each group. The blue files indicate those components used in the current \gls{poc} deployment demo.}\label{fig:randbeacon_files}
+\caption{Structure of core beacon components. Placed under one python package, with modules for each group. The blue files indicate the components used in the current \gls{poc} deployment demo.}\label{fig:randbeacon_files}
 \end{figure}
 }
