@@ -28,7 +28,7 @@ This evinces that fan-out is a considerably more expensive task than fan-in --- 
 
 We can conclude that the proxies in our system are extremely unlikely to be bottlenecks, and we should rather look further down the pipeline for issues; hence we examine the input processor.
 
-\begin{figure}
+\begin{figure}[tbh]
     \centering
     \footnotesize
     \begin{tikzpicture}
@@ -58,31 +58,10 @@ We can conclude that the proxies in our system are extremely unlikely to be bott
     \end{tikzpicture}
     \caption{%
         64 bytes message throughput per second of \textit{stream} proxy, with different numbers of pullers and pushers.
-Overhead of round-robin message distribution can be seen effecting throughput.}%
+Overhead of round-robin message distribution can be seen affecting throughput.}%
 \label{fig:proxy_throughput}
 \end{figure}
-
-\subsubsection{Input Processor --- Building Merkle Trees}%
-\label{ssub:input_processor_building_merkle_trees}
-The most expensive task performed in a bottleneck is building the Merkle tree in our input processor.
-This task is done periodically when it is time to compute a new random output.
-It should not take a significant amount of time, since this would extend the time between the last seen input and publishing the commit.
-As such, we examine how the number of leaves, i.e.\ inputs, relates to the time it takes to build the Merkle tree.
-
-In \cref{fig:merkle_build}, a linear growth in build time is seen as a factor of the number of leaves.
-The growth is slow and is negligible in our beacon.
-There needs to be well over 2 million leaves to result in a build time over three seconds.
-We can describe the relationship as follows, where $N$ is the number of leaves:
-$$
-1.41\,\mu\text{s} \cdot N + 1.41\,\text{ms}
-$$
-
-Admittedly, the build time could be a problem if significantly many inputs are used.
-However, in this case one might reimplement the input processor in a more performant language than Python, e.g.\ C.
-In addition, the construction of Merkle trees is trivially parallelized.
-Our implementation of Merkle trees does not take advantage of this fact, and so building subtrees in multiple processes and merging them to form the final tree will likely provide a significant speed-up with a factor close to the number of available CPU cores.
-
-\begin{figure}
+\begin{figure}[tb]
     \centering\footnotesize
     \begin{tikzpicture}
         \begin{axis} [
@@ -105,4 +84,23 @@ Our implementation of Merkle trees does not take advantage of this fact, and so 
     \caption{Correlation between number of leaves and the time it takes to build a Merkle tree, with those leaves.}%
 \label{fig:merkle_build}
 \end{figure}
+\subimport{}{figures.tex}
+\subsubsection{Input Processor --- Building Merkle Trees}%
+\label{ssub:input_processor_building_merkle_trees}
+The most expensive task performed in a bottleneck is building the Merkle tree in our input processor.
+This task is done periodically when it is time to compute a new random output.
+It should not take a significant amount of time, since this would extend the time between the last seen input and publishing the commit.
+As such, we examine how the number of leaves, i.e.\ inputs, affects the building time of the Merkle tree.
 
+In \cref{fig:merkle_build}, a linear growth in build time is seen as a factor of the number of leaves.
+The growth is slow and is negligible in our beacon.
+There needs to be well over 2 million leaves to result in a build time over three seconds.
+We can describe the relationship as follows, where $N$ is the number of leaves:
+$$
+1.41\,\mu\text{s} \cdot N + 1.41\,\text{ms}
+$$
+
+Admittedly, the build time could be a problem if significantly many inputs are used.
+However, in this case one might reimplement the input processor in a more performant language than Python, e.g.\ C.
+In addition, the construction of Merkle trees is trivially parallelized.
+Our implementation of Merkle trees does not take advantage of this fact, and so building subtrees in multiple processes and merging them to form the final tree will likely provide a significant speed-up with a factor close to the number of available CPU cores.

@@ -26,7 +26,7 @@ This could even include the beacon operator, which would impact operations.
 
 Another way to mitigate this would be to use a delay function that was also memory-hard, i.e.\ required large amounts of memory to compute.
 This would make it resistant to \gls{asic}-equipped adversaries, as these have small amounts of memory to optimize for speed.
-While the function would require more resources, it should still be computable for an ordinary computer.
+While the function requires more resources, it should still be computable for an ordinary computer.
 
 \subsection{Salting}
 One thing we considered in the design of the beacon was having the operator add a salt to the inputs.
@@ -42,7 +42,6 @@ We therefore find it interesting to consider implementing our beacon in a smart 
 
 There would be some definite benefits to this, namely that it would remove the need for a single operator, which removes some threats towards the beacon.
 In addition, it would be much harder to \gls{dos} attack the beacon, as it would be run by the entire network.
-
 However, a central aspect of our beacon is practically incompatible with the nature of smart contracts, as delay functions are computationally intensive.
 Smart contracts need to pay for each computation they make, which would make the beacon costly to run.
 

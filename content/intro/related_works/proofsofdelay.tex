@@ -9,10 +9,9 @@ The operation of the beacon is based on operator election, with the option for a
 Outputs can be publicly contested, prompting the operator to verify correct execution.
 They present an incentive structure for operating the beacon and fulfilling verification, which relies on the beacon being operated as a \enquote{greater good}.
 The contesting and verification is implemented in an Ethereum smart contract, which attaches a cost to contesting correct operation.
-The usage of a smart contract limits the availability for users not invested in the Ethereum blockchain, and restrict the possible algorithm usage in the delay function to sequential hash chains.
-They consider the \textit{sloth} delay function to be a state-of-the-art delay function, but use sequential hash chains because they are cheaper to verify in a smart contract.
+The usage of a smart contract limits the availability for users not invested in the Ethereum blockchain, and restrict the possible delay functions to sequential hash chains.
+They consider the \textit{sloth} delay function to be a state-of-the-art delay function, but use sequential hash chains as they are cheaper to verify in a smart contract.
 
 Compared to this approach, our beacon exists without the need for smart contracts and buying into various cryptocurrencies.
 This simplifies the beacon, but also removes a convenient way of disbanding a dishonest beacon operator.
 However, we believe that the added complexity of relying on e.g.\ Ethereum will repel many potential users, who do not want to get involved monetarily to use a randomness beacon.
-

@@ -86,11 +86,10 @@ For the computation we implement a delay function based on \textit{sloth} by \ci
 The general idea behind \textit{sloth} is to use modular square root arithmetics to construct a deterministic time hard algorithm, while containing a trapdoor for fast reversal, i.e.\ verification.
 The computation of \textit{sloth} iterates through modular square root permutations of a large prime number.
 This is a significantly more expensive operation than its inverse, which is used in the verification process.
-Essentially, the verification just calculates squares of the output from the computation.
+Essentially, the verification calculates squares of the output from the computation.
 
 When implementing delay functions in systems that rely on their time guarantees, it is important to focus on performance, since an obvious yet undeployed optimization of execution time would compromise the \enquote{time hardness} of the algorithm.
 Because of this, and the fact that Python is not the best performing language, we implement \textit{sloth} as a Python module with a C-extension for the actual algorithm.
 In the C-extension the GNU MP library\footnote{\url{https://gmplib.org/}} is used to perform integer arithmetics with extremely large numbers.
 
 In \vref{sub:sloth_parameters} we evaluate using \textit{sloth} as our delay function, and how execution time of the delay function can be adjusted.
-

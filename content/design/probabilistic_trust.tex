@@ -72,9 +72,9 @@ Let $\delta$ be this extra time additional to the delay function.
 \end{equation*}
 
 \noindent
-If, for example, the delay function is expected to always finish at most 2 minutes later than the expected time of 10 minutes (i.e.\ a worst-case time of 12 minutes) and the input collection is 2 minutes, 6 nodes in total are necessary to guarantee that a node is always ready every 2 minutes, given a maximum of 2 minutes expected delay.
+If, for example, the delay function is expected to always finish at most 2 minutes later than the expected time of 10 minutes (i.e.\ a worst-case time of 12 minutes) and the input collection is 2 minutes, 6 nodes in total are necessary to guarantee a node is always ready every 2 minutes, given a maximum of 2 minutes expected delay.
 
-The beacon operator should find a sensible number of nodes that on one hand maximizes the chances of a ready computation node given expected delays, and on the other hand minimizes the idle time of the nodes.
+The beacon operator should find a sensible number of nodes that maximizes the chances of a ready computation node given expected delays, while minimizing the idle time of the nodes.
 
 \subsubsection{Expected User Behavior}
 Based on what \citet{randomzoo} write about smart users always trying to input as close to the commitment as possible, we admit that our solution of parallel offset computations will not prevent such behavior.
@@ -87,4 +87,3 @@ Users are still welcome to contribute input as close to a deadline as possible i
 This may, however, be tricky as the beacon will not announce deadlines as to not encourage users to input at the same time.
 Instead, we propose another strategy for the smart user: Instead of supplying one input, multiple unique inputs should be supplied spaced apart in time.
 For example, a user supplying an input every 10 seconds until receiving a commitment will have a better chance of coming close to the deadline.
-

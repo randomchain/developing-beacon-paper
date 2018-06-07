@@ -6,8 +6,8 @@ For example, the architecture can potentially make it possible for adversaries t
 The protocol used to communicate from service to service must be secure in a way that prevents adversaries from being able to covertly manipulate the messages.
 
 In the case of a randomness beacon, the security also embodies the operator's ability to predict or manipulate the output.
-This means we need some mechanism to prevent the operator from performing last-draw attacks disguised as regular user inputs, or excluding certain inputs to alter the output.
-We also want to prevent the operator from being able to initiate multiple beacon computations, and then only publish the output which benefits the operator the most.
+This means we need a mechanism to prevent the operator from disguising last-draw attacks as regular user inputs, and from excluding certain inputs to alter the output.
+We also want to prevent the operator from initiating multiple beacon computations, and then only publish the output which benefits the operator the most.
 
 \subsubsection{CCO Workflow}
 Our solution for this problem is to enforce what we will call a \gls{cco} workflow in the beacon protocol.
@@ -25,10 +25,10 @@ In essence, it reduces the \enquote{market value} of the output, making it less 
 While it does not prevent the operator of performing a withholding attack, it minimizes the effects of it, as others can compute the output from the commitment and still obtain an equally valid output.
 
 \subsubsection{Delay Functions}
-To decrease the possibilities of the operator trying different commits before releasing them, we utilize a \emph{delay function}.
-Delay functions can be seen as black box hash functions that require a given amount of time to run and are inherently sequential, meaning that they cannot benefit from parallel execution.
+To decrease the possibilities of the operator trying different commits before releasing them, we use a \emph{delay function}.
+Delay functions can be seen as black box hash functions that require a given amount of time to run and are inherently sequential, meaning they cannot benefit from parallel execution.
 It ensures that the output cannot be instantly computed, and ensures that the operator cannot try more than one commit before running out of time.
-As such, the operator is unable to perform the input manipulation attack in any meaningful way --- the operator is of course still able to exclude or change output, but not in a way that knowingly benefits anyone because the effect of the manipulation is hidden behind the delay function.
+As such, the operator is unable to perform the input manipulation attack in a meaningful way. The operator is of course able to exclude or change output, but not in a way that knowingly benefits anyone because the effect of the manipulation is hidden behind the delay function.
 
 When deploying delay functions in randomness beacons, it is important to keep verification in mind.
 A user should be able to run the delay function in reverse to confirm that an output matches the commitment.
@@ -44,4 +44,3 @@ The adversary needs to compute the result of adding a specific input as the last
 Delay functions make this significantly more difficult to attempt due to the time needed to compute the result.
 Given a delay function that takes five minutes to complete, an adversary must dedicate five minutes of processor time to any given input he attempts to use.
 This means he must dedicate large amounts of resources to perform any significant amount of attempts, and more importantly if a single input is added to the beacon within that five minute period, all of his work will be null, and he will be forced to restart.
-
