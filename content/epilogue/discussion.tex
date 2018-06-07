@@ -38,13 +38,13 @@ This could be mitigated by having the operator publish a timed commitment to the
 
 \subsection{Smart Contracts}
 A distrustful environment is an obvious setting for a randomness beacon, and one of the most obvious types of these are public blockchains.
-We therefore find it interesting to consider implementing our beacon in a smart contract on a blockchain. We consider implementing it in a public blockchain such as the bitcoin or ethereum blockchains.
+We therefore find it interesting to consider implementing our beacon in a smart contract on a blockchain. We consider implementing it in a public blockchain such as the bitcoin or Ethereum blockchains.
 
 There would be some definite benefits to this, namely that it would remove the need for a single operator, which removes some threats towards the beacon.
 In addition, it would be much harder to \gls{dos} attack the beacon, as it would be run by the entire network.
 
 However, a central aspect of our beacon is practically incompatible with the nature of smart contracts, as delay functions are computationally intensive.
-Smart contracts need to pay for each computation they make, which would make the beacon very costly to run.
+Smart contracts need to pay for each computation they make, which would make the beacon costly to run.
 
 This would tie the beacon into the monetary incentive structures that dictate smart contract behavior.
 However, some parts, like the verification process, are nowhere near as intensive, and could potentially be implemented in a smart contract.
