@@ -31,9 +31,10 @@ External dependencies are fetched from the official Python package repository\fo
     child { node {\_\_init\_\_.py}}
     child { node {computation}
         child { node {\_\_init\_\_.py} }
+        child { node [label={right:{\sffamily Base class}}] {base.py}}
         child { node [selected] {delay\_sloth.py}}
     }
-    child [missing] {} child [missing] {}
+    child [missing] {} child [missing] {} child [missing] {}
     child { node {input\_collection}
       child { node {\_\_init\_\_.py}}
       child { node [selected] {urandom.py}}
@@ -44,10 +45,11 @@ External dependencies are fetched from the official Python package repository\fo
     child [missing] {} child [missing] {} child [missing] {} child [missing] {} child [missing] {}
     child { node {input\_processing}
       child { node {\_\_init\_\_.py}}
+      child { node [label={right:{\sffamily Base class}}] {base.py}}
       child { node {concat\_sha512.py}}
       child { node [selected] {merkle.py}}
     }
-    child [missing] {} child [missing] {} child [missing] {}
+    child [missing] {} child [missing] {} child [missing] {} child [missing] {}
     child { node {publishing}
       child { node {\_\_init\_\_.py}}
       child { node [selected] {json\_dump.py}}
