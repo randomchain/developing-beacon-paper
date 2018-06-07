@@ -90,7 +90,7 @@ We do not care \emph{who} the beacon operator is.
 As long as a user's input is included in a valid output, that output is good to use for that user --- no matter who did the computation.
 
 \parathreat{Emitting False Output}\drea{2,1,2,3,8}
-Because users should not trust an output that cannot be verified both for inclusion of input and correctness of computation, emitting a false output will simply be an availability attack --- the output cannot be used and as such could be non-existent.
+Users should not trust an output that cannot be verified both for inclusion of input and correctness of computation, and as such emitting a false output will simply be an availability attack --- the output cannot be used and as such could be non-existent.
 While the beacon operator practically could easily do this, it would not cause much harm, since our \gls{cco} workflow ensures that users can compute the delay function themselves.
 
 % In practice, the effects of this kind of attack could likely be lessened by signing messages sent by the beacon to prevent them from being manipulated.
@@ -145,4 +145,3 @@ Our beacon uses a variety of cryptographic components like hash functions and de
 If exploits were found in any of these, it would completely change the assumptions on the beacon.
 If a shortcut to computing the delay function was found, it would allow adversaries to perform many of the other attacks.
 We have partly mitigated it by allowing the hashing algorithm to be switched out easily.
-
