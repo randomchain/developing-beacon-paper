@@ -12,7 +12,7 @@ The user could then at any time poll the application for a \emph{verified} beaco
 In this scenario, the user would inherently need to trust the application to not be acting malicious.
 
 Another usability application, taking a far simpler approach, could be a simple verification service.
-It would allow users to painlessly check if their input was used in a beacon output.
+It allows users to painlessly check if their input was used in a beacon output.
 Since our beacon uses a Merkle tree for storing the inputs, the verification service could provide users with proofs of inclusion, without them needing to fetch the entire set of used inputs.
 In fact, user would at most need to download $\log{n} + 1$ nodes in the Merkle tree, to validate the proof; this is further explained in \vref{ssub:combining_inputs}.
 Users could then correlate the valid proof with the output of the beacon for complete verification.

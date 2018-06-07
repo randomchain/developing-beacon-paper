@@ -6,7 +6,7 @@ The \gls{mpc} model does not scale well enough for general use in public randomn
 As described by \citet{damgaard2006scalable}, \gls{mpc} protocols either assumes an honest majority, which is a weaker assumption than our security goals, or cannot guarantee fairness and output delivery, a likewise undesired behavior.
 Even as more scalable \gls{mpc} protocols has been developed, they still need some assumptions about the protocol participants, which we cannot guarantee in a public randomness beacon.
 An example of this is the \gls{mpc} protocol designed by \citet{damgaard2006scalable}, which they claim is the first scalable general \gls{mpc} protocol.
-This protocol still only allows for corruption of some constant fraction of the participants, and furthermore assumes the existence of a computationally simple pseudorandom generator to maintain a constant number of rounds needed to complete the protocol.
+This protocol still only allows for corruption of some constant fraction of the participants, and furthermore assumes a computationally simple pseudorandom generator to maintain a constant number of rounds needed to complete the protocol.
 
 Since our world view of \enquote{everybody is colluding against you} is far more pessimistic than the guarantees provided by the aforementioned protocols, \gls{mpc} is not suitable for us, although the model could fit in a more controlled or private environment.
 This leaves us with the transparent authority model which we adopt.
@@ -17,4 +17,3 @@ Regarding input source models, we can immediately discard private input sources 
 The guarantees by publicly available sources are weak compared to user input.
 If sufficiently paranoid, the user will want to bias these publicly available sources to make sure all other users are not colluding.
 Therefore, user input is the simplest solution and provides the strongest guarantees for the user.
-

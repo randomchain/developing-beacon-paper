@@ -4,7 +4,7 @@ Potential bottlenecks in the system should be easy to mitigate, and beacon opera
 
 Our choice of pipeline and \gls{soa} fits well with our intentions for scaling the beacon.
 Individual services in the \gls{soa} can be scaled as needed, as they are designed to be stateless and loosely coupled with each other.
-As long as the overall contract of the pipeline is respected, i.e.\ the order of component types, individual steps in our design can be scaled up or down as needed.
+As long as the overall contract of the pipeline is respected, i.e.\ the order of component types, individual steps in our design can be scaled as needed.
 
 In some scenarios a beacon may consist of multiple computation services as a mean of redundancy, as long as each computation is run on the same input.
 The same can be said about input processors, where a beacon may need redundancy to likewise avoid a single point of failure.

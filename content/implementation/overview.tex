@@ -6,9 +6,11 @@ As such, the figure can be used as a reference as we explain the various parts o
 At a glance, the figure shows the services and how they interact.
 All services are controlled by the beacon operator.
 Examples of input collectors are shown, and each of them hash inputs as they are received and send them to a known proxy (fan-in pattern).
+It also responds to the user with the hash of the given input.
 The proxy forwards any message to the input processor.
 The input processor adds each input to a Merkle tree structure.
 Here the pipeline fans out.
+
 A computation node that is ready to take on work signals its readiness to the input processor (1).
 Here, the input processor internally adds the computation node to a queue.
 The input processor will at an interval equal to the input collection duration send the current Merkle tree (2) to the computation node in front of its queue and starts building a new Merkle tree with new input.
@@ -16,7 +18,7 @@ This ensures that e.g.\ every minute a computation node is starting a computatio
 Once given the Merkle tree, the computation node releases a commitment (3) to this input, and runs the delay function on it (4).
 Eventually the output (5) is sent to the output proxy (fan-in pattern).
 This proxy forwards the output to each publisher.
-A publisher then sends the received output to a specific outlet.
+A publisher then packages the received output and sends it to a specific outlet.
 
 \subsection{Framework and Language Choice}
 To achieve the \acrfull{soa} and pipelining presented in \cref{sec:design}, we utilize a framework for asynchronous message passing and concurrency.
@@ -44,4 +46,3 @@ As of writing this, no existing security issues with \textit{ZeroMQ} are publish
 The components of our beacon are mainly implemented using Python 3, both for fast prototype turnaround, but also because of a state of the art \textit{ZeroMQ} library.
 However, in some cases the performance overhead in Python is unsuitable for the task at hand.
 Fortunately, Python programs can easily be extended with C code, and due to our \gls{soa} entire components can be implemented in this fashion if deemed necessary.
-

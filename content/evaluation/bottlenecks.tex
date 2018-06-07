@@ -28,7 +28,7 @@ This evinces that fan-out is a considerably more expensive task than fan-in --- 
 
 We can conclude that the proxies in our system are extremely unlikely to be bottlenecks, and we should rather look further down the pipeline for issues; hence we examine the input processor.
 
-\begin{figure}[tbh]
+\begin{figure}[tb]
     \centering
     \footnotesize
     \begin{tikzpicture}
@@ -66,7 +66,7 @@ Overhead of round-robin message distribution can be seen affecting throughput.}%
     \begin{tikzpicture}
         \begin{axis} [
             width=\axisdefaultwidth,
-            height=5cm,
+            height=5.7cm,
             xlabel=number of leaves,
             ylabel=time (s),
             legend pos=north west,

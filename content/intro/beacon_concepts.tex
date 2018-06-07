@@ -5,6 +5,7 @@ A randomness beacon emits an unpredictable random value at a regular interval, e
 The beacon performs \emph{some} computation on an input source in order to generate an unpredictable number.
 The result of this computation is sent to users.
 This workflow is repeated indefinitely at the specified interval.
+
 \subimport{}{simple_beacon_fig.tex}
 
 Examining existing beacons~\cite{nistbeacon,randomzoo,bentov2016bitcoin,fischer2011publicrandomnessservice,bonneau2015bitcoin,baigneres2015trap,clark2010use,randao,bunz2017proofsof,syta2017scalable,cascudo2017scrape}, a few common ways of composing the input sourcing and computation are discernible and can be described as specific models.
@@ -19,6 +20,7 @@ Based on a survey of randomness beacons we made in previous work~\cite{worldsbes
 A beacon can use a private source of data to produce randomness.
 This allows them to produce randomness of high quality at a high rate, but since users are seldom present to physically inspect this private source, it requires users of the beacon to trust the beacon and its randomness.
 This does not align well with our aforementioned security goals, since inputs cannot reliably be distinguished from carefully crafted values that appear to be random.
+
 An example of this input source model is the \gls{nist} randomness beacon~\cite{nistbeacon} which observes quantum mechanical effects to produce what they claim is high-quality randomness.
 Ultimately it requires trust, since the observations cannot be repeated, and therefore users cannot make sure that the value is indeed from observing the quantum mechanical effects.
 As such, the users need to blindly trust the beacon operator, which in the case of \gls{nist} can be hard given their history~\cite{nist2014backdoor, nytimes-nsaconstants, nytimes-nsabackdoors}.
@@ -61,7 +63,7 @@ Users utilize \acrfull{mpc} to collectively produce randomness, typically from t
 Given an honest majority, this type of beacon produces randomness that is not biased against the participants, and although work has been done in the field, they are difficult to scale to large groups since any addition or removal of a user requires a new setup phase~\cite{cascudo2017scrape, syta2017scalable}.
 This type of beacon is therefore unsuited for public settings, but might fit in a controlled private context.
 
-In \vref{sub:drand_a_distributed_randomness_beacon_daemon} we describe the state of the art of specialized \gls{mpc} randomness beacons.
+In \cref{sub:drand_a_distributed_randomness_beacon_daemon} we describe the state of the art of specialized \gls{mpc} randomness beacons.
 
 \paragraph{Transparent Authority}
 A single entity collects input and publishes it with a focus on transparency.

@@ -1,8 +1,7 @@
 \section{Requirements}%
 \label{sec:beacon_requirements}
 This section lists the requirements for a randomness beacon suitable for our security goals and the threats that exist towards beacons.
-We decided on using the \emph{transparent authority} type of beacon in \cref{sub:delimitations}, which requires a high level of transparency, and as such we build requirements on top of that.
-
+We decided on using the \emph{transparent authority} type of beacon, which requires a high level of transparency, and as such we build requirements on top of that.
 The requirements presented here will serve as a foundation of our design.
 
 \subsection{Transparent Operation}\label{sec:transparent_operation}
@@ -23,7 +22,6 @@ However, the output should still be unpredictable, even to the beacon operator.
 Anyone should be able to easily contribute to the beacon protocol to influence the random generation.
 There should be no requirements imposed on users to limit their contribution rate besides \gls{dos} protection.
 The protocol should be secure meaning that even if only a single user is honest, the output is still unpredictable.
-This single user will in the worst case be you.
 
 \subsection{Timely Publishing}\label{sec:timely_publishing}
 The protocol should enforce that input, output, and any data needed for verification of an output is published as soon as possible to make the beacon more transparent.

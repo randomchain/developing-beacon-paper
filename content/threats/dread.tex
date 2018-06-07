@@ -13,7 +13,7 @@ An insider is anyone with the capabilities of the beacon operator, which ideally
 Because the beacon operator should not be trusted either, we see no reason to distinguish between a legitimate beacon operator, a malicious beacon operator, or an adversary maliciously acquiring access to the inside of the beacon.
 An outsider is anyone who can influence the beacon operation from the outside network, and thus does not possess inside access.
 
-\cref{tab:threats-categories} visualizes these dimensions.
+\vref{tab:threats-categories} visualizes these dimensions.
 After listing the found attacks in the following sections, we relate them to this matrix.
 
 \subimport{}{threat_table_nocontent.tex}
@@ -29,8 +29,8 @@ DREAD consists of five metrics~\cite{dread}, that we score on a scale of 1 to 3 
 Discoverability can, however, be considered to reward security through obscurity.
 As such we will not consider it, as an adversary with unlimited resources is expected to have knowledge of all possible exploits.
 
-In the following section, all threats are accompanied by a DREAD scoring which is portrayed as follows:
-\vspace{\dimexpr-1\parsep-1\parskip\relax}% Fixing centering spacing
+In the following section, all threats are accompanied by a DREAD score which is portrayed as follows:
+\vspace{\dimexpr-3\parsep-1\parskip\relax}% Fixing centering spacing
 \begin{center}
 \begin{tikzpicture}[xscale=0.25, yscale=0.25, baseline=-.5ex]
     \scriptsize
@@ -51,7 +51,7 @@ We go more in-depth with our use of the DREAD framework and explain our scoring 
 
 \subsection{Threats}
 This section lists the threats we are able to find alongside our best educated guess on a DREAD score.
-The list is split into two parts; first attacks that threaten the availability of the output, and then attacks that threaten the integrity of the output.
+The list is split into two; first attacks threatening the availability of the beacon, and then attacks that threaten the integrity of the output.
 A summary of the threats can be seen in \vref{tab:threat-categorization}.
 
 \subsubsection{Threats to Availability}
@@ -99,6 +99,7 @@ We consider using a biased output the worst thing for any user, which makes thes
 An outsider can provide input that knowingly biases the output to their benefit or others' disadvantage.
 In this attack the outsider constructs an input such that it affects the output in a known way despite other users contributing input later.
 If the outsider has the capability of providing the last input, it is a last-draw attack.
+
 This is a severe threat to the beacon, as the adversary is able to freely manipulate the output with their input, and violates the unpredictability of the random number as the adversary now knows more than everybody else.
 The attack can be executed by anyone with access to the input collectors given that they have the ability to pre-compute outputs.
 %D3 - Ruins the output for everyone, and breaks unbiased / unpredictable, R 3 - everyone can do it with a web browser, E 2 - requires the ability to precompute results, A 3 - all users affected
@@ -119,6 +120,7 @@ It is also easy for any operator capable of pre-computing the output, and affect
 \parathreat{Man in the Middle}\drea{3,1,1,3,8}
 Adversaries can intercept and change data sent between user and beacon.
 This threat could be significantly damaging but also extremely hard to execute for adversaries.
+
 Due to the nature of beacons we recommend using them when you need to agree on some random number --- thus, to intercept and manipulate inputs and outputs, the adversary would have to distribute the manipulated number to all users, as they would otherwise disagree on the numbers, leading to the manipulation being discovered.
 %D 3 - ruins beacons output, R 1 - needs to send to all users , E 1 - must be done to all users, A 3 - affects all users.
 
@@ -143,8 +145,7 @@ In this case one might also consider the effect quantum computers would have on 
 
 \subsection{Summary}
 
-\cref{tab:threat-categorization} shows the above threats in the matrix.
-To reiterate, an insider can perform outsider attacks, and outsiders can perform insider attacks if they obtain sufficient privileges.
+\vref{tab:threat-categorization} shows the above threats in the matrix.
+To reiterate, an insider can always perform outsider attacks, and outsiders can perform insider attacks if they obtain sufficient privileges, e.g.\ through hijacking the beacon.
 
 \subimport{}{threat_table.tex}
-
