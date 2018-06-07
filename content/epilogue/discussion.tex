@@ -38,22 +38,16 @@ This could be mitigated by having the operator publish a timed commitment to the
 
 \subsection{Smart Contracts}
 A distrustful environment is an obvious setting for a randomness beacon, and one of the most obvious types of these are public blockchains.
-We therefore find it interesting to consider implementing our beacon in a smart contract on a blockchain.
+We therefore find it interesting to consider implementing our beacon in a smart contract on a blockchain. We consider implementing it in a public blockchain such as the bitcoin or ethereum blockchains.
 
 There would be some definite benefits to this, namely that it would remove the need for a single operator, which removes some threats towards the beacon.
 In addition, it would be much harder to \gls{dos} attack the beacon, as it would be run by the entire network.
 
 However, a central aspect of our beacon is practically incompatible with the nature of smart contracts, as delay functions are computationally intensive.
-Smart contracts need to pay for each computation they make, which would make the beacon costly to run.
+Smart contracts need to pay for each computation they make, which would make the beacon very costly to run.
 
 This would tie the beacon into the monetary incentive structures that dictate smart contract behavior.
-Running a smart contract equivalent of our randomness beacon would be expensive due to the use of delay functions.
 However, some parts, like the verification process, are nowhere near as intensive, and could potentially be implemented in a smart contract.
-
-This has also been examined in the literature, where \citet{bunz2017proofsof} implement an Ethereum smart contract to publish and challenge the output of their beacon.
-We described the relation of their work to our in \vref{ssub:proofs_of_delay}.
-Their beacon requires money to publish outputs on the blockchain, and users must pay to challenge a given output.
-They also provide a detailed analysis of the incentives the beacon should provide to ensure correct behavior.
 
 In addition, since parts of the beacon would still be off-chain, those parts would still be dependent on an operator and vulnerable to \acrshort{dos} attacks.
 
@@ -63,4 +57,3 @@ They are incentivized to include the transactions that give the greatest rewards
 Thus, a user would have to pay a competitive fee to interact with a beacon on a blockchain.
 
 If we also consider the trust assumption of everyone being against the user, they would have to mine the block themselves to guarantee their interaction, which is a steep requirement.
-\mtjnote{I thunk abot it}
