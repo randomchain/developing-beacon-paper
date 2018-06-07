@@ -1,5 +1,5 @@
-\subsection{Acceptance}
-We established a set of requirements for our beacon, and we evaluate the degree to which they have been fulfilled by our design.
+\subsection{Review of Requirements}
+We established a set of requirements for our beacon, and we now briefly describe how each requirement is fulfilled by our design.
 %Requirements
 %Transparent Operation
 %Catch deviations
@@ -29,20 +29,26 @@ We established a set of requirements for our beacon, and we evaluate the degree 
 %CCO workflow
 %Delay functions
 %Rational trust assumptions - timeliness
-We designed the beacon in a service oriented architecture. The architecture facilitates the scalability of our beacon, and having multiple interchangeable components makes it easy to have multiple channels of both input and output. Additionally, it has no requirements on users, which makes it easy for anyone to contribute.
 
-The beacon operation is structured around a \acrshort{cco} workflow, which makes it transparent by posting commits that contain enough info for users to compute the output alongside the beacon. It also allows them to verify whether a given output matches it's commit.
+We designed the beacon in a \gls{soa}. The architecture facilitates the scalability of our beacon, and allows for multiple interchangeable components making it easy to have multiple channels of both input and output.
 
-Using delay functions makes the beacon more secure, as the output is harder to pre-image due to the time it takes to compute. The \emph{sloth} function also makes it faster to verify the result. It also provides some measure of timeliness to the output, as it will always take some regular wall-clock time to compute for the beacon. Timely commits also form the basis of our rational trust assumptions, that dictate whether users should use a specific randomness output.
+The beacon operation is structured around a \acrshort{cco} workflow, which makes it transparent.
+There are no requirements on users, which makes it easy for anyone to contribute. As such, it is a open protocol.
+The commits contains enough information for users to compute the output alongside the beacon.
 
-Although it is mentioned as a requirement, we leave the ease of deployment and installation as an implementation concern, as it is tightly coupled to which tools we use.
+Using delay functions makes the beacon more secure, as the output is harder to pre-image due to the time it takes to compute.
+The \emph{sloth} function, being asymmetrically hard, also enables faster verification of the result.
+It also facilitates a secure protocol, in the sense that any single honest user will render the output unpredictable.
+The delay function provides a measure of timeliness to the output, as it will always take some regular wall-clock time to compute for the beacon.
+Timely commits also form the basis of our rational trust assumptions, that helps users decide whether to trust a specific beacon output.
 
+The design contains succinct and well-separated components.
+And because of this we believe fault tolerance will be easy to implement, and it will facilitate ease of deployment and installation.
+We leave these areas to be fulfilled in the implementation, as they are tightly coupled to which tools we use.
 
-\srknote{REEEEEEEEEEEEEE-ad this please}
-
-\subsection{Mitigated Threats}
+\subsection{Review of Threats}
 In the process of designing our beacon, we have considered the threats to a beacon and designed measures to mitigate them.
-We present the threats we consider to be successfully mitigated with our design.
+We present the threats we consider to be successfully mitigated with our design:
 
 \parathreat{Output Degradation}\drea{2,3,3,2,10}
 The beacon will additively aggregate inputs.
@@ -52,7 +58,7 @@ It is not possible to statistically reason about the output of the beacon relate
 
 \parathreat{Input Manipulation}\drea{3,3,2,3,11}
 We have designed the beacon around delay functions specifically to prevent this attack.
-As previously mentioned, it requires an adversary, to spend significant resources to compute a single pre-image before releasing a commitment, which is essential to this type of attack.
+As previously mentioned, it requires an adversary to spend significant resources to compute a single pre-image before releasing a commitment, which is essential to this type of attack. This is not possible under our \gls{cco} workflow and reasonable trust assumptions by the users.
 This also makes any attempt at this attack from the operator equivalent to a withholding attack, as users should not use an output they did not see a timely commit for.
 
 \parathreat{Input Biasing}\drea{3,3,2,3,11}
@@ -62,32 +68,64 @@ This threat is mitigated by the same means as the previously addressed threat mi
 Our delay function based \gls{cco} workflow also mitigates the operator leaking outputs that give any significant advantage.
 An output will never be used unless a commit for it is seen, and the commit contains all the data required to compute the output alongside the operator --- thus the operator can only leak outputs that are already pre-determined, removing their \enquote{market value}.
 
-\parathreat{Withholding Attack}\drea{2,2,2,3,9}
-The \gls{cco} workflow accompanied by a delay function mitigates this type of attack.
+\parathreat{Withholding Output}\drea{2,2,2,3,9}
+The \gls{cco} workflow accompanied by a delay function minimized the consequences of this type of attack.
 Using delay functions and requiring the beacon to publish a commit to a set of inputs before computing, prevents malicious operators from pre-computing outputs, and withholding if they are not beneficial.
 The operator could still withhold the commit to prevent availability, but they can not know whether the output favors them or not.
 
+\parathreat{Shutdown}\drea{2,2,2,3,9}
+Similar to the withholding output attack, shutdown attacks by the beacon operator cannot be based on knowledge. The operator cannot know if the output favors anyone. It can only be performed randomly, and will thus make users suspicious of abnormal operation.
+
+\parathreat{Man in the Middle}\drea{3,1,1,3,8}
+This threat is rendered ineffective because of the \gls{cco} workflow. Assuming the adversary is not able to compute the delay function unrealistically faster, the adversary can, at most, perform an availability attack because the user's input is missing from the output, or a correct output is never received by the user. The user must receive a timely commitment and verify inclusion of the input in the output, and if an adversary is capable of this the adversary has performed the exact same work as an honest beacon operator would have performed. As such, the user can actually use the output.
+
+Normal man in the middle mitigation using certificates will be redundant here. We do not care \emph{who} the beacon operator is. As long as a user's input is included in a valid output, that output is good to use for that user --- no matter who did the computation.
+
+\parathreat{Emitting False Output}\drea{2,1,2,3,8}
+Because users should not trust an output that cannot be verified both for inclusion of input and correctness of computation, emitting a false output will simply be an availability attack --- the output cannot be used and as such could be non-existent. While the beacon operator practically could easily do this, it would not cause much harm, since our \gls{cco} workflow ensures that users can compute the delay function themselves.
+
+% In practice, the effects of this kind of attack could likely be lessened by signing messages sent by the beacon to prevent them from being manipulated.
+% This, however, brings forth a new issue of managing and more importantly trusting certificates.
+% As the attack is already unrealistic, we have not designed such signing.
+
 \bigskip
-With this we have covered some of the largest threats to the integrity of the beacon, making the beacon significantly more secure.
-There are still a number of unmitigated threats toward the beacon, but these will be discussed in \vref{sec:discussion}.
+These mitigated threats can be seen in context in the \cref{tab:threat-mitigated}.
+
+\aboverulesep=0ex
+\belowrulesep=0ex
+\begin{figure}[htb]
+\centering
+\small
+\newcommand{\tabletitle}{\sffamily\color{descriptionlabeling}\bfseries}
+\begin{tabular}{@{}ll!{\color{clframe}\vrule}l@{}}
+    \arrayrulecolor{clframe}
+
+    & \multicolumn{1}{c}{\tabletitle Insider} & \multicolumn{1}{c}{\tabletitle Outsider} \\
+
+    \settowidth\rotheadsize{\parbox{2.1cm}{\centering\tabletitle Attacks on availability}}
+    \rothead{\parbox{2cm}{\centering\tabletitle Threats to availability}} &
+    \makecell[l]{\st{Shutdown} \\ \st{Withholding output}} &
+    \makecell[l]{Input flooding \\ Eclipse beacon \\ Eclipse (select) users} \\
+
+    \cmidrule(l){2-3}
+
+    \settowidth\rotheadsize{\parbox{2.1cm}{\centering\tabletitle Attacks on integrity}}
+    \rothead{\parbox{2cm}{\centering\tabletitle Threats to integrity}} &
+    \makecell[l]{\st{Input manipulation} \\ \st{Leak output} \\ \st{Emit false output}} &
+    \makecell[l]{\st{Input biasing} \\ \st{Output degradation} \\ \st{Man in the middle} \\ Cryptography exploit} \\
 
 
-\srknote{REEEEEEEEEEEEEE. Format the discussion, \LaTeX gurus}
+\end{tabular}
+\caption{The state of mitigated threats (shown by striked through text).}\label{tab:threat-mitigated}
+\end{figure}
 
+\subsubsection{Unmitigated Threats}
+There are unmitigated threats, particularly the threats concerning availability by outsiders.
+A variety of existing solutions for mitigating input flooding attacks already exist, and these problems are not particular to randomness beacons.
+Both eclipsing attacks are difficult for us to mitigate. Essentially, it requires control of the connections to all the users. To launch this kind of attack, it would require the role of system administrators at ISP level or similar. Therefore, it is deemed out of scope. Eclipsing the beacon could be mitigated by having several redundant forms of communication with the outside world.
 
-\subsection{Unmitigated Threats}
-We have mitigated a variety of threats to our beacon in its design, but there are still some left.
-In particular, we have not focused on mitigating the threats to the availability.
-This is because a variety of existing solutions for mitigating \gls{dos} attacks already exist, and that these problems are not particular to randomness beacons.
-
-However, there are still threats to the integrity that have not been mitigated.
-Man-in-the-middle attacks is one of those threats.
-This is a highly damaging threat that consists of intercepting and manipulating messages between the beacon and users.
-The goal is to make users use biased randomness that favors the adversary, but this requires all users to receive the manipulated randomness, which makes the attack difficult to execute.
-In practice, it could likely also be mitigated by signing messages sent by the beacon to prevent them from being manipulated.
-However, this brings forth a new issue of managing and more importantly trusting certificates.
-
-Cryptography exploits is another threat we have not, and quite possibly cannot mitigate.
+Cryptography exploits is the last threat we have not, and quite possibly cannot account for.
 Our beacon uses a variety of cryptographic components like hash functions and delay functions.
 If exploits were found in any of these, it would completely change the assumptions on the beacon.
-If a shortcut to computing the delay function was found, it would allow adversaries to perform input manipulation attacks.
+If a shortcut to computing the delay function was found, it would allow adversaries to perform many of the other attacks.
+We have partly mitigated it by allowing the hashing algorithm to be switched out easily.
