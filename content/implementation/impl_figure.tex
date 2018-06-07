@@ -19,9 +19,12 @@
         \node[left=3em of ic1] (dummyin1) {};
         \node[left=3em of ic2] (dummyin2) {};
         \node[left=3em of ic3] (dummyin3) {};
-        \draw[arrow] (dummyin1) -- node[pos=.4]{$i$} (ic1);
-        \draw[arrow] (dummyin2) -- (ic2);
-        \draw[arrow] (dummyin3) -- (ic3);
+        \draw[arrow] ([yshift=.4em]dummyin1.east) -- node[pos=.4]{$i$} ([yshift=.4em]ic1.west);
+        \draw[arrow] ([yshift=-.4em]ic1.west) -- node[pos=.4]{$H(i)$} ([yshift=-.4em]dummyin1.east);
+        \draw[arrow] ([yshift=.4em]dummyin2.east) -- ([yshift=.4em]ic2.west);
+        \draw[arrow] ([yshift=-.4em]ic2.west) -- ([yshift=-.4em]dummyin2.east);
+        \draw[arrow] ([yshift=.4em]dummyin3.east) -- ([yshift=.4em]ic3.west);
+        \draw[arrow] ([yshift=-.4em]ic3.west) -- ([yshift=-.4em]dummyin3.east);
 
         % Proxy
         \node[implblock, text width=4em, right=2em of icframe] (proxy1) {Stream\\Proxy};
@@ -73,7 +76,7 @@
 
         \draw[arrow] (proxy1) -- (ip);
 
-        \draw (ip) edge[arrow, loop, looseness=6, out=250, in=290] node[below, align=center]{Building\\Merkle Tree} (ip);
+        \draw (ip) edge[arrow, loop, looseness=5, out=250, in=290] node[below, align=center]{Building\\Merkle Tree} (ip);
 
         \draw ([yshift=.9em]ip.east) edge[out=0, in=180, arrowrev, bend left=30, postaction={decorate,decoration={raise=0.6ex, text along path, text align=center, text={1. Ready}}}] ([yshift=.1em]comp1.west);
         \draw ([yshift=.8em]ip.east) edge[out=180, in=0, arrow, bend right=22, postaction={decorate,decoration={raise=0.5ex, text along path, text align=center, text={2. Data}}}] ([yshift=-.1em]comp1.west);
